@@ -9,23 +9,25 @@ import java.util.Stack;
 /**
  * Represents a digraph without multi-edges.  
  * Provides methods for querying graph.
+ * 
+ * @param <N> type of graph nodes
  */
-public class Graph {
+public class Graph<N> {
 
 	/**
 	 * Stores the graphs parent child relations
 	 */
-	private final Map<String, Set<String>> nodeMap = new HashMap<String, Set<String>>();
+	private final Map<N, Set<N>> nodeMap = new HashMap<N, Set<N>>();
 
-	public void addNode(String node) {
-		nodeMap.put(node, new HashSet<String>());
+	public void addNode(N node) {
+		nodeMap.put(node, new HashSet<N>());
 	}
 	
-	public void addEdge(String parent, String child) {
+	public void addEdge(N parent, N child) {
 		if (containsNode(parent)) {
 			nodeMap.get(parent).add(child);
 		} else {
-			Set<String> childs = new HashSet<String>();
+			Set<N> childs = new HashSet<N>();
 			childs.add(child);
 			nodeMap.put(parent, childs);
 		}
@@ -34,27 +36,27 @@ public class Graph {
 		}
 	}
 	
-	public Set<String> getChilds(String parent) {
+	public Set<N> getChilds(N parent) {
 		return nodeMap.get(parent);
 	}
 	
-	public boolean hasChilds(String parent) {
+	public boolean hasChilds(N parent) {
 		return nodeMap.get(parent).size() > 0;
 	}
 	
-	public boolean containsNode(String node) {
+	public boolean containsNode(N node) {
 		return nodeMap.containsKey(node);
 	}
 	
-	public Set<String> getLeaveNodes(String node) {
-		Set<String> leaveNodes = new HashSet<String>();
-		Stack<String> ancestors = new Stack<String>();
+	public Set<N> getLeaveNodes(N node) {
+		Set<N> leaveNodes = new HashSet<N>();
+		Stack<N> ancestors = new Stack<N>();
 		ancestors.addAll(getChilds(node));
 		while(!ancestors.isEmpty()) {
-			String ancestor = ancestors.pop();
+			N ancestor = ancestors.pop();
 			// detect cycle, ignore self
 			if (!ancestor.equals(node)) {
-				Set<String> ancestorsOfAncestor = getChilds(ancestor);
+				Set<N> ancestorsOfAncestor = getChilds(ancestor);
 				if (ancestorsOfAncestor.size() > 0) {
 					// more callers to detect
 					ancestors.addAll(ancestorsOfAncestor);

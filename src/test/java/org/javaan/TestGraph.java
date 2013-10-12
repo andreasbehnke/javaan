@@ -13,7 +13,7 @@ public class TestGraph {
 	
 	@Test
 	public void testAddNode() {
-		Graph graph = new Graph();
+		Graph<String> graph = new Graph<String>();
 		graph.addNode("a");
 		
 		assertTrue(graph.containsNode("a"));
@@ -21,7 +21,7 @@ public class TestGraph {
 	
 	@Test
 	public void testAddEdge() {
-		Graph graph = new Graph();
+		Graph<String> graph = new Graph<String>();
 		graph.addEdge("x", "a");
 		
 		assertTrue(graph.containsNode("a"));
@@ -37,7 +37,7 @@ public class TestGraph {
 
 	@Test
 	public void testGetChilds() {
-		Graph graph = new Graph();
+		Graph<String> graph = new Graph<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
@@ -51,24 +51,24 @@ public class TestGraph {
 	
 	@Test
 	public void testHasChilds() {
-		Graph childs = new Graph();
-		childs.addEdge("x", "a");
+		Graph<String> graph = new Graph<String>();
+		graph.addEdge("x", "a");
 		
-		assertTrue(childs.hasChilds("x"));
-		assertFalse(childs.hasChilds("a"));
+		assertTrue(graph.hasChilds("x"));
+		assertFalse(graph.hasChilds("a"));
 	}
 	
 	@Test
 	public void testContainsNode() {
-		Graph childs = new Graph();
-		childs.addNode("x");
+		Graph<String> graph = new Graph<String>();
+		graph.addNode("x");
 		
-		assertTrue(childs.containsNode("x"));
+		assertTrue(graph.containsNode("x"));
 	}
 	
 	@Test
 	public void testGetLeaveNodes() {
-		Graph graph = new Graph();
+		Graph<String> graph = new Graph<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
@@ -102,7 +102,7 @@ public class TestGraph {
 	
 	@Test
 	public void testGetLeaveNodesCycle() {
-		Graph graph = new Graph();
+		Graph<String> graph = new Graph<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("a", "b");
 		graph.addEdge("b", "x");
