@@ -7,27 +7,27 @@ import java.util.Set;
 import java.util.Stack;
 
 /**
- * Represents the call-graph for all methods of a library set.
- * Provides methods for querying call-graph.
+ * Represents a digraph without multi-edges.  
+ * Provides methods for querying graph.
  */
 public class Graph {
 
 	/**
-	 * Stores the caller signatures for a given (key) method signature
+	 * Stores the graphs parent child relations
 	 */
-	private final Map<String, Set<String>> callersMap = new HashMap<String, Set<String>>();
+	private final Map<String, Set<String>> nodeMap = new HashMap<String, Set<String>>();
 
 	public void add(String method) {
-		callersMap.put(method, new HashSet<String>());
+		nodeMap.put(method, new HashSet<String>());
 	}
 	
 	public void addCaller(String callee, String caller) {
 		if (containsMethod(callee)) {
-			callersMap.get(callee).add(caller);
+			nodeMap.get(callee).add(caller);
 		} else {
 			Set<String> callers = new HashSet<String>();
 			callers.add(caller);
-			callersMap.put(callee, callers);
+			nodeMap.put(callee, callers);
 		}
 		if (!containsMethod(caller)) {
 			add(caller);
@@ -35,15 +35,15 @@ public class Graph {
 	}
 	
 	public Set<String> getCallers(String callee	) {
-		return callersMap.get(callee);
+		return nodeMap.get(callee);
 	}
 	
 	public boolean hasCallers(String callee) {
-		return callersMap.get(callee).size() > 0;
+		return nodeMap.get(callee).size() > 0;
 	}
 	
 	public boolean containsMethod(String method) {
-		return callersMap.containsKey(method);
+		return nodeMap.containsKey(method);
 	}
 	
 	public Set<String> getCallingEntryMethods(String callee) {
