@@ -12,7 +12,7 @@ import java.util.Stack;
  * 
  * @param <N> type of graph nodes
  */
-public class Graph<N> {
+public class SimpleGraph<N> {
 
 	/**
 	 * Stores the graphs parent child relations

@@ -9,11 +9,11 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class TestGraph {
+public class TestSimpleGraph {
 	
 	@Test
 	public void testAddNode() {
-		Graph<String> graph = new Graph<String>();
+		SimpleGraph<String> graph = new SimpleGraph<String>();
 		graph.addNode("a");
 		
 		assertTrue(graph.containsNode("a"));
@@ -21,7 +21,7 @@ public class TestGraph {
 	
 	@Test
 	public void testAddEdge() {
-		Graph<String> graph = new Graph<String>();
+		SimpleGraph<String> graph = new SimpleGraph<String>();
 		graph.addEdge("x", "a");
 		
 		assertTrue(graph.containsNode("a"));
@@ -37,7 +37,7 @@ public class TestGraph {
 
 	@Test
 	public void testGetChilds() {
-		Graph<String> graph = new Graph<String>();
+		SimpleGraph<String> graph = new SimpleGraph<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
@@ -51,7 +51,7 @@ public class TestGraph {
 	
 	@Test
 	public void testHasChilds() {
-		Graph<String> graph = new Graph<String>();
+		SimpleGraph<String> graph = new SimpleGraph<String>();
 		graph.addEdge("x", "a");
 		
 		assertTrue(graph.hasChilds("x"));
@@ -60,7 +60,7 @@ public class TestGraph {
 	
 	@Test
 	public void testContainsNode() {
-		Graph<String> graph = new Graph<String>();
+		SimpleGraph<String> graph = new SimpleGraph<String>();
 		graph.addNode("x");
 		
 		assertTrue(graph.containsNode("x"));
@@ -68,7 +68,7 @@ public class TestGraph {
 	
 	@Test
 	public void testGetLeaveNodes() {
-		Graph<String> graph = new Graph<String>();
+		SimpleGraph<String> graph = new SimpleGraph<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
@@ -102,7 +102,7 @@ public class TestGraph {
 	
 	@Test
 	public void testGetLeaveNodesCycle() {
-		Graph<String> graph = new Graph<String>();
+		SimpleGraph<String> graph = new SimpleGraph<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("a", "b");
 		graph.addEdge("b", "x");
