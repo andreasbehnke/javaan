@@ -101,7 +101,7 @@ public class TestGraph {
 	}
 	
 	@Test
-	public void testGetCallingEntryMethodsCycle() {
+	public void testGetLeaveNodesCycle() {
 		Graph graph = new Graph();
 		graph.addEdge("x", "a");
 		graph.addEdge("a", "b");
