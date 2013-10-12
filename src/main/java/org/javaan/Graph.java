@@ -17,53 +17,53 @@ public class Graph {
 	 */
 	private final Map<String, Set<String>> nodeMap = new HashMap<String, Set<String>>();
 
-	public void add(String method) {
-		nodeMap.put(method, new HashSet<String>());
+	public void addNode(String node) {
+		nodeMap.put(node, new HashSet<String>());
 	}
 	
-	public void addCaller(String callee, String caller) {
-		if (containsMethod(callee)) {
-			nodeMap.get(callee).add(caller);
+	public void addEdge(String parent, String child) {
+		if (containsNode(parent)) {
+			nodeMap.get(parent).add(child);
 		} else {
-			Set<String> callers = new HashSet<String>();
-			callers.add(caller);
-			nodeMap.put(callee, callers);
+			Set<String> childs = new HashSet<String>();
+			childs.add(child);
+			nodeMap.put(parent, childs);
 		}
-		if (!containsMethod(caller)) {
-			add(caller);
+		if (!containsNode(child)) {
+			addNode(child);
 		}
 	}
 	
-	public Set<String> getCallers(String callee	) {
-		return nodeMap.get(callee);
+	public Set<String> getChilds(String parent) {
+		return nodeMap.get(parent);
 	}
 	
-	public boolean hasCallers(String callee) {
-		return nodeMap.get(callee).size() > 0;
+	public boolean hasChilds(String parent) {
+		return nodeMap.get(parent).size() > 0;
 	}
 	
-	public boolean containsMethod(String method) {
-		return nodeMap.containsKey(method);
+	public boolean containsNode(String node) {
+		return nodeMap.containsKey(node);
 	}
 	
-	public Set<String> getCallingEntryMethods(String callee) {
-		Set<String> callingEntryMethods = new HashSet<String>();
-		Stack<String> callers = new Stack<String>();
-		callers.addAll(getCallers(callee));
-		while(!callers.isEmpty()) {
-			String caller = callers.pop();
-			// detect cycle, ignore callee
-			if (!caller.equals(callee)) {
-				Set<String> callerCallers = getCallers(caller);
-				if (callerCallers.size() > 0) {
+	public Set<String> getLeaveNodes(String node) {
+		Set<String> leaveNodes = new HashSet<String>();
+		Stack<String> ancestors = new Stack<String>();
+		ancestors.addAll(getChilds(node));
+		while(!ancestors.isEmpty()) {
+			String ancestor = ancestors.pop();
+			// detect cycle, ignore self
+			if (!ancestor.equals(node)) {
+				Set<String> ancestorsOfAncestor = getChilds(ancestor);
+				if (ancestorsOfAncestor.size() > 0) {
 					// more callers to detect
-					callers.addAll(callerCallers);
+					ancestors.addAll(ancestorsOfAncestor);
 				} else {
 					// entry method found
-					callingEntryMethods.add(caller);
+					leaveNodes.add(ancestor);
 				}
 			}
 		}
-		return callingEntryMethods;
+		return leaveNodes;
 	}
 }

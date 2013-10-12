@@ -12,105 +12,105 @@ import org.junit.Test;
 public class TestGraph {
 	
 	@Test
-	public void testAdd() {
-		Graph callGraph = new Graph();
-		callGraph.add("a");
+	public void testAddNode() {
+		Graph graph = new Graph();
+		graph.addNode("a");
 		
-		assertTrue(callGraph.containsMethod("a"));
+		assertTrue(graph.containsNode("a"));
 	}
 	
 	@Test
-	public void testAddCaller() {
-		Graph callGraph = new Graph();
-		callGraph.addCaller("x", "a");
+	public void testAddEdge() {
+		Graph graph = new Graph();
+		graph.addEdge("x", "a");
 		
-		assertTrue(callGraph.containsMethod("a"));
-		assertTrue(callGraph.containsMethod("x"));
-		Set<String> caller = callGraph.getCallers("a");
-		assertNotNull(caller);
-		assertEquals(0, caller.size());
-		caller = callGraph.getCallers("x");
-		assertNotNull(caller);
-		assertEquals(1, caller.size());
-		assertTrue(caller.contains("a"));
+		assertTrue(graph.containsNode("a"));
+		assertTrue(graph.containsNode("x"));
+		Set<String> childs = graph.getChilds("a");
+		assertNotNull(childs);
+		assertEquals(0, childs.size());
+		childs = graph.getChilds("x");
+		assertNotNull(childs);
+		assertEquals(1, childs.size());
+		assertTrue(childs.contains("a"));
 	}
 
 	@Test
-	public void testGetCallers() {
-		Graph callGraph = new Graph();
-		callGraph.addCaller("x", "a");
-		callGraph.addCaller("x", "b");
-		callGraph.addCaller("x", "c");
+	public void testGetChilds() {
+		Graph graph = new Graph();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
 		
-		Set<String> callers = callGraph.getCallers("x");
-		assertNotNull(callers);
-		assertTrue(callers.contains("a"));
-		assertTrue(callers.contains("b"));
-		assertTrue(callers.contains("c"));
+		Set<String> childs = graph.getChilds("x");
+		assertNotNull(childs);
+		assertTrue(childs.contains("a"));
+		assertTrue(childs.contains("b"));
+		assertTrue(childs.contains("c"));
 	}
 	
 	@Test
-	public void testHasCallers() {
-		Graph callGraph = new Graph();
-		callGraph.addCaller("x", "a");
+	public void testHasChilds() {
+		Graph childs = new Graph();
+		childs.addEdge("x", "a");
 		
-		assertTrue(callGraph.hasCallers("x"));
-		assertFalse(callGraph.hasCallers("a"));
+		assertTrue(childs.hasChilds("x"));
+		assertFalse(childs.hasChilds("a"));
 	}
 	
 	@Test
-	public void testContainsMethod() {
-		Graph callGraph = new Graph();
-		callGraph.add("x");
+	public void testContainsNode() {
+		Graph childs = new Graph();
+		childs.addNode("x");
 		
-		assertTrue(callGraph.containsMethod("x"));
+		assertTrue(childs.containsNode("x"));
 	}
 	
 	@Test
-	public void testGetCallingEntryMethods() {
-		Graph callGraph = new Graph();
-		callGraph.addCaller("x", "a");
-		callGraph.addCaller("x", "b");
-		callGraph.addCaller("x", "c");
-		callGraph.addCaller("c", "d");
-		callGraph.addCaller("c", "e");
-		callGraph.addCaller("e", "f");
+	public void testGetLeaveNodes() {
+		Graph graph = new Graph();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
 		
-		Set<String> callers = callGraph.getCallingEntryMethods("x");
-		assertNotNull(callers);
-		assertEquals(4, callers.size());
-		assertTrue(callers.contains("a"));
-		assertTrue(callers.contains("b"));
-		assertTrue(callers.contains("d"));
-		assertTrue(callers.contains("f"));
-		callers = callGraph.getCallingEntryMethods("c");
-		assertNotNull(callers);
-		assertEquals(2, callers.size());
-		assertTrue(callers.contains("d"));
-		assertTrue(callers.contains("f"));
-		callers = callGraph.getCallingEntryMethods("a");
-		assertNotNull(callers);
-		assertEquals(0, callers.size());
-		callers = callGraph.getCallingEntryMethods("b");
-		assertNotNull(callers);
-		assertEquals(0, callers.size());
-		callers = callGraph.getCallingEntryMethods("e");
-		assertNotNull(callers);
-		assertEquals(1, callers.size());
-		assertTrue(callers.contains("f"));
+		Set<String> leaveNodes = graph.getLeaveNodes("x");
+		assertNotNull(leaveNodes);
+		assertEquals(4, leaveNodes.size());
+		assertTrue(leaveNodes.contains("a"));
+		assertTrue(leaveNodes.contains("b"));
+		assertTrue(leaveNodes.contains("d"));
+		assertTrue(leaveNodes.contains("f"));
+		leaveNodes = graph.getLeaveNodes("c");
+		assertNotNull(leaveNodes);
+		assertEquals(2, leaveNodes.size());
+		assertTrue(leaveNodes.contains("d"));
+		assertTrue(leaveNodes.contains("f"));
+		leaveNodes = graph.getLeaveNodes("a");
+		assertNotNull(leaveNodes);
+		assertEquals(0, leaveNodes.size());
+		leaveNodes = graph.getLeaveNodes("b");
+		assertNotNull(leaveNodes);
+		assertEquals(0, leaveNodes.size());
+		leaveNodes = graph.getLeaveNodes("e");
+		assertNotNull(leaveNodes);
+		assertEquals(1, leaveNodes.size());
+		assertTrue(leaveNodes.contains("f"));
 	}
 	
 	@Test
 	public void testGetCallingEntryMethodsCycle() {
-		Graph callGraph = new Graph();
-		callGraph.addCaller("x", "a");
-		callGraph.addCaller("a", "b");
-		callGraph.addCaller("b", "x");
-		callGraph.addCaller("a", "c");
+		Graph graph = new Graph();
+		graph.addEdge("x", "a");
+		graph.addEdge("a", "b");
+		graph.addEdge("b", "x");
+		graph.addEdge("a", "c");
 		
-		Set<String> callers = callGraph.getCallingEntryMethods("x");
-		assertNotNull(callers);
-		assertEquals(1, callers.size());
-		assertTrue(callers.contains("c"));
+		Set<String> leaveNodes = graph.getLeaveNodes("x");
+		assertNotNull(leaveNodes);
+		assertEquals(1, leaveNodes.size());
+		assertTrue(leaveNodes.contains("c"));
 	}
 }
