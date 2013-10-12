@@ -56,8 +56,10 @@ public class CallGraph {
 			if (!caller.equals(callee)) {
 				Set<String> callerCallers = getCallers(caller);
 				if (callerCallers.size() > 0) {
+					// more callers to detect
 					callers.addAll(callerCallers);
 				} else {
+					// entry method found
 					callingEntryMethods.add(caller);
 				}
 			}
