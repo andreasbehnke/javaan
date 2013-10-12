@@ -52,11 +52,14 @@ public class CallGraph {
 		callers.addAll(getCallers(callee));
 		while(!callers.isEmpty()) {
 			String caller = callers.pop();
-			Set<String> callerCallers = getCallers(caller);
-			if (callerCallers.size() > 0) {
-				callers.addAll(callerCallers);
-			} else {
-				callingEntryMethods.add(caller);
+			// detect cycle, ignore callee
+			if (!caller.equals(callee)) {
+				Set<String> callerCallers = getCallers(caller);
+				if (callerCallers.size() > 0) {
+					callers.addAll(callerCallers);
+				} else {
+					callingEntryMethods.add(caller);
+				}
 			}
 		}
 		return callingEntryMethods;

@@ -73,22 +73,44 @@ public class TestCallGraph {
 		callGraph.addCaller("x", "b");
 		callGraph.addCaller("x", "c");
 		callGraph.addCaller("c", "d");
+		callGraph.addCaller("c", "e");
+		callGraph.addCaller("e", "f");
 		
 		Set<String> callers = callGraph.getCallingEntryMethods("x");
 		assertNotNull(callers);
-		assertEquals(3, callers.size());
+		assertEquals(4, callers.size());
 		assertTrue(callers.contains("a"));
 		assertTrue(callers.contains("b"));
 		assertTrue(callers.contains("d"));
+		assertTrue(callers.contains("f"));
 		callers = callGraph.getCallingEntryMethods("c");
 		assertNotNull(callers);
-		assertEquals(1, callers.size());
+		assertEquals(2, callers.size());
 		assertTrue(callers.contains("d"));
+		assertTrue(callers.contains("f"));
 		callers = callGraph.getCallingEntryMethods("a");
 		assertNotNull(callers);
 		assertEquals(0, callers.size());
 		callers = callGraph.getCallingEntryMethods("b");
 		assertNotNull(callers);
 		assertEquals(0, callers.size());
+		callers = callGraph.getCallingEntryMethods("e");
+		assertNotNull(callers);
+		assertEquals(1, callers.size());
+		assertTrue(callers.contains("f"));
+	}
+	
+	@Test
+	public void testGetCallingEntryMethodsCycle() {
+		CallGraph callGraph = new CallGraph();
+		callGraph.addCaller("x", "a");
+		callGraph.addCaller("a", "b");
+		callGraph.addCaller("b", "x");
+		callGraph.addCaller("a", "c");
+		
+		Set<String> callers = callGraph.getCallingEntryMethods("x");
+		assertNotNull(callers);
+		assertEquals(1, callers.size());
+		assertTrue(callers.contains("c"));
 	}
 }
