@@ -9,11 +9,11 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class TestCallGraph {
+public class TestGraph {
 	
 	@Test
 	public void testAdd() {
-		CallGraph callGraph = new CallGraph();
+		Graph callGraph = new Graph();
 		callGraph.add("a");
 		
 		assertTrue(callGraph.containsMethod("a"));
@@ -21,7 +21,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testAddCaller() {
-		CallGraph callGraph = new CallGraph();
+		Graph callGraph = new Graph();
 		callGraph.addCaller("x", "a");
 		
 		assertTrue(callGraph.containsMethod("a"));
@@ -37,7 +37,7 @@ public class TestCallGraph {
 
 	@Test
 	public void testGetCallers() {
-		CallGraph callGraph = new CallGraph();
+		Graph callGraph = new Graph();
 		callGraph.addCaller("x", "a");
 		callGraph.addCaller("x", "b");
 		callGraph.addCaller("x", "c");
@@ -51,7 +51,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testHasCallers() {
-		CallGraph callGraph = new CallGraph();
+		Graph callGraph = new Graph();
 		callGraph.addCaller("x", "a");
 		
 		assertTrue(callGraph.hasCallers("x"));
@@ -60,7 +60,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testContainsMethod() {
-		CallGraph callGraph = new CallGraph();
+		Graph callGraph = new Graph();
 		callGraph.add("x");
 		
 		assertTrue(callGraph.containsMethod("x"));
@@ -68,7 +68,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testGetCallingEntryMethods() {
-		CallGraph callGraph = new CallGraph();
+		Graph callGraph = new Graph();
 		callGraph.addCaller("x", "a");
 		callGraph.addCaller("x", "b");
 		callGraph.addCaller("x", "c");
@@ -102,7 +102,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testGetCallingEntryMethodsCycle() {
-		CallGraph callGraph = new CallGraph();
+		Graph callGraph = new Graph();
 		callGraph.addCaller("x", "a");
 		callGraph.addCaller("a", "b");
 		callGraph.addCaller("b", "x");

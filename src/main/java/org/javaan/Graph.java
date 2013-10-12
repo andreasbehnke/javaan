@@ -10,7 +10,7 @@ import java.util.Stack;
  * Represents the call-graph for all methods of a library set.
  * Provides methods for querying call-graph.
  */
-public class CallGraph {
+public class Graph {
 
 	/**
 	 * Stores the caller signatures for a given (key) method signature
