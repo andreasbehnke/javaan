@@ -1,12 +1,13 @@
-package org.javaan;
+package org.javaan.commands;
 
 import java.util.List;
 
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+import org.javaan.BaseCommand;
 
-public class FindEntryMethodsCommand extends BaseCommand {
+public class FindEntryMethods extends BaseCommand {
 	
 	private final static String NAME = "findEntryMethods";
 	

@@ -7,6 +7,7 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.javaan.commands.FindEntryMethods;
 
 /**
  * Javaan Command Line Client
@@ -37,7 +38,7 @@ public class JavaanCli {
 
 	public static void main(String[] args) {
 		CommandMap commands = new CommandMap();
-		commands.addCommand(new FindEntryMethodsCommand());
+		commands.addCommand(new FindEntryMethods());
 		System.exit(new JavaanCli(args, commands).execute());
 	}
 
