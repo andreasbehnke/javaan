@@ -14,9 +14,6 @@ import org.apache.commons.cli.ParseException;
  */
 public class JavaanCli {
 	
-	public static final int ERROR_CODE_PARSE = 1;
-	public static final int ERROR_CODE_COMMAND = 2;
-	
 	private static final String HELP_COMMAND = "javaan <command> <files> <options>";
 	private static final String HELP_DESCRIPTION = 
 			  "javaan is a java byte code analyser for static code analysis.\n"
@@ -47,13 +44,13 @@ public class JavaanCli {
 	public int execute() {
 		if (args.length < 1) {
 			printUsage();
-			return ERROR_CODE_PARSE;
+			return ReturnCodes.errorParse.getValue();
 		}
 		Command command = commands.getCommand(args[0]);
 		if (command == null) {
 			System.out.println(String.format(EXCEPTION_UNKNOWN_COMMAND, args[0]));
 			printUsage();
-			return ERROR_CODE_PARSE;
+			return ReturnCodes.errorParse.getValue();
 		}
 		Options options = new Options();
 		options.addOption("h", "help", false, "Display help information for this command");
@@ -68,19 +65,18 @@ public class JavaanCli {
 			if (args.length < 2) {
 				System.out.println(EXCEPTION_MISSING_FILES);
 				printUsage();
-				return ERROR_CODE_PARSE;
+				return ReturnCodes.errorParse.getValue();
 			}
 			String[] files = Arrays.copyOfRange(params, 1, params.length);
-			command.execute(cl, files);
+			return command.execute(cl, files).getValue();
 		} catch(ParseException e) {
 			System.out.println(String.format(EXCEPTION_COULD_NOT_PARSE, e.getMessage()));
 			printUsage(command, options);
-			return ERROR_CODE_PARSE;
+			return ReturnCodes.errorParse.getValue();
 		} catch (Exception e) {
 			System.out.println(String.format(EXCEPTION_COMMAND, e.getMessage()));
-			return ERROR_CODE_COMMAND;
+			return ReturnCodes.errorCommand.getValue();
 		}
-		return 0;
 	}
 	
 	private void printUsage() {

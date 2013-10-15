@@ -1,9 +1,12 @@
 package org.javaan;
 
+import java.util.List;
+
+import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
-public class FindEntryMethodsCommand implements Command {
+public class FindEntryMethodsCommand extends BaseCommand {
 	
 	private final static String NAME = "findEntryMethods";
 	
@@ -31,11 +34,10 @@ public class FindEntryMethodsCommand implements Command {
 	public Options buildCommandLineOptions(Options options) {
 		return options;
 	}
-
+	
 	@Override
-	public void execute(CommandLine commandLine, String[] files) {
+	protected void execute(CommandLine commandLine, List<JavaClass> classes) {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

@@ -13,5 +13,5 @@ public interface Command {
 	
 	Options buildCommandLineOptions(Options options);
 	
-	void execute(CommandLine commandLine, String[] files);
+	ReturnCodes execute(CommandLine commandLine, String[] files);
 }
