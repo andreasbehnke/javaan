@@ -17,6 +17,14 @@ public class TestSimpleGraph {
 		graph.addNode("a");
 		
 		assertTrue(graph.containsNode("a"));
+		
+		graph.addEdge("b", "c");
+		// relation should not be overwritten
+		graph.addNode("b");
+		Set<String> childs = graph.getChilds("b");
+		assertNotNull(childs);
+		assertEquals(1, childs.size());
+		assertTrue(childs.contains("c"));
 	}
 	
 	@Test

@@ -18,7 +18,9 @@ public class SimpleGraph<N> implements Graph<N> {
 
 	@Override
 	public void addNode(N node) {
-		nodeMap.put(node, new HashSet<N>());
+		if (!nodeMap.containsKey(node)) {
+			nodeMap.put(node, new HashSet<N>());
+		}
 	}
 	
 	@Override
