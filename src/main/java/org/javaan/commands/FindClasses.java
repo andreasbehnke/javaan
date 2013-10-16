@@ -3,12 +3,17 @@
  */
 package org.javaan.commands;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+import org.apache.commons.io.IOUtils;
 import org.javaan.BaseCommand;
+import org.javaan.ClassContext;
+import org.javaan.ClassContextBuilder;
 
 /**
  * @author andreasbehnke
@@ -43,9 +48,9 @@ public class FindClasses extends BaseCommand {
 	}
 
 	@Override
-	protected void execute(CommandLine commandLine, List<JavaClass> classes) {
-		// TODO Auto-generated method stub
-		
+	protected void execute(CommandLine commandLine, OutputStream output, List<JavaClass> classes) throws IOException {
+		ClassContext classContext = new ClassContextBuilder(classes).build();
+		IOUtils.writeLines(classContext.getClasses(), System.lineSeparator(), output);
 	}
 
 }

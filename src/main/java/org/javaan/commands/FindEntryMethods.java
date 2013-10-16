@@ -1,5 +1,6 @@
 package org.javaan.commands;
 
+import java.io.OutputStream;
 import java.util.List;
 
 import org.apache.bcel.classfile.JavaClass;
@@ -37,7 +38,7 @@ public class FindEntryMethods extends BaseCommand {
 	}
 	
 	@Override
-	protected void execute(CommandLine commandLine, List<JavaClass> classes) {
+	protected void execute(CommandLine commandLine, OutputStream output, List<JavaClass> classes) {
 		// TODO Auto-generated method stub
 		
 	}
