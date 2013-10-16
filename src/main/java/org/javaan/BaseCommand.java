@@ -13,8 +13,15 @@ public abstract class BaseCommand implements Command {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(BaseCommand.class);
 
+	private static final String HELP_COMMAND_LINE = "javaan %s <files> <options>";
+
 	public BaseCommand() {
 		super();
+	}
+
+	@Override
+	public String getHelpCommandLine() {
+		return String.format(HELP_COMMAND_LINE, getName());
 	}
 
 	@Override

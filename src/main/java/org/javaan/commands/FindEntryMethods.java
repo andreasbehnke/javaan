@@ -12,8 +12,6 @@ public class FindEntryMethods extends BaseCommand {
 	
 	private final static String NAME = "findEntryMethods";
 	
-	private final static String HELP_COMMAND_LINE = "javaan findEntryMethods <files> <options>";
-	
 	private final static String DESCRIPTION = "Finds all entry methods of the libraries. An entry method is a method which is not "
 			+ "being used within the library. Use option --method to find entry methods to a specific method.";
 
@@ -25,11 +23,6 @@ public class FindEntryMethods extends BaseCommand {
 	@Override
 	public String getDescription() {
 		return DESCRIPTION;
-	}
-	
-	@Override
-	public String getHelpCommandLine() {
-		return HELP_COMMAND_LINE;
 	}
 	
 	@Override

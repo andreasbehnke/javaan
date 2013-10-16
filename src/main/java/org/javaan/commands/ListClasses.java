@@ -19,13 +19,11 @@ import org.javaan.ClassContextBuilder;
  * @author andreasbehnke
  *
  */
-public class FindClasses extends BaseCommand {
+public class ListClasses extends BaseCommand {
 	
-	private final static String NAME = "findClasses";
+	private final static String NAME = "listClasses";
 	
 	private final static String DESCRIPTION = "List all classes of the libraries";
-	
-	private final static String HELP_COMMAND_LINE = "javaan findClasses <files>";
 	
 	@Override
 	public String getName() {
@@ -35,11 +33,6 @@ public class FindClasses extends BaseCommand {
 	@Override
 	public String getDescription() {
 		return DESCRIPTION;
-	}
-
-	@Override
-	public String getHelpCommandLine() {
-		return HELP_COMMAND_LINE;
 	}
 
 	@Override
