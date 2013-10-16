@@ -8,13 +8,11 @@ import java.util.List;
 import org.apache.bcel.classfile.JavaClass;
 import org.junit.Test;
 
-public class TestJarFileLoader {
+public class TestJarFileLoader implements TestConstants {
 	
-	private static final String TEST_JAR_FILE = "src/test/resources/testJar.jar";
-
 	@Test
 	public void testLoadJarFiles() throws IOException {
 		List<JavaClass> classes = new JarFileLoader().loadJavaClasses(new String[]{TEST_JAR_FILE});
-		assertEquals(3, classes.size());
+		assertEquals(NUMBER_OF_CLASSES_AND_INTERFACES, classes.size());
 	}
 }
