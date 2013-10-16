@@ -13,6 +13,8 @@ public interface Graph<N> {
 	void addNode(N node);
 
 	void addEdge(N parent, N child);
+	
+	Set<N> getNodes();
 
 	Set<N> getChilds(N parent);
 

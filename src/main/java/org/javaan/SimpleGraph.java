@@ -36,6 +36,11 @@ public class SimpleGraph<N> implements Graph<N> {
 	}
 	
 	@Override
+	public Set<N> getNodes() {
+		return nodeMap.keySet();
+	}
+	
+	@Override
 	public Set<N> getChilds(N parent) {
 		return nodeMap.get(parent);
 	}

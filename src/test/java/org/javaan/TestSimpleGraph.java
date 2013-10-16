@@ -34,6 +34,20 @@ public class TestSimpleGraph {
 		assertEquals(1, childs.size());
 		assertTrue(childs.contains("a"));
 	}
+	
+	@Test
+	public void testGetNodes() {
+		Graph<String> graph = new SimpleGraph<String>();
+		graph.addNode("a");
+		graph.addEdge("x", "b");
+		
+		Set<String> nodes = graph.getNodes();
+		assertNotNull(nodes);
+		assertEquals(3, nodes.size());
+		assertTrue(nodes.contains("a"));
+		assertTrue(nodes.contains("b"));
+		assertTrue(nodes.contains("x"));
+	}
 
 	@Test
 	public void testGetChilds() {
