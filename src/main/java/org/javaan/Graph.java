@@ -27,4 +27,5 @@ public interface Graph<N> {
 
 	Set<N> getLeaveNodes(N node);
 
+	
 }

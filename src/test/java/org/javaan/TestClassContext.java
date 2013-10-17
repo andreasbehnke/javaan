@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -18,11 +19,10 @@ public class TestClassContext {
 		context.addClass("c");
 		Set<String> classes = context.getClasses();
 		assertNotNull(classes);
-		assertEquals(4, classes.size());
+		assertEquals(3, classes.size());
 		assertTrue(classes.contains("a"));
 		assertTrue(classes.contains("b"));
 		assertTrue(classes.contains("c"));
-		assertTrue(classes.contains(ClassContext.OBJECT_CLASS));
 	}
 
 	@Test
@@ -39,4 +39,19 @@ public class TestClassContext {
 		assertEquals("y", context.getSuperClass("x"));		
 	}
 	
+	@Test
+	public void testGetSuperClasses() {
+		ClassContext context = new ClassContext();
+		context.addClass("a");
+		context.addSuperClass("b", "a");
+		context.addSuperClass("c", "b");
+		
+		List<String> superClasses = context.getSuperClasses("c");
+		assertNotNull(superClasses);
+		assertEquals(4, superClasses.size());
+		assertEquals("c", superClasses.get(0));
+		assertEquals("b", superClasses.get(1));
+		assertEquals("a", superClasses.get(2));
+		assertEquals(ClassContext.OBJECT_CLASS, superClasses.get(3));
+	}
 }
