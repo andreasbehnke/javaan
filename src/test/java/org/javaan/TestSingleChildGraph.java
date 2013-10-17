@@ -18,12 +18,14 @@ public class TestSingleChildGraph {
 		assertEquals(0, childs.size());
 		
 		graph.addEdge("a", "b");
+		assertTrue(graph.containsNode("b"));
 		childs = graph.getChilds("a");
 		assertNotNull(childs);
 		assertEquals(1, childs.size());
 		assertTrue(childs.contains("b"));
 		
 		graph.addEdge("a", "c");
+		assertTrue(graph.containsNode("c"));
 		childs = graph.getChilds("a");
 		assertNotNull(childs);
 		assertEquals(1, childs.size());

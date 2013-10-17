@@ -14,7 +14,7 @@ public class SimpleGraph<N> implements Graph<N> {
 	/**
 	 * Stores the graphs parent child relations
 	 */
-	private final Map<N, Set<N>> nodeMap = new HashMap<N, Set<N>>();
+	protected final Map<N, Set<N>> nodeMap = new HashMap<N, Set<N>>();
 
 	@Override
 	public void addNode(N node) {

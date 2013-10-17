@@ -15,7 +15,7 @@ public class ClassContextBuilder {
 	public ClassContext build() {
 		ClassContext context = new ClassContext();
 		for (JavaClass clazz : classes) {
-			context.addClass(clazz.getClassName());
+			context.addSuperClass(clazz.getClassName(), clazz.getSuperclassName());
 		}
 		return context;
 	}
