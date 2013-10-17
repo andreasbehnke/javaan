@@ -2,6 +2,7 @@ package org.javaan;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import org.apache.bcel.classfile.JavaClass;
@@ -37,6 +38,6 @@ public abstract class BaseCommand implements Command {
 		return ReturnCodes.ok;
 	}
 	
-	protected abstract void execute(CommandLine commandLine, OutputStream output, List<JavaClass> classes) throws IOException;
+	protected abstract void execute(CommandLine commandLine, PrintStream output, List<JavaClass> classes);
 
 }

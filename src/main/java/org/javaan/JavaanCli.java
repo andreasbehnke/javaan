@@ -1,6 +1,10 @@
 package org.javaan;
 
 import java.util.Arrays;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -43,6 +47,15 @@ public class JavaanCli {
 		commands.addCommand(new FindEntryMethods());
 		System.exit(new JavaanCli(args, commands).execute());
 	}
+	
+	private void setLoggerLevel(Level level) {
+		Logger logger = LogManager.getLogManager().getLogger("");
+		Handler[] handlers = logger.getHandlers();
+		for (Handler handler : handlers) {
+			handler.setLevel(level);
+		}
+		logger.setLevel(level);
+	}
 
 	public int execute() {
 		if (args.length < 1) {
@@ -57,6 +70,7 @@ public class JavaanCli {
 		}
 		Options options = new Options();
 		options.addOption("h", "help", false, "Display help information for this command");
+		options.addOption("v", "verbose", false, "Log verbose output");
 		options = command.buildCommandLineOptions(options);
 		try {
 			CommandLine cl = new GnuParser().parse(options, args);
@@ -64,6 +78,13 @@ public class JavaanCli {
 				printUsage(command, options);
 				return 0;
 			}
+			
+			if (cl.hasOption("v")) {
+				setLoggerLevel(Level.FINEST);
+			} else {
+				setLoggerLevel(Level.SEVERE);
+			}
+			
 			String[] params = cl.getArgs();
 			if (args.length < 2) {
 				System.out.println(EXCEPTION_MISSING_FILES);
