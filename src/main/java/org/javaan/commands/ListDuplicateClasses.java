@@ -9,6 +9,7 @@ import org.javaan.BaseCommand;
 import org.javaan.ClassData;
 import org.javaan.DuplicatesFinder;
 import org.javaan.PrintUtil;
+import org.javaan.SortUtil;
 
 public class ListDuplicateClasses extends BaseCommand {
 	
@@ -34,6 +35,7 @@ private final static String NAME = "listDuplicateClasses";
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
 		List<List<ClassData>> duplicates = new DuplicatesFinder(classes).find();
+		SortUtil.sort(duplicates);
 		for (List<ClassData> duplicate : duplicates) {
 			PrintUtil.println(output, duplicate, "\n");
 			output.println();

@@ -5,7 +5,6 @@ package org.javaan.commands;
 
 import java.io.PrintStream;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
@@ -14,6 +13,7 @@ import org.javaan.ClassContext;
 import org.javaan.ClassContextBuilder;
 import org.javaan.ClassData;
 import org.javaan.PrintUtil;
+import org.javaan.SortUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,11 +56,11 @@ public class ListClasses extends BaseCommand {
 	}
 	
 	public void printClasses(PrintStream output, ClassContext classContext) {
-		PrintUtil.println(output, classContext.getClasses(), System.lineSeparator());
+		PrintUtil.println(output, SortUtil.sort(classContext.getClasses()), System.lineSeparator());
 	}
 
 	public void printClassesAndSuperClasses(PrintStream output, ClassContext classContext) {
-		Set<String> classes = classContext.getClasses();
+		List<String> classes = SortUtil.sort(classContext.getClasses());
 		for (String clazz : classes) {
 			LOG.info("Processing class {}", clazz);
 			PrintUtil.println(output, classContext.getSuperClasses(clazz), ",");
