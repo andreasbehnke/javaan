@@ -9,7 +9,9 @@ import org.javaan.graph.SingleChildGraphImpl;
 public class ClassContext {
 	
 	private final SingleChildGraph<String> superClass = new SingleChildGraphImpl<String>();
-	
+
+	private final SingleChildGraph<String> superInterface = new SingleChildGraphImpl<String>();
+
 	public void addClass(String className) {
 		superClass.addNode(className);
 	}
@@ -32,5 +34,29 @@ public class ClassContext {
 	
 	public List<String> getSuperClasses(String className) {
 		return superClass.getPath(className);
+	}
+	
+	public void addInterface(String interfaceName) {
+		superInterface.addNode(interfaceName);
+	}
+
+	public void addSuperInterface(String interfaceName, String superInterfaceName) {
+		superInterface.addEdge(interfaceName, superInterfaceName);
+	}
+	
+	public boolean containsInterface(String interfaceName) {
+		return superInterface.containsNode(interfaceName);
+	}
+	
+	public Set<String> getInterfaces() {
+		return superInterface.getNodes();
+	}
+
+	public String getSuperInterface(String interfaceName) {
+		return superInterface.getChild(interfaceName);
+	}
+	
+	public List<String> getSuperInterfaces(String interfaceName) {
+		return superInterface.getPath(interfaceName);
 	}
 }

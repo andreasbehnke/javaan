@@ -54,8 +54,47 @@ public class TestClassContext {
 		assertEquals("a", superClasses.get(2));
 	}
 	
+	
 	@Test
-	public void testGetInterfacesOfClass() {
+	public void testAddInterface() {
+		ClassContext context = new ClassContext();
+		context.addInterface("a");
+		context.addInterface("b");
+		context.addInterface("c");
+		Set<String> interfaces = context.getInterfaces();
+		assertNotNull(interfaces);
+		assertEquals(3, interfaces.size());
+		assertTrue(interfaces.contains("a"));
+		assertTrue(interfaces.contains("b"));
+		assertTrue(interfaces.contains("c"));
+	}
+
+	@Test
+	public void testAddSuperInterfaces() {
+		ClassContext context = new ClassContext();
+		context.addInterface("a");
+		context.addSuperInterface("b", "a");
+		context.addSuperInterface("x", "y");
 		
+		assertTrue(context.containsInterface("y"));
+		assertEquals(null, context.getSuperInterface("a"));
+		assertEquals("a", context.getSuperInterface("b"));
+		assertEquals(null, context.getSuperInterface("y"));
+		assertEquals("y", context.getSuperInterface("x"));		
+	}
+	
+	@Test
+	public void testGetSuperInterfaces() {
+		ClassContext context = new ClassContext();
+		context.addInterface("a");
+		context.addSuperInterface("b", "a");
+		context.addSuperInterface("c", "b");
+		
+		List<String> superInterfaces = context.getSuperInterfaces("c");
+		assertNotNull(superInterfaces);
+		assertEquals(3, superInterfaces.size());
+		assertEquals("c", superInterfaces.get(0));
+		assertEquals("b", superInterfaces.get(1));
+		assertEquals("a", superInterfaces.get(2));
 	}
 }
