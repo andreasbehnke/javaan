@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,14 +7,14 @@ import java.util.Set;
 import java.util.Stack;
 
 /**
- * Implementation of {@link Graph} using a hash map as data structure
+ * Implementation of {@link Digraph} using a hash map as data structure
  */
-public class SimpleGraph<N> implements Graph<N> {
+public class DigraphImpl<N> implements Digraph<N> {
 
 	/**
 	 * Stores the graphs parent child relations
 	 */
-	protected final Map<N, Set<N>> nodeMap = new HashMap<N, Set<N>>();
+	private final Map<N, Set<N>> nodeMap = new HashMap<N, Set<N>>();
 
 	@Override
 	public void addNode(N node) {
@@ -32,9 +32,7 @@ public class SimpleGraph<N> implements Graph<N> {
 			childs.add(child);
 			nodeMap.put(parent, childs);
 		}
-		if (!containsNode(child)) {
-			addNode(child);
-		}
+		addNode(child);
 	}
 	
 	@Override

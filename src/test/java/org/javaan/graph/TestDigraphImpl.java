@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.graph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,15 +7,17 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
+import org.javaan.graph.Digraph;
+import org.javaan.graph.Graph;
+import org.javaan.graph.DigraphImpl;
 import org.junit.Test;
 
-public class TestSimpleGraph {
+public class TestDigraphImpl {
 	
 	@Test
 	public void testAddNode() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addNode("a");
-		
 		assertTrue(graph.containsNode("a"));
 		
 		graph.addEdge("b", "c");
@@ -29,7 +31,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testAddEdge() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		
 		assertTrue(graph.containsNode("a"));
@@ -45,7 +47,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testGetNodes() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Graph<String> graph = new DigraphImpl<String>();
 		graph.addNode("a");
 		graph.addEdge("x", "b");
 		
@@ -59,7 +61,7 @@ public class TestSimpleGraph {
 
 	@Test
 	public void testGetChilds() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
@@ -73,7 +75,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testHasChilds() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		
 		assertTrue(graph.hasChilds("x"));
@@ -82,7 +84,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testContainsNode() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Graph<String> graph = new DigraphImpl<String>();
 		graph.addNode("x");
 		
 		assertTrue(graph.containsNode("x"));
@@ -90,7 +92,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testGetLeaveNodes() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
@@ -124,7 +126,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testGetLeaveNodesCycle() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("a", "b");
 		graph.addEdge("b", "x");
