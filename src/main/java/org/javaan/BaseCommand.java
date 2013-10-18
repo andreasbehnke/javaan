@@ -1,11 +1,9 @@
 package org.javaan;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.cli.CommandLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +28,9 @@ public abstract class BaseCommand implements Command {
 		LOG.info("Processing jar files...");
 		JarFileLoader loader = new JarFileLoader();
 		try {
-			execute(commandLine, System.out, loader.loadJavaClasses(files));
+			List<ClassData> classes = loader.loadJavaClasses(files);
+			LOG.info("Loaded {} class files", classes.size());
+			execute(commandLine, System.out, classes);
 		} catch (IOException e) {
 			LOG.error("Could not process command", e);
 			return ReturnCodes.errorCommand;
@@ -38,6 +38,6 @@ public abstract class BaseCommand implements Command {
 		return ReturnCodes.ok;
 	}
 	
-	protected abstract void execute(CommandLine commandLine, PrintStream output, List<JavaClass> classes);
+	protected abstract void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes);
 
 }

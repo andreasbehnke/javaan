@@ -7,12 +7,12 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
 import org.javaan.ClassContext;
 import org.javaan.ClassContextBuilder;
+import org.javaan.ClassData;
 import org.javaan.PrintUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class ListClasses extends BaseCommand {
 	}
 
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<JavaClass> classes) {
+	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
 		ClassContext classContext = new ClassContextBuilder(classes).build();
 		if (commandLine.hasOption("superClasses")) {
 			printClassesAndSuperClasses(output, classContext);

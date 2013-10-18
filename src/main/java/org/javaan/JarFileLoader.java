@@ -18,7 +18,7 @@ import org.apache.commons.io.IOUtils;
 
 public class JarFileLoader {
 	
-	private void processJar(InputStream input, List<JavaClass> classes) throws IOException {
+	private void processJar(String path, InputStream input, List<ClassData> classes) throws IOException {
 		File file = File.createTempFile(new Random().nextLong() + "", ".jar");
 		OutputStream output = FileUtils.openOutputStream(file);
 		try {
@@ -27,24 +27,26 @@ public class JarFileLoader {
 			output.close();
 		}
 		try {
-			processJar(file.getAbsolutePath(), new JarFile(file), classes);
+			processJar(path, file.getAbsolutePath(), new JarFile(file), classes);
 		} finally {
 			file.delete();
 		}
 	}
 	
-	private void processEntry(String fileName, JarFile jar, List<JavaClass> classes, JarEntry entry) throws IOException {
+	private void processEntry(String path, String fileName, JarFile jar, List<ClassData> classes, JarEntry entry) throws IOException {
 		if (!entry.isDirectory()) {
 			String name = entry.getName();
 			boolean isClass = name.endsWith(".class");
 			boolean isLibrary = name.endsWith(".jar") || name.endsWith(".war") || name.endsWith(".ear");
 			if (isClass) {
 				ClassParser parser = new ClassParser(fileName, entry.getName());
-				classes.add(parser.parse());
+				JavaClass clazz = parser.parse();
+				ClassData data = new ClassData(path + File.pathSeparator + clazz.getFileName(), clazz);
+				classes.add(data);
 			} else if (isLibrary) {
 				InputStream input = jar.getInputStream(entry);
 				try {
-					processJar(input, classes);
+					processJar(path + File.pathSeparator + entry.getName(), input, classes);
 				} finally {
 					input.close();
 				}
@@ -52,20 +54,20 @@ public class JarFileLoader {
 		}
 	}
 	
-	private void processJar(String fileName, JarFile jar, List<JavaClass> classes) throws IOException {
+	private void processJar(String path, String fileName, JarFile jar, List<ClassData> classes) throws IOException {
 		try {
 			Enumeration<JarEntry> entries = jar.entries();
 			while (entries.hasMoreElements()) {
-				processEntry(fileName, jar, classes, entries.nextElement());
+				processEntry(path, fileName, jar, classes, entries.nextElement());
 			}
 		} finally {
 			jar.close();
 		}
 	}
 
-	public List<JavaClass> loadJavaClasses(String[] fileNames)
+	public List<ClassData> loadJavaClasses(String[] fileNames)
 			throws IOException {
-		List<JavaClass> classes = new ArrayList<JavaClass>();
+		List<ClassData> classes = new ArrayList<ClassData>();
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
 			if (!file.exists()) {
@@ -73,7 +75,7 @@ public class JarFileLoader {
 						"JAR file %s does not exist", fileName));
 			}
 			JarFile jar = new JarFile(file);
-			processJar(fileName, jar, classes);
+			processJar(jar.getName(), fileName, jar, classes);
 		}
 
 		return classes;

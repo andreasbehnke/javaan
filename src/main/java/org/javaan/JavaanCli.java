@@ -13,6 +13,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.javaan.commands.ListClasses;
 import org.javaan.commands.FindEntryMethods;
+import org.javaan.commands.ListDuplicateClasses;
 
 /**
  * Javaan Command Line Client
@@ -44,6 +45,7 @@ public class JavaanCli {
 	public static void main(String[] args) {
 		CommandMap commands = new CommandMap();
 		commands.addCommand(new ListClasses());
+		commands.addCommand(new ListDuplicateClasses());
 		commands.addCommand(new FindEntryMethods());
 		System.exit(new JavaanCli(args, commands).execute());
 	}

@@ -1,17 +1,17 @@
 package org.javaan;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.bcel.classfile.JavaClass;
 import org.junit.Test;
 
 public class TestClassContextBuilder implements TestConstants {
 
-	private List<JavaClass> loadClasses() throws IOException {
+	private List<ClassData> loadClasses() throws IOException {
 		return new JarFileLoader().loadJavaClasses(new String[]{TEST_JAR_FILE});
 	}
 	
