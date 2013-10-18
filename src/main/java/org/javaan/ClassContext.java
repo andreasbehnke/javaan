@@ -8,16 +8,10 @@ import java.util.Set;
 
 public class ClassContext {
 	
-	public final static String OBJECT_CLASS = Object.class.getCanonicalName();
-	
 	private final Map<String, String> superClasses = new HashMap<String, String>();
 	
 	public void addClass(String className) {
-		if (className.equals(OBJECT_CLASS)) {
-			superClasses.put(OBJECT_CLASS, null);
-		} else {
-			superClasses.put(className, OBJECT_CLASS);
-		}
+		superClasses.put(className, null);
 	}
 
 	public void addSuperClass(String className, String superClassName) {

@@ -21,7 +21,13 @@ public class ClassContextBuilder {
 		ClassContext context = new ClassContext();
 		for (ClassData data : classes) {
 			JavaClass clazz = data.getJavaClass();
-			context.addSuperClass(clazz.getClassName(), clazz.getSuperclassName());
+			String className = clazz.getClassName();
+			String superClassName = clazz.getSuperclassName();
+			if (superClassName == null || "java.lang.Object".equals(superClassName)) {
+				context.addClass(className);
+			} else {
+				context.addSuperClass(className, superClassName);
+			}
 		}
 		LOG.info("Created class context with {} classes", context.getClasses().size());
 		return context;

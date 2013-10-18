@@ -33,9 +33,9 @@ public class TestClassContext {
 		context.addSuperClass("x", "y");
 		
 		assertTrue(context.containsClass("y"));
-		assertEquals(ClassContext.OBJECT_CLASS, context.getSuperClass("a"));
+		assertEquals(null, context.getSuperClass("a"));
 		assertEquals("a", context.getSuperClass("b"));
-		assertEquals(ClassContext.OBJECT_CLASS, context.getSuperClass("y"));
+		assertEquals(null, context.getSuperClass("y"));
 		assertEquals("y", context.getSuperClass("x"));		
 	}
 	
@@ -48,10 +48,9 @@ public class TestClassContext {
 		
 		List<String> superClasses = context.getSuperClasses("c");
 		assertNotNull(superClasses);
-		assertEquals(4, superClasses.size());
+		assertEquals(3, superClasses.size());
 		assertEquals("c", superClasses.get(0));
 		assertEquals("b", superClasses.get(1));
 		assertEquals("a", superClasses.get(2));
-		assertEquals(ClassContext.OBJECT_CLASS, superClasses.get(3));
 	}
 }

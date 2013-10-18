@@ -20,8 +20,6 @@ public class TestClassContextBuilder implements TestConstants {
 		ClassContext context = new ClassContextBuilder(loadClasses()).build();
 		Set<String> classes = context.getClasses();
 		assertNotNull(classes);
-		assertEquals(NUMBER_OF_CLASSES + 1, classes.size()); // + 1 because Object is always part of context
-		
+		assertEquals(NUMBER_OF_CLASSES, classes.size());
 	}
-	
 }
