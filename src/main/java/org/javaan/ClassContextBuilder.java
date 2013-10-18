@@ -16,18 +16,38 @@ public class ClassContextBuilder {
 		this.classes = classes;
 	}
 	
+	private void addInterface(ClassContext context, JavaClass clazz) {
+		String interfaceName = clazz.getClassName();
+		String[] interfaces = clazz.getInterfaceNames();
+		for (String superInterfaceName : interfaces) {
+			context.addSuperInterface(interfaceName, superInterfaceName);
+		}
+	}
+	
+	private void addClass(ClassContext context, JavaClass clazz) {
+		String className = clazz.getClassName();
+		String superClassName = clazz.getSuperclassName();
+		if (superClassName == null || "java.lang.Object".equals(superClassName)) {
+			context.addClass(className);
+		} else {
+			context.addSuperClass(className, superClassName);
+		}
+	}
+	
+	private void addJavaClass(ClassContext context, JavaClass clazz) {
+		if (clazz.isInterface()) {
+			addInterface(context, clazz);
+		} else if (clazz.isClass()) {
+			addClass(context, clazz);
+		}
+	}
+	
 	public ClassContext build() {
 		LOG.info("Creating class context ...");
 		ClassContext context = new ClassContext();
 		for (ClassData data : classes) {
 			JavaClass clazz = data.getJavaClass();
-			String className = clazz.getClassName();
-			String superClassName = clazz.getSuperclassName();
-			if (superClassName == null || "java.lang.Object".equals(superClassName)) {
-				context.addClass(className);
-			} else {
-				context.addSuperClass(className, superClassName);
-			}
+			addJavaClass(context, clazz);
 		}
 		LOG.info("Created class context with {} classes", context.getClasses().size());
 		return context;

@@ -3,6 +3,8 @@ package org.javaan;
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.graph.Digraph;
+import org.javaan.graph.DigraphImpl;
 import org.javaan.graph.SingleChildGraph;
 import org.javaan.graph.SingleChildGraphImpl;
 
@@ -10,7 +12,7 @@ public class ClassContext {
 	
 	private final SingleChildGraph<String> superClass = new SingleChildGraphImpl<String>();
 
-	private final SingleChildGraph<String> superInterface = new SingleChildGraphImpl<String>();
+	private final Digraph<String> superInterface = new DigraphImpl<String>();
 
 	public void addClass(String className) {
 		superClass.addNode(className);
@@ -32,7 +34,7 @@ public class ClassContext {
 		return superClass.getChild(className);
 	}
 	
-	public List<String> getSuperClasses(String className) {
+	public List<String> getSuperClassHierachy(String className) {
 		return superClass.getPath(className);
 	}
 	
@@ -52,11 +54,7 @@ public class ClassContext {
 		return superInterface.getNodes();
 	}
 
-	public String getSuperInterface(String interfaceName) {
-		return superInterface.getChild(interfaceName);
-	}
-	
-	public List<String> getSuperInterfaces(String interfaceName) {
-		return superInterface.getPath(interfaceName);
+	public Set<String> getSuperInterfaces(String interfaceName) {
+		return superInterface.getSuccessors(interfaceName);
 	}
 }

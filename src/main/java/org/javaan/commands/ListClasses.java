@@ -63,7 +63,7 @@ public class ListClasses extends BaseCommand {
 		List<String> classes = SortUtil.sort(classContext.getClasses());
 		for (String clazz : classes) {
 			LOG.info("Processing class {}", clazz);
-			PrintUtil.println(output, classContext.getSuperClasses(clazz), ",");
+			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), ",");
 		}
 	}
 	

@@ -1,8 +1,6 @@
 package org.javaan;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Set;
@@ -46,7 +44,7 @@ public class TestClassContext {
 		context.addSuperClass("b", "a");
 		context.addSuperClass("c", "b");
 		
-		List<String> superClasses = context.getSuperClasses("c");
+		List<String> superClasses = context.getSuperClassHierachy("c");
 		assertNotNull(superClasses);
 		assertEquals(3, superClasses.size());
 		assertEquals("c", superClasses.get(0));
@@ -74,27 +72,25 @@ public class TestClassContext {
 		ClassContext context = new ClassContext();
 		context.addInterface("a");
 		context.addSuperInterface("b", "a");
+		context.addSuperInterface("b", "c");
+		context.addSuperInterface("c", "d");
 		context.addSuperInterface("x", "y");
 		
-		assertTrue(context.containsInterface("y"));
-		assertEquals(null, context.getSuperInterface("a"));
-		assertEquals("a", context.getSuperInterface("b"));
-		assertEquals(null, context.getSuperInterface("y"));
-		assertEquals("y", context.getSuperInterface("x"));		
-	}
-	
-	@Test
-	public void testGetSuperInterfaces() {
-		ClassContext context = new ClassContext();
-		context.addInterface("a");
-		context.addSuperInterface("b", "a");
-		context.addSuperInterface("c", "b");
+		Set<String> interfaces = context.getSuperInterfaces("a");
+		assertNotNull(interfaces);
+		assertEquals(0, interfaces.size());
 		
-		List<String> superInterfaces = context.getSuperInterfaces("c");
-		assertNotNull(superInterfaces);
-		assertEquals(3, superInterfaces.size());
-		assertEquals("c", superInterfaces.get(0));
-		assertEquals("b", superInterfaces.get(1));
-		assertEquals("a", superInterfaces.get(2));
+		interfaces = context.getSuperInterfaces("b");
+		assertNotNull(interfaces);
+		assertEquals(3, interfaces.size());
+		assertTrue(interfaces.contains("a"));
+		assertTrue(interfaces.contains("c"));
+		assertTrue(interfaces.contains("d"));
+		
+		assertTrue(context.containsInterface("y"));
+		interfaces = context.getSuperInterfaces("x");
+		assertNotNull(interfaces);
+		assertEquals(1, interfaces.size());
+		assertTrue(interfaces.contains("y"));
 	}
 }

@@ -68,9 +68,25 @@ public class TestDigraphImpl {
 		
 		Set<String> childs = graph.getChilds("x");
 		assertNotNull(childs);
+		assertEquals(3, childs.size());
 		assertTrue(childs.contains("a"));
 		assertTrue(childs.contains("b"));
 		assertTrue(childs.contains("c"));
+	}
+	
+	@Test
+	public void testGetSuccessor() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("b", "c");
+		
+		Set<String> successors = graph.getSuccessors("x");
+		assertNotNull(successors);
+		assertEquals(3, successors.size());
+		assertTrue(successors.contains("a"));
+		assertTrue(successors.contains("b"));
+		assertTrue(successors.contains("c"));
 	}
 	
 	@Test

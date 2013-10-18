@@ -46,6 +46,26 @@ public class DigraphImpl<N> implements Digraph<N> {
 	}
 	
 	@Override
+	public Set<N> getSuccessors(N parent) {
+		Set<N> successors = new HashSet<N>();
+		Stack<N> successorStack = new Stack<N>();
+		successorStack.addAll(getChilds(parent));
+		while(!successorStack.isEmpty()) {
+			N successor = successorStack.pop();
+			// detect cycle, ignore existing nodes
+			if (!successors.contains(successor)) {
+				successors.add(successor);
+				Set<N> successorOfSuccessor = getChilds(successor);
+				if (successorOfSuccessor.size() > 0) {
+					// more callers to detect
+					successorStack.addAll(successorOfSuccessor);
+				}
+			}
+		}
+		return successors;
+	}
+	
+	@Override
 	public boolean hasChilds(N parent) {
 		return nodeMap.get(parent).size() > 0;
 	}
@@ -58,19 +78,19 @@ public class DigraphImpl<N> implements Digraph<N> {
 	@Override
 	public Set<N> getLeaveNodes(N node) {
 		Set<N> leaveNodes = new HashSet<N>();
-		Stack<N> ancestors = new Stack<N>();
-		ancestors.addAll(getChilds(node));
-		while(!ancestors.isEmpty()) {
-			N ancestor = ancestors.pop();
+		Stack<N> successors = new Stack<N>();
+		successors.addAll(getChilds(node));
+		while(!successors.isEmpty()) {
+			N successor = successors.pop();
 			// detect cycle, ignore self
-			if (!ancestor.equals(node)) {
-				Set<N> ancestorsOfAncestor = getChilds(ancestor);
-				if (ancestorsOfAncestor.size() > 0) {
+			if (!successor.equals(node)) {
+				Set<N> successorOfSuccessor = getChilds(successor);
+				if (successorOfSuccessor.size() > 0) {
 					// more callers to detect
-					ancestors.addAll(ancestorsOfAncestor);
+					successors.addAll(successorOfSuccessor);
 				} else {
-					// entry method found
-					leaveNodes.add(ancestor);
+					// leave node found
+					leaveNodes.add(successor);
 				}
 			}
 		}
