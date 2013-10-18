@@ -1,64 +1,36 @@
 package org.javaan;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import org.javaan.graph.Digraph;
-import org.javaan.graph.DigraphImpl;
+import org.javaan.graph.SingleChildGraph;
+import org.javaan.graph.SingleChildGraphImpl;
 
 public class ClassContext {
 	
-	private final Map<String, String> superClass = new HashMap<String, String>();
+	private final SingleChildGraph<String> superClass = new SingleChildGraphImpl<String>();
 	
-	private final Digraph<String> interfaceOfClass = new DigraphImpl<String>();
-
 	public void addClass(String className) {
-		superClass.put(className, null);
+		superClass.addNode(className);
 	}
 
 	public void addSuperClass(String className, String superClassName) {
-		if (!superClass.containsKey(superClassName)) {
-			addClass(superClassName);
-		}
-		superClass.put(className, superClassName);
+		superClass.addEdge(className, superClassName);
 	}
 	
 	public boolean containsClass(String className) {
-		return superClass.containsKey(className);
+		return superClass.containsNode(className);
 	}
 	
 	public Set<String> getClasses() {
-		return superClass.keySet();
+		return superClass.getNodes();
 	}
 
 	public String getSuperClass(String className) {
-		return superClass.get(className);
+		return superClass.getChild(className);
 	}
 	
 	public List<String> getSuperClasses(String className) {
-		List<String> classes = new ArrayList<String>();
-		String currentClass = className;
-		while(currentClass != null) {
-			classes.add(currentClass);
-			currentClass = superClass.get(currentClass);
-		}
-		return classes;
-	}
-	
-	public void addInterface(String className, String interfaceName) {
-		interfaceOfClass.addEdge(className, interfaceName);
-	}
-	
-	public Set<String> getInterfacesOfClass(String className) {
-		Set<String> interfaces = new HashSet<String>();
-		Set<String> directInterfaces = interfaceOfClass.getChilds(className);
-		for (String interfaze : directInterfaces) {
-			interfaces.addAll(getSuperClasses(interfaze));
-		}
-		return interfaces;
+		return superClass.getPath(className);
 	}
 }

@@ -56,25 +56,6 @@ public class TestClassContext {
 	
 	@Test
 	public void testGetInterfacesOfClass() {
-		ClassContext context = new ClassContext();
-		context.addClass("interfaceC");
-		context.addClass("interfaceA");
-		context.addSuperClass("interfaceB", "interfaceA");
-		context.addClass("a");
-		context.addClass("b");
-		context.addInterface("a", "interfaceB");
-		context.addInterface("b", "interfaceA");
-		context.addInterface("b", "interfaceC");
 		
-		Set<String> interfaces = context.getInterfacesOfClass("a");
-		assertNotNull(interfaces);
-		assertEquals(2, interfaces.size());
-		assertTrue(interfaces.contains("interfaceA"));
-		assertTrue(interfaces.contains("interfaceB"));
-		interfaces = context.getInterfacesOfClass("b");
-		assertNotNull(interfaces);
-		assertEquals(2, interfaces.size());
-		assertTrue(interfaces.contains("interfaceA"));
-		assertTrue(interfaces.contains("interfaceC"));
 	}
 }
