@@ -35,7 +35,7 @@ private final static String NAME = "listDuplicateClasses";
 	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
 		List<List<ClassData>> duplicates = new DuplicatesFinder(classes).find();
 		for (List<ClassData> duplicate : duplicates) {
-			PrintUtil.println(output, duplicate, "\n\t");
+			PrintUtil.println(output, duplicate, "\n");
 			output.println();
 		}
 	}
