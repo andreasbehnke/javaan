@@ -5,17 +5,18 @@ import java.util.Collection;
 
 public class PrintUtil {
 
-	public static <E> void println(PrintStream output, Collection<E> elements, String separator) {
-		StringBuilder buffer = new StringBuilder();
+	public static <E> void println(PrintStream output, Collection<E> elements, String prefix, String linePrefix, String separator) {
+		output.print(prefix);
 		boolean first = true;
 		for (E e : elements) {
 			if(first) {
 				first = false;
 			} else {
-				buffer.append(separator);
+				output.print(separator);
 			}
-			buffer.append(e.toString());
+			output.print(linePrefix);
+			output.print(e.toString());
 		}
-		output.println(buffer);
+		output.println();
 	}
 }

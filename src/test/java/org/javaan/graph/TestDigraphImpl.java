@@ -75,7 +75,7 @@ public class TestDigraphImpl {
 	}
 	
 	@Test
-	public void testGetSuccessor() {
+	public void testGetSuccessors() {
 		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");

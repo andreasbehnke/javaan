@@ -37,7 +37,7 @@ private final static String NAME = "listDuplicateClasses";
 		List<List<ClassData>> duplicates = new DuplicatesFinder(classes).find();
 		SortUtil.sort(duplicates);
 		for (List<ClassData> duplicate : duplicates) {
-			PrintUtil.println(output, duplicate, "\n");
+			PrintUtil.println(output, duplicate, "", "", "\n");
 			output.println();
 		}
 	}
