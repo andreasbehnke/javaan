@@ -49,7 +49,7 @@ public class ClassContextBuilder {
 			JavaClass clazz = data.getJavaClass();
 			addJavaClass(context, clazz);
 		}
-		LOG.info("Created class context with {} classes", context.getClasses().size());
+		LOG.info("Created class context with {} classes and {} interfaces", context.getClasses().size(), context.getInterfaces().size());
 		return context;
 	}
 }
