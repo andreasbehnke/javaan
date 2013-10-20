@@ -75,6 +75,21 @@ public class TestDigraphImpl {
 	}
 	
 	@Test
+	public void testGetParents() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("a", "x");
+		graph.addEdge("b", "x");
+		graph.addEdge("c", "x");
+		
+		Set<String> childs = graph.getParents("x");
+		assertNotNull(childs);
+		assertEquals(3, childs.size());
+		assertTrue(childs.contains("a"));
+		assertTrue(childs.contains("b"));
+		assertTrue(childs.contains("c"));
+	}
+	
+	@Test
 	public void testGetSuccessors() {
 		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");

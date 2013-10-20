@@ -14,35 +14,50 @@ public class DigraphImpl<N> implements Digraph<N> {
 	/**
 	 * Stores the graphs parent child relations
 	 */
-	private final Map<N, Set<N>> nodeMap = new HashMap<N, Set<N>>();
-
+	private final Map<N, Set<N>> parentChildMap = new HashMap<N, Set<N>>();
+	
+	/**
+	 * Stores the graphs child parent relations
+	 */
+	private final Map<N, Set<N>> childParentMap = new HashMap<N, Set<N>>();
+	
 	@Override
 	public void addNode(N node) {
-		if (!nodeMap.containsKey(node)) {
-			nodeMap.put(node, new HashSet<N>());
+		if (!parentChildMap.containsKey(node)) {
+			parentChildMap.put(node, new HashSet<N>());
 		}
 	}
 	
 	@Override
 	public void addEdge(N parent, N child) {
-		if (containsNode(parent)) {
-			nodeMap.get(parent).add(child);
-		} else {
-			Set<N> childs = new HashSet<N>();
-			childs.add(child);
-			nodeMap.put(parent, childs);
+		Set<N> childs = parentChildMap.get(parent);
+		if (childs == null) {
+			childs = new HashSet<N>();
+			parentChildMap.put(parent, childs);
 		}
+		childs.add(child);
+		Set<N> parents = childParentMap.get(child);
+		if (parents == null) {
+			parents = new HashSet<N>();
+			childParentMap.put(child, parents);
+		}
+		parents.add(parent);
 		addNode(child);
 	}
 	
 	@Override
 	public Set<N> getNodes() {
-		return nodeMap.keySet();
+		return parentChildMap.keySet();
 	}
 	
 	@Override
 	public Set<N> getChilds(N parent) {
-		return nodeMap.get(parent);
+		return parentChildMap.get(parent);
+	}
+	
+	@Override
+	public Set<N> getParents(N child) {
+		return childParentMap.get(child);
 	}
 	
 	@Override
@@ -67,12 +82,12 @@ public class DigraphImpl<N> implements Digraph<N> {
 	
 	@Override
 	public boolean hasChilds(N parent) {
-		return nodeMap.get(parent).size() > 0;
+		return parentChildMap.get(parent).size() > 0;
 	}
 	
 	@Override
 	public boolean containsNode(N node) {
-		return nodeMap.containsKey(node);
+		return parentChildMap.containsKey(node);
 	}
 	
 	@Override

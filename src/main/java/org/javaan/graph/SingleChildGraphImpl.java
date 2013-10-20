@@ -14,6 +14,9 @@ public class SingleChildGraphImpl<N> implements SingleChildGraph<N> {
 	 */
 	private final Map<N, N> parentChildMap = new HashMap<N, N>();
 	
+	/**
+	 * Stores the graphs child parent relations
+	 */
 	private final Map<N, Set<N>> childParentMap = new HashMap<N, Set<N>>();
 	
 	@Override
