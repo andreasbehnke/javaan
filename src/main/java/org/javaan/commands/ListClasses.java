@@ -59,9 +59,9 @@ public class ListClasses extends BaseCommand {
 		}
 		if (includeInterfaces) {
 			List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
-			for (String interfaze : interfaces) {
-				List<String> superInterfaces = SortUtil.sort(classContext.getSuperInterfaces(interfaze));
-				superInterfaces.add(0, interfaze);
+			for (String interfaceName : interfaces) {
+				List<String> superInterfaces = SortUtil.sort(classContext.getSuperInterfaces(interfaceName));
+				superInterfaces.add(0, interfaceName);
 				PrintUtil.println(output, superInterfaces, "[I]", "", ",");
 			}
 		}
