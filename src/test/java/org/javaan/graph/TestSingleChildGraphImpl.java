@@ -58,6 +58,21 @@ public class TestSingleChildGraphImpl {
 	}
 	
 	@Test
+	public void testGetParents() {
+		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
+		graph.addEdge("a", "x");
+		graph.addEdge("b", "x");
+		graph.addEdge("c", "x");
+		
+		Set<String> parents = graph.getParents("x");
+		assertNotNull(parents);
+		assertEquals(3, parents.size());
+		assertTrue(parents.contains("a"));
+		assertTrue(parents.contains("b"));
+		assertTrue(parents.contains("c"));
+	}
+	
+	@Test
 	public void testHasChild() {
 		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
 		graph.addEdge("x", "a");
