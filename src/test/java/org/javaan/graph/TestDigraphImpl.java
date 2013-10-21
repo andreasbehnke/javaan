@@ -63,11 +63,16 @@ public class TestDigraphImpl {
 	@Test
 	public void testGetChilds() {
 		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addNode("b");
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
 		
-		Set<String> childs = graph.getChilds("a");
+		Set<String> childs = graph.getChilds("b");
+		assertNotNull(childs);
+		assertEquals(0, childs.size());
+		
+		childs = graph.getChilds("a");
 		assertNotNull(childs);
 		assertEquals(0, childs.size());
 		

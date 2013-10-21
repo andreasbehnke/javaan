@@ -1,7 +1,10 @@
 package org.javaan;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import org.javaan.graph.Digraph;
 import org.javaan.graph.DigraphImpl;
@@ -13,13 +16,18 @@ public class ClassContext {
 	private final SingleChildGraph<String> superClass = new SingleChildGraphImpl<String>();
 
 	private final Digraph<String> superInterface = new DigraphImpl<String>();
+	
+	private final Digraph<String> interfaceOfClass = new DigraphImpl<String>();
 
 	public void addClass(String className) {
 		superClass.addNode(className);
+		interfaceOfClass.addNode(className);
 	}
 
 	public void addSuperClass(String className, String superClassName) {
 		superClass.addEdge(className, superClassName);
+		interfaceOfClass.addNode(className);
+		interfaceOfClass.addNode(superClassName);
 	}
 	
 	public boolean containsClass(String className) {
@@ -56,5 +64,50 @@ public class ClassContext {
 
 	public Set<String> getSuperInterfaces(String interfaceName) {
 		return superInterface.getSuccessors(interfaceName);
+	}
+	
+	public void addInterfaceOfClass(String className, String interfaceName) {
+		if (!superInterface.containsNode(interfaceName)) {
+			throw new IllegalArgumentException("Unknown interface " + interfaceName);
+		}
+		if (!superClass.containsNode(className)) {
+			throw new IllegalArgumentException("Unknown class " + className);
+		}
+		interfaceOfClass.addEdge(className, interfaceName);
+	}
+	
+	private Set<String> getDirectIntefacesOfClass(String className) {
+		Set<String> childs = interfaceOfClass.getChilds(className);
+		Set<String> interfaces = new HashSet<String>(childs);
+		for (String interfaceName : childs) {
+			interfaces.addAll(superInterface.getSuccessors(interfaceName));
+		}
+		return interfaces;
+	}
+	
+	public Set<String> getInterfacesOfClass(String className) {
+		List<String> superClasses = superClass.getPath(className);
+		Set<String> interfaces = new HashSet<String>();
+		for (String superClassName : superClasses) {
+			interfaces.addAll(getDirectIntefacesOfClass(superClassName));
+		}
+		return interfaces;
+	}
+	
+	public Set<String> getImplementations(String interfaceName) {
+		Set<String> implementingClasses = new HashSet<String>();
+		Set<String> interfaces = superInterface.getPredecessors(interfaceName);
+		interfaces.add(interfaceName);
+		Set<String> classes = new HashSet<String>();
+		// find direct implementations of all specialized interfaces
+		for (String specializedInterface : interfaces) {
+			classes.addAll(interfaceOfClass.getParents(specializedInterface));
+		}
+		// find all specializations of implementations 
+		for (String className : classes) {
+			implementingClasses.add(className);
+			implementingClasses.addAll(superClass.getPredecessors(className));
+		}
+		return implementingClasses;
 	}
 }
