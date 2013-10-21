@@ -5,12 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.Digraph;
-import org.javaan.graph.Graph;
-import org.javaan.graph.DigraphImpl;
 import org.junit.Test;
 
 public class TestDigraphImpl {
