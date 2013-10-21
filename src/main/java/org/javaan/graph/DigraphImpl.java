@@ -57,7 +57,11 @@ public class DigraphImpl<N> implements Digraph<N> {
 	
 	@Override
 	public Set<N> getParents(N child) {
-		return childParentMap.get(child);
+		if (childParentMap.containsKey(child)) {
+			return childParentMap.get(child);
+		} else {
+			return new HashSet<N>();
+		}
 	}
 	
 	@Override
@@ -70,14 +74,26 @@ public class DigraphImpl<N> implements Digraph<N> {
 			// detect cycle, ignore existing nodes
 			if (!successors.contains(successor)) {
 				successors.add(successor);
-				Set<N> successorOfSuccessor = getChilds(successor);
-				if (successorOfSuccessor.size() > 0) {
-					// more callers to detect
-					successorStack.addAll(successorOfSuccessor);
-				}
+				successorStack.addAll(getChilds(successor));
 			}
 		}
 		return successors;
+	}
+	
+	@Override
+	public Set<N> getPredecessors(N child) {
+		Set<N> predecessors = new HashSet<N>();
+		Stack<N> predecessorStack = new Stack<N>();
+		predecessorStack.addAll(getParents(child));
+		while(!predecessorStack.isEmpty()) {
+			N predecessor = predecessorStack.pop();
+			// detect cycle, ignore existing nodes
+			if (!predecessors.contains(predecessor)) {
+				predecessors.add(predecessor);
+				predecessorStack.addAll(getParents(predecessor));
+			}
+		}
+		return predecessors;
 	}
 	
 	@Override

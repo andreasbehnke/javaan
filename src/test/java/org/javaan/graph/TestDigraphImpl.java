@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.Set;
 
 import org.javaan.graph.Digraph;
@@ -66,7 +67,11 @@ public class TestDigraphImpl {
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
 		
-		Set<String> childs = graph.getChilds("x");
+		Set<String> childs = graph.getChilds("a");
+		assertNotNull(childs);
+		assertEquals(0, childs.size());
+		
+		childs = graph.getChilds("x");
 		assertNotNull(childs);
 		assertEquals(3, childs.size());
 		assertTrue(childs.contains("a"));
@@ -81,7 +86,11 @@ public class TestDigraphImpl {
 		graph.addEdge("b", "x");
 		graph.addEdge("c", "x");
 		
-		Set<String> childs = graph.getParents("x");
+		Set<String> childs = graph.getParents("a");
+		assertNotNull(childs);
+		assertEquals(0, childs.size());
+		
+		childs = graph.getParents("x");
 		assertNotNull(childs);
 		assertEquals(3, childs.size());
 		assertTrue(childs.contains("a"));
@@ -104,6 +113,36 @@ public class TestDigraphImpl {
 		assertTrue(successors.contains("c"));
 	}
 	
+	@Test
+	public void testGetPredecessors() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("b", "c");
+		graph.addEdge("d", "c");
+		
+		Set<String> predecessors = graph.getPredecessors("x");
+		assertNotNull(predecessors);
+		assertEquals(0, predecessors.size());
+		
+		predecessors = graph.getPredecessors("a");
+		assertNotNull(predecessors);
+		assertEquals(1, predecessors.size());
+		assertTrue(predecessors.contains("x"));
+		
+		predecessors = graph.getPredecessors("b");
+		assertNotNull(predecessors);
+		assertEquals(1, predecessors.size());
+		assertTrue(predecessors.contains("x"));
+		
+		predecessors = graph.getPredecessors("c");
+		assertNotNull(predecessors);
+		assertEquals(3, predecessors.size());
+		assertTrue(predecessors.contains("b"));
+		assertTrue(predecessors.contains("d"));
+		assertTrue(predecessors.contains("x"));
+	}
+
 	@Test
 	public void testHasChilds() {
 		Digraph<String> graph = new DigraphImpl<String>();

@@ -15,6 +15,8 @@ public interface Digraph<N> extends Graph<N> {
 	Set<N> getParents(N child);
 	
 	Set<N> getSuccessors(N parent);
+	
+	Set<N> getPredecessors(N child);
 
 	boolean hasChilds(N parent);
 
