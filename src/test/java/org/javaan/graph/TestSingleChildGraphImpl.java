@@ -1,92 +1,32 @@
 package org.javaan.graph;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Test;
 
 public class TestSingleChildGraphImpl {
 	
-	@Test
-	public void testAddNode() {
-		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
-		graph.addNode("a");
-		
-		assertTrue(graph.containsNode("a"));
-		
-		graph.addEdge("b", "c");
-		// relation should not be overwritten
-		graph.addNode("b");
-		assertEquals("c", graph.getChild("b"));
-	}
-	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testAddEdge() {
 		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
 		graph.addEdge("x", "a");
-		
-		assertTrue(graph.containsNode("a"));
-		assertTrue(graph.containsNode("x"));
-		assertNull(graph.getChild("a"));
-		assertEquals("a", graph.getChild("x"));
-	}
-	
-	@Test
-	public void testGetNodes() {
-		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
-		graph.addNode("a");
 		graph.addEdge("x", "b");
-		
-		Set<String> nodes = graph.getNodes();
-		assertNotNull(nodes);
-		assertEquals(3, nodes.size());
-		assertTrue(nodes.contains("a"));
-		assertTrue(nodes.contains("b"));
-		assertTrue(nodes.contains("x"));
+		fail("expecting exception");
 	}
 
 	@Test
 	public void testGetChild() {
 		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
 		graph.addEdge("x", "a");
-		graph.addEdge("x", "b");
-		graph.addEdge("x", "c");
-		
-		assertEquals("c", graph.getChild("x"));
+		assertEquals("a", graph.getChild("x"));
 	}
 	
-	@Test
-	public void testGetParents() {
-		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
-		graph.addEdge("a", "x");
-		graph.addEdge("b", "x");
-		graph.addEdge("c", "x");
-		
-		Set<String> parents = graph.getParents("x");
-		assertNotNull(parents);
-		assertEquals(3, parents.size());
-		assertTrue(parents.contains("a"));
-		assertTrue(parents.contains("b"));
-		assertTrue(parents.contains("c"));
-	}
-	
-	@Test
-	public void testHasChild() {
-		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
-		graph.addEdge("x", "a");
-		
-		assertTrue(graph.hasChild("x"));
-		assertFalse(graph.hasChild("a"));
-	}
-	
-	@Test
-	public void testContainsNode() {
-		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();
-		graph.addNode("x");
-		assertTrue(graph.containsNode("x"));
-	}
 	@Test
 	public void testGetPath() {
 		SingleChildGraph<String> graph = new SingleChildGraphImpl<String>();

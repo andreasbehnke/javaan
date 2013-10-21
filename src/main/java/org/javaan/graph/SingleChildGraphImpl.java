@@ -1,66 +1,26 @@
 package org.javaan.graph;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-public class SingleChildGraphImpl<N> implements SingleChildGraph<N> {
-
-	/**
-	 * Stores the graphs parent child relations
-	 */
-	private final Map<N, N> parentChildMap = new HashMap<N, N>();
-	
-	/**
-	 * Stores the graphs child parent relations
-	 */
-	private final Map<N, Set<N>> childParentMap = new HashMap<N, Set<N>>();
-	
-	@Override
-	public void addNode(N node) {
-		if (!parentChildMap.containsKey(node)) {
-			parentChildMap.put(node, null);
-		}
-	}
+public class SingleChildGraphImpl<N> extends DigraphImpl<N> implements SingleChildGraph<N> {
 
 	@Override
 	public void addEdge(N parent, N child) {
-		parentChildMap.put(parent, child);
-		Set<N> parents = childParentMap.get(child);
-		if (parents == null) {
-			parents = new HashSet<N>();
-			childParentMap.put(child, parents);
+		if (hasChilds(parent)) {
+			throw new IllegalArgumentException("Parent node " + parent + " already contains a child!");
 		}
-		parents.add(parent);
-		addNode(child);
-	}
-
-	@Override
-	public Set<N> getNodes() {
-		return parentChildMap.keySet();
-	}
-
-	@Override
-	public boolean containsNode(N node) {
-		return parentChildMap.containsKey(node);
-	}
-
-	@Override
-	public N getChild(N parent) {
-		return parentChildMap.get(parent);
+		super.addEdge(parent, child);
 	}
 	
 	@Override
-	public Set<N> getParents(N child) {
-		return childParentMap.get(child);
-	}
-
-	@Override
-	public boolean hasChild(N parent) {
-		return parentChildMap.get(parent) != null;
+	public N getChild(N parent) {
+		Set<N> childs = parentChildMap.get(parent);
+		if (childs == null || childs.size() == 0) {
+			return null;
+		}
+		return childs.iterator().next();
 	}
 
 	@Override
@@ -70,7 +30,7 @@ public class SingleChildGraphImpl<N> implements SingleChildGraph<N> {
 		N currentNode = node;
 		while(currentNode != null) {
 			path.add(currentNode);
-			currentNode = parentChildMap.get(currentNode);
+			currentNode = getChild(currentNode);
 			if (firstNode.equals(currentNode)) {
 				path.add(currentNode);
 				// found a cycle, stop here!

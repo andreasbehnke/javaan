@@ -14,12 +14,12 @@ public class DigraphImpl<N> implements Digraph<N> {
 	/**
 	 * Stores the graphs parent child relations
 	 */
-	private final Map<N, Set<N>> parentChildMap = new HashMap<N, Set<N>>();
+	protected final Map<N, Set<N>> parentChildMap = new HashMap<N, Set<N>>();
 	
 	/**
 	 * Stores the graphs child parent relations
 	 */
-	private final Map<N, Set<N>> childParentMap = new HashMap<N, Set<N>>();
+	protected final Map<N, Set<N>> childParentMap = new HashMap<N, Set<N>>();
 	
 	@Override
 	public void addNode(N node) {
@@ -98,7 +98,11 @@ public class DigraphImpl<N> implements Digraph<N> {
 	
 	@Override
 	public boolean hasChilds(N parent) {
-		return parentChildMap.get(parent).size() > 0;
+		Set<N> childs = parentChildMap.get(parent);
+		if (childs == null || childs.size() == 0) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
