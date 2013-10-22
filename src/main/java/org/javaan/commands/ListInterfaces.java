@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
 import org.javaan.ClassContext;
@@ -30,7 +32,10 @@ public class ListInterfaces extends BaseCommand {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
-		options.addOption("si", "superInterfaces", false, "For each interface list all super interfaces");
+		OptionGroup additionalInformation = new OptionGroup();
+		additionalInformation.addOption(new Option("si", "superInterfaces", false, "For each interface list all super interfaces"))
+			.addOption(new Option("impl", "implementations", false, "For each interface list all implementing classes"));
+		options.addOptionGroup(additionalInformation);
 		return options;
 	}
 
@@ -39,6 +44,8 @@ public class ListInterfaces extends BaseCommand {
 		ClassContext classContext = new ClassContextBuilder(classes).build();
 		if (commandLine.hasOption("si")) {
 			printInterfacesAndSuperInterfaces(output, classContext);
+		} else if (commandLine.hasOption("impl")) {
+			printInterfacesAndImplementations(output, classContext);
 		} else {
 			printInterfaces(output, classContext);
 		}
@@ -51,8 +58,14 @@ public class ListInterfaces extends BaseCommand {
 	public void printInterfacesAndSuperInterfaces(PrintStream output, ClassContext classContext) {
 		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
 		for (String interfaceName : interfaces) {	
-			PrintUtil.println(output, classContext.getSuperInterfaces(interfaceName), "[I]" + interfaceName, "", ", ");
+			PrintUtil.println(output, classContext.getSuperInterfaces(interfaceName), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
 
+	public void printInterfacesAndImplementations(PrintStream output, ClassContext classContext) {
+		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
+		for (String interfaceName : interfaces) {	
+			PrintUtil.println(output, classContext.getImplementations(interfaceName), "[I]" + interfaceName + ": ", "[C]", ", ");
+		}
+	}
 }
