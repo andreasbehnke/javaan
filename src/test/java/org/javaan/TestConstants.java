@@ -10,6 +10,8 @@ public interface TestConstants {
 	
 	public static final int NUMBER_OF_CLASSES_AND_INTERFACES = NUMBER_OF_CLASSES + NUMBER_OF_INTERFACES;
 	
+	public static final String CLASS_A = "org.javaan.test.jar.ClassA";
+	
 	public static final String CLASS_C = "org.javaan.test.jar.ClassC";
 	
 	public static final String SUPER_CLASS_OF_CLASS_C = "org.javaan.test.jar.ClassB";
