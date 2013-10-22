@@ -58,7 +58,7 @@ public class ListClasses extends BaseCommand {
 	public void printClassesAndSuperClasses(PrintStream output, ClassContext classContext) {
 		List<String> classes = SortUtil.sort(classContext.getClasses());
 		for (String clazz : classes) {
-			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "[C]", "[C]", " --> ");
+			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "", "[C]", " --> ");
 		}
 	}
 	
