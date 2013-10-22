@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
 import org.javaan.ClassContext;
@@ -30,7 +32,10 @@ public class ListClasses extends BaseCommand {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
-		options.addOption("sc", "superClasses", false, "For each class list all super classes");
+		OptionGroup additionalInformation = new OptionGroup();
+		additionalInformation.addOption(new Option("sc", "superClasses", false, "For each class list the class hierachy of super classes"))
+			.addOption(new Option("i", "interfaces", false, "For each class list all implemented interfaces"));
+		options.addOptionGroup(additionalInformation);
 		return options;
 	}
 	
@@ -39,6 +44,8 @@ public class ListClasses extends BaseCommand {
 		ClassContext classContext = new ClassContextBuilder(classes).build();
 		if (commandLine.hasOption("sc")) {
 			printClassesAndSuperClasses(output, classContext);
+		} else if (commandLine.hasOption("i")) {
+			printClassesAndInterfaces(output, classContext);
 		} else {
 			printClasses(output, classContext);
 		}
@@ -51,8 +58,14 @@ public class ListClasses extends BaseCommand {
 	public void printClassesAndSuperClasses(PrintStream output, ClassContext classContext) {
 		List<String> classes = SortUtil.sort(classContext.getClasses());
 		for (String clazz : classes) {
-			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "[C]", "", " --> ");
+			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "[C]", "[C]", " --> ");
 		}
 	}
 	
+	public void printClassesAndInterfaces(PrintStream output, ClassContext classContext) {
+		List<String> classes = SortUtil.sort(classContext.getClasses());
+		for (String clazz : classes) {
+			PrintUtil.println(output, classContext.getInterfacesOfClass(clazz), "[C]" + clazz + ": ", "[I]", ", ");
+		}
+	}
 }
