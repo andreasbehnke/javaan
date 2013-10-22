@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.graph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,13 +9,12 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class TestSimpleGraph {
+public class TestDigraphImpl {
 	
 	@Test
 	public void testAddNode() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addNode("a");
-		
 		assertTrue(graph.containsNode("a"));
 		
 		graph.addEdge("b", "c");
@@ -29,7 +28,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testAddEdge() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		
 		assertTrue(graph.containsNode("a"));
@@ -45,7 +44,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testGetNodes() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Graph<String> graph = new DigraphImpl<String>();
 		graph.addNode("a");
 		graph.addEdge("x", "b");
 		
@@ -59,21 +58,95 @@ public class TestSimpleGraph {
 
 	@Test
 	public void testGetChilds() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addNode("b");
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
 		
-		Set<String> childs = graph.getChilds("x");
+		Set<String> childs = graph.getChilds("b");
 		assertNotNull(childs);
+		assertEquals(0, childs.size());
+		
+		childs = graph.getChilds("a");
+		assertNotNull(childs);
+		assertEquals(0, childs.size());
+		
+		childs = graph.getChilds("x");
+		assertNotNull(childs);
+		assertEquals(3, childs.size());
 		assertTrue(childs.contains("a"));
 		assertTrue(childs.contains("b"));
 		assertTrue(childs.contains("c"));
 	}
 	
 	@Test
+	public void testGetParents() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("a", "x");
+		graph.addEdge("b", "x");
+		graph.addEdge("c", "x");
+		
+		Set<String> childs = graph.getParents("a");
+		assertNotNull(childs);
+		assertEquals(0, childs.size());
+		
+		childs = graph.getParents("x");
+		assertNotNull(childs);
+		assertEquals(3, childs.size());
+		assertTrue(childs.contains("a"));
+		assertTrue(childs.contains("b"));
+		assertTrue(childs.contains("c"));
+	}
+	
+	@Test
+	public void testGetSuccessors() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("b", "c");
+		
+		Set<String> successors = graph.getSuccessors("x");
+		assertNotNull(successors);
+		assertEquals(3, successors.size());
+		assertTrue(successors.contains("a"));
+		assertTrue(successors.contains("b"));
+		assertTrue(successors.contains("c"));
+	}
+	
+	@Test
+	public void testGetPredecessors() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("b", "c");
+		graph.addEdge("d", "c");
+		
+		Set<String> predecessors = graph.getPredecessors("x");
+		assertNotNull(predecessors);
+		assertEquals(0, predecessors.size());
+		
+		predecessors = graph.getPredecessors("a");
+		assertNotNull(predecessors);
+		assertEquals(1, predecessors.size());
+		assertTrue(predecessors.contains("x"));
+		
+		predecessors = graph.getPredecessors("b");
+		assertNotNull(predecessors);
+		assertEquals(1, predecessors.size());
+		assertTrue(predecessors.contains("x"));
+		
+		predecessors = graph.getPredecessors("c");
+		assertNotNull(predecessors);
+		assertEquals(3, predecessors.size());
+		assertTrue(predecessors.contains("b"));
+		assertTrue(predecessors.contains("d"));
+		assertTrue(predecessors.contains("x"));
+	}
+
+	@Test
 	public void testHasChilds() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		
 		assertTrue(graph.hasChilds("x"));
@@ -82,7 +155,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testContainsNode() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Graph<String> graph = new DigraphImpl<String>();
 		graph.addNode("x");
 		
 		assertTrue(graph.containsNode("x"));
@@ -90,7 +163,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testGetLeaveNodes() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
 		graph.addEdge("x", "c");
@@ -124,7 +197,7 @@ public class TestSimpleGraph {
 	
 	@Test
 	public void testGetLeaveNodesCycle() {
-		Graph<String> graph = new SimpleGraph<String>();
+		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("a", "b");
 		graph.addEdge("b", "x");

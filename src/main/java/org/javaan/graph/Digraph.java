@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.graph;
 
 import java.util.Set;
 
@@ -8,24 +8,17 @@ import java.util.Set;
  * 
  * @param <N> type of graph nodes
  */
-public interface Graph<N> {
-
-	/**
-	 * Adds node if not exists
-	 */
-	void addNode(N node);
-
-	void addEdge(N parent, N child);
-	
-	Set<N> getNodes();
+public interface Digraph<N> extends Graph<N> {
 
 	Set<N> getChilds(N parent);
+	
+	Set<N> getParents(N child);
+	
+	Set<N> getSuccessors(N parent);
+	
+	Set<N> getPredecessors(N child);
 
 	boolean hasChilds(N parent);
 
-	boolean containsNode(N node);
-
 	Set<N> getLeaveNodes(N node);
-
-	
 }

@@ -13,7 +13,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.javaan.commands.ListClasses;
 import org.javaan.commands.FindEntryMethods;
-import org.javaan.commands.ListDuplicateClasses;
+import org.javaan.commands.ListDuplicates;
+import org.javaan.commands.ListInterfaces;
 
 /**
  * Javaan Command Line Client
@@ -45,8 +46,8 @@ public class JavaanCli {
 	public static void main(String[] args) {
 		CommandMap commands = new CommandMap();
 		commands.addCommand(new ListClasses());
-		commands.addCommand(new ListDuplicateClasses());
-		commands.addCommand(new FindEntryMethods());
+		commands.addCommand(new ListDuplicates());
+		commands.addCommand(new ListInterfaces());
 		System.exit(new JavaanCli(args, commands).execute());
 	}
 	
@@ -88,7 +89,7 @@ public class JavaanCli {
 			}
 			
 			String[] params = cl.getArgs();
-			if (args.length < 2) {
+			if (params.length < 2) {
 				System.out.println(EXCEPTION_MISSING_FILES);
 				printUsage();
 				return ReturnCodes.errorParse.getValue();
