@@ -11,11 +11,11 @@ import org.javaan.DuplicatesFinder;
 import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
 
-public class ListDuplicateClasses extends BaseCommand {
+public class ListDuplicates extends BaseCommand {
 	
-private final static String NAME = "listDuplicateClasses";
+private final static String NAME = "listDuplicates";
 	
-	private final static String DESCRIPTION = "List all duplicate classes of the libraries being loaded. Classes are duplications when they have same canonical name, they may vary in bytecode and location.";
+	private final static String DESCRIPTION = "List all duplicate classes and interfaces of the libraries being loaded. Classes are duplications when they have same canonical name, they may vary in bytecode and location.";
 	
 	@Override
 	public String getName() {
