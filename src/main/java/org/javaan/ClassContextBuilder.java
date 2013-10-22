@@ -32,6 +32,13 @@ public class ClassContextBuilder {
 		} else {
 			context.addSuperClass(className, superClassName);
 		}
+		String[] interfaceNames = clazz.getInterfaceNames();
+		if (interfaceNames != null) {
+			for (String interfaceName : interfaceNames) {
+				context.addInterface(interfaceName);
+				context.addInterfaceOfClass(className, interfaceName);
+			}
+		}
 	}
 	
 	private void addJavaClass(ClassContext context, JavaClass clazz) {
