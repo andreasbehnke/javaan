@@ -14,6 +14,7 @@ public class TestJavaanCli {
 		
 		@Override
 		public Options buildCommandLineOptions(Options options) {
+			options.addOption("t", "test", false, "Just a test");
 			return options;
 		}
 	}
@@ -45,7 +46,7 @@ public class TestJavaanCli {
 		when(command.getName()).thenReturn("test");
 		when(command.getHelpCommandLine()).thenReturn("javaan test");
 		commands.addCommand(command);
-		assertEquals(ReturnCodes.errorParse.getValue(), new JavaanCli(new String[]{"test"}, commands).execute());
+		assertEquals(ReturnCodes.errorParse.getValue(), new JavaanCli(new String[]{"test", "-t"}, commands).execute());
 	}
 	
 	@Test
