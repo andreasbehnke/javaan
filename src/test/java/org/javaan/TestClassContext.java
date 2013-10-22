@@ -52,7 +52,6 @@ public class TestClassContext {
 		assertEquals("a", superClasses.get(2));
 	}
 	
-	
 	@Test
 	public void testAddInterface() {
 		ClassContext context = new ClassContext();
@@ -68,7 +67,7 @@ public class TestClassContext {
 	}
 
 	@Test
-	public void testAddSuperInterfaces() {
+	public void testGetSuperInterfaces() {
 		ClassContext context = new ClassContext();
 		context.addInterface("a");
 		context.addSuperInterface("b", "a");
