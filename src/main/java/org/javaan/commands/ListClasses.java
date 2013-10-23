@@ -33,8 +33,10 @@ public class ListClasses extends BaseCommand {
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		OptionGroup additionalInformation = new OptionGroup();
-		additionalInformation.addOption(new Option("sc", "superClasses", false, "For each class list the class hierachy of super classes"))
-			.addOption(new Option("i", "interfaces", false, "For each class list all implemented interfaces"));
+		additionalInformation
+			.addOption(new Option(OptionName.SUPER, "superClasses", false, "For each class list the class hierachy of super classes"))
+			.addOption(new Option(OptionName.SPECIALIZATIONS, "specializations", false, "For each class list specialization classes"))
+			.addOption(new Option(OptionName.INTERFACES, "interfaces", false, "For each class list all implemented interfaces"));
 		options.addOptionGroup(additionalInformation);
 		return options;
 	}
@@ -42,9 +44,11 @@ public class ListClasses extends BaseCommand {
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
 		ClassContext classContext = new ClassContextBuilder(classes).build();
-		if (commandLine.hasOption("sc")) {
+		if (commandLine.hasOption(OptionName.SUPER)) {
 			printClassesAndSuperClasses(output, classContext);
-		} else if (commandLine.hasOption("i")) {
+		} else if (commandLine.hasOption(OptionName.SPECIALIZATIONS)) {
+			printClassesAndSpecializations(output, classContext);
+		} else if (commandLine.hasOption(OptionName.INTERFACES)) {
 			printClassesAndInterfaces(output, classContext);
 		} else {
 			printClasses(output, classContext);
@@ -59,6 +63,13 @@ public class ListClasses extends BaseCommand {
 		List<String> classes = SortUtil.sort(classContext.getClasses());
 		for (String clazz : classes) {
 			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "", "[C]", " --> ");
+		}
+	}
+	
+	public void printClassesAndSpecializations(PrintStream output, ClassContext classContext) {
+		List<String> classes = SortUtil.sort(classContext.getClasses());
+		for (String clazz : classes) {
+			PrintUtil.println(output, classContext.getSpecializationsOfClass(clazz), "[C]" + clazz + ": ", "[C]", ", ");
 		}
 	}
 	
