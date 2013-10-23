@@ -53,6 +53,24 @@ public class TestClassContext {
 	}
 	
 	@Test
+	public void testGetSpecializationOfClass() {
+		ClassContext context = new ClassContext();
+		context.addClass("a");
+		context.addSuperClass("b", "a");
+		context.addSuperClass("c", "b");
+
+		Set<String> spec = context.getSpecializationsOfClass("a");
+		assertNotNull(spec);
+		assertEquals(2, spec.size());
+		assertTrue(spec.contains("b"));
+		assertTrue(spec.contains("c"));
+		
+		spec = context.getSpecializationsOfClass("c");
+		assertNotNull(spec);
+		assertEquals(0, spec.size());
+	}
+	
+	@Test
 	public void testAddInterface() {
 		ClassContext context = new ClassContext();
 		context.addInterface("a");
@@ -91,6 +109,24 @@ public class TestClassContext {
 		assertNotNull(interfaces);
 		assertEquals(1, interfaces.size());
 		assertTrue(interfaces.contains("y"));
+	}
+	
+	@Test
+	public void testSpecializationOfInterface() {
+		ClassContext context = new ClassContext();
+		context.addInterface("a");
+		context.addSuperInterface("b", "a");
+		context.addSuperInterface("c", "b");
+		
+		Set<String> interfaces = context.getSpecializationOfInterface("a");
+		assertNotNull(interfaces);
+		assertEquals(2, interfaces.size());
+		assertTrue(interfaces.contains("b"));
+		assertTrue(interfaces.contains("c"));
+		
+		interfaces = context.getSpecializationOfInterface("c");
+		assertNotNull(interfaces);
+		assertEquals(0, interfaces.size());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
