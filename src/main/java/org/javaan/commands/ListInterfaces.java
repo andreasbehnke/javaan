@@ -33,8 +33,10 @@ public class ListInterfaces extends BaseCommand {
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		OptionGroup additionalInformation = new OptionGroup();
-		additionalInformation.addOption(new Option("si", "superInterfaces", false, "For each interface list all super interfaces"))
-			.addOption(new Option("impl", "implementations", false, "For each interface list all implementing classes"));
+		additionalInformation
+			.addOption(new Option(OptionName.SUPER, "superInterfaces", false, "For each interface list all super interfaces"))
+			.addOption(new Option(OptionName.SPECIALIZATIONS, "specializations", false, "For each interface list all specializations"))
+			.addOption(new Option(OptionName.IMPLEMENTATION, "implementations", false, "For each interface list all implementing classes"));
 		options.addOptionGroup(additionalInformation);
 		return options;
 	}
@@ -42,9 +44,11 @@ public class ListInterfaces extends BaseCommand {
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
 		ClassContext classContext = new ClassContextBuilder(classes).build();
-		if (commandLine.hasOption("si")) {
+		if (commandLine.hasOption(OptionName.SUPER)) {
 			printInterfacesAndSuperInterfaces(output, classContext);
-		} else if (commandLine.hasOption("impl")) {
+		} else if (commandLine.hasOption(OptionName.SPECIALIZATIONS)) {
+			printInterfacesAndSpecializations(output, classContext);
+		} else if (commandLine.hasOption(OptionName.IMPLEMENTATION)) {
 			printInterfacesAndImplementations(output, classContext);
 		} else {
 			printInterfaces(output, classContext);
@@ -59,6 +63,13 @@ public class ListInterfaces extends BaseCommand {
 		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
 		for (String interfaceName : interfaces) {	
 			PrintUtil.println(output, classContext.getSuperInterfaces(interfaceName), "[I]" + interfaceName + ": ", "[I]", ", ");
+		}
+	}
+	
+	public void printInterfacesAndSpecializations(PrintStream output, ClassContext classContext) {
+		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
+		for (String interfaceName : interfaces) {	
+			PrintUtil.println(output, classContext.getSpecializationOfInterface(interfaceName), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
 

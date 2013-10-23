@@ -44,6 +44,10 @@ public class ClassContext {
 		return superClass.getPath(className);
 	}
 	
+	public Set<String> getSpecializationsOfClass(String className) {
+		return superClass.getPredecessors(className);
+	}
+	
 	public void addInterface(String interfaceName) {
 		superInterface.addNode(interfaceName);
 	}
@@ -62,6 +66,10 @@ public class ClassContext {
 
 	public Set<String> getSuperInterfaces(String interfaceName) {
 		return superInterface.getSuccessors(interfaceName);
+	}
+	
+	public Set<String> getSpecializationOfInterface(String interfaceName) {
+		return superInterface.getPredecessors(interfaceName);
 	}
 	
 	public void addInterfaceOfClass(String className, String interfaceName) {
