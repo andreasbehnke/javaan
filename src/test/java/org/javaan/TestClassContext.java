@@ -231,4 +231,53 @@ public class TestClassContext {
 		assertTrue(classes.contains("classc"));
 		assertTrue(classes.contains("classd"));
 	}
+	
+	@Test
+	public void testGetMethodsOfClass() {
+		ClassContext context = new ClassContext();
+		context.addSuperInterface("ia", "ib");
+		context.addInterface("ic");
+		context.addSuperClass("classa", "classb");
+		
+		context.addInterfaceOfClass("classa", "ia");
+		context.addInterfaceOfClass("classb", "ic");
+		
+		context.addMethod("ia", "methoda");
+		context.addMethod("ia", "methodb");
+		context.addMethod("ib", "methodc");
+		context.addMethod("ic", "methodd");
+		context.addMethod("classb", "methode");
+		context.addMethod("classb", "methodc"); // classb implements methodc from interface ib
+		context.addMethod("classa", "methodf");
+		
+		Set<String> methods = context.getMethodsOfClass("classa");
+		assertNotNull(methods);
+		assertEquals(6, methods.size());
+		assertTrue(methods.contains("methoda"));
+		assertTrue(methods.contains("methodb"));
+		assertTrue(methods.contains("methodc"));
+		assertTrue(methods.contains("methodd"));
+		assertTrue(methods.contains("methode"));
+		assertTrue(methods.contains("methodf"));
+	}
+	
+	@Test
+	public void testGetMethodsOfInterface() {
+		ClassContext context = new ClassContext();
+		context.addSuperInterface("ia", "ib");
+		context.addSuperInterface("ia","ic");
+		
+		context.addMethod("ia", "methoda");
+		context.addMethod("ia", "methodb");
+		context.addMethod("ib", "methodc");
+		context.addMethod("ic", "methodd");
+		
+		Set<String> methods = context.getMethodsOfInterface("ia");
+		assertNotNull(methods);
+		assertEquals(4, methods.size());
+		assertTrue(methods.contains("methoda"));
+		assertTrue(methods.contains("methodb"));
+		assertTrue(methods.contains("methodc"));
+		assertTrue(methods.contains("methodd"));
+	}
 }

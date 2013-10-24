@@ -16,6 +16,8 @@ public class ClassContext {
 	private final Digraph<String> superInterface = new DigraphImpl<String>();
 	
 	private final Digraph<String> interfaceOfClass = new DigraphImpl<String>();
+	
+	private final Digraph<String> methodsOfType = new DigraphImpl<String>();
 
 	public void addClass(String className) {
 		superClass.addNode(className);
@@ -115,5 +117,29 @@ public class ClassContext {
 			implementingClasses.addAll(superClass.getPredecessors(className));
 		}
 		return implementingClasses;
+	}
+	
+	public void addMethod(String typeName, String methodName) {
+		methodsOfType.addEdge(typeName, methodName);
+	}
+	
+	public Set<String> getMethodsOfClass(String className) {
+		Set<String> methods = new HashSet<String>();
+		Set<String> types  = getInterfacesOfClass(className);
+		types.addAll(getSuperClassHierachy(className));
+		for (String typeName : types) {
+			methods.addAll(methodsOfType.getChilds(typeName));
+		}
+		return methods;
+	}
+	
+	public Set<String> getMethodsOfInterface(String interfaceName) {
+		Set<String> methods = new HashSet<String>();
+		Set<String> types  = getSuperInterfaces(interfaceName);
+		types.add(interfaceName);
+		for (String typeName : types) {
+			methods.addAll(methodsOfType.getChilds(typeName));
+		}
+		return methods;
 	}
 }
