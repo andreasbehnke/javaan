@@ -52,10 +52,15 @@ public class TestParentChildGraphImpl {
 	}
 	
 	@Test
-	public void testGetParent() {
+	public void testGetParents() {
 		ParentChildGraph<String, String> graph = new ParentChildGraphImpl<String, String>();
 		graph.addEdge("parent", "first");
+		graph.addEdge("parent2", "first");
 		
-		assertEquals("parent", graph.getParent("first"));
+		Set<String> parents = graph.getParents("first");
+		assertNotNull(parents);
+		assertEquals(2, parents.size());
+		assertTrue(parents.contains("parent"));
+		assertTrue(parents.contains("parent2"));
 	}
 }

@@ -20,5 +20,5 @@ public interface ParentChildGraph<P, C> {
 	
 	Set<C> getChilds(P parent);
 	
-	P getParent(C child);
+	Set<P> getParents(C child);
 }

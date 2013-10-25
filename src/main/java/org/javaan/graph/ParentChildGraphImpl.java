@@ -9,7 +9,7 @@ public class ParentChildGraphImpl<P, C> implements ParentChildGraph<P, C> {
 
 	private final Map<P, Set<C>> parentChildMap = new HashMap<P, Set<C>>();
 	
-	private final Map<C, P> childParentMap = new HashMap<C, P>();
+	private final Map<C, Set<P>> childParentMap = new HashMap<C, Set<P>>();
 	
 	@Override
 	public void addParent(P parent) {
@@ -25,13 +25,18 @@ public class ParentChildGraphImpl<P, C> implements ParentChildGraph<P, C> {
 
 	@Override
 	public void addEdge(P parent, C child) {
-		childParentMap.put(child, parent);
+		Set<P> parents = childParentMap.get(child);
 		Set<C> childs = parentChildMap.get(parent);
 		if (childs == null) {
 			childs = new HashSet<C>();
 			parentChildMap.put(parent, childs);
 		}
+		if (parents == null) {
+			parents = new HashSet<P>();
+			childParentMap.put(child, parents);
+		}
 		childs.add(child);
+		parents.add(parent);
 	}
 
 	@Override
@@ -45,7 +50,7 @@ public class ParentChildGraphImpl<P, C> implements ParentChildGraph<P, C> {
 	}
 
 	@Override
-	public P getParent(C child) {
+	public Set<P> getParents(C child) {
 		return childParentMap.get(child);
 	}
 
