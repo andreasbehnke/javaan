@@ -36,7 +36,8 @@ public class ListClasses extends BaseCommand {
 		additionalInformation
 			.addOption(new Option(OptionName.SUPER, "superClasses", false, "For each class list the class hierachy of super classes"))
 			.addOption(new Option(OptionName.SPECIALIZATIONS, "specializations", false, "For each class list specialization classes"))
-			.addOption(new Option(OptionName.INTERFACES, "interfaces", false, "For each class list all implemented interfaces"));
+			.addOption(new Option(OptionName.INTERFACES, "interfaces", false, "For each class list all implemented interfaces"))
+			.addOption(new Option(OptionName.METHODS, "methods", false, "For each class list all virtual methods"));
 		options.addOptionGroup(additionalInformation);
 		return options;
 	}
@@ -50,6 +51,8 @@ public class ListClasses extends BaseCommand {
 			printClassesAndSpecializations(output, classContext);
 		} else if (commandLine.hasOption(OptionName.INTERFACES)) {
 			printClassesAndInterfaces(output, classContext);
+		} else if (commandLine.hasOption(OptionName.METHODS)) {
+			printClassesAndMethods(output, classContext);
 		} else {
 			printClasses(output, classContext);
 		}
@@ -77,6 +80,13 @@ public class ListClasses extends BaseCommand {
 		List<String> classes = SortUtil.sort(classContext.getClasses());
 		for (String clazz : classes) {
 			PrintUtil.println(output, classContext.getInterfacesOfClass(clazz), "[C]" + clazz + ": ", "[I]", ", ");
+		}
+	}
+	
+	public void printClassesAndMethods(PrintStream output, ClassContext classContext) {
+		List<String> classes = SortUtil.sort(classContext.getClasses());
+		for (String clazz : classes) {
+			PrintUtil.println(output, classContext.getMethodsOfType(clazz), "[C]" + clazz + ": ", "\n\t[M]", ", ");
 		}
 	}
 }
