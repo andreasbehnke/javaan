@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.model;
 
 import java.util.HashSet;
 import java.util.List;

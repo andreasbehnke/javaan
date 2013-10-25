@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.javaan.model.ClassContext;
+import org.javaan.model.ClassData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

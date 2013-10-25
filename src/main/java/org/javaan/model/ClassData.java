@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.model;
 
 import org.apache.bcel.classfile.JavaClass;
 

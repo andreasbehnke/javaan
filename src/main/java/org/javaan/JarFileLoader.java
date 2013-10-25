@@ -15,6 +15,7 @@ import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.javaan.model.ClassData;
 
 public class JarFileLoader {
 	

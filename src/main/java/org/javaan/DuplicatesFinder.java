@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.javaan.model.ClassData;
+
 /**
  * Finds duplicate classes within a list of {@link ClassData} objects
  */

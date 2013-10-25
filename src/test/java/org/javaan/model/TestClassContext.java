@@ -1,10 +1,11 @@
-package org.javaan;
+package org.javaan.model;
 
 import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.model.ClassContext;
 import org.junit.Test;
 
 public class TestClassContext {

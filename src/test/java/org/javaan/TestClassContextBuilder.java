@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.model.ClassContext;
+import org.javaan.model.ClassData;
 import org.junit.Test;
 
 public class TestClassContextBuilder implements TestConstants {

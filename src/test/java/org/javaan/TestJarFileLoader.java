@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.List;
 
+import org.javaan.model.ClassData;
 import org.junit.Test;
 
 public class TestJarFileLoader implements TestConstants {

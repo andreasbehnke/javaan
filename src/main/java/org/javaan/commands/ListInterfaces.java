@@ -8,11 +8,11 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
-import org.javaan.ClassContext;
 import org.javaan.ClassContextBuilder;
-import org.javaan.ClassData;
 import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
+import org.javaan.model.ClassContext;
+import org.javaan.model.ClassData;
 
 public class ListInterfaces extends BaseCommand {
 	

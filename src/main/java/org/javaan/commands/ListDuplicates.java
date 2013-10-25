@@ -6,10 +6,10 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
-import org.javaan.ClassData;
 import org.javaan.DuplicatesFinder;
 import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
+import org.javaan.model.ClassData;
 
 public class ListDuplicates extends BaseCommand {
 	

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.javaan.model.ClassData;
 import org.junit.Test;
 
 public class TestDuplicatesFinder {
