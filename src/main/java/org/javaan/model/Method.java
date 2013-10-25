@@ -2,25 +2,29 @@ package org.javaan.model;
 
 public class Method extends Type {
 	
-	private final Clazz clazz;
+	private final Type type;
 	
 	private final String signature;
 
-	public Method(Clazz clazz, String signature) {
-		super(buildMethodName(clazz, signature));
+	private Method(Type type, String signature) {
+		super(buildMethodName(type, signature));
 		this.signature = signature;
-		this.clazz = clazz;
+		this.type = type;
 	}
 
-	private static String buildMethodName(Clazz clazz, String signature) {
-		return clazz.getName() + " - " + signature;
+	private static String buildMethodName(Type type, String signature) {
+		return type.getName() + " - " + signature;
 	}
 
-	public Clazz getClazz() {
-		return clazz;
+	public Type getType() {
+		return type;
 	}
 
 	public String getSignature() {
 		return signature;
+	}
+
+	public static Method get(Type type, String signature) {
+		return new Method(type, signature);
 	}
 }

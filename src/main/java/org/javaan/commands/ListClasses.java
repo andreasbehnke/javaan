@@ -13,6 +13,7 @@ import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
 import org.javaan.model.ClassContext;
 import org.javaan.model.ClassData;
+import org.javaan.model.Clazz;
 
 public class ListClasses extends BaseCommand {
 	
@@ -63,30 +64,30 @@ public class ListClasses extends BaseCommand {
 	}
 
 	public void printClassesAndSuperClasses(PrintStream output, ClassContext classContext) {
-		List<String> classes = SortUtil.sort(classContext.getClasses());
-		for (String clazz : classes) {
+		List<Clazz> classes = SortUtil.sort(classContext.getClasses());
+		for (Clazz clazz : classes) {
 			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "", "[C]", " --> ");
 		}
 	}
 	
 	public void printClassesAndSpecializations(PrintStream output, ClassContext classContext) {
-		List<String> classes = SortUtil.sort(classContext.getClasses());
-		for (String clazz : classes) {
+		List<Clazz> classes = SortUtil.sort(classContext.getClasses());
+		for (Clazz clazz : classes) {
 			PrintUtil.println(output, classContext.getSpecializationsOfClass(clazz), "[C]" + clazz + ": ", "[C]", ", ");
 		}
 	}
 	
 	public void printClassesAndInterfaces(PrintStream output, ClassContext classContext) {
-		List<String> classes = SortUtil.sort(classContext.getClasses());
-		for (String clazz : classes) {
+		List<Clazz> classes = SortUtil.sort(classContext.getClasses());
+		for (Clazz clazz : classes) {
 			PrintUtil.println(output, classContext.getInterfacesOfClass(clazz), "[C]" + clazz + ": ", "[I]", ", ");
 		}
 	}
 	
 	public void printClassesAndMethods(PrintStream output, ClassContext classContext) {
-		List<String> classes = SortUtil.sort(classContext.getClasses());
-		for (String clazz : classes) {
-			PrintUtil.println(output, classContext.getMethodsOfType(clazz), "[C]" + clazz + ": ", "\n\t[M]", ", ");
+		List<Clazz> classes = SortUtil.sort(classContext.getClasses());
+		for (Clazz clazz : classes) {
+			PrintUtil.println(output, classContext.getMethods(clazz), "[C]" + clazz + ": ", "\n\t[M]", ", ");
 		}
 	}
 }

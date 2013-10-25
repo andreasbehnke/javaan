@@ -10,63 +10,76 @@ import org.junit.Test;
 
 public class TestClassContext {
 	
+	private static final Clazz CLASSA = Clazz.get("a");
+	private static final Clazz CLASSB = Clazz.get("b");
+	private static final Clazz CLASSC = Clazz.get("c");
+	private static final Clazz CLASSD = Clazz.get("d");
+	private static final Clazz CLASSX = Clazz.get("x");
+	private static final Clazz CLASSY = Clazz.get("y");
+	private static final Interface INTERFACEA = Interface.get("a");
+	private static final Interface INTERFACEB = Interface.get("b");
+	private static final Interface INTERFACEC = Interface.get("c");
+	private static final Interface INTERFACED = Interface.get("d");
+	private static final Interface INTERFACEX = Interface.get("x");
+	private static final Interface INTERFACEY = Interface.get("y");
+	
 	@Test
 	public void testAddClass() {
 		ClassContext context = new ClassContext();
-		context.addClass("a");
-		context.addClass("b");
-		context.addClass("c");
-		Set<String> classes = context.getClasses();
+		context.addClass(CLASSA);
+		context.addClass(CLASSB);
+		context.addClass(CLASSC);
+		Set<Clazz> classes = context.getClasses();
 		assertNotNull(classes);
 		assertEquals(3, classes.size());
-		assertTrue(classes.contains("a"));
-		assertTrue(classes.contains("b"));
-		assertTrue(classes.contains("c"));
+		assertTrue(classes.contains(CLASSA));
+		assertTrue(classes.contains(CLASSB));
+		assertTrue(classes.contains(CLASSC));
 	}
 
 	@Test
 	public void testAddSuperClass() {
 		ClassContext context = new ClassContext();
-		context.addClass("a");
-		context.addSuperClass("b", "a");
-		context.addSuperClass("x", "y");
+		context.addClass(CLASSA);
+		context.addSuperClass(CLASSB, CLASSA);
+		context.addSuperClass(CLASSX, CLASSY);
 		
-		assertTrue(context.containsClass("y"));
-		assertEquals(null, context.getSuperClass("a"));
-		assertEquals("a", context.getSuperClass("b"));
-		assertEquals(null, context.getSuperClass("y"));
-		assertEquals("y", context.getSuperClass("x"));		
+		assertTrue(context.containsClass(CLASSY));
+		assertEquals(null, context.getSuperClass(CLASSA));
+		assertEquals(CLASSA, context.getSuperClass(CLASSB));
+		assertEquals(null, context.getSuperClass(CLASSY));
+		assertEquals(CLASSY, context.getSuperClass(CLASSX));		
 	}
 	
 	@Test
 	public void testGetSuperClasses() {
 		ClassContext context = new ClassContext();
-		context.addClass("a");
-		context.addSuperClass("b", "a");
-		context.addSuperClass("c", "b");
+		context.addClass(CLASSA);
+		context.addSuperClass(CLASSB, CLASSA);
+		context.addSuperClass(CLASSC, CLASSB);
 		
-		List<String> superClasses = context.getSuperClassHierachy("c");
+		List<Clazz> superClasses = context.getSuperClassHierachy(CLASSC);
 		assertNotNull(superClasses);
 		assertEquals(3, superClasses.size());
-		assertEquals("c", superClasses.get(0));
-		assertEquals("b", superClasses.get(1));
-		assertEquals("a", superClasses.get(2));
+		assertEquals(CLASSC, superClasses.get(0));
+		assertEquals(CLASSB, superClasses.get(1));
+		assertEquals(CLASSA, superClasses.get(2));
 	}
 	
 	@Test
 	public void testGetSpecializationOfClass() {
 		ClassContext context = new ClassContext();
-		context.addClass("a");
-		context.addSuperClass("b", "a");
-		context.addSuperClass("c", "b");
+		context.addClass(CLASSA);
+		context.addSuperClass(CLASSB, CLASSA);
+		context.addSuperClass(CLASSC, CLASSB);
 
-		Set<String> spec = context.getSpecializationsOfClass("a");
+		Set<Clazz> spec = context.getSpecializationsOfClass(CLASSA);
 		assertNotNull(spec);
 		assertEquals(2, spec.size());
-		assertTrue(spec.contains("b"));
-		assertTrue(spec.contains("c"));
+		assertTrue(spec.contains(CLASSB));
+		assertTrue(spec.contains(CLASSC));
 		
-		spec = context.getSpecializationsOfClass("c");
+		spec = context.getSpecializationsOfClass(CLASSC);
 		assertNotNull(spec);
 		assertEquals(0, spec.size());
 	}
@@ -74,58 +87,58 @@ public class TestClassContext {
 	@Test
 	public void testAddInterface() {
 		ClassContext context = new ClassContext();
-		context.addInterface("a");
-		context.addInterface("b");
-		context.addInterface("c");
-		Set<String> interfaces = context.getInterfaces();
+		context.addInterface(INTERFACEA);
+		context.addInterface(INTERFACEB);
+		context.addInterface(INTERFACEC);
+		Set<Interface> interfaces = context.getInterfaces();
 		assertNotNull(interfaces);
 		assertEquals(3, interfaces.size());
-		assertTrue(interfaces.contains("a"));
-		assertTrue(interfaces.contains("b"));
-		assertTrue(interfaces.contains("c"));
+		assertTrue(interfaces.contains(INTERFACEA));
+		assertTrue(interfaces.contains(INTERFACEB));
+		assertTrue(interfaces.contains(INTERFACEC));
 	}
 
 	@Test
 	public void testGetSuperInterfaces() {
 		ClassContext context = new ClassContext();
-		context.addInterface("a");
-		context.addSuperInterface("b", "a");
-		context.addSuperInterface("b", "c");
-		context.addSuperInterface("c", "d");
-		context.addSuperInterface("x", "y");
+		context.addInterface(INTERFACEA);
+		context.addSuperInterface(INTERFACEB, INTERFACEA);
+		context.addSuperInterface(INTERFACEB, INTERFACEC);
+		context.addSuperInterface(INTERFACEC, INTERFACED);
+		context.addSuperInterface(INTERFACEX, INTERFACEY);
 		
-		Set<String> interfaces = context.getSuperInterfaces("a");
+		Set<Interface> interfaces = context.getSuperInterfaces(INTERFACEA);
 		assertNotNull(interfaces);
 		assertEquals(0, interfaces.size());
 		
-		interfaces = context.getSuperInterfaces("b");
+		interfaces = context.getSuperInterfaces(INTERFACEB);
 		assertNotNull(interfaces);
 		assertEquals(3, interfaces.size());
-		assertTrue(interfaces.contains("a"));
-		assertTrue(interfaces.contains("c"));
-		assertTrue(interfaces.contains("d"));
+		assertTrue(interfaces.contains(INTERFACEA));
+		assertTrue(interfaces.contains(INTERFACEC));
+		assertTrue(interfaces.contains(INTERFACED));
 		
-		assertTrue(context.containsInterface("y"));
-		interfaces = context.getSuperInterfaces("x");
+		assertTrue(context.containsInterface(INTERFACEY));
+		interfaces = context.getSuperInterfaces(INTERFACEX);
 		assertNotNull(interfaces);
 		assertEquals(1, interfaces.size());
-		assertTrue(interfaces.contains("y"));
+		assertTrue(interfaces.contains(INTERFACEY));
 	}
 	
 	@Test
 	public void testSpecializationOfInterface() {
 		ClassContext context = new ClassContext();
-		context.addInterface("a");
-		context.addSuperInterface("b", "a");
-		context.addSuperInterface("c", "b");
+		context.addInterface(INTERFACEA);
+		context.addSuperInterface(INTERFACEB, INTERFACEA);
+		context.addSuperInterface(INTERFACEC, INTERFACEB);
 		
-		Set<String> interfaces = context.getSpecializationOfInterface("a");
+		Set<Interface> interfaces = context.getSpecializationOfInterface(INTERFACEA);
 		assertNotNull(interfaces);
 		assertEquals(2, interfaces.size());
-		assertTrue(interfaces.contains("b"));
-		assertTrue(interfaces.contains("c"));
+		assertTrue(interfaces.contains(INTERFACEB));
+		assertTrue(interfaces.contains(INTERFACEC));
 		
-		interfaces = context.getSpecializationOfInterface("c");
+		interfaces = context.getSpecializationOfInterface(INTERFACEC);
 		assertNotNull(interfaces);
 		assertEquals(0, interfaces.size());
 	}
@@ -133,45 +146,45 @@ public class TestClassContext {
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddInterfaceOfClassUnknownClass() {
 		ClassContext context = new ClassContext();
-		context.addInterface("ia");
-		context.addInterfaceOfClass("classa", "ia");
+		context.addInterface(INTERFACEA);
+		context.addInterfaceOfClass(CLASSA, INTERFACEA);
 		fail("Exepect Exception");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddInterfaceOfClassUnknownInterface() {
 		ClassContext context = new ClassContext();
-		context.addClass("classa");
-		context.addInterfaceOfClass("classa", "ia");
+		context.addClass(CLASSA);
+		context.addInterfaceOfClass(CLASSA, INTERFACEA);
 		fail("Exepect Exception");
 	}
 	
 	@Test
 	public void testGetInterfacesOfClass() {
 		ClassContext context = new ClassContext();
-		context.addSuperInterface("ia", "ib");
-		context.addSuperInterface("ib", "ic");
-		context.addSuperInterface("ix", "iy");
+		context.addSuperInterface(INTERFACEA, INTERFACEB);
+		context.addSuperInterface(INTERFACEB, INTERFACEC);
+		context.addSuperInterface(INTERFACEX, INTERFACEY);
 		
-		context.addSuperClass("classa", "classb");
-		context.addSuperClass("classb", "classc");
-		context.addSuperClass("classc", "classd");
+		context.addSuperClass(CLASSA, CLASSB);
+		context.addSuperClass(CLASSB, CLASSC);
+		context.addSuperClass(CLASSC, CLASSD);
 		
-		context.addInterfaceOfClass("classa", "ia");
-		context.addInterfaceOfClass("classc", "ix");
+		context.addInterfaceOfClass(CLASSA, INTERFACEA);
+		context.addInterfaceOfClass(CLASSC, INTERFACEX);
 		
-		Set<String> interfaces = context.getInterfacesOfClass("classd");
+		Set<Interface> interfaces = context.getInterfacesOfClass(CLASSD);
 		assertNotNull(interfaces);
 		assertEquals(0, interfaces.size());
 		
-		interfaces = context.getInterfacesOfClass("classa");
+		interfaces = context.getInterfacesOfClass(CLASSA);
 		assertNotNull(interfaces);
 		assertEquals(5, interfaces.size());
-		assertTrue(interfaces.contains("ia"));
-		assertTrue(interfaces.contains("ib"));
-		assertTrue(interfaces.contains("ic"));
-		assertTrue(interfaces.contains("ix"));
-		assertTrue(interfaces.contains("iy"));
+		assertTrue(interfaces.contains(INTERFACEA));
+		assertTrue(interfaces.contains(INTERFACEB));
+		assertTrue(interfaces.contains(INTERFACEC));
+		assertTrue(interfaces.contains(INTERFACEX));
+		assertTrue(interfaces.contains(INTERFACEY));
 	}
 	
 	@Test
@@ -191,51 +204,51 @@ public class TestClassContext {
 			
 		 */
 		ClassContext context = new ClassContext();
-		context.addInterface("ia");
-		context.addSuperInterface("ia", "ib");
-		context.addSuperInterface("ib", "ix");
-		context.addInterface("ic");
-		context.addClass("classa");
-		context.addClass("classb");
-		context.addSuperClass("classc", "classb");
-		context.addSuperClass("classd", "classc");
-		context.addInterfaceOfClass("classa", "ia");
-		context.addInterfaceOfClass("classa", "ic");
-		context.addInterfaceOfClass("classb", "ia");	
+		context.addInterface(INTERFACEA);
+		context.addSuperInterface(INTERFACEA, INTERFACEB);
+		context.addSuperInterface(INTERFACEB, INTERFACEX);
+		context.addInterface(INTERFACEC);
+		context.addClass(CLASSA);
+		context.addClass(CLASSB);
+		context.addSuperClass(CLASSC, CLASSB);
+		context.addSuperClass(CLASSD, CLASSC);
+		context.addInterfaceOfClass(CLASSA, INTERFACEA);
+		context.addInterfaceOfClass(CLASSA, INTERFACEC);
+		context.addInterfaceOfClass(CLASSB, INTERFACEA);	
 		
-		Set<String> classes = context.getImplementations("ia");
+		Set<Clazz> classes = context.getImplementations(INTERFACEA);
 		assertNotNull(classes);
 		assertEquals(4, classes.size());
-		assertTrue(classes.contains("classa"));
-		assertTrue(classes.contains("classb"));
-		assertTrue(classes.contains("classc"));
-		assertTrue(classes.contains("classd"));
+		assertTrue(classes.contains(CLASSA));
+		assertTrue(classes.contains(CLASSB));
+		assertTrue(classes.contains(CLASSC));
+		assertTrue(classes.contains(CLASSD));
 		
-		classes = context.getImplementations("ib");
+		classes = context.getImplementations(INTERFACEB);
 		assertNotNull(classes);
 		assertEquals(4, classes.size());
-		assertTrue(classes.contains("classa"));
-		assertTrue(classes.contains("classb"));
-		assertTrue(classes.contains("classc"));
-		assertTrue(classes.contains("classd"));
+		assertTrue(classes.contains(CLASSA));
+		assertTrue(classes.contains(CLASSB));
+		assertTrue(classes.contains(CLASSC));
+		assertTrue(classes.contains(CLASSD));
 		
-		classes = context.getImplementations("ic");
+		classes = context.getImplementations(INTERFACEC);
 		assertNotNull(classes);
 		assertEquals(1, classes.size());
-		assertTrue(classes.contains("classa"));
+		assertTrue(classes.contains(CLASSA));
 		
-		classes = context.getImplementations("ix");
+		classes = context.getImplementations(INTERFACEX);
 		assertNotNull(classes);
 		assertEquals(4, classes.size());
-		assertTrue(classes.contains("classa"));
-		assertTrue(classes.contains("classb"));
-		assertTrue(classes.contains("classc"));
-		assertTrue(classes.contains("classd"));
+		assertTrue(classes.contains(CLASSA));
+		assertTrue(classes.contains(CLASSB));
+		assertTrue(classes.contains(CLASSC));
+		assertTrue(classes.contains(CLASSD));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddMethodMissingType() {
-		new ClassContext().addMethod("classa", "methoda");
+		new ClassContext().addMethod(CLASSA, "methoda");
 		fail("Exoecting illegal argument exception");
 	}
 	
@@ -243,34 +256,34 @@ public class TestClassContext {
 	public void testGetMethodsOfType() {
 		ClassContext context = new ClassContext();
 		
-		context.addClass("classa");
-		context.addClass("classb");
-		context.addInterface("interfacea");
+		context.addClass(CLASSA);
+		context.addClass(CLASSB);
+		context.addInterface(INTERFACEA);
 		
-		context.addMethod("classa", "methoda");
-		context.addMethod("classa", "methodb");
-		context.addMethod("classa", "methodc");
+		Method classa_methoda = context.addMethod(CLASSA, "methoda");
+		Method classa_methodb = context.addMethod(CLASSA, "methodb");
+		Method classa_methodc = context.addMethod(CLASSA, "methodc");
 		
-		context.addMethod("interfacea", "methoda");
-		context.addMethod("interfacea", "methodb");
-		context.addMethod("interfacea", "methodc");
+		Method interfacea_methoda = context.addMethod(INTERFACEA, "methoda");
+		Method interfacea_methodb = context.addMethod(INTERFACEA, "methodb");
+		Method interfacea_methodc = context.addMethod(INTERFACEA, "methodc");
 		
-		Set<String> methods = context.getMethodsOfType("classb");
+		Set<Method> methods = context.getMethods(CLASSB);
 		assertNotNull(methods);
 		assertEquals(0, methods.size());
 		
-		methods = context.getMethodsOfType("classa");
+		methods = context.getMethods(CLASSA);
 		assertNotNull(methods);
 		assertEquals(3, methods.size());
-		assertTrue(methods.contains("methoda"));
-		assertTrue(methods.contains("methodb"));
-		assertTrue(methods.contains("methodc"));
+		assertTrue(methods.contains(classa_methoda));
+		assertTrue(methods.contains(classa_methodb));
+		assertTrue(methods.contains(classa_methodc));
 		
-		methods = context.getMethodsOfType("interfacea");
+		methods = context.getMethods(INTERFACEA);
 		assertNotNull(methods);
 		assertEquals(3, methods.size());
-		assertTrue(methods.contains("methoda"));
-		assertTrue(methods.contains("methodb"));
-		assertTrue(methods.contains("methodc"));
+		assertTrue(methods.contains(interfacea_methoda));
+		assertTrue(methods.contains(interfacea_methodb));
+		assertTrue(methods.contains(interfacea_methodc));
 	}
 }

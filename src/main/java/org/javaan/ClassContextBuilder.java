@@ -6,6 +6,8 @@ import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 import org.javaan.model.ClassContext;
 import org.javaan.model.ClassData;
+import org.javaan.model.Clazz;
+import org.javaan.model.Interface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,44 +21,46 @@ public class ClassContextBuilder {
 		this.classes = classes;
 	}
 	
-	private void addInterface(ClassContext context, JavaClass clazz) {
-		String interfaceName = clazz.getClassName();
-		String[] interfaces = clazz.getInterfaceNames();
+	private void addInterface(ClassContext context, JavaClass javaClass) {
+		Interface interfaceName = Interface.get(javaClass.getClassName());
+		String[] interfaces = javaClass.getInterfaceNames();
 		context.addInterface(interfaceName);
 		for (String superInterfaceName : interfaces) {
-			context.addSuperInterface(interfaceName, superInterfaceName);
+			context.addSuperInterface(interfaceName, Interface.get(superInterfaceName));
+		}
+		for (Method method : javaClass.getMethods()) {
+			context.addMethod(interfaceName, method.toString());
 		}
 	}
 	
-	private void addClass(ClassContext context, JavaClass clazz) {
-		String className = clazz.getClassName();
-		String superClassName = clazz.getSuperclassName();
+	private void addClass(ClassContext context, JavaClass javaClass) {
+		Clazz className = Clazz.get(javaClass.getClassName());
+		String superClassName = javaClass.getSuperclassName();
 		if (superClassName == null || "java.lang.Object".equals(superClassName)) {
 			context.addClass(className);
 		} else {
-			context.addSuperClass(className, superClassName);
+			context.addSuperClass(className, Clazz.get(superClassName));
 		}
-		String[] interfaceNames = clazz.getInterfaceNames();
+		String[] interfaceNames = javaClass.getInterfaceNames();
 		if (interfaceNames != null) {
 			for (String interfaceName : interfaceNames) {
-				context.addInterface(interfaceName);
-				context.addInterfaceOfClass(className, interfaceName);
+				Interface interfaze = Interface.get(interfaceName);
+				context.addInterface(interfaze);
+				context.addInterfaceOfClass(className, interfaze);
 			}
+		}
+		for (Method method : javaClass.getMethods()) {
+			context.addMethod(className, method.toString());
 		}
 	}
 	
-	private void addJavaClass(ClassContext context, JavaClass clazz) {
-		if (clazz.isInterface()) {
-			addInterface(context, clazz);
-		} else if (clazz.isClass()) {
-			addClass(context, clazz);
+	private void addJavaClass(ClassContext context, JavaClass javaClass) {
+		if (javaClass.isInterface()) {
+			addInterface(context, javaClass);
+		} else if (javaClass.isClass()) {
+			addClass(context, javaClass);
 		} else {
 			throw new IllegalArgumentException("JavaClass is neither class nor interface");
-		}
-		String className = clazz.getClassName();
-		for (Method method : clazz.getMethods()) {
-			String methodName = method.toString();
-			context.addMethod(className, methodName);
 		}
 	}
 	

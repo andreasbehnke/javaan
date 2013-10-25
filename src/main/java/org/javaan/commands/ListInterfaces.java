@@ -13,6 +13,7 @@ import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
 import org.javaan.model.ClassContext;
 import org.javaan.model.ClassData;
+import org.javaan.model.Interface;
 
 public class ListInterfaces extends BaseCommand {
 	
@@ -63,30 +64,30 @@ public class ListInterfaces extends BaseCommand {
 	}
 
 	public void printInterfacesAndSuperInterfaces(PrintStream output, ClassContext classContext) {
-		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
-		for (String interfaceName : interfaces) {	
+		List<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
+		for (Interface interfaceName : interfaces) {	
 			PrintUtil.println(output, classContext.getSuperInterfaces(interfaceName), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
 	
 	public void printInterfacesAndSpecializations(PrintStream output, ClassContext classContext) {
-		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
-		for (String interfaceName : interfaces) {	
+		List<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
+		for (Interface interfaceName : interfaces) {	
 			PrintUtil.println(output, classContext.getSpecializationOfInterface(interfaceName), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
 
 	public void printInterfacesAndImplementations(PrintStream output, ClassContext classContext) {
-		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
-		for (String interfaceName : interfaces) {
+		List<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
+		for (Interface interfaceName : interfaces) {
 			PrintUtil.println(output, classContext.getImplementations(interfaceName), "[I]" + interfaceName + ": ", "[C]", ", ");
 		}
 	}
 	
 	public void printInterfacesAndMethods(PrintStream output, ClassContext classContext) {
-		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
-		for (String interfaceName : interfaces) {
-			PrintUtil.println(output, classContext.getMethodsOfType(interfaceName), "[C]" + interfaceName + ": ", "\n\t[M]", ", ");
+		List<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
+		for (Interface interfaceName : interfaces) {
+			PrintUtil.println(output, classContext.getMethods(interfaceName), "[I]" + interfaceName + ": ", "\n\t[M]", ", ");
 		}
 	}
 }
