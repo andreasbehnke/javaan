@@ -6,7 +6,7 @@ public interface TestConstants {
 	
 	public static final int NUMBER_OF_CLASSES = 3;
 	
-	public static final int NUMBER_OF_INTERFACES = 3;
+	public static final int NUMBER_OF_INTERFACES = 4;
 	
 	public static final int NUMBER_OF_CLASSES_AND_INTERFACES = NUMBER_OF_CLASSES + NUMBER_OF_INTERFACES;
 	
