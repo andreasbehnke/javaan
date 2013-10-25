@@ -231,4 +231,45 @@ public class TestClassContext {
 		assertTrue(classes.contains("classc"));
 		assertTrue(classes.contains("classd"));
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddMethodMissingType() {
+		new ClassContext().addMethod("classa", "methoda");
+		fail("Exoecting illegal argument exception");
+	}
+	
+	@Test
+	public void testGetMethodsOfType() {
+		ClassContext context = new ClassContext();
+		
+		context.addClass("classa");
+		context.addClass("classb");
+		context.addInterface("interfacea");
+		
+		context.addMethod("classa", "methoda");
+		context.addMethod("classa", "methodb");
+		context.addMethod("classa", "methodc");
+		
+		context.addMethod("interfacea", "methoda");
+		context.addMethod("interfacea", "methodb");
+		context.addMethod("interfacea", "methodc");
+		
+		Set<String> methods = context.getMethodsOfType("classb");
+		assertNotNull(methods);
+		assertEquals(0, methods.size());
+		
+		methods = context.getMethodsOfType("classa");
+		assertNotNull(methods);
+		assertEquals(3, methods.size());
+		assertTrue(methods.contains("methoda"));
+		assertTrue(methods.contains("methodb"));
+		assertTrue(methods.contains("methodc"));
+		
+		methods = context.getMethodsOfType("interfacea");
+		assertNotNull(methods);
+		assertEquals(3, methods.size());
+		assertTrue(methods.contains("methoda"));
+		assertTrue(methods.contains("methodb"));
+		assertTrue(methods.contains("methodc"));
+	}
 }

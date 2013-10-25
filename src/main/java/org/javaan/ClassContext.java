@@ -16,6 +16,8 @@ public class ClassContext {
 	private final Digraph<String> superInterface = new DigraphImpl<String>();
 	
 	private final Digraph<String> interfaceOfClass = new DigraphImpl<String>();
+	
+	private final Digraph<String> methodsOfType = new DigraphImpl<String>();
 
 	public void addClass(String className) {
 		superClass.addNode(className);
@@ -115,5 +117,20 @@ public class ClassContext {
 			implementingClasses.addAll(superClass.getPredecessors(className));
 		}
 		return implementingClasses;
+	}
+	
+	public void addMethod(String typeName, String methodName) {
+		if (!superInterface.containsNode(typeName) && !superClass.containsNode(typeName)) {
+			throw new IllegalArgumentException("Unknown type " + typeName);
+		}
+		methodsOfType.addEdge(typeName, methodName);
+	}
+	
+	public Set<String> getMethodsOfType(String typeName) {
+		Set<String> methods = methodsOfType.getChilds(typeName);
+		if (methods == null) {
+			methods = new HashSet<String>();
+		}
+		return methods;
 	}
 }

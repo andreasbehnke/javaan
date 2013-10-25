@@ -12,15 +12,17 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.javaan.commands.ListClasses;
-import org.javaan.commands.FindEntryMethods;
 import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
+import org.slf4j.LoggerFactory;
 
 /**
  * Javaan Command Line Client
  * @author behnkea
  */
 public class JavaanCli {
+	
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(JavaanCli.class);
 	
 	private static final String HELP_COMMAND = "javaan <command> <files> <options>";
 	private static final String HELP_DESCRIPTION = 
@@ -32,7 +34,7 @@ public class JavaanCli {
 	private static final String EXCEPTION_MISSING_FILES = "No file list provided";
 	private static final String EXCEPTION_UNKNOWN_COMMAND = "Unknown command: %s";
 	private static final String EXCEPTION_COULD_NOT_PARSE = "Could not parse command line arguments: %s";
-	private static final String EXCEPTION_COMMAND = "Could not process command: %s";
+	private static final String EXCEPTION_COMMAND = "Could not process command";
 	
 	private final CommandMap commands;
 	
@@ -101,7 +103,7 @@ public class JavaanCli {
 			printUsage(command, options);
 			return ReturnCodes.errorParse.getValue();
 		} catch (Exception e) {
-			System.out.println(String.format(EXCEPTION_COMMAND, e.getMessage()));
+			LOG.error(EXCEPTION_COMMAND, e);
 			return ReturnCodes.errorCommand.getValue();
 		}
 	}

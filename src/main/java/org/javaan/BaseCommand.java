@@ -32,7 +32,7 @@ public abstract class BaseCommand implements Command {
 			LOG.info("Loaded {} class files", classes.size());
 			execute(commandLine, System.out, classes);
 		} catch (IOException e) {
-			LOG.error("Could not process command", e);
+			System.out.println(String.format("Could not load class files from libraries: %s", e.getMessage()));
 			return ReturnCodes.errorCommand;
 		}
 		return ReturnCodes.ok;

@@ -3,6 +3,7 @@ package org.javaan;
 import java.util.List;
 
 import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.classfile.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ public class ClassContextBuilder {
 	private void addInterface(ClassContext context, JavaClass clazz) {
 		String interfaceName = clazz.getClassName();
 		String[] interfaces = clazz.getInterfaceNames();
+		context.addInterface(interfaceName);
 		for (String superInterfaceName : interfaces) {
 			context.addSuperInterface(interfaceName, superInterfaceName);
 		}
@@ -46,6 +48,13 @@ public class ClassContextBuilder {
 			addInterface(context, clazz);
 		} else if (clazz.isClass()) {
 			addClass(context, clazz);
+		} else {
+			throw new IllegalArgumentException("JavaClass is neither class nor interface");
+		}
+		String className = clazz.getClassName();
+		for (Method method : clazz.getMethods()) {
+			String methodName = method.toString();
+			context.addMethod(className, methodName);
 		}
 	}
 	

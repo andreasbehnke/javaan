@@ -36,7 +36,8 @@ public class ListInterfaces extends BaseCommand {
 		additionalInformation
 			.addOption(new Option(OptionName.SUPER, "superInterfaces", false, "For each interface list all super interfaces"))
 			.addOption(new Option(OptionName.SPECIALIZATIONS, "specializations", false, "For each interface list all specializations"))
-			.addOption(new Option(OptionName.IMPLEMENTATION, "implementations", false, "For each interface list all implementing classes"));
+			.addOption(new Option(OptionName.IMPLEMENTATION, "implementations", false, "For each interface list all implementing classes"))
+			.addOption(new Option(OptionName.METHODS, "methods", false, "For each interface list all methods"));
 		options.addOptionGroup(additionalInformation);
 		return options;
 	}
@@ -50,6 +51,8 @@ public class ListInterfaces extends BaseCommand {
 			printInterfacesAndSpecializations(output, classContext);
 		} else if (commandLine.hasOption(OptionName.IMPLEMENTATION)) {
 			printInterfacesAndImplementations(output, classContext);
+		} else if (commandLine.hasOption(OptionName.METHODS)) {
+			printInterfacesAndMethods(output, classContext);
 		} else {
 			printInterfaces(output, classContext);
 		}
@@ -75,8 +78,15 @@ public class ListInterfaces extends BaseCommand {
 
 	public void printInterfacesAndImplementations(PrintStream output, ClassContext classContext) {
 		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
-		for (String interfaceName : interfaces) {	
+		for (String interfaceName : interfaces) {
 			PrintUtil.println(output, classContext.getImplementations(interfaceName), "[I]" + interfaceName + ": ", "[C]", ", ");
+		}
+	}
+	
+	public void printInterfacesAndMethods(PrintStream output, ClassContext classContext) {
+		List<String> interfaces = SortUtil.sort(classContext.getInterfaces());
+		for (String interfaceName : interfaces) {
+			PrintUtil.println(output, classContext.getMethodsOfType(interfaceName), "[C]" + interfaceName + ": ", "\n\t[M]", ", ");
 		}
 	}
 }

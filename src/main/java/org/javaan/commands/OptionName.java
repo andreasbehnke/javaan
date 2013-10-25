@@ -9,4 +9,6 @@ public interface OptionName {
 	static final String SUPER = "s";
 	
 	static final String INTERFACES = "i";
+	
+	static final String METHODS = "m";
 }
