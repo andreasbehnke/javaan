@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class SingleChildGraphImpl<N> extends DigraphImpl<N> implements SingleChildGraph<N> {
+public class SingleChildGraphImpl<N extends Comparable<? super N>> extends DigraphImpl<N> implements SingleChildGraph<N> {
 
 	@Override
 	public void addEdge(N parent, N child) {

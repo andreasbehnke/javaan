@@ -1,15 +1,19 @@
 package org.javaan.graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import org.javaan.SortUtil;
+
 /**
  * Implementation of {@link Digraph} using a hash map as data structure
  */
-public class DigraphImpl<N> implements Digraph<N> {
+public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> {
 
 	/**
 	 * Stores the graphs parent child relations
@@ -130,5 +134,96 @@ public class DigraphImpl<N> implements Digraph<N> {
 			}
 		}
 		return leaveNodes;
+	}
+	
+	private void traverseBreadthFirst(N node, int depth, Visitor<N> visitor, TraversalCallback<N> callback) {
+		List<List<N>> successors = new ArrayList<List<N>>();
+		List<N> firstChilds = new ArrayList<N>();
+		Set<N> visited = new HashSet<N>();
+		firstChilds.add(node);
+		successors.add(firstChilds);
+		int level = 0;
+		while(!successors.isEmpty()) {
+			List<N> currentChilds = successors.remove(0);
+			List<N> nextChilds = null;
+			for (N n : currentChilds) {
+				if (!visited.contains(n)) {
+					visitor.visit(n);
+					visited.add(n);
+					if (depth < 0 || level < depth) {
+						if (nextChilds == null) {
+							nextChilds = new ArrayList<N>();
+						}
+						nextChilds.addAll(callback.getNextForTranversal(n));
+					}
+				}
+			}
+			if (nextChilds != null) {
+				successors.add(nextChilds);
+			}
+			level++;
+		}
+	}
+	
+	private void traverseDepthFirst(N node, int depth, Visitor<N> visitor, TraversalCallback<N> callback) {
+		Stack<List<N>> stack = new Stack<List<N>>();
+		List<N> firstChilds = new ArrayList<N>();
+		Set<N> visited = new HashSet<N>();
+		firstChilds.add(node);
+		stack.push(firstChilds);
+		while(!stack.empty()) {
+			List<N> childList = stack.peek();
+			if (childList.isEmpty()) {
+				stack.pop();
+			} else {
+				N n = childList.remove(0);
+				if (!visited.contains(n)) {
+					visitor.visit(n);
+					visited.add(n);
+					if (depth < 0 || stack.size() < depth) {
+						childList = callback.getNextForTranversal(n);
+						stack.push(childList);
+					}
+				}
+			}
+		}
+	}
+	
+	private TraversalCallback<N> getChildTraversal() {
+		return new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return SortUtil.sort(getChilds(node));
+			}
+		};
+	}
+	
+	private TraversalCallback<N> getParentTraversal() {
+		return new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return SortUtil.sort(getParents(node));
+			}
+		};
+	}
+	
+	@Override
+	public void traverseSuccessorsBreadthFirst(N node, int depth, Visitor<N> visitor) {
+		traverseBreadthFirst(node, depth, visitor, getChildTraversal());
+	}
+	
+	@Override
+	public void traverseSuccessorsDepthFirst(N node, int depth, Visitor<N> visitor) {
+		traverseDepthFirst(node, depth, visitor, getChildTraversal());
+	}
+	
+	@Override
+	public void traversePredecessorsBreadthFirst(N node, int depth, Visitor<N> visitor) {
+		traverseBreadthFirst(node, depth, visitor, getParentTraversal());
+	}
+	
+	@Override
+	public void traversePredecessorsDepthFirst(N node, int depth, Visitor<N> visitor) {
+		traverseDepthFirst(node, depth, visitor, getParentTraversal());
 	}
 }
