@@ -148,7 +148,7 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 			List<N> nextChilds = null;
 			for (N n : currentChilds) {
 				if (!visited.contains(n)) {
-					visitor.visit(n);
+					visitor.visit(n, level);
 					visited.add(n);
 					if (depth < 0 || level < depth) {
 						if (nextChilds == null) {
@@ -178,9 +178,10 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 			} else {
 				N n = childList.remove(0);
 				if (!visited.contains(n)) {
-					visitor.visit(n);
+					int stackSize = stack.size() - 1;
+					visitor.visit(n, stackSize);
 					visited.add(n);
-					if (depth < 0 || stack.size() < depth) {
+					if (depth < 0 || stackSize < depth) {
 						childList = callback.getNextForTranversal(n);
 						stack.push(childList);
 					}
