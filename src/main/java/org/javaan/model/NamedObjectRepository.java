@@ -14,8 +14,12 @@ public class NamedObjectRepository<N extends NamedObject> {
 		addAll(objects);
 	}
 	
-	public void add(N objects) {
-		objectMap.put(objects.getName(), objects);
+	public void add(N object) {
+		String name = object.getName();
+		if (objectMap.containsKey(name)) {
+			throw new IllegalArgumentException("Duplicate object found: " + object.getName());
+		}
+		objectMap.put(name, object);
 	}
 	
 	public void addAll(Collection<N> objects) {
