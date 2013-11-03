@@ -1,21 +1,23 @@
 package org.javaan;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
 import org.javaan.model.ClassContext;
-import org.javaan.model.ClassData;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
 import org.javaan.model.Method;
+import org.javaan.model.Type;
 import org.junit.Test;
 
 public class TestClassContextBuilder implements TestConstants {
 
-	private List<ClassData> loadClasses() throws IOException {
+	private List<Type> loadClasses() throws IOException {
 		return new JarFileLoader().loadJavaClasses(new String[]{TEST_JAR_FILE});
 	}
 	
@@ -46,7 +48,7 @@ public class TestClassContextBuilder implements TestConstants {
 		Set<Method> methods =  context.getMethods(CLASS_A);
 		assertNotNull(methods);
 		assertEquals(2, methods.size());
-		assertTrue(methods.contains(Method.get(CLASS_A, "public String methodInterfaceB(String a, String b)")));
+		assertTrue(methods.contains(new Method(CLASS_A, "public String methodInterfaceB(String a, String b)")));
 		
 	}
 }

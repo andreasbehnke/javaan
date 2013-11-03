@@ -1,12 +1,19 @@
 package org.javaan.model;
 
+import org.apache.bcel.classfile.JavaClass;
+
 public class Clazz extends Type {
 
-	private Clazz(String name) {
+	public Clazz(String name) {
 		super(name);
 	}
-
-	public static Clazz get(String name) {
-		return new Clazz(name);
+	
+	protected Clazz(JavaClass javaClass, String filePath) {
+		super(javaClass, filePath);
+	}
+	
+	@Override
+	public JavaType getJavaType() {
+		return JavaType.CLASS;
 	}
 }

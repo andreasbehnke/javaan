@@ -10,18 +10,18 @@ import org.junit.Test;
 
 public class TestClassContext {
 	
-	private static final Clazz CLASSA = Clazz.get("a");
-	private static final Clazz CLASSB = Clazz.get("b");
-	private static final Clazz CLASSC = Clazz.get("c");
-	private static final Clazz CLASSD = Clazz.get("d");
-	private static final Clazz CLASSX = Clazz.get("x");
-	private static final Clazz CLASSY = Clazz.get("y");
-	private static final Interface INTERFACEA = Interface.get("a");
-	private static final Interface INTERFACEB = Interface.get("b");
-	private static final Interface INTERFACEC = Interface.get("c");
-	private static final Interface INTERFACED = Interface.get("d");
-	private static final Interface INTERFACEX = Interface.get("x");
-	private static final Interface INTERFACEY = Interface.get("y");
+	private static final Clazz CLASSA = new Clazz("a");
+	private static final Clazz CLASSB = new Clazz("b");
+	private static final Clazz CLASSC = new Clazz("c");
+	private static final Clazz CLASSD = new Clazz("d");
+	private static final Clazz CLASSX = new Clazz("x");
+	private static final Clazz CLASSY = new Clazz("y");
+	private static final Interface INTERFACEA = new Interface("a");
+	private static final Interface INTERFACEB = new Interface("b");
+	private static final Interface INTERFACEC = new Interface("c");
+	private static final Interface INTERFACED = new Interface("d");
+	private static final Interface INTERFACEX = new Interface("x");
+	private static final Interface INTERFACEY = new Interface("y");
 	
 	@Test
 	public void testAddClass() {

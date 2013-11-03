@@ -5,9 +5,10 @@ import java.util.List;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 import org.javaan.model.ClassContext;
-import org.javaan.model.ClassData;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
+import org.javaan.model.NamedObjectRepository;
+import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,61 +16,79 @@ public class ClassContextBuilder {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(ClassContextBuilder.class);
 
-	private final List<ClassData> classes;
+	private final NamedObjectRepository<Type> types;
 	
-	public ClassContextBuilder(List<ClassData> classes) {
-		this.classes = classes;
+	public ClassContextBuilder(List<Type> types) {
+		this.types = new NamedObjectRepository<Type>(types);
 	}
 	
-	private void addInterface(ClassContext context, JavaClass javaClass) {
-		Interface interfaceName = Interface.get(javaClass.getClassName());
+	private Interface getInterface(String name) {
+		Interface interfaze = (Interface)types.get(name);
+		if (interfaze == null) {
+			interfaze =  new Interface(name);
+		}
+		return interfaze;
+	}
+	
+	private Clazz getClazz(String name) {
+		Clazz clazz = (Clazz)types.get(name);
+		if (clazz == null) {
+			clazz =  new Clazz(name);
+		}
+		return clazz;
+	}
+	
+	private void addType(ClassContext context, Interface interfaze) {
+		JavaClass javaClass = interfaze.getJavaClass();
 		String[] interfaces = javaClass.getInterfaceNames();
-		context.addInterface(interfaceName);
+		context.addInterface(interfaze);
 		for (String superInterfaceName : interfaces) {
-			context.addSuperInterface(interfaceName, Interface.get(superInterfaceName));
+			context.addSuperInterface(interfaze, getInterface(superInterfaceName));
 		}
 		for (Method method : javaClass.getMethods()) {
-			context.addMethod(interfaceName, method.toString());
+			context.addMethod(interfaze, method.toString());
 		}
 	}
 	
-	private void addClass(ClassContext context, JavaClass javaClass) {
-		Clazz className = Clazz.get(javaClass.getClassName());
+	private void addType(ClassContext context, Clazz clazz) {
+		JavaClass javaClass = clazz.getJavaClass();
 		String superClassName = javaClass.getSuperclassName();
 		if (superClassName == null || "java.lang.Object".equals(superClassName)) {
-			context.addClass(className);
+			context.addClass(clazz);
 		} else {
-			context.addSuperClass(className, Clazz.get(superClassName));
+			context.addSuperClass(clazz, getClazz(superClassName));
 		}
 		String[] interfaceNames = javaClass.getInterfaceNames();
 		if (interfaceNames != null) {
 			for (String interfaceName : interfaceNames) {
-				Interface interfaze = Interface.get(interfaceName);
+				Interface interfaze = getInterface(interfaceName);
 				context.addInterface(interfaze);
-				context.addInterfaceOfClass(className, interfaze);
+				context.addInterfaceOfClass(clazz, interfaze);
 			}
 		}
 		for (Method method : javaClass.getMethods()) {
-			context.addMethod(className, method.toString());
+			context.addMethod(clazz, method.toString());
 		}
 	}
 	
-	private void addJavaClass(ClassContext context, JavaClass javaClass) {
-		if (javaClass.isInterface()) {
-			addInterface(context, javaClass);
-		} else if (javaClass.isClass()) {
-			addClass(context, javaClass);
-		} else {
-			throw new IllegalArgumentException("JavaClass is neither class nor interface");
+	private void addType(ClassContext context, Type type) {
+		switch (type.getJavaType()) {
+		case CLASS:
+			addType(context, (Clazz)type);
+			break;
+		case INTERFACE:
+			addType(context, (Interface)type);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown type: " + type.getJavaType());
 		}
 	}
 	
 	public ClassContext build() {
 		LOG.info("Creating class context ...");
 		ClassContext context = new ClassContext();
-		for (ClassData data : classes) {
-			JavaClass clazz = data.getJavaClass();
-			addJavaClass(context, clazz);
+		for (Type type : types.getNamedObjects()) {
+			addType(context, type);
 		}
 		LOG.info("Created class context with {} classes and {} interfaces", context.getClasses().size(), context.getInterfaces().size());
 		return context;

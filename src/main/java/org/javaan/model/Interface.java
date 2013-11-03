@@ -1,12 +1,19 @@
 package org.javaan.model;
 
+import org.apache.bcel.classfile.JavaClass;
+
 public class Interface extends Type {
 
-	private Interface(String name) {
+	public Interface(String name) {
 		super(name);
 	}
-
-	public static Interface get(String name) {
-		return new Interface(name);
+	
+	protected Interface(JavaClass javaClass, String filePath) {
+		super(javaClass, filePath);
+	}
+	
+	@Override
+	public JavaType getJavaType() {
+		return JavaType.INTERFACE;
 	}
 }

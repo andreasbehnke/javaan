@@ -5,7 +5,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
-import org.javaan.model.ClassData;
+import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +29,9 @@ public abstract class BaseCommand implements Command {
 		LOG.info("Processing jar files...");
 		JarFileLoader loader = new JarFileLoader();
 		try {
-			List<ClassData> classes = loader.loadJavaClasses(files);
-			LOG.info("Loaded {} class files", classes.size());
-			execute(commandLine, System.out, classes);
+			List<Type> types = loader.loadJavaClasses(files);
+			LOG.info("Loaded {} class files", types.size());
+			execute(commandLine, System.out, types);
 		} catch (IOException e) {
 			System.out.println(String.format("Could not load class files from libraries: %s", e.getMessage()));
 			return ReturnCodes.errorCommand;
@@ -39,6 +39,6 @@ public abstract class BaseCommand implements Command {
 		return ReturnCodes.ok;
 	}
 	
-	protected abstract void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes);
+	protected abstract void execute(CommandLine commandLine, PrintStream output, List<Type> types);
 
 }

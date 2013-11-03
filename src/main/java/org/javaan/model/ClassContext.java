@@ -127,7 +127,7 @@ public class ClassContext {
 		if (!superClass.containsNode(className)) {
 			throw new IllegalArgumentException("Unknown class " + className);
 		}
-		Method method = Method.get(className, signature);
+		Method method = new Method(className, signature);
 		methodsOfClass.addEdge(className, method);
 		return method;
 	}
@@ -136,7 +136,7 @@ public class ClassContext {
 		if (!superInterface.containsNode(interfaceName)) {
 			throw new IllegalArgumentException("Unknown interface " + interfaceName);
 		}
-		Method method = Method.get(interfaceName, signature);
+		Method method = new Method(interfaceName, signature);
 		methodsOfInterface.addEdge(interfaceName, method);
 		return method;
 	}

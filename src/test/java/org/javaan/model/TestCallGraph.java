@@ -13,15 +13,15 @@ import org.mockito.InOrder;
 
 public class TestCallGraph {
 	
-	private final static Method METHODA = Method.get(Clazz.get("classa"), "methoda");
+	private final static Method METHODA = new Method(new Clazz("classa"), "methoda");
 
-	private final static Method METHODB = Method.get(Clazz.get("classa"), "methodb");
+	private final static Method METHODB = new Method(new Clazz("classa"), "methodb");
 	
-	private final static Method METHODC = Method.get(Clazz.get("classa"), "methodc");
+	private final static Method METHODC = new Method(new Clazz("classa"), "methodc");
 
-	private final static Method METHODD = Method.get(Clazz.get("classb"), "methodd");
+	private final static Method METHODD = new Method(new Clazz("classb"), "methodd");
 	
-	private final static Method METHODE = Method.get(Clazz.get("classb"), "methodE");
+	private final static Method METHODE = new Method(new Clazz("classb"), "methodE");
 	
 	@Test
 	public void testGetCallers() {

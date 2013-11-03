@@ -1,67 +1,54 @@
 package org.javaan.model;
 
-public abstract class Type implements NamedObject {
+import org.apache.bcel.classfile.JavaClass;
 
-	private final String name;
+public abstract class Type extends NamedObjectBase {
 	
-	public Type(String name) {
-		this.name = name;
+	public enum JavaType {
+		CLASS,
+		INTERFACE
 	}
 	
-	@Override
-	public String getName() {
-		return name;
-	}
+	private final JavaClass javaClass;
 	
-	@Override
-	public String toString() {
-		return name;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+	private final String filePath;
+	
+	protected Type(String name) {
+		super(name);
+		this.javaClass = null;
+		this.filePath = null;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Type other = (Type) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+	protected Type(JavaClass javaClass, String filePath) {
+		super(javaClass.getClassName());
+		this.javaClass = javaClass;
+		this.filePath = filePath;
 	}
 	
-	@Override
-	public int compareTo(NamedObject o) {
-		// null check
-		if (this == o) {
-			return 0;
+	public static Type create(JavaClass javaClass, String filePath) {
+		if (javaClass.isInterface()) {
+			return new Interface(javaClass, filePath);
+		} else if (javaClass.isClass()) {
+			return new Clazz(javaClass, filePath);
 		}
-		if (o == null) {
-			return -1;
-		}
-		String otherName = o.getName();
-		if (otherName == null && name == null) {
-			return 0;
-		}
-		if (otherName != null && name == null) {
-			return 1;
-		}
-		if (otherName == null && name != null) {
-			return -1;
-		}
-		return name.compareTo(otherName);
+		throw new IllegalArgumentException("Unknown type: " + javaClass.toString());
 	}
+
+	public JavaClass getJavaClass() {
+		return javaClass;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+	
+	public Interface createInterface() {
+		return new Interface(javaClass, filePath);
+	}
+	
+	public Clazz createClass() {
+		return new Clazz(javaClass, filePath);
+	}
+	
+	public abstract JavaType getJavaType();
 }

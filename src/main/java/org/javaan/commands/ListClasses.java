@@ -12,8 +12,8 @@ import org.javaan.ClassContextBuilder;
 import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
 import org.javaan.model.ClassContext;
-import org.javaan.model.ClassData;
 import org.javaan.model.Clazz;
+import org.javaan.model.Type;
 
 public class ListClasses extends BaseCommand {
 	
@@ -44,8 +44,8 @@ public class ListClasses extends BaseCommand {
 	}
 	
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
-		ClassContext classContext = new ClassContextBuilder(classes).build();
+	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+		ClassContext classContext = new ClassContextBuilder(types).build();
 		if (commandLine.hasOption(OptionName.SUPER)) {
 			printClassesAndSuperClasses(output, classContext);
 		} else if (commandLine.hasOption(OptionName.SPECIALIZATIONS)) {
