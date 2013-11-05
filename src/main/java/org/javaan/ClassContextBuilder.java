@@ -38,6 +38,14 @@ public class ClassContextBuilder {
 		return clazz;
 	}
 	
+	private org.javaan.model.Method createMethod(Interface interfaze, Method method) {
+		return new org.javaan.model.Method(interfaze, method, SignatureUtil.createSignature(method));
+	}
+	
+	private org.javaan.model.Method createMethod(Clazz clazz, Method method) {
+		return new org.javaan.model.Method(clazz, method, SignatureUtil.createSignature(method));
+	}
+	
 	private void addType(ClassContext context, Interface interfaze) {
 		JavaClass javaClass = interfaze.getJavaClass();
 		String[] interfaces = javaClass.getInterfaceNames();
@@ -46,7 +54,7 @@ public class ClassContextBuilder {
 			context.addSuperInterface(interfaze, getInterface(superInterfaceName));
 		}
 		for (Method method : javaClass.getMethods()) {
-			context.addMethod(interfaze, method.toString());
+			context.addMethod(createMethod(interfaze, method));
 		}
 	}
 	
@@ -67,7 +75,7 @@ public class ClassContextBuilder {
 			}
 		}
 		for (Method method : javaClass.getMethods()) {
-			context.addMethod(clazz, method.toString());
+			context.addMethod(createMethod(clazz, method));
 		}
 	}
 	

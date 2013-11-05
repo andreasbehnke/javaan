@@ -1,11 +1,14 @@
 package org.javaan.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.model.ClassContext;
 import org.junit.Test;
 
 public class TestClassContext {
@@ -22,6 +25,13 @@ public class TestClassContext {
 	private static final Interface INTERFACED = new Interface("d");
 	private static final Interface INTERFACEX = new Interface("x");
 	private static final Interface INTERFACEY = new Interface("y");
+	private static final Method CLASSA_METHODA = new Method(CLASSA, null, "methoda");
+	private static final Method CLASSA_METHODB = new Method(CLASSA, null, "methodb");
+	private static final Method CLASSA_METHODC = new Method(CLASSA, null, "methodc");
+	
+	private static final Method INTERFACEA_METHODA = new Method(INTERFACEA, null, "methoda");
+	private static final Method INTERFACEA_METHODB = new Method(INTERFACEA, null, "methodb");
+	private static final Method INTERFACEA_METHODC = new Method(INTERFACEA, null, "methodc");
 	
 	@Test
 	public void testAddClass() {
@@ -248,7 +258,7 @@ public class TestClassContext {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddMethodMissingType() {
-		new ClassContext().addMethod(CLASSA, "methoda");
+		new ClassContext().addMethod(CLASSA_METHODA);
 		fail("Exoecting illegal argument exception");
 	}
 	
@@ -260,13 +270,13 @@ public class TestClassContext {
 		context.addClass(CLASSB);
 		context.addInterface(INTERFACEA);
 		
-		Method classa_methoda = context.addMethod(CLASSA, "methoda");
-		Method classa_methodb = context.addMethod(CLASSA, "methodb");
-		Method classa_methodc = context.addMethod(CLASSA, "methodc");
+		context.addMethod(CLASSA_METHODA);
+		context.addMethod(CLASSA_METHODB);
+		context.addMethod(CLASSA_METHODC);
 		
-		Method interfacea_methoda = context.addMethod(INTERFACEA, "methoda");
-		Method interfacea_methodb = context.addMethod(INTERFACEA, "methodb");
-		Method interfacea_methodc = context.addMethod(INTERFACEA, "methodc");
+		context.addMethod(INTERFACEA_METHODA);
+		context.addMethod(INTERFACEA_METHODB);
+		context.addMethod(INTERFACEA_METHODC);
 		
 		Set<Method> methods = context.getMethods(CLASSB);
 		assertNotNull(methods);
@@ -275,15 +285,44 @@ public class TestClassContext {
 		methods = context.getMethods(CLASSA);
 		assertNotNull(methods);
 		assertEquals(3, methods.size());
-		assertTrue(methods.contains(classa_methoda));
-		assertTrue(methods.contains(classa_methodb));
-		assertTrue(methods.contains(classa_methodc));
+		assertTrue(methods.contains(CLASSA_METHODA));
+		assertTrue(methods.contains(CLASSA_METHODB));
+		assertTrue(methods.contains(CLASSA_METHODC));
 		
 		methods = context.getMethods(INTERFACEA);
 		assertNotNull(methods);
 		assertEquals(3, methods.size());
-		assertTrue(methods.contains(interfacea_methoda));
-		assertTrue(methods.contains(interfacea_methodb));
-		assertTrue(methods.contains(interfacea_methodc));
+		assertTrue(methods.contains(INTERFACEA_METHODA));
+		assertTrue(methods.contains(INTERFACEA_METHODB));
+		assertTrue(methods.contains(INTERFACEA_METHODC));
+		
+		assertSame(CLASSA_METHODA, context.getMethod(CLASSA, "methoda"));
+		assertSame(INTERFACEA_METHODA, context.getMethod(INTERFACEA, "methoda"));
+	}
+	
+	@Test
+	public void testGetVirtualMethodsOfType() {
+		ClassContext context = new ClassContext();
+		
+		context.addClass(CLASSA);
+		context.addSuperClass(CLASSB, CLASSA);
+		context.addInterface(INTERFACEA);
+		context.addSuperInterface(INTERFACEB, INTERFACEA);
+		
+		context.addMethod(CLASSA_METHODA);
+		context.addMethod(INTERFACEA_METHODA);
+		
+		Set<Method> methods = context.getVirtualMethods(CLASSB);
+		assertNotNull(methods);
+		assertEquals(1, methods.size());
+		assertTrue(methods.contains(CLASSA_METHODA));
+		
+		methods = context.getVirtualMethods(INTERFACEB);
+		assertNotNull(methods);
+		assertEquals(1, methods.size());
+		assertTrue(methods.contains(INTERFACEA_METHODA));
+		
+		assertSame(CLASSA_METHODA, context.getVirtualMethod(CLASSB, "methoda"));
+		assertSame(INTERFACEA_METHODA, context.getVirtualMethod(INTERFACEB, "methoda"));
 	}
 }

@@ -123,22 +123,41 @@ public class ClassContext {
 		return implementingClasses;
 	}
 	
-	public Method addMethod(Clazz className, String signature) {
-		if (!superClass.containsNode(className)) {
-			throw new IllegalArgumentException("Unknown class " + className);
+	public void addMethod(Method method) {
+		Type typeName = method.getType();
+		switch (typeName.getJavaType()) {
+		case CLASS:
+			if (!superClass.containsNode((Clazz)typeName)) {
+				throw new IllegalArgumentException("Unknown class " + typeName);
+			}
+			methodsOfClass.addEdge((Clazz)typeName, method);
+			break;
+		case INTERFACE:
+			if (!superInterface.containsNode((Interface)typeName)) {
+				throw new IllegalArgumentException("Unknown interface " + typeName);
+			}
+			methodsOfInterface.addEdge((Interface)typeName, method);
+			break;
+		default:
+			break;
 		}
-		Method method = new Method(className, signature);
-		methodsOfClass.addEdge(className, method);
-		return method;
 	}
 
-	public Method addMethod(Interface interfaceName, String signature) {
-		if (!superInterface.containsNode(interfaceName)) {
-			throw new IllegalArgumentException("Unknown interface " + interfaceName);
+	private Method findMethod(Set<Method> methods, String signature) {
+		for (Method method : methods) {
+			if (method.getSignature().equals(signature)) {
+				return method;
+			}
 		}
-		Method method = new Method(interfaceName, signature);
-		methodsOfInterface.addEdge(interfaceName, method);
-		return method;
+		return null;
+	}
+	
+	public Method getMethod(Clazz className, String signature) {
+		return findMethod(getMethods(className), signature);
+	}
+	
+	public Method getMethod(Interface interfaceName, String signature) {
+		return findMethod(getMethods(interfaceName), signature);
 	}
 	
 	public Set<Method> getMethods(Clazz className) {
@@ -153,6 +172,33 @@ public class ClassContext {
 		Set<Method> methods = methodsOfInterface.getChilds(interfaceName);
 		if (methods == null) {
 			methods = new HashSet<Method>();
+		}
+		return methods;
+	}
+	
+	public Method getVirtualMethod(Clazz className, String signature) {
+		return findMethod(getVirtualMethods(className), signature);
+	}
+	
+	public Method getVirtualMethod(Interface interfaceName, String signature) {
+		return findMethod(getVirtualMethods(interfaceName), signature);
+	}
+	
+	public Set<Method> getVirtualMethods(Clazz className) {
+		List<Clazz> superClasses = getSuperClassHierachy(className);
+		Set<Method> methods = new HashSet<Method>();
+		for (Clazz clazz : superClasses) {
+			methods.addAll(methodsOfClass.getChilds(clazz));
+		}
+		return methods;
+	}
+
+	public Set<Method> getVirtualMethods(Interface interfaceName) {
+		Set<Interface> superInterfaces = getSuperInterfaces(interfaceName);
+		superInterfaces.add(interfaceName);
+		Set<Method> methods = new HashSet<Method>();
+		for (Interface interfaze : superInterfaces) {
+			methods.addAll(methodsOfInterface.getChilds(interfaze));
 		}
 		return methods;
 	}

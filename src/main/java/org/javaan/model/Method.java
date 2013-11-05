@@ -4,10 +4,13 @@ public class Method extends NamedObjectBase {
 	
 	private final Type type;
 	
+	private final org.apache.bcel.classfile.Method javaMethod;
+	
 	private final String signature;
 
-	public Method(Type type, String signature) {
+	public Method(Type type, org.apache.bcel.classfile.Method javaMethod, String signature) {
 		super(buildMethodName(type, signature));
+		this.javaMethod = javaMethod;
 		this.signature = signature;
 		this.type = type;
 	}
@@ -16,11 +19,15 @@ public class Method extends NamedObjectBase {
 		return type.getName() + " - " + signature;
 	}
 
-	public NamedObjectBase getType() {
+	public Type getType() {
 		return type;
 	}
 
 	public String getSignature() {
 		return signature;
+	}
+	
+	public org.apache.bcel.classfile.Method getJavaMethod() {
+		return javaMethod;
 	}
 }

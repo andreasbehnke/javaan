@@ -46,7 +46,11 @@ public class ParentChildGraphImpl<P, C> implements ParentChildGraph<P, C> {
 	
 	@Override
 	public Set<C> getChilds(P parent) {
-		return parentChildMap.get(parent);
+		Set<C> childs = parentChildMap.get(parent);
+		if (childs == null) {
+			return new HashSet<C>();
+		}
+		return childs;
 	}
 
 	@Override

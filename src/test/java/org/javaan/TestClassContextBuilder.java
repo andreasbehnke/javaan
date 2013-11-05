@@ -48,7 +48,7 @@ public class TestClassContextBuilder implements TestConstants {
 		Set<Method> methods =  context.getMethods(CLASS_A);
 		assertNotNull(methods);
 		assertEquals(2, methods.size());
-		assertTrue(methods.contains(new Method(CLASS_A, "public String methodInterfaceB(String a, String b)")));
+		assertTrue(methods.contains(new Method(CLASS_A, null, SIGNATURE_METHOD_INTERFACE_B)));
 		
 	}
 }
