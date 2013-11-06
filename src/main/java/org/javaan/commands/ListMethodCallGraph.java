@@ -39,18 +39,24 @@ public class ListMethodCallGraph extends BaseCommand {
 	public Options buildCommandLineOptions(Options options) {
 		StandardOptions.FILTER.setRequired(true);
 		options.addOption(StandardOptions.FILTER);
+		options.addOption(StandardOptions.CALLERS);
 		return options;
 	}
 
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
 		String criteria = commandLine.getOptionValue(StandardOptions.OPT_FILTER);
+		boolean traverseCallers = commandLine.hasOption(StandardOptions.OPT_CALLERS);
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext, types).build();
 		Collection<Method> methods = SortUtil.sort(FilterUtil.filter(classContext.getMethods(), new MethodMatcher(criteria)));
 		GraphPrinter<Method> graphPrinter = new GraphPrinter<Method>(output, new MethodFormatter());
 		for (Method method : methods) {
-			callGraph.traverseCallees(method, -1, graphPrinter);
+			if (traverseCallers) {
+				callGraph.traverseCallers(method, -1, graphPrinter);
+			} else {
+				callGraph.traverseCallees(method, -1, graphPrinter);
+			}
 			output.println();
 			output.println("--");
 			output.println();
