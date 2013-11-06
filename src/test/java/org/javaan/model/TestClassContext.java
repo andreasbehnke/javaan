@@ -263,6 +263,23 @@ public class TestClassContext {
 	}
 	
 	@Test
+	public void testGetMethods() {
+		ClassContext context = new ClassContext();
+		
+		context.addClass(CLASSA);
+		context.addInterface(INTERFACEA);
+		
+		context.addMethod(CLASSA_METHODA);
+		context.addMethod(INTERFACEA_METHODA);
+		
+		Set<Method> methods = context.getMethods();
+		assertNotNull(methods);
+		assertEquals(2, methods.size());
+		assertTrue(methods.contains(CLASSA_METHODA));
+		assertTrue(methods.contains(INTERFACEA_METHODA));
+	}
+	
+	@Test
 	public void testGetMethodsOfType() {
 		ClassContext context = new ClassContext();
 		

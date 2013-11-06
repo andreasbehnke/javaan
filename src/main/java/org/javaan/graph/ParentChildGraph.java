@@ -18,6 +18,8 @@ public interface ParentChildGraph<P, C> {
 	
 	boolean containsChild(C child);
 	
+	Set<C> getChilds();
+	
 	Set<C> getChilds(P parent);
 	
 	Set<P> getParents(C child);

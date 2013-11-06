@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.javaan.model.NamedObject;
-
 public class FilterUtil {
 	
-	public static <E extends NamedObject> List<E> filter(Collection<E> list, String criteria) {
+	public static interface Matcher<E> {
+		boolean accept(E e);
+	}
+	
+	public static <E> List<E> filter(Collection<E> list, Matcher<E> matcher) {
 		List<E> filtered = new ArrayList<E>();
-		for (E namedObject : list) {
-			if (namedObject.getName().toLowerCase().contains(criteria.toLowerCase())) {
-				filtered.add(namedObject);
+		for (E e : list) {
+			if (matcher.accept(e)) {
+				filtered.add(e);
 			}
 		}
 		return filtered;

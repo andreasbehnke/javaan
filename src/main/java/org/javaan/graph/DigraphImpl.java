@@ -50,13 +50,22 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 	}
 	
 	@Override
+	public int size() {
+		return parentChildMap.size();
+	}
+	
+	@Override
 	public Set<N> getNodes() {
 		return parentChildMap.keySet();
 	}
 	
 	@Override
 	public Set<N> getChilds(N parent) {
-		return parentChildMap.get(parent);
+		if (parentChildMap.containsKey(parent)) {
+			return parentChildMap.get(parent);
+		} else {
+			return new HashSet<N>();
+		}
 	}
 	
 	@Override

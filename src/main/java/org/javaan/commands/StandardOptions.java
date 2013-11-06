@@ -18,6 +18,8 @@ public interface StandardOptions {
 	
 	static final String OPT_FILTER = "f";
 	
+	static final String OPT_METHOD = "method";
+	
 	static final Option SUPER_TYPES = new Option(StandardOptions.OPT_SUPER, "superTypes", false, "For each type list the hierachy of super types");
 	
 	static final Option SPECIALIZATIONS = new Option(StandardOptions.OPT_SPECIALIZATIONS, "specializations", false, "For each type list specialization types");
@@ -28,6 +30,5 @@ public interface StandardOptions {
 	
 	static final Option VIRTUAL_METHODS = new Option(StandardOptions.OPT_VIRTUAL_METHODS, "virtualMethods", false, "For each type list all methods and all inherited (virtual) methods");
 
-	static final Option FILTER = new Option(StandardOptions.OPT_FILTER, "filter", true, "Filter types by <pattern>. All types which contain <pattern> in name will match.");
-	
+	static final Option FILTER = new Option(StandardOptions.OPT_FILTER, "filter", true, "Filter types by <arg>. All types which contain <arg> in name will match.");
 }

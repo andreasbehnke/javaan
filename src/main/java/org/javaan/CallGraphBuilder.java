@@ -20,6 +20,8 @@ import org.javaan.model.Interface;
 import org.javaan.model.Method;
 import org.javaan.model.NamedObjectRepository;
 import org.javaan.model.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds the call graph for all methods of given class list
@@ -69,6 +71,8 @@ public class CallGraphBuilder {
 	    }
 	}
 	
+	private final static Logger LOG = LoggerFactory.getLogger(CallGraphBuilder.class);
+
 	private final ClassContext classContext;
 	
 	private final NamedObjectRepository<Type> types;
@@ -103,7 +107,10 @@ public class CallGraphBuilder {
 		if (callee != null) {
 			Set<Clazz> implementations = classContext.getImplementations((Interface)callee.getType());
 			for (Clazz implementation : implementations) {
-				callGraph.addCall(caller, classContext.getMethod(implementation, callee.getSignature()));
+				Method calleeCandidate = classContext.getMethod(implementation, callee.getSignature());
+				if (calleeCandidate != null) {
+					callGraph.addCall(caller, calleeCandidate);
+				}
 			}
 		}
 	}
@@ -130,7 +137,9 @@ public class CallGraphBuilder {
 	}
 	
 	public CallGraph build() {
+		LOG.info("Creating method call graph ...");
 		processClasses();
+		LOG.info("Created call graph containg {} methods", callGraph.size());
 		return callGraph;
 	}
 }

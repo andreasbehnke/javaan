@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 
 import java.util.Set;
 
+import org.javaan.graph.Visitor;
 import org.junit.Test;
 import org.mockito.InOrder;
 
@@ -68,7 +69,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		MethodVisitor visitor = mock(MethodVisitor.class);
+		Visitor<Method> visitor = mock(Visitor.class);
 		InOrder order = inOrder(visitor);
 		
 		callGraph.traverseCallers(METHODE, -1, visitor);
@@ -86,7 +87,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		MethodVisitor visitor = mock(MethodVisitor.class);
+		Visitor<Method> visitor = mock(Visitor.class);
 		InOrder order = inOrder(visitor);
 		
 		callGraph.traverseCallees(METHODA, -1, visitor);

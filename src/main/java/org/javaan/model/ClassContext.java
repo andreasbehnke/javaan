@@ -24,11 +24,20 @@ public class ClassContext {
 	private final ParentChildGraph<Interface, Method> methodsOfInterface = new ParentChildGraphImpl<Interface, Method>();
 
 	public void addClass(Clazz className) {
+		if (className == null) {
+			throw new IllegalArgumentException("Parameter className must not be null");
+		}
 		superClass.addNode(className);
 		interfaceOfClass.addParent(className);
 	}
 
 	public void addSuperClass(Clazz className, Clazz superClassName) {
+		if (className == null) {
+			throw new IllegalArgumentException("Parameter className must not be null");
+		}
+		if (superClassName == null) {
+			throw new IllegalArgumentException("Parameter superClassName must not be null");
+		}
 		superClass.addEdge(className, superClassName);
 		interfaceOfClass.addParent(className);
 		interfaceOfClass.addParent(superClassName);
@@ -158,6 +167,13 @@ public class ClassContext {
 	
 	public Method getMethod(Interface interfaceName, String signature) {
 		return findMethod(getMethods(interfaceName), signature);
+	}
+	
+	public Set<Method> getMethods() {
+		Set<Method> methods = new HashSet<Method>();
+		methods.addAll(methodsOfClass.getChilds());
+		methods.addAll(methodsOfInterface.getChilds());
+		return methods;
 	}
 	
 	public Set<Method> getMethods(Clazz className) {

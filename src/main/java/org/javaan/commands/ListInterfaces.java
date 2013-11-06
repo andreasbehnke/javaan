@@ -10,6 +10,7 @@ import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
 import org.javaan.ClassContextBuilder;
 import org.javaan.FilterUtil;
+import org.javaan.NameMatcher;
 import org.javaan.SortUtil;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Interface;
@@ -54,7 +55,7 @@ public class ListInterfaces extends BaseCommand {
 		Collection<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
 		if (commandLine.hasOption(StandardOptions.OPT_FILTER)) {
 			String criteria = commandLine.getOptionValue(StandardOptions.OPT_FILTER);
-			interfaces = FilterUtil.filter(interfaces, criteria); 
+			interfaces = FilterUtil.filter(interfaces, new NameMatcher<Interface>(criteria)); 
 		}
 		if (commandLine.hasOption(StandardOptions.OPT_SUPER)) {
 			printInterfacesAndSuperInterfaces(output, interfaces);

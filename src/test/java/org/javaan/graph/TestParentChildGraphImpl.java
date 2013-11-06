@@ -49,6 +49,17 @@ public class TestParentChildGraphImpl {
 		Set<String> childs = graph.getChilds("parent");
 		assertNotNull(childs);
 		assertEquals(0, childs.size());
+		
+		graph.addEdge("parent", "child1");
+		graph.addEdge("parent", "child2");
+		graph.addEdge("parent2", "child3");
+		
+		childs = graph.getChilds();
+		assertNotNull(childs);
+		assertEquals(3, childs.size());
+		assertTrue(childs.contains("child1"));
+		assertTrue(childs.contains("child2"));
+		assertTrue(childs.contains("child3"));
 	}
 	
 	@Test

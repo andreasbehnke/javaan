@@ -10,6 +10,7 @@ import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
 import org.javaan.ClassContextBuilder;
 import org.javaan.FilterUtil;
+import org.javaan.NameMatcher;
 import org.javaan.SortUtil;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
@@ -55,7 +56,7 @@ public class ListClasses extends BaseCommand {
 		Collection<Clazz> classes = classContext.getClasses();
 		if (commandLine.hasOption(StandardOptions.OPT_FILTER)) {
 			String criteria = commandLine.getOptionValue(StandardOptions.OPT_FILTER);
-			classes = FilterUtil.filter(classes, criteria); 
+			classes = FilterUtil.filter(classes, new NameMatcher<Clazz>(criteria)); 
 		}
 		classes = SortUtil.sort(classes);
 		if (commandLine.hasOption(StandardOptions.OPT_SUPER)) {

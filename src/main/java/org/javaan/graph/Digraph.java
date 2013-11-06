@@ -9,6 +9,8 @@ import java.util.Set;
  * @param <N> type of graph nodes
  */
 public interface Digraph<N extends Comparable<? super N>> extends Graph<N> {
+	
+	int size();
 
 	Set<N> getChilds(N parent);
 	
