@@ -7,9 +7,9 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
 import org.javaan.DuplicatesFinder;
-import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
 import org.javaan.model.Type;
+import org.javaan.print.PrintUtil;
 
 public class ListDuplicates extends BaseCommand {
 	
