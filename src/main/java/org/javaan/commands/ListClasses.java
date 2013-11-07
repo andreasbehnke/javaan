@@ -20,7 +20,7 @@ import org.javaan.print.PrintUtil;
 
 public class ListClasses extends BaseCommand {
 	
-	private final static String NAME = "listClasses";
+	private final static String NAME = "classes";
 	
 	private final static String DESCRIPTION = "List all classes of the libraries";
 	

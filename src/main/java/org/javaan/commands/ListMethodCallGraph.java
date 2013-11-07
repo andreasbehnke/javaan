@@ -21,7 +21,7 @@ import org.javaan.print.MethodFormatter;
 
 public class ListMethodCallGraph extends BaseCommand {
 
-	private final static String NAME = "listMethodCallGraph";
+	private final static String NAME = "callgraph";
 
 	private final static String DESCRIPTION = "Display the graph of methods being called by methods defined with option --filter '<class> - <method signature>'.";
 
