@@ -6,10 +6,10 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
-import org.javaan.ClassData;
 import org.javaan.DuplicatesFinder;
-import org.javaan.PrintUtil;
 import org.javaan.SortUtil;
+import org.javaan.model.Type;
+import org.javaan.print.PrintUtil;
 
 public class ListDuplicates extends BaseCommand {
 	
@@ -33,10 +33,10 @@ private final static String NAME = "listDuplicates";
 	}
 
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
-		List<List<ClassData>> duplicates = new DuplicatesFinder(classes).find();
+	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+		List<List<Type>> duplicates = new DuplicatesFinder(types).find();
 		SortUtil.sort(duplicates);
-		for (List<ClassData> duplicate : duplicates) {
+		for (List<Type> duplicate : duplicates) {
 			PrintUtil.println(output, duplicate, "", "", "\n");
 			output.println();
 		}

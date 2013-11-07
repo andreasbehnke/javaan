@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 import java.util.Set;
 
 import org.junit.Test;
+import org.mockito.InOrder;
 
 public class TestDigraphImpl {
 	
@@ -207,5 +209,195 @@ public class TestDigraphImpl {
 		assertNotNull(leaveNodes);
 		assertEquals(1, leaveNodes.size());
 		assertTrue(leaveNodes.contains("c"));
+	}
+	
+	@Test
+	public void testTraverseSuccessorsDepthFirst() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		graph.addEdge("x", "g");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traverseSuccessorsDepthFirst("x", -1, visitor);
+		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("a", 1);
+		order.verify(visitor).visit("b", 1);
+		order.verify(visitor).visit("c", 1);
+		order.verify(visitor).visit("d", 2);
+		order.verify(visitor).visit("e", 2);
+		order.verify(visitor).visit("f", 3);
+		order.verify(visitor).visit("g", 1);
+		order.verifyNoMoreInteractions();
+	}
+
+	@Test
+	public void testTraverseSuccessorsDepthFirstWithDepth() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		graph.addEdge("x", "g");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traverseSuccessorsDepthFirst("x", 2, visitor);
+		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("a", 1);
+		order.verify(visitor).visit("b", 1);
+		order.verify(visitor).visit("c", 1);
+		order.verify(visitor).visit("d", 2);
+		order.verify(visitor).visit("e", 2);
+		order.verify(visitor).visit("g", 1);
+		order.verifyNoMoreInteractions();
+	}
+
+	@Test
+	public void testTraverseSuccessorsDepthFirstCycle() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("a", "b");
+		graph.addEdge("b", "x");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traverseSuccessorsDepthFirst("x", -1, visitor);
+		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("a", 1);
+		order.verify(visitor).visit("b", 2);
+		order.verifyNoMoreInteractions();
+	}
+
+	@Test
+	public void testTraverseSuccessorsBreadthFirst() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		graph.addEdge("x", "g");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traverseSuccessorsBreadthFirst("x", -1, visitor);
+		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("a", 1);
+		order.verify(visitor).visit("b", 1);
+		order.verify(visitor).visit("c", 1);
+		order.verify(visitor).visit("g", 1);
+		order.verify(visitor).visit("d", 2);
+		order.verify(visitor).visit("e", 2);
+		order.verify(visitor).visit("f", 3);
+		order.verifyNoMoreInteractions();
+	}
+
+
+	@Test
+	public void testTraverseSuccessorsBreadthFirstWithDepth() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traverseSuccessorsBreadthFirst("x", 2, visitor);
+		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("a", 1);
+		order.verify(visitor).visit("b", 1);
+		order.verify(visitor).visit("c", 1);
+		order.verify(visitor).visit("d", 2);
+		order.verify(visitor).visit("e", 2);
+		order.verifyNoMoreInteractions();
+	}
+
+	@Test
+	public void testTraverseSuccessorsBreadthFirstWithDepthZero() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traverseSuccessorsBreadthFirst("x", 0, visitor);
+		order.verify(visitor).visit("x", 0);
+		order.verifyNoMoreInteractions();
+	}
+	
+	@Test
+	public void testTraverseSuccessorsBreadthFirstCycle() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("a", "b");
+		graph.addEdge("b", "x");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traverseSuccessorsBreadthFirst("x", -1, visitor);
+		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("a", 1);
+		order.verify(visitor).visit("b", 2);
+		order.verifyNoMoreInteractions();
+	}
+	
+	@Test
+	public void testTraversePredecessorsBreadthFirst() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		graph.addEdge("y", "f");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traversePredecessorsBreadthFirst("f", -1, visitor);
+		order.verify(visitor).visit("f", 0);
+		order.verify(visitor).visit("e", 1);
+		order.verify(visitor).visit("y", 1);
+		order.verify(visitor).visit("c", 2);
+		order.verify(visitor).visit("x", 3);
+		order.verifyNoMoreInteractions();
+	}
+
+	@Test
+	public void testTraversePredecessorsDepthFirst() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "b");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		graph.addEdge("y", "f");
+		Visitor<String> visitor = mock(Visitor.class);
+		InOrder order = inOrder(visitor);
+		
+		graph.traversePredecessorsDepthFirst("f", -1, visitor);
+		order.verify(visitor).visit("f", 0);
+		order.verify(visitor).visit("e", 1);
+		order.verify(visitor).visit("c", 2);
+		order.verify(visitor).visit("x", 3);
+		order.verify(visitor).visit("y", 1);
+		order.verifyNoMoreInteractions();
 	}
 }

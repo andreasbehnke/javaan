@@ -5,31 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.javaan.model.Type;
+
 /**
  * Finds duplicate classes within a list of {@link ClassData} objects
  */
 public class DuplicatesFinder {
 
-	private final List<ClassData> classes;
+	private final List<Type> types;
 	
-	public DuplicatesFinder(List<ClassData> classes) {
-		this.classes = classes;
+	public DuplicatesFinder(List<Type> types) {
+		this.types = types;
 	}
 	
-	public List<List<ClassData>> find() {
-		Map<String, List<ClassData>> counts = new HashMap<String, List<ClassData>>();
-		for (ClassData classData : classes) {
-			String className = classData.getClassName();
+	public List<List<Type>> find() {
+		Map<String, List<Type>> counts = new HashMap<String, List<Type>>();
+		for (Type type : types) {
+			String className = type.getName();
 			if (counts.containsKey(className)) {
-				counts.get(className).add(classData);
+				counts.get(className).add(type);
 			} else {
-				List<ClassData> dups = new ArrayList<ClassData>();
-				dups.add(classData);
+				List<Type> dups = new ArrayList<Type>();
+				dups.add(type);
 				counts.put(className, dups);
 			}
 		}
-		List<List<ClassData>> duplicates = new ArrayList<List<ClassData>>();
-		for (List<ClassData> classlist : counts.values()) {
+		List<List<Type>> duplicates = new ArrayList<List<Type>>();
+		for (List<Type> classlist : counts.values()) {
 			if (classlist.size() > 1) {
 				duplicates.add(classlist);
 			}

@@ -1,14 +1,14 @@
 package org.javaan;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 public class SortUtil {
 
-	public static <T extends Comparable<? super T>> List<T> sort(Set<T> set) {
+	public static <T extends Comparable<? super T>> List<T> sort(Collection<T> set) {
 		List<T> sorted = new ArrayList<T>();
 		sorted.addAll(set);
 		Collections.sort(sorted);

@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.BaseCommand;
-import org.javaan.ClassData;
+import org.javaan.model.Type;
 
 public class FindEntryMethods extends BaseCommand {
 	
@@ -31,7 +31,7 @@ public class FindEntryMethods extends BaseCommand {
 	}
 	
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<ClassData> classes) {
+	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
 		// TODO Auto-generated method stub
 		
 	}
