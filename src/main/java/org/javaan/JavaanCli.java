@@ -59,7 +59,7 @@ public class JavaanCli {
 		commands.addCommand(new ListInterfaces());
 		commands.addCommand(new ListDuplicates());
 		commands.addCommand(new ListMethodCallGraph());
-		System.exit(new JavaanCli(args, commands).execute());
+		System.exit(new JavaanCli(args, commands).execute().getValue());
 	}
 	
 	private void setLoggerLevel(Level level) {
@@ -71,16 +71,16 @@ public class JavaanCli {
 		logger.setLevel(level);
 	}
 
-	public int execute() {
+	public ReturnCodes execute() {
 		if (args.length < 1) {
 			printUsage();
-			return ReturnCodes.errorParse.getValue();
+			return ReturnCodes.errorParse;
 		}
 		Command command = commands.getCommand(args[0]);
 		if (command == null) {
 			System.out.println(String.format(EXCEPTION_UNKNOWN_COMMAND, args[0]));
 			printUsage();
-			return ReturnCodes.errorParse.getValue();
+			return ReturnCodes.errorParse;
 		}
 		Options options = new Options();
 		options.addOption("h", "help", false, "Display help information for this command");
@@ -90,7 +90,7 @@ public class JavaanCli {
 			CommandLine cl = new GnuParser().parse(options, args);
 			if (cl.hasOption("h")) {
 				printCommandUsage(command, options);
-				return 0;
+				return ReturnCodes.ok;
 			}
 			
 			if (cl.hasOption("v")) {
@@ -103,17 +103,17 @@ public class JavaanCli {
 			if (params.length < 2) {
 				System.out.println(EXCEPTION_MISSING_FILES);
 				printUsage();
-				return ReturnCodes.errorParse.getValue();
+				return ReturnCodes.errorParse;
 			}
 			String[] files = Arrays.copyOfRange(params, 1, params.length);
-			return command.execute(cl, files).getValue();
+			return command.execute(cl, files);
 		} catch(ParseException e) {
 			System.out.println(String.format(EXCEPTION_COULD_NOT_PARSE, e.getMessage()));
 			printCommandUsage(command, options);
-			return ReturnCodes.errorParse.getValue();
+			return ReturnCodes.errorParse;
 		} catch (Exception e) {
 			LOG.error(EXCEPTION_COMMAND, e);
-			return ReturnCodes.errorCommand.getValue();
+			return ReturnCodes.errorCommand;
 		}
 	}
 	

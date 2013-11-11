@@ -21,9 +21,9 @@ public class TestJavaanCli {
 	
 	@Test
 	public void testExecuteParseError() {
-		assertEquals(ReturnCodes.errorParse.getValue(), new JavaanCli(new String[]{}, new CommandMap()).execute());
-		assertEquals(ReturnCodes.errorParse.getValue(), new JavaanCli(new String[]{"unknownCommand"}, new CommandMap()).execute());
-		assertEquals(ReturnCodes.errorParse.getValue(), new JavaanCli(new String[]{"unknownCommand", "file1"}, new CommandMap()).execute());
+		assertEquals(ReturnCodes.errorParse, new JavaanCli(new String[]{}, new CommandMap()).execute());
+		assertEquals(ReturnCodes.errorParse, new JavaanCli(new String[]{"unknownCommand"}, new CommandMap()).execute());
+		assertEquals(ReturnCodes.errorParse, new JavaanCli(new String[]{"unknownCommand", "file1"}, new CommandMap()).execute());
 	}
 	
 	@Test
@@ -34,7 +34,7 @@ public class TestJavaanCli {
 		when(command.getName()).thenReturn("test");
 		when(command.getHelpCommandLine()).thenReturn("javaan test");
 		commands.addCommand(command);
-		assertEquals(ReturnCodes.errorParse.getValue(), new JavaanCli(new String[]{"test", "--unknownOption"}, commands).execute());
+		assertEquals(ReturnCodes.errorParse, new JavaanCli(new String[]{"test", "--unknownOption"}, commands).execute());
 		verify(command).getHelpCommandLine();
 	}
 
@@ -46,7 +46,7 @@ public class TestJavaanCli {
 		when(command.getName()).thenReturn("test");
 		when(command.getHelpCommandLine()).thenReturn("javaan test");
 		commands.addCommand(command);
-		assertEquals(ReturnCodes.errorParse.getValue(), new JavaanCli(new String[]{"test", "-t"}, commands).execute());
+		assertEquals(ReturnCodes.errorParse, new JavaanCli(new String[]{"test", "-t"}, commands).execute());
 	}
 	
 	@Test
@@ -57,7 +57,7 @@ public class TestJavaanCli {
 		doCallRealMethod().when(command).buildCommandLineOptions(any(Options.class));
 		doThrow(new RuntimeException("error")).when(command).execute(any(CommandLine.class), any(String[].class));
 		commands.addCommand(command);
-		assertEquals(ReturnCodes.errorCommand.getValue(), new JavaanCli(new String[]{"test", "file1"}, commands).execute());
+		assertEquals(ReturnCodes.errorCommand, new JavaanCli(new String[]{"test", "file1"}, commands).execute());
 		verify(command).execute(any(CommandLine.class), any(String[].class));
 	}
 	
@@ -69,7 +69,7 @@ public class TestJavaanCli {
 		when(command.execute(any(CommandLine.class), any(String[].class))).thenReturn(ReturnCodes.ok);
 		doCallRealMethod().when(command).buildCommandLineOptions(any(Options.class));
 		commands.addCommand(command);
-		assertEquals(0, new JavaanCli(new String[]{"test", "file1"}, commands).execute());
+		assertEquals(ReturnCodes.ok, new JavaanCli(new String[]{"test", "file1"}, commands).execute());
 		verify(command).execute(any(CommandLine.class), eq(new String[]{"file1"}));
 	}
 	
@@ -81,7 +81,7 @@ public class TestJavaanCli {
 		when(command.execute(any(CommandLine.class), any(String[].class))).thenReturn(ReturnCodes.ok);
 		doCallRealMethod().when(command).buildCommandLineOptions(any(Options.class));
 		commands.addCommand(command);
-		assertEquals(0, new JavaanCli(new String[]{"test", "file1", "file2"}, commands).execute());
+		assertEquals(ReturnCodes.ok, new JavaanCli(new String[]{"test", "file1", "file2"}, commands).execute());
 		verify(command).execute(any(CommandLine.class), eq(new String[]{"file1", "file2"}));
 	}
 
@@ -93,7 +93,7 @@ public class TestJavaanCli {
 		when(command.getName()).thenReturn("test");
 		when(command.getHelpCommandLine()).thenReturn("javaan test");
 		commands.addCommand(command);
-		assertEquals(0, new JavaanCli(new String[]{"test", "--help"}, commands).execute());
+		assertEquals(ReturnCodes.ok, new JavaanCli(new String[]{"test", "--help"}, commands).execute());
 		verify(command).getHelpCommandLine();
 	}
 }
