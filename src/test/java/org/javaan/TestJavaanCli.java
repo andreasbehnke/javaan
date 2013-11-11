@@ -86,7 +86,7 @@ public class TestJavaanCli {
 	}
 
 	@Test
-	public void testExecuteHelp() {
+	public void testExecuteCommandSpecificHelp() {
 		CommandMap commands = new CommandMap();
 		Command command = mock(CommandStub.class);
 		doCallRealMethod().when(command).buildCommandLineOptions(any(Options.class));
@@ -95,5 +95,11 @@ public class TestJavaanCli {
 		commands.addCommand(command);
 		assertEquals(ReturnCodes.ok, new JavaanCli(new String[]{"test", "--help"}, commands).execute());
 		verify(command).getHelpCommandLine();
+	}
+	
+	@Test
+	public void testExecuteHelpWithoutCommand() {
+		CommandMap commands = new CommandMap();
+		assertEquals(ReturnCodes.ok, new JavaanCli(new String[]{"--help"}, commands).execute());
 	}
 }

@@ -77,22 +77,29 @@ public class JavaanCli {
 			return ReturnCodes.errorParse;
 		}
 		Command command = commands.getCommand(args[0]);
-		if (command == null) {
-			System.out.println(String.format(EXCEPTION_UNKNOWN_COMMAND, args[0]));
-			printUsage();
-			return ReturnCodes.errorParse;
-		}
+		boolean withoutCommand = (command == null);
 		Options options = new Options();
 		options.addOption("h", "help", false, "Display help information for this command");
 		options.addOption("v", "verbose", false, "Log verbose output");
-		options = command.buildCommandLineOptions(options);
+		if (!withoutCommand) {
+			options = command.buildCommandLineOptions(options);
+		}
 		try {
 			CommandLine cl = new GnuParser().parse(options, args);
-			if (cl.hasOption("h")) {
+			boolean displayHelp = cl.hasOption("h");
+			if (displayHelp && withoutCommand) {
+				printUsage();
+				return ReturnCodes.ok;
+			}
+			if (displayHelp && !withoutCommand) {
 				printCommandUsage(command, options);
 				return ReturnCodes.ok;
 			}
-			
+			if (!displayHelp && withoutCommand) {
+				System.out.println(String.format(EXCEPTION_UNKNOWN_COMMAND, args[0]));
+				printUsage();
+				return ReturnCodes.errorParse;
+			}
 			if (cl.hasOption("v")) {
 				setLoggerLevel(Level.FINEST);
 			} else {
