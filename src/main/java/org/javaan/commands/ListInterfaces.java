@@ -20,7 +20,7 @@ import org.javaan.print.PrintUtil;
 
 public class ListInterfaces extends BaseCommand {
 	
-	private final static String NAME = "listInterfaces";
+	private final static String NAME = "interfaces";
 	
 	private final static String DESCRIPTION = "List all interfaces of the libraries";
 	

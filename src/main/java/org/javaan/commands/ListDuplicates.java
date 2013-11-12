@@ -13,7 +13,7 @@ import org.javaan.print.PrintUtil;
 
 public class ListDuplicates extends BaseCommand {
 	
-private final static String NAME = "listDuplicates";
+private final static String NAME = "duplicates";
 	
 	private final static String DESCRIPTION = "List all duplicate classes and interfaces of the libraries being loaded. Classes are duplications when they have same canonical name, they may vary in bytecode and location.";
 	

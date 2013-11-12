@@ -19,44 +19,25 @@ import org.javaan.model.Type;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.MethodFormatter;
 
-public class ListMethodCallGraph extends BaseCommand {
-
-	private final static String NAME = "listMethodCallGraph";
-
-	private final static String DESCRIPTION = "Display the graph of methods being called by methods defined with option --filter '<class> - <method signature>'.";
-
-	@Override
-	public String getName() {
-		return NAME;
-	}
-
-	@Override
-	public String getDescription() {
-		return DESCRIPTION;
-	}
+abstract class BaseCallGraphCommand extends BaseCommand {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
-		StandardOptions.FILTER.setRequired(true);
-		options.addOption(StandardOptions.FILTER);
-		options.addOption(StandardOptions.CALLERS);
+		options.addOption(StandardOptions.METHOD);
 		return options;
 	}
-
+	
+	protected abstract void traverse(CallGraph callGraph, Method method, int maxDepth, GraphPrinter<Method> graphPrinter);
+	
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
-		String criteria = commandLine.getOptionValue(StandardOptions.OPT_FILTER);
-		boolean traverseCallers = commandLine.hasOption(StandardOptions.OPT_CALLERS);
+		String criteria = commandLine.getOptionValue(StandardOptions.OPT_METHOD);
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext, types).build();
 		Collection<Method> methods = SortUtil.sort(FilterUtil.filter(classContext.getMethods(), new MethodMatcher(criteria)));
 		GraphPrinter<Method> graphPrinter = new GraphPrinter<Method>(output, new MethodFormatter());
 		for (Method method : methods) {
-			if (traverseCallers) {
-				callGraph.traverseCallers(method, -1, graphPrinter);
-			} else {
-				callGraph.traverseCallees(method, -1, graphPrinter);
-			}
+			traverse(callGraph, method, -1, graphPrinter);
 			output.println();
 			output.println("--");
 			output.println();

@@ -5,8 +5,6 @@ import java.util.List;
 
 public class CommandMap {
 	
-	public static final String HELP_COMMANDS = "supported commands:\n";
-	
 	private final List<Command> commands = new ArrayList<Command>();
 	
 	public void addCommand(Command cmd) {
@@ -21,12 +19,8 @@ public class CommandMap {
 		}
 		return null;
 	}
-	
-	public void printHelp() {
-		System.out.println(HELP_COMMANDS);
-		for (Command cmd : commands) {
-			System.out.println("\t" + cmd.getName());
-			System.out.println("\t\t" + cmd.getDescription());
-		}
+
+	public List<Command> getCommands() {
+		return commands;
 	}
 }
