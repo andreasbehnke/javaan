@@ -15,7 +15,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.javaan.commands.ListClasses;
 import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
-import org.javaan.commands.ListMethodCallGraph;
+import org.javaan.commands.ShowCallerGraph;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -58,7 +58,7 @@ public class JavaanCli {
 		commands.addCommand(new ListClasses());
 		commands.addCommand(new ListInterfaces());
 		commands.addCommand(new ListDuplicates());
-		commands.addCommand(new ListMethodCallGraph());
+		commands.addCommand(new ShowCallerGraph());
 		System.exit(new JavaanCli(args, commands).execute().getValue());
 	}
 	
@@ -87,11 +87,7 @@ public class JavaanCli {
 		try {
 			CommandLine cl = new GnuParser().parse(options, args);
 			boolean displayHelp = cl.hasOption("h");
-			if (displayHelp && withoutCommand) {
-				printUsage();
-				return ReturnCodes.ok;
-			}
-			if (displayHelp && !withoutCommand) {
+			if (displayHelp) {
 				printCommandUsage(command, options);
 				return ReturnCodes.ok;
 			}
@@ -122,10 +118,6 @@ public class JavaanCli {
 			LOG.error(EXCEPTION_COMMAND, e);
 			return ReturnCodes.errorCommand;
 		}
-	}
-	
-	private void printCommandUsage(Command command, Options options) {
-		new HelpFormatter().printHelp(command.getHelpCommandLine(), command.getDescription(), options, "");
 	}
 	
 	private int maxCommandNameLength() {
@@ -175,5 +167,15 @@ public class JavaanCli {
 		}
 		System.out.println();
 		printParagraph(HELP_FOOTER);
+	}
+	
+	
+	private void printCommandUsage(Command command, Options options) {
+		if (command == null) {
+			printUsage();
+		} else {
+			new HelpFormatter()
+				.printHelp(command.getHelpCommandLine(), command.getDescription(), options, "");
+		}
 	}
 }

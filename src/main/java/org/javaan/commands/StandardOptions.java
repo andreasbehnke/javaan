@@ -18,7 +18,7 @@ public interface StandardOptions {
 	
 	static final String OPT_FILTER = "f";
 	
-	static final String OPT_CALLERS = "callers";
+	static final String OPT_METHOD = "method";
 	
 	static final Option SUPER_TYPES = new Option(StandardOptions.OPT_SUPER, "super", false, "For each type, list the hierachy of super types");
 	
@@ -32,5 +32,6 @@ public interface StandardOptions {
 
 	static final Option FILTER = new Option(StandardOptions.OPT_FILTER, "filter", true, "Filter types by <arg>. All types which contain <arg> in name will match.");
 
-	static final Option CALLERS = new Option(OPT_CALLERS, "Instead of traversing the call graph from caller to callee, list all callers of the given methods.");
+	static final Option METHOD = new Option(StandardOptions.OPT_METHOD, true, "Filter methods by <arg>. The format of <arg> is '<canonical class name> - <methodname><signature>'.");
+
 }
