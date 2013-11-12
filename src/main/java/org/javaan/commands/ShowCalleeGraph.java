@@ -6,7 +6,7 @@ import org.javaan.print.GraphPrinter;
 
 public class ShowCalleeGraph extends BaseCallGraphCommand {
 
-	private final static String NAME = "callee";
+	private final static String NAME = "callees";
 
 	private final static String DESCRIPTION = "Display the graph of methods being called by methods defined with option method.";
 
