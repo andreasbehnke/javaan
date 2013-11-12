@@ -5,6 +5,6 @@ package org.javaan.graph;
  */
 public interface Visitor<N> {
 
-	void visit(N node, int level);
+	void visit(N node, int level, boolean hasChilds);
 
 }

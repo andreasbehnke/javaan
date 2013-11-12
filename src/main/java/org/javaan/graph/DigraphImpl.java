@@ -157,13 +157,14 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 			List<N> nextChilds = null;
 			for (N n : currentChilds) {
 				if (!visited.contains(n)) {
-					visitor.visit(n, level);
+					List<N> childs = callback.getNextForTranversal(n);
+					visitor.visit(n, level, childs.size() > 0);
 					visited.add(n);
 					if (depth < 0 || level < depth) {
 						if (nextChilds == null) {
 							nextChilds = new ArrayList<N>();
 						}
-						nextChilds.addAll(callback.getNextForTranversal(n));
+						nextChilds.addAll(childs);
 					}
 				}
 			}
@@ -188,10 +189,10 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 				N n = childList.remove(0);
 				if (!visited.contains(n)) {
 					int stackSize = stack.size() - 1;
-					visitor.visit(n, stackSize);
+					childList = callback.getNextForTranversal(n);
+					visitor.visit(n, stackSize, childList.size() > 0);
 					visited.add(n);
 					if (depth < 0 || stackSize < depth) {
-						childList = callback.getNextForTranversal(n);
 						stack.push(childList);
 					}
 				}

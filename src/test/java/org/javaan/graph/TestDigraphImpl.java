@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 
 import java.util.Set;
 
@@ -225,14 +226,14 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsDepthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
-		order.verify(visitor).visit("f", 3);
-		order.verify(visitor).visit("g", 1);
+		order.verify(visitor).visit("x", 0, true);
+		order.verify(visitor).visit("a", 1, false);
+		order.verify(visitor).visit("b", 1, false);
+		order.verify(visitor).visit("c", 1, true);
+		order.verify(visitor).visit("d", 2, false);
+		order.verify(visitor).visit("e", 2, true);
+		order.verify(visitor).visit("f", 3, false);
+		order.verify(visitor).visit("g", 1, false);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -250,13 +251,13 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsDepthFirst("x", 2, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
-		order.verify(visitor).visit("g", 1);
+		order.verify(visitor).visit("x", 0, true);
+		order.verify(visitor).visit("a", 1, false);
+		order.verify(visitor).visit("b", 1, false);
+		order.verify(visitor).visit("c", 1, true);
+		order.verify(visitor).visit("d", 2, false);
+		order.verify(visitor).visit("e", 2, true);
+		order.verify(visitor).visit("g", 1, false);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -270,9 +271,9 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsDepthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 2);
+		order.verify(visitor).visit("x", 0, true);
+		order.verify(visitor).visit("a", 1, true);
+		order.verify(visitor).visit("b", 2, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -290,14 +291,14 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("g", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
-		order.verify(visitor).visit("f", 3);
+		order.verify(visitor).visit("x", 0, true);
+		order.verify(visitor).visit("a", 1, false);
+		order.verify(visitor).visit("b", 1, false);
+		order.verify(visitor).visit("c", 1, true);
+		order.verify(visitor).visit("g", 1, false);
+		order.verify(visitor).visit("d", 2, false);
+		order.verify(visitor).visit("e", 2, true);
+		order.verify(visitor).visit("f", 3, false);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -315,12 +316,12 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", 2, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
+		order.verify(visitor).visit("x", 0, true);
+		order.verify(visitor).visit("a", 1, false);
+		order.verify(visitor).visit("b", 1, false);
+		order.verify(visitor).visit("c", 1, true);
+		order.verify(visitor).visit("d", 2, false);
+		order.verify(visitor).visit("e", 2, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -337,7 +338,7 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", 0, visitor);
-		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("x", 0, true);
 		order.verifyNoMoreInteractions();
 	}
 	
@@ -351,9 +352,9 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 2);
+		order.verify(visitor).visit("x", 0, true);
+		order.verify(visitor).visit("a", 1, true);
+		order.verify(visitor).visit("b", 2, true);
 		order.verifyNoMoreInteractions();
 	}
 	
@@ -371,11 +372,11 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traversePredecessorsBreadthFirst("f", -1, visitor);
-		order.verify(visitor).visit("f", 0);
-		order.verify(visitor).visit("e", 1);
-		order.verify(visitor).visit("y", 1);
-		order.verify(visitor).visit("c", 2);
-		order.verify(visitor).visit("x", 3);
+		order.verify(visitor).visit("f", 0, true);
+		order.verify(visitor).visit("e", 1, true);
+		order.verify(visitor).visit("y", 1, false);
+		order.verify(visitor).visit("c", 2, true);
+		order.verify(visitor).visit("x", 3, false);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -393,11 +394,11 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traversePredecessorsDepthFirst("f", -1, visitor);
-		order.verify(visitor).visit("f", 0);
-		order.verify(visitor).visit("e", 1);
-		order.verify(visitor).visit("c", 2);
-		order.verify(visitor).visit("x", 3);
-		order.verify(visitor).visit("y", 1);
+		order.verify(visitor).visit("f", 0, true);
+		order.verify(visitor).visit("e", 1, true);
+		order.verify(visitor).visit("c", 2, true);
+		order.verify(visitor).visit("x", 3, false);
+		order.verify(visitor).visit("y", 1, false);
 		order.verifyNoMoreInteractions();
 	}
 }
