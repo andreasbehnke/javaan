@@ -101,7 +101,33 @@ public class TestDigraphImpl {
 		assertTrue(childs.contains("b"));
 		assertTrue(childs.contains("c"));
 	}
-	
+
+	@Test
+	public void testGetLeafParents() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		graph.addEdge("y", "f");
+		
+		Set<String> leafNodes = graph.getLeafParents("x");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		
+		leafNodes = graph.getLeafParents("a");
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains("x"));
+		
+		leafNodes = graph.getLeafParents("f");
+		assertNotNull(leafNodes);
+		assertEquals(2, leafNodes.size());
+		assertTrue(leafNodes.contains("x"));
+		assertTrue(leafNodes.contains("y"));
+	}
+
 	@Test
 	public void testGetSuccessors() {
 		Digraph<String> graph = new DigraphImpl<String>();

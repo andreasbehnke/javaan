@@ -16,6 +16,8 @@ public interface Digraph<N extends Comparable<? super N>> extends Graph<N> {
 	
 	Set<N> getParents(N child);
 	
+	Set<N> getLeafParents(N child);
+	
 	Set<N> getSuccessors(N parent);
 	
 	Set<N> getPredecessors(N child);

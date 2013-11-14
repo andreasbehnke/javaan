@@ -76,6 +76,37 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 			return new HashSet<N>();
 		}
 	}
+
+	private Set<N> collectLeafNodes(N node, TraversalCallback<N> callback) {
+		Set<N> leafNodes = new HashSet<N>();
+		Stack<N> successors = new Stack<N>();
+		successors.addAll(callback.getNextForTranversal(node));
+		while(!successors.isEmpty()) {
+			N successor = successors.pop();
+			// detect cycle, ignore self
+			if (!successor.equals(node)) {
+				List<N> successorOfSuccessor = callback.getNextForTranversal(successor);
+				if (successorOfSuccessor.size() > 0) {
+					// more childs to detect
+					successors.addAll(successorOfSuccessor);
+				} else {
+					// leaf node found
+					leafNodes.add(successor);
+				}
+			}
+		}
+		return leafNodes;
+	}
+	
+	@Override
+	public Set<N> getLeafParents(N child) {
+		return collectLeafNodes(child, new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return new ArrayList<N>(getParents(node));
+			}
+		});
+	}
 	
 	@Override
 	public Set<N> getSuccessors(N parent) {
@@ -122,29 +153,17 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 	public boolean containsNode(N node) {
 		return parentChildMap.containsKey(node);
 	}
-	
+
 	@Override
-	public Set<N> getLeafChilds(N node) {
-		Set<N> leafNodes = new HashSet<N>();
-		Stack<N> successors = new Stack<N>();
-		successors.addAll(getChilds(node));
-		while(!successors.isEmpty()) {
-			N successor = successors.pop();
-			// detect cycle, ignore self
-			if (!successor.equals(node)) {
-				Set<N> successorOfSuccessor = getChilds(successor);
-				if (successorOfSuccessor.size() > 0) {
-					// more childs to detect
-					successors.addAll(successorOfSuccessor);
-				} else {
-					// leaf node found
-					leafNodes.add(successor);
-				}
+	public Set<N> getLeafChilds(N parent) {
+		return collectLeafNodes(parent, new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return new ArrayList<N>(getChilds(node));
 			}
-		}
-		return leafNodes;
+		});
 	}
-	
+
 	private void traverseBreadthFirst(N node, int depth, Visitor<N> visitor, TraversalCallback<N> callback) {
 		List<List<N>> successors = new ArrayList<List<N>>();
 		List<N> firstChilds = new ArrayList<N>();
