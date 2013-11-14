@@ -43,4 +43,12 @@ public class CallGraph {
 	public void traverseCallees(Method caller, int depth, Visitor<Method> calleeVisitor) {
 		callerOfMethod.traverseSuccessorsDepthFirst(caller, depth, calleeVisitor);
 	}
+	
+	public Set<Method> getLeafCallers(Method callee) {
+		return callerOfMethod.getLeafParents(callee);
+	}
+	
+	public Set<Method> getLeafCallees(Method caller) {
+		return callerOfMethod.getLeafChilds(caller);
+	}
 }

@@ -97,4 +97,39 @@ public class TestCallGraph {
 		order.verify(visitor).visit(METHODE, 3, false);
 		order.verifyNoMoreInteractions();
 	}
+	
+	@Test
+	public void testGetLeafCallers() {
+		CallGraph callGraph = new CallGraph();
+		callGraph.addCall(METHODA, METHODB);
+		callGraph.addCall(METHODA, METHODC);
+		callGraph.addCall(METHODC, METHODD);
+		
+		Set<Method> leafCallers = callGraph.getLeafCallers(METHODA);
+		assertNotNull(leafCallers);
+		assertEquals(0, leafCallers.size());
+		
+		leafCallers = callGraph.getLeafCallers(METHODD);
+		assertNotNull(leafCallers);
+		assertEquals(1, leafCallers.size());
+		assertTrue(leafCallers.contains(METHODA));
+	}
+	
+	@Test
+	public void testGetLeafCallees() {
+		CallGraph callGraph = new CallGraph();
+		callGraph.addCall(METHODA, METHODB);
+		callGraph.addCall(METHODA, METHODC);
+		callGraph.addCall(METHODC, METHODD);
+		
+		Set<Method> leafCallees = callGraph.getLeafCallees(METHODA);
+		assertNotNull(leafCallees);
+		assertEquals(2, leafCallees.size());
+		assertTrue(leafCallees.contains(METHODB));
+		assertTrue(leafCallees.contains(METHODD));
+		
+		leafCallees = callGraph.getLeafCallees(METHODD);
+		assertNotNull(leafCallees);
+		assertEquals(0, leafCallees.size());
+	}
 }
