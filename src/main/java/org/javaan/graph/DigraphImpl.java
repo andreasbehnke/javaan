@@ -228,15 +228,6 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 		};
 	}
 	
-	private TraversalCallback<N> getParentTraversal() {
-		return new TraversalCallback<N>() {
-			@Override
-			public List<N> getNextForTranversal(N node) {
-				return SortUtil.sort(getParents(node));
-			}
-		};
-	}
-	
 	@Override
 	public void traverseSuccessorsBreadthFirst(N node, int depth, Visitor<N> visitor) {
 		traverseBreadthFirst(node, depth, visitor, getChildTraversal());
@@ -247,6 +238,15 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 		traverseDepthFirst(node, depth, visitor, getChildTraversal());
 	}
 	
+	private TraversalCallback<N> getParentTraversal() {
+		return new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return SortUtil.sort(getParents(node));
+			}
+		};
+	}
+
 	@Override
 	public void traversePredecessorsBreadthFirst(N node, int depth, Visitor<N> visitor) {
 		traverseBreadthFirst(node, depth, visitor, getParentTraversal());
