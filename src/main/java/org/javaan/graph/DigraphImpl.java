@@ -124,7 +124,7 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 	}
 	
 	@Override
-	public Set<N> getLeaveNodes(N node) {
+	public Set<N> getLeafNodes(N node) {
 		Set<N> leaveNodes = new HashSet<N>();
 		Stack<N> successors = new Stack<N>();
 		successors.addAll(getChilds(node));
