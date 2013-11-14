@@ -48,7 +48,7 @@ abstract class BaseCallGraphCommand extends BaseCommand {
 	
 	private void printLeafMethods(CallGraph callGraph, PrintStream output, Collection<Method> methods, ObjectFormatter<Method> formatter) {
 		for (Method method : methods) {
-			PrintUtil.println(output, SortUtil.sort(collectLeafMethods(callGraph, method)), "[M]" + method + ":", "\n\t[M]", ", ");
+			PrintUtil.println(output, formatter, SortUtil.sort(collectLeafMethods(callGraph, method)), formatter.format(method) , "\n\t", ", ");
 		}		
 	}
 	
