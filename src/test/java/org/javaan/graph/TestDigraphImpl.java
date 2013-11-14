@@ -236,6 +236,15 @@ public class TestDigraphImpl {
 		assertNotNull(leafNodes);
 		assertEquals(1, leafNodes.size());
 		assertTrue(leafNodes.contains("c"));
+		
+		graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("a", "b");
+		graph.addEdge("b", "a");
+		
+		leafNodes = graph.getLeafChilds("x");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
 	}
 	
 	@Test

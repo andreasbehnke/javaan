@@ -78,24 +78,24 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 	}
 
 	private Set<N> collectLeafNodes(N node, TraversalCallback<N> callback) {
-		Set<N> leafNodes = new HashSet<N>();
-		Stack<N> successors = new Stack<N>();
-		successors.addAll(callback.getNextForTranversal(node));
-		while(!successors.isEmpty()) {
-			N successor = successors.pop();
-			// detect cycle, ignore self
-			if (!successor.equals(node)) {
-				List<N> successorOfSuccessor = callback.getNextForTranversal(successor);
-				if (successorOfSuccessor.size() > 0) {
-					// more childs to detect
-					successors.addAll(successorOfSuccessor);
+		Set<N> leaveNodes = new HashSet<N>();
+		Set<N> successors = new HashSet<N>();
+		Stack<N> successorStack = new Stack<N>();
+		successorStack.addAll(callback.getNextForTranversal(node));
+		while(!successorStack.isEmpty()) {
+			N successor = successorStack.pop();
+			// detect cycle, ignore existing nodes
+			if (!successors.contains(successor)) {
+				successors.add(successor);
+				List<N> nextNodes = callback.getNextForTranversal(successor);
+				if (nextNodes.size() > 0) {
+					successorStack.addAll(nextNodes);
 				} else {
-					// leaf node found
-					leafNodes.add(successor);
+					leaveNodes.add(successor);
 				}
 			}
 		}
-		return leafNodes;
+		return leaveNodes;
 	}
 	
 	@Override
