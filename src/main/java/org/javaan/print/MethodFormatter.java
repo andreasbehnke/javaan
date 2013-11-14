@@ -6,7 +6,7 @@ public class MethodFormatter implements ObjectFormatter<Method> {
 
 	@Override
 	public String format(Method method) {
-		return method.getFullName();
+		return "[M]" + method.getFullName();
 	}
 
 }

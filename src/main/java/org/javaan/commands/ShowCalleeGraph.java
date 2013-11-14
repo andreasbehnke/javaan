@@ -1,8 +1,10 @@
 package org.javaan.commands;
 
+import java.util.Set;
+
+import org.javaan.graph.Visitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Method;
-import org.javaan.print.GraphPrinter;
 
 public class ShowCalleeGraph extends BaseCallGraphCommand {
 
@@ -21,8 +23,13 @@ public class ShowCalleeGraph extends BaseCallGraphCommand {
 	}
 
 	@Override
-	protected void traverse(CallGraph callGraph, Method method, int maxDepth, GraphPrinter<Method> graphPrinter) {
+	protected void traverse(CallGraph callGraph, Method method, int maxDepth, Visitor<Method> graphPrinter) {
 		callGraph.traverseCallees(method, -1, graphPrinter);
+	}
+	
+	@Override
+	protected Set<Method> collectLeafMethods(CallGraph callGraph, Method method) {
+		return callGraph.getLeafCallees(method);
 	}
 
 }

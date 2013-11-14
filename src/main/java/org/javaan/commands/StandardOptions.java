@@ -20,6 +20,8 @@ public interface StandardOptions {
 	
 	static final String OPT_METHOD = "method";
 	
+	static final String OPT_LEAVES = "l";
+	
 	static final Option SUPER_TYPES = new Option(StandardOptions.OPT_SUPER, "super", false, "For each type, list the hierachy of super types");
 	
 	static final Option SPECIALIZATIONS = new Option(StandardOptions.OPT_SPECIALIZATIONS, "specializations", false, "For each type, list specialization types");
@@ -34,4 +36,5 @@ public interface StandardOptions {
 
 	static final Option METHOD = new Option(StandardOptions.OPT_METHOD, true, "Filter methods by <arg>. The format of <arg> is '<canonical class name> - <methodname><signature>'.");
 
+	static final Option LEAVES = new Option(StandardOptions.OPT_LEAVES, "leaves", false, "Only display leave elements of tree.");
 }
