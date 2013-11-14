@@ -165,7 +165,7 @@ public class TestDigraphImpl {
 	}
 	
 	@Test
-	public void testGetLeafNodes() {
+	public void testGetLeafChilds() {
 		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
@@ -174,42 +174,42 @@ public class TestDigraphImpl {
 		graph.addEdge("c", "e");
 		graph.addEdge("e", "f");
 		
-		Set<String> leaveNodes = graph.getLeafNodes("x");
-		assertNotNull(leaveNodes);
-		assertEquals(4, leaveNodes.size());
-		assertTrue(leaveNodes.contains("a"));
-		assertTrue(leaveNodes.contains("b"));
-		assertTrue(leaveNodes.contains("d"));
-		assertTrue(leaveNodes.contains("f"));
-		leaveNodes = graph.getLeafNodes("c");
-		assertNotNull(leaveNodes);
-		assertEquals(2, leaveNodes.size());
-		assertTrue(leaveNodes.contains("d"));
-		assertTrue(leaveNodes.contains("f"));
-		leaveNodes = graph.getLeafNodes("a");
-		assertNotNull(leaveNodes);
-		assertEquals(0, leaveNodes.size());
-		leaveNodes = graph.getLeafNodes("b");
-		assertNotNull(leaveNodes);
-		assertEquals(0, leaveNodes.size());
-		leaveNodes = graph.getLeafNodes("e");
-		assertNotNull(leaveNodes);
-		assertEquals(1, leaveNodes.size());
-		assertTrue(leaveNodes.contains("f"));
+		Set<String> leafNodes = graph.getLeafChilds("x");
+		assertNotNull(leafNodes);
+		assertEquals(4, leafNodes.size());
+		assertTrue(leafNodes.contains("a"));
+		assertTrue(leafNodes.contains("b"));
+		assertTrue(leafNodes.contains("d"));
+		assertTrue(leafNodes.contains("f"));
+		leafNodes = graph.getLeafChilds("c");
+		assertNotNull(leafNodes);
+		assertEquals(2, leafNodes.size());
+		assertTrue(leafNodes.contains("d"));
+		assertTrue(leafNodes.contains("f"));
+		leafNodes = graph.getLeafChilds("a");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		leafNodes = graph.getLeafChilds("b");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		leafNodes = graph.getLeafChilds("e");
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains("f"));
 	}
 	
 	@Test
-	public void testGetLeaveNodesCycle() {
+	public void testGetLeafNodesCycle() {
 		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("a", "b");
 		graph.addEdge("b", "x");
 		graph.addEdge("a", "c");
 		
-		Set<String> leaveNodes = graph.getLeafNodes("x");
-		assertNotNull(leaveNodes);
-		assertEquals(1, leaveNodes.size());
-		assertTrue(leaveNodes.contains("c"));
+		Set<String> leafNodes = graph.getLeafChilds("x");
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains("c"));
 	}
 	
 	@Test

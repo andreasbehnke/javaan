@@ -124,8 +124,8 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 	}
 	
 	@Override
-	public Set<N> getLeafNodes(N node) {
-		Set<N> leaveNodes = new HashSet<N>();
+	public Set<N> getLeafChilds(N node) {
+		Set<N> leafNodes = new HashSet<N>();
 		Stack<N> successors = new Stack<N>();
 		successors.addAll(getChilds(node));
 		while(!successors.isEmpty()) {
@@ -134,15 +134,15 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 			if (!successor.equals(node)) {
 				Set<N> successorOfSuccessor = getChilds(successor);
 				if (successorOfSuccessor.size() > 0) {
-					// more callers to detect
+					// more childs to detect
 					successors.addAll(successorOfSuccessor);
 				} else {
-					// leave node found
-					leaveNodes.add(successor);
+					// leaf node found
+					leafNodes.add(successor);
 				}
 			}
 		}
-		return leaveNodes;
+		return leafNodes;
 	}
 	
 	private void traverseBreadthFirst(N node, int depth, Visitor<N> visitor, TraversalCallback<N> callback) {

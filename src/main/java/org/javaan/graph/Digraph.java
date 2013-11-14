@@ -22,7 +22,7 @@ public interface Digraph<N extends Comparable<? super N>> extends Graph<N> {
 
 	boolean hasChilds(N parent);
 
-	Set<N> getLeafNodes(N node);
+	Set<N> getLeafChilds(N node);
 	
 	void traverseSuccessorsBreadthFirst(N node, int depth, Visitor<N> visitor);
 	
