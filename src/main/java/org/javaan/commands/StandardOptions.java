@@ -20,6 +20,8 @@ public interface StandardOptions {
 	
 	static final String OPT_METHOD = "method";
 	
+	static final String OPT_LEAVES = "l";
+	
 	static final Option SUPER_TYPES = new Option(StandardOptions.OPT_SUPER, "super", false, "For each type, list the hierachy of super types");
 	
 	static final Option SPECIALIZATIONS = new Option(StandardOptions.OPT_SPECIALIZATIONS, "specializations", false, "For each type, list specialization types");
@@ -32,6 +34,8 @@ public interface StandardOptions {
 
 	static final Option FILTER = new Option(StandardOptions.OPT_FILTER, "filter", true, "Filter types by <arg>. All types which contain <arg> in name will match.");
 
-	static final Option METHOD = new Option(StandardOptions.OPT_METHOD, true, "Filter methods by <arg>. The format of <arg> is '<canonical class name> - <methodname><signature>'.");
+	static final Option METHOD = new Option(StandardOptions.OPT_METHOD, true, "Filter methods by <arg>. The format of a matching method is '<canonical class name> - <methodname><signature>'. "
+			+ "All methods which contain <arg> in name will match.");
 
+	static final Option LEAVES = new Option(StandardOptions.OPT_LEAVES, "leaves", false, "Only display leaf elements of tree.");
 }

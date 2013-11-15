@@ -76,6 +76,37 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 			return new HashSet<N>();
 		}
 	}
+
+	private Set<N> collectLeafNodes(N node, TraversalCallback<N> callback) {
+		Set<N> leaveNodes = new HashSet<N>();
+		Set<N> successors = new HashSet<N>();
+		Stack<N> successorStack = new Stack<N>();
+		successorStack.addAll(callback.getNextForTranversal(node));
+		while(!successorStack.isEmpty()) {
+			N successor = successorStack.pop();
+			// detect cycle, ignore existing nodes
+			if (!successors.contains(successor)) {
+				successors.add(successor);
+				List<N> nextNodes = callback.getNextForTranversal(successor);
+				if (nextNodes.size() > 0) {
+					successorStack.addAll(nextNodes);
+				} else {
+					leaveNodes.add(successor);
+				}
+			}
+		}
+		return leaveNodes;
+	}
+	
+	@Override
+	public Set<N> getLeafParents(N child) {
+		return collectLeafNodes(child, new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return new ArrayList<N>(getParents(node));
+			}
+		});
+	}
 	
 	@Override
 	public Set<N> getSuccessors(N parent) {
@@ -122,29 +153,17 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 	public boolean containsNode(N node) {
 		return parentChildMap.containsKey(node);
 	}
-	
+
 	@Override
-	public Set<N> getLeaveNodes(N node) {
-		Set<N> leaveNodes = new HashSet<N>();
-		Stack<N> successors = new Stack<N>();
-		successors.addAll(getChilds(node));
-		while(!successors.isEmpty()) {
-			N successor = successors.pop();
-			// detect cycle, ignore self
-			if (!successor.equals(node)) {
-				Set<N> successorOfSuccessor = getChilds(successor);
-				if (successorOfSuccessor.size() > 0) {
-					// more callers to detect
-					successors.addAll(successorOfSuccessor);
-				} else {
-					// leave node found
-					leaveNodes.add(successor);
-				}
+	public Set<N> getLeafChilds(N parent) {
+		return collectLeafNodes(parent, new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return new ArrayList<N>(getChilds(node));
 			}
-		}
-		return leaveNodes;
+		});
 	}
-	
+
 	private void traverseBreadthFirst(N node, int depth, Visitor<N> visitor, TraversalCallback<N> callback) {
 		List<List<N>> successors = new ArrayList<List<N>>();
 		List<N> firstChilds = new ArrayList<N>();
@@ -155,15 +174,18 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 		while(!successors.isEmpty()) {
 			List<N> currentChilds = successors.remove(0);
 			List<N> nextChilds = null;
-			for (N n : currentChilds) {
+			for (int i=0; i<currentChilds.size(); i++) {
+				N n = currentChilds.get(i);
+				boolean isTail = (i == currentChilds.size() - 1);
 				if (!visited.contains(n)) {
-					visitor.visit(n, level);
+					List<N> childs = callback.getNextForTranversal(n);
+					visitor.visit(n, level, childs.size() > 0, isTail);
 					visited.add(n);
 					if (depth < 0 || level < depth) {
 						if (nextChilds == null) {
 							nextChilds = new ArrayList<N>();
 						}
-						nextChilds.addAll(callback.getNextForTranversal(n));
+						nextChilds.addAll(childs);
 					}
 				}
 			}
@@ -186,12 +208,13 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 				stack.pop();
 			} else {
 				N n = childList.remove(0);
+				boolean isTail = childList.isEmpty();
 				if (!visited.contains(n)) {
 					int stackSize = stack.size() - 1;
-					visitor.visit(n, stackSize);
+					childList = callback.getNextForTranversal(n);
+					visitor.visit(n, stackSize, childList.size() > 0, isTail);
 					visited.add(n);
 					if (depth < 0 || stackSize < depth) {
-						childList = callback.getNextForTranversal(n);
 						stack.push(childList);
 					}
 				}
@@ -208,15 +231,6 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 		};
 	}
 	
-	private TraversalCallback<N> getParentTraversal() {
-		return new TraversalCallback<N>() {
-			@Override
-			public List<N> getNextForTranversal(N node) {
-				return SortUtil.sort(getParents(node));
-			}
-		};
-	}
-	
 	@Override
 	public void traverseSuccessorsBreadthFirst(N node, int depth, Visitor<N> visitor) {
 		traverseBreadthFirst(node, depth, visitor, getChildTraversal());
@@ -227,6 +241,15 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 		traverseDepthFirst(node, depth, visitor, getChildTraversal());
 	}
 	
+	private TraversalCallback<N> getParentTraversal() {
+		return new TraversalCallback<N>() {
+			@Override
+			public List<N> getNextForTranversal(N node) {
+				return SortUtil.sort(getParents(node));
+			}
+		};
+	}
+
 	@Override
 	public void traversePredecessorsBreadthFirst(N node, int depth, Visitor<N> visitor) {
 		traverseBreadthFirst(node, depth, visitor, getParentTraversal());

@@ -1,14 +1,17 @@
 package org.javaan.commands;
 
+import java.util.Set;
+
+import org.javaan.graph.Visitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Method;
-import org.javaan.print.GraphPrinter;
 
 public class ShowCallerGraph extends BaseCallGraphCommand {
 
 	private final static String NAME = "callers";
 
-	private final static String DESCRIPTION = "Display the graph of methods which call methods defined with option method.";
+	private final static String DESCRIPTION = "Display the graph of methods which call another method. "
+			+ "This is the bottom up view of the call graph.";
 
 	@Override
 	public String getName() {
@@ -21,8 +24,12 @@ public class ShowCallerGraph extends BaseCallGraphCommand {
 	}
 
 	@Override
-	protected void traverse(CallGraph callGraph, Method method, int maxDepth, GraphPrinter<Method> graphPrinter) {
+	protected void traverse(CallGraph callGraph, Method method, int maxDepth, Visitor<Method> graphPrinter) {
 		callGraph.traverseCallers(method, -1, graphPrinter);
 	}
 
+	@Override
+	protected Set<Method> collectLeafMethods(CallGraph callGraph, Method method) {
+		return callGraph.getLeafCallers(method);
+	}
 }

@@ -7,7 +7,7 @@ import org.javaan.graph.DigraphImpl;
 import org.javaan.graph.Visitor;
 
 /**
- * Represents the call-graph of all loaded JavaClasses. Leave nodes of the graph represent potential 
+ * Represents the call-graph of all loaded methods. Leaf nodes of the graph represent potential 
  * entry points to loaded libraries.
  */
 public class CallGraph {
@@ -42,5 +42,13 @@ public class CallGraph {
 	
 	public void traverseCallees(Method caller, int depth, Visitor<Method> calleeVisitor) {
 		callerOfMethod.traverseSuccessorsDepthFirst(caller, depth, calleeVisitor);
+	}
+	
+	public Set<Method> getLeafCallers(Method callee) {
+		return callerOfMethod.getLeafParents(callee);
+	}
+	
+	public Set<Method> getLeafCallees(Method caller) {
+		return callerOfMethod.getLeafChilds(caller);
 	}
 }

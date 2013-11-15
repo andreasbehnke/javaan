@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 
 import java.util.Set;
 
@@ -100,7 +101,33 @@ public class TestDigraphImpl {
 		assertTrue(childs.contains("b"));
 		assertTrue(childs.contains("c"));
 	}
-	
+
+	@Test
+	public void testGetLeafParents() {
+		Digraph<String> graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("x", "c");
+		graph.addEdge("c", "d");
+		graph.addEdge("c", "e");
+		graph.addEdge("e", "f");
+		graph.addEdge("y", "f");
+		
+		Set<String> leafNodes = graph.getLeafParents("x");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		
+		leafNodes = graph.getLeafParents("a");
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains("x"));
+		
+		leafNodes = graph.getLeafParents("f");
+		assertNotNull(leafNodes);
+		assertEquals(2, leafNodes.size());
+		assertTrue(leafNodes.contains("x"));
+		assertTrue(leafNodes.contains("y"));
+	}
+
 	@Test
 	public void testGetSuccessors() {
 		Digraph<String> graph = new DigraphImpl<String>();
@@ -164,7 +191,7 @@ public class TestDigraphImpl {
 	}
 	
 	@Test
-	public void testGetLeaveNodes() {
+	public void testGetLeafChilds() {
 		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("x", "b");
@@ -173,42 +200,51 @@ public class TestDigraphImpl {
 		graph.addEdge("c", "e");
 		graph.addEdge("e", "f");
 		
-		Set<String> leaveNodes = graph.getLeaveNodes("x");
-		assertNotNull(leaveNodes);
-		assertEquals(4, leaveNodes.size());
-		assertTrue(leaveNodes.contains("a"));
-		assertTrue(leaveNodes.contains("b"));
-		assertTrue(leaveNodes.contains("d"));
-		assertTrue(leaveNodes.contains("f"));
-		leaveNodes = graph.getLeaveNodes("c");
-		assertNotNull(leaveNodes);
-		assertEquals(2, leaveNodes.size());
-		assertTrue(leaveNodes.contains("d"));
-		assertTrue(leaveNodes.contains("f"));
-		leaveNodes = graph.getLeaveNodes("a");
-		assertNotNull(leaveNodes);
-		assertEquals(0, leaveNodes.size());
-		leaveNodes = graph.getLeaveNodes("b");
-		assertNotNull(leaveNodes);
-		assertEquals(0, leaveNodes.size());
-		leaveNodes = graph.getLeaveNodes("e");
-		assertNotNull(leaveNodes);
-		assertEquals(1, leaveNodes.size());
-		assertTrue(leaveNodes.contains("f"));
+		Set<String> leafNodes = graph.getLeafChilds("x");
+		assertNotNull(leafNodes);
+		assertEquals(4, leafNodes.size());
+		assertTrue(leafNodes.contains("a"));
+		assertTrue(leafNodes.contains("b"));
+		assertTrue(leafNodes.contains("d"));
+		assertTrue(leafNodes.contains("f"));
+		leafNodes = graph.getLeafChilds("c");
+		assertNotNull(leafNodes);
+		assertEquals(2, leafNodes.size());
+		assertTrue(leafNodes.contains("d"));
+		assertTrue(leafNodes.contains("f"));
+		leafNodes = graph.getLeafChilds("a");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		leafNodes = graph.getLeafChilds("b");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		leafNodes = graph.getLeafChilds("e");
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains("f"));
 	}
 	
 	@Test
-	public void testGetLeaveNodesCycle() {
+	public void testGetLeafNodesCycle() {
 		Digraph<String> graph = new DigraphImpl<String>();
 		graph.addEdge("x", "a");
 		graph.addEdge("a", "b");
 		graph.addEdge("b", "x");
 		graph.addEdge("a", "c");
 		
-		Set<String> leaveNodes = graph.getLeaveNodes("x");
-		assertNotNull(leaveNodes);
-		assertEquals(1, leaveNodes.size());
-		assertTrue(leaveNodes.contains("c"));
+		Set<String> leafNodes = graph.getLeafChilds("x");
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains("c"));
+		
+		graph = new DigraphImpl<String>();
+		graph.addEdge("x", "a");
+		graph.addEdge("a", "b");
+		graph.addEdge("b", "a");
+		
+		leafNodes = graph.getLeafChilds("x");
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
 	}
 	
 	@Test
@@ -225,14 +261,14 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsDepthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
-		order.verify(visitor).visit("f", 3);
-		order.verify(visitor).visit("g", 1);
+		order.verify(visitor).visit("x", 0, true, true);
+		order.verify(visitor).visit("a", 1, false, false);
+		order.verify(visitor).visit("b", 1, false, false);
+		order.verify(visitor).visit("c", 1, true, false);
+		order.verify(visitor).visit("d", 2, false, false);
+		order.verify(visitor).visit("e", 2, true, true);
+		order.verify(visitor).visit("f", 3, false, true);
+		order.verify(visitor).visit("g", 1, false, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -250,13 +286,13 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsDepthFirst("x", 2, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
-		order.verify(visitor).visit("g", 1);
+		order.verify(visitor).visit("x", 0, true, true);
+		order.verify(visitor).visit("a", 1, false, false);
+		order.verify(visitor).visit("b", 1, false, false);
+		order.verify(visitor).visit("c", 1, true, false);
+		order.verify(visitor).visit("d", 2, false, false);
+		order.verify(visitor).visit("e", 2, true, true);
+		order.verify(visitor).visit("g", 1, false, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -270,9 +306,9 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsDepthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 2);
+		order.verify(visitor).visit("x", 0, true, true);
+		order.verify(visitor).visit("a", 1, true, true);
+		order.verify(visitor).visit("b", 2, true, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -290,14 +326,14 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("g", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
-		order.verify(visitor).visit("f", 3);
+		order.verify(visitor).visit("x", 0, true, true);
+		order.verify(visitor).visit("a", 1, false, false);
+		order.verify(visitor).visit("b", 1, false, false);
+		order.verify(visitor).visit("c", 1, true, false);
+		order.verify(visitor).visit("g", 1, false, true);
+		order.verify(visitor).visit("d", 2, false, false);
+		order.verify(visitor).visit("e", 2, true, true);
+		order.verify(visitor).visit("f", 3, false, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -315,12 +351,12 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", 2, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 1);
-		order.verify(visitor).visit("c", 1);
-		order.verify(visitor).visit("d", 2);
-		order.verify(visitor).visit("e", 2);
+		order.verify(visitor).visit("x", 0, true, true);
+		order.verify(visitor).visit("a", 1, false, false);
+		order.verify(visitor).visit("b", 1, false, false);
+		order.verify(visitor).visit("c", 1, true, true);
+		order.verify(visitor).visit("d", 2, false, false);
+		order.verify(visitor).visit("e", 2, true, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -337,7 +373,7 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", 0, visitor);
-		order.verify(visitor).visit("x", 0);
+		order.verify(visitor).visit("x", 0, true, true);
 		order.verifyNoMoreInteractions();
 	}
 	
@@ -351,9 +387,9 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traverseSuccessorsBreadthFirst("x", -1, visitor);
-		order.verify(visitor).visit("x", 0);
-		order.verify(visitor).visit("a", 1);
-		order.verify(visitor).visit("b", 2);
+		order.verify(visitor).visit("x", 0, true, true);
+		order.verify(visitor).visit("a", 1, true, true);
+		order.verify(visitor).visit("b", 2, true, true);
 		order.verifyNoMoreInteractions();
 	}
 	
@@ -371,11 +407,11 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traversePredecessorsBreadthFirst("f", -1, visitor);
-		order.verify(visitor).visit("f", 0);
-		order.verify(visitor).visit("e", 1);
-		order.verify(visitor).visit("y", 1);
-		order.verify(visitor).visit("c", 2);
-		order.verify(visitor).visit("x", 3);
+		order.verify(visitor).visit("f", 0, true, true);
+		order.verify(visitor).visit("e", 1, true, false);
+		order.verify(visitor).visit("y", 1, false, true);
+		order.verify(visitor).visit("c", 2, true, true);
+		order.verify(visitor).visit("x", 3, false, true);
 		order.verifyNoMoreInteractions();
 	}
 
@@ -393,11 +429,11 @@ public class TestDigraphImpl {
 		InOrder order = inOrder(visitor);
 		
 		graph.traversePredecessorsDepthFirst("f", -1, visitor);
-		order.verify(visitor).visit("f", 0);
-		order.verify(visitor).visit("e", 1);
-		order.verify(visitor).visit("c", 2);
-		order.verify(visitor).visit("x", 3);
-		order.verify(visitor).visit("y", 1);
+		order.verify(visitor).visit("f", 0, true, true);
+		order.verify(visitor).visit("e", 1, true, false);
+		order.verify(visitor).visit("c", 2, true, true);
+		order.verify(visitor).visit("x", 3, false, true);
+		order.verify(visitor).visit("y", 1, false, true);
 		order.verifyNoMoreInteractions();
 	}
 }
