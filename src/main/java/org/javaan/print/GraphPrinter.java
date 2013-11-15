@@ -18,7 +18,7 @@ public class GraphPrinter<N> implements Visitor<N> {
 	}
 	
 	@Override
-	public void visit(N node, int level, boolean hasChilds) {
+	public void visit(N node, int level, boolean hasChilds, boolean isTail) {
 		StringBuilder buffer = new StringBuilder();
 		for (int i=0; i < level; i++) {
 			buffer.append(LEVEL_SPACER);

@@ -174,10 +174,12 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 		while(!successors.isEmpty()) {
 			List<N> currentChilds = successors.remove(0);
 			List<N> nextChilds = null;
-			for (N n : currentChilds) {
+			for (int i=0; i<currentChilds.size(); i++) {
+				N n = currentChilds.get(i);
+				boolean isTail = (i == currentChilds.size() - 1);
 				if (!visited.contains(n)) {
 					List<N> childs = callback.getNextForTranversal(n);
-					visitor.visit(n, level, childs.size() > 0);
+					visitor.visit(n, level, childs.size() > 0, isTail);
 					visited.add(n);
 					if (depth < 0 || level < depth) {
 						if (nextChilds == null) {
@@ -206,10 +208,11 @@ public class DigraphImpl<N extends Comparable<? super N>> implements Digraph<N> 
 				stack.pop();
 			} else {
 				N n = childList.remove(0);
+				boolean isTail = childList.isEmpty();
 				if (!visited.contains(n)) {
 					int stackSize = stack.size() - 1;
 					childList = callback.getNextForTranversal(n);
-					visitor.visit(n, stackSize, childList.size() > 0);
+					visitor.visit(n, stackSize, childList.size() > 0, isTail);
 					visited.add(n);
 					if (depth < 0 || stackSize < depth) {
 						stack.push(childList);

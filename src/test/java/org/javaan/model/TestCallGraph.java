@@ -73,10 +73,10 @@ public class TestCallGraph {
 		InOrder order = inOrder(visitor);
 		
 		callGraph.traverseCallers(METHODE, -1, visitor);
-		order.verify(visitor).visit(METHODE, 0, true);
-		order.verify(visitor).visit(METHODD, 1, true);
-		order.verify(visitor).visit(METHODC, 2, true);
-		order.verify(visitor).visit(METHODA, 3, false);
+		order.verify(visitor).visit(METHODE, 0, true, true);
+		order.verify(visitor).visit(METHODD, 1, true, true);
+		order.verify(visitor).visit(METHODC, 2, true, true);
+		order.verify(visitor).visit(METHODA, 3, false, true);
 		order.verifyNoMoreInteractions();
 	}
 	
@@ -91,10 +91,10 @@ public class TestCallGraph {
 		InOrder order = inOrder(visitor);
 		
 		callGraph.traverseCallees(METHODA, -1, visitor);
-		order.verify(visitor).visit(METHODA, 0, true);
-		order.verify(visitor).visit(METHODB, 1, false);
-		order.verify(visitor).visit(METHODC, 1, true);
-		order.verify(visitor).visit(METHODE, 3, false);
+		order.verify(visitor).visit(METHODA, 0, true, true);
+		order.verify(visitor).visit(METHODB, 1, false, false);
+		order.verify(visitor).visit(METHODC, 1, true, true);
+		order.verify(visitor).visit(METHODE, 3, false, true);
 		order.verifyNoMoreInteractions();
 	}
 	
