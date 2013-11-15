@@ -41,5 +41,10 @@ public class TestCallGraphBuilder implements TestConstants {
 		assertTrue(callees.contains(CLASSB_METHOD_CLASS_B));
 		assertTrue(callees.contains(CLASSA_METHOD_INTERFACE_B));
 		assertTrue(callees.contains(CLASSB_CONSTRUCTOR));
+		
+		callees = callGraph.getCallees(CLASS_CALLING_ABSTACT_METHOD_CALL_ABSTRACT_METHOD);
+		assertNotNull(callees);
+		assertEquals(1, callees.size());
+		assertTrue(callees.contains(SPECIALIZATION_CLASS_B_ABSTRACT_METHOD));
  	}
 }
