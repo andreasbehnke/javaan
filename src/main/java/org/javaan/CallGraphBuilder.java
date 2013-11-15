@@ -102,23 +102,34 @@ public class CallGraphBuilder {
 		
 	}
 	
+	private void addAbstractMethodCall(Set<Clazz> implementations, Method caller, Method abstractCallee) {
+		for (Clazz implementation : implementations) {
+			Method calleeCandidate = classContext.getMethod(implementation, abstractCallee.getSignature());
+			if (calleeCandidate != null) {
+				callGraph.addCall(caller, calleeCandidate);
+			}
+		}
+	}
+	
 	private void addInterfaceMethodCall(Method caller, InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
 		Method callee = getMethod(invoke, constantPoolGen);
 		if (callee != null) {
+			// find implementations of interface
 			Set<Clazz> implementations = classContext.getImplementations((Interface)callee.getType());
-			for (Clazz implementation : implementations) {
-				Method calleeCandidate = classContext.getMethod(implementation, callee.getSignature());
-				if (calleeCandidate != null) {
-					callGraph.addCall(caller, calleeCandidate);
-				}
-			}
+			addAbstractMethodCall(implementations, caller, callee);
 		}
 	}
 	
 	private void addClassMethodCall(Method caller, InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
 		Method callee = getMethod(invoke, constantPoolGen);
 		if (callee != null) {
-			callGraph.addCall(caller, callee);
+			if (callee.getJavaMethod().isAbstract()) {
+				// find implementations of abstract method
+				Set<Clazz> implementations = classContext.getSpecializationsOfClass((Clazz)callee.getType());
+				addAbstractMethodCall(implementations, caller, callee);
+			} else {
+				callGraph.addCall(caller, callee);	
+			}
 		}
 	}
 	
