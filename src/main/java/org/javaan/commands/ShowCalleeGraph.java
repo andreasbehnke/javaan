@@ -10,7 +10,8 @@ public class ShowCalleeGraph extends BaseCallGraphCommand {
 
 	private final static String NAME = "callees";
 
-	private final static String DESCRIPTION = "Display the graph of methods being called by methods defined with option method.";
+	private final static String DESCRIPTION = "Display the graph of methods being called by another method. "
+			+ "This is the top down view of the call graph.";
 
 	@Override
 	public String getName() {

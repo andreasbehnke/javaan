@@ -10,7 +10,8 @@ public class ShowCallerGraph extends BaseCallGraphCommand {
 
 	private final static String NAME = "callers";
 
-	private final static String DESCRIPTION = "Display the graph of methods which call methods defined with option method.";
+	private final static String DESCRIPTION = "Display the graph of methods which call another method. "
+			+ "This is the bottom up view of the call graph.";
 
 	@Override
 	public String getName() {
