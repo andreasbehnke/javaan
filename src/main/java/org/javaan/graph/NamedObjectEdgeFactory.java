@@ -8,11 +8,11 @@ import org.jgrapht.EdgeFactory;
  * Edges are of type NamedObjectEdge and the identifier is produced by concatenation 
  * of source and target name.
  */
-public class NamedObjectEdgeFactory implements EdgeFactory<NamedObject, NamedObjectEdge> {
+public class NamedObjectEdgeFactory<V extends NamedObject> implements EdgeFactory<V, NamedObjectEdge<V>> {
 
 	@Override
-	public NamedObjectEdge createEdge(NamedObject sourceVertex, NamedObject targetVertex) {
-		return new NamedObjectEdge(sourceVertex, targetVertex);
+	public NamedObjectEdge<V> createEdge(V sourceVertex, V targetVertex) {
+		return new NamedObjectEdge<V>(sourceVertex, targetVertex);
 	}
 
 }
