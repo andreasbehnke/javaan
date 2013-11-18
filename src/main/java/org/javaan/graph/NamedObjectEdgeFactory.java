@@ -5,13 +5,14 @@ import org.jgrapht.EdgeFactory;
 
 /**
  * Implementation of the {@link EdgeFactory} for {@link NamedObject} as vertex type.
- * Edges are of type String and produced by concatenation of source and target name.
+ * Edges are of type NamedObjectEdge and the identifier is produced by concatenation 
+ * of source and target name.
  */
-public class NamedObjectEdgeFactory implements EdgeFactory<NamedObject, String> {
+public class NamedObjectEdgeFactory implements EdgeFactory<NamedObject, NamedObjectEdge> {
 
 	@Override
-	public String createEdge(NamedObject sourceVertex, NamedObject targetVertex) {
-		return sourceVertex.getName() + " -> " + targetVertex.getName();
+	public NamedObjectEdge createEdge(NamedObject sourceVertex, NamedObject targetVertex) {
+		return new NamedObjectEdge(sourceVertex, targetVertex);
 	}
 
 }
