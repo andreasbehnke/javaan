@@ -10,6 +10,10 @@ import org.javaan.ReturnCodes;
 import org.javaan.model.DuplicatesFinder;
 import org.javaan.model.Type;
 
+/**
+ * Base class for all commands which need a unique set of types being loaded.
+ * A warning message is shown if the loaded types contain duplicates.
+ */
 public abstract class BaseTypeLoadingCommand extends BaseCommand {
 
 	@Override
