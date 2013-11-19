@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-import org.javaan.BaseCommand;
 import org.javaan.CallGraphBuilder;
 import org.javaan.ClassContextBuilder;
 import org.javaan.FilterUtil;
@@ -23,7 +22,7 @@ import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
 
-abstract class BaseCallGraphCommand extends BaseCommand {
+abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
