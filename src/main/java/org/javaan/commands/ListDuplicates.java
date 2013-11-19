@@ -1,13 +1,14 @@
 package org.javaan.commands;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-import org.javaan.BaseCommand;
-import org.javaan.DuplicatesFinder;
+import org.javaan.ReturnCodes;
 import org.javaan.SortUtil;
+import org.javaan.model.DuplicatesFinder;
 import org.javaan.model.Type;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
@@ -34,14 +35,24 @@ private final static String NAME = "duplicates";
 	public Options buildCommandLineOptions(Options options) {
 		return options;
 	}
-
+	
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
-		List<List<Type>> duplicates = new DuplicatesFinder(types).find();
+	public ReturnCodes execute(CommandLine commandLine, String[] files) {
+		try {
+			printDuplicates(System.out, loadTypes(files));
+		} catch (IOException e) {
+			LOG.error("Could not load class files from libraries", e);
+			return ReturnCodes.errorCommand;
+		}
+		return ReturnCodes.ok;
+	}
+
+	private void printDuplicates(PrintStream output, List<Type> types) {
+		List<List<Type>> duplicates = new DuplicatesFinder<Type>(types).find();
 		SortUtil.sort(duplicates);
 		ObjectFormatter<Type> formatter = new TypeInformationFormatter();
 		for (List<Type> duplicate : duplicates) {
-			PrintUtil.println(output, formatter, duplicate, "", "", "\n");
+			PrintUtil.println(output, formatter, duplicate,"", "", "\n");
 			output.println();
 		}
 	}

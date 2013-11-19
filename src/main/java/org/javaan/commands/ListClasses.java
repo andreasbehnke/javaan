@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
-import org.javaan.BaseCommand;
 import org.javaan.ClassContextBuilder;
 import org.javaan.FilterUtil;
 import org.javaan.NameMatcher;
@@ -18,7 +17,7 @@ import org.javaan.model.Type;
 import org.javaan.print.MethodFormatter;
 import org.javaan.print.PrintUtil;
 
-public class ListClasses extends BaseCommand {
+public class ListClasses extends BaseTypeLoadingCommand {
 	
 	private final static String NAME = "classes";
 	

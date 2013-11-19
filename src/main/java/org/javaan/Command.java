@@ -4,7 +4,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
 public interface Command {
-
+	
 	String getName();
 	
 	String getDescription();
