@@ -9,7 +9,9 @@ import org.javaan.BaseCommand;
 import org.javaan.DuplicatesFinder;
 import org.javaan.SortUtil;
 import org.javaan.model.Type;
+import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
+import org.javaan.print.TypeInformationFormatter;
 
 public class ListDuplicates extends BaseCommand {
 	
@@ -37,8 +39,9 @@ private final static String NAME = "duplicates";
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
 		List<List<Type>> duplicates = new DuplicatesFinder(types).find();
 		SortUtil.sort(duplicates);
+		ObjectFormatter<Type> formatter = new TypeInformationFormatter();
 		for (List<Type> duplicate : duplicates) {
-			PrintUtil.println(output, duplicate, "", "", "\n");
+			PrintUtil.println(output, formatter, duplicate, "", "", "\n");
 			output.println();
 		}
 	}
