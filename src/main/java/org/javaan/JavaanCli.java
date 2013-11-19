@@ -101,7 +101,7 @@ public class JavaanCli {
 			if (cl.hasOption("v")) {
 				setLoggerLevel(Level.FINEST);
 			} else {
-				setLoggerLevel(Level.SEVERE);
+				setLoggerLevel(Level.WARNING);
 			}
 			
 			String[] params = cl.getArgs();
