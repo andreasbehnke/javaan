@@ -6,23 +6,23 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class TestParentChildGraphImpl {
+public class TestBidirectionalMap {
 
 	@Test
 	public void testAddParent() {
-		ParentChildGraph<String, String> graph = new ParentChildGraphImpl<String, String>();
+		BidirectionalMap<String, String> graph = new BidirectionalMap<String, String>();
 		graph.addParent("parent");
 		assertTrue(graph.containsParent("parent"));
 	}
 	
 	@Test
 	public void testContainsParent() {
-		assertFalse(new ParentChildGraphImpl<String, String>().containsParent("unknown"));
+		assertFalse(new BidirectionalMap<String, String>().containsParent("unknown"));
 	}
 	
 	@Test
 	public void testAddEdge() {
-		ParentChildGraph<String, String> graph = new ParentChildGraphImpl<String, String>();
+		BidirectionalMap<String, String> graph = new BidirectionalMap<String, String>();
 		graph.addEdge("parent", "first");
 		graph.addEdge("parent", "second");
 		
@@ -38,12 +38,12 @@ public class TestParentChildGraphImpl {
 	
 	@Test
 	public void testContainsCild() {
-		assertFalse(new ParentChildGraphImpl<String, String>().containsChild("unknown"));
+		assertFalse(new BidirectionalMap<String, String>().containsChild("unknown"));
 	}
 	
 	@Test
 	public void testGetChilds() {
-		ParentChildGraph<String, String> graph = new ParentChildGraphImpl<String, String>();
+		BidirectionalMap<String, String> graph = new BidirectionalMap<String, String>();
 		graph.addParent("parent");
 		
 		Set<String> childs = graph.getChilds("parent");
@@ -64,7 +64,7 @@ public class TestParentChildGraphImpl {
 	
 	@Test
 	public void testGetParents() {
-		ParentChildGraph<String, String> graph = new ParentChildGraphImpl<String, String>();
+		BidirectionalMap<String, String> graph = new BidirectionalMap<String, String>();
 		graph.addEdge("parent", "first");
 		graph.addEdge("parent2", "first");
 		

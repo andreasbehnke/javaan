@@ -4,9 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.graph.BidirectionalMap;
 import org.javaan.graph.NamedObjectDirectedGraph;
-import org.javaan.graph.ParentChildGraph;
-import org.javaan.graph.ParentChildGraphImpl;
 import org.javaan.graph.SingleTargetDirectedGraph;
 
 public class ClassContext {
@@ -15,11 +14,11 @@ public class ClassContext {
 
 	private final NamedObjectDirectedGraph<Interface> superInterface = new NamedObjectDirectedGraph<Interface>();
 	
-	private final ParentChildGraph<Clazz, Interface> interfaceOfClass = new ParentChildGraphImpl<Clazz, Interface>();
+	private final BidirectionalMap<Clazz, Interface> interfaceOfClass = new BidirectionalMap<Clazz, Interface>();
 	
-	private final ParentChildGraph<Clazz, Method> methodsOfClass = new ParentChildGraphImpl<Clazz, Method>();
+	private final BidirectionalMap<Clazz, Method> methodsOfClass = new BidirectionalMap<Clazz, Method>();
 	
-	private final ParentChildGraph<Interface, Method> methodsOfInterface = new ParentChildGraphImpl<Interface, Method>();
+	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>();
 
 	public void addClass(Clazz className) {
 		if (className == null) {
