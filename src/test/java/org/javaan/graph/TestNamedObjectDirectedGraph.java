@@ -3,11 +3,16 @@ package org.javaan.graph;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.Set;
 
 import org.javaan.model.Clazz;
 import org.junit.Test;
+import org.mockito.InOrder;
 
 public class TestNamedObjectDirectedGraph {
 
@@ -15,6 +20,9 @@ public class TestNamedObjectDirectedGraph {
 	private static final Clazz B = new Clazz("b");
 	private static final Clazz C = new Clazz("c");
 	private static final Clazz D = new Clazz("d");
+	private static final Clazz E = new Clazz("e");
+	private static final Clazz F = new Clazz("f");
+	private static final Clazz G = new Clazz("g");
 	private static final Clazz X = new Clazz("x");
 	private static final Clazz Y = new Clazz("y");
 
@@ -107,5 +115,119 @@ public class TestNamedObjectDirectedGraph {
 		assertTrue(predecessors.contains(B));
 		assertTrue(predecessors.contains(D));
 		assertTrue(predecessors.contains(X));
+	}
+
+	@Test
+	public void testTraverseSuccessorsDepthFirst() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(X, B);
+		graph.addEdge(X, C);
+		graph.addEdge(C, D);
+		graph.addEdge(C, E);
+		graph.addEdge(E, F);
+		graph.addEdge(X, G);
+		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		
+		graph.traverseSuccessorsDepthFirst(X, visitor);
+		verify(visitor).visit(X, 0);
+		verify(visitor).visit(A, 1);
+		verify(visitor).visit(B, 1);
+		verify(visitor).visit(C, 1);
+		verify(visitor).visit(D, 2);
+		verify(visitor).visit(E, 2);
+		verify(visitor).visit(F, 3);
+		verify(visitor).visit(G, 1);
+		verifyNoMoreInteractions(visitor);
+	}
+
+	@Test
+	public void testTraverseSuccessorsDepthFirstCycle() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(A, B);
+		graph.addEdge(B, X);
+		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+
+		graph.traverseSuccessorsDepthFirst(X, visitor);
+		verify(visitor).visit(X, 0);
+		verify(visitor).visit(A, 1);
+		verify(visitor).visit(B, 2);
+		verifyNoMoreInteractions(visitor);
+	}
+
+
+	@Test
+	public void testTraversePredecessorsDepthFirst() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(X, B);
+		graph.addEdge(X, C);
+		graph.addEdge(C, D);
+		graph.addEdge(C, E);
+		graph.addEdge(E, F);
+		graph.addEdge(Y, F);
+		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		
+		graph.traversePredecessorsDepthFirst(F, visitor);
+		verify(visitor).visit(F, 0);
+		verify(visitor).visit(E, 1);
+		verify(visitor).visit(C, 2);
+		verify(visitor).visit(X, 3);
+		verify(visitor).visit(Y, 1);
+		verifyNoMoreInteractions(visitor);
+	}
+	
+	@Test
+	public void testGetLeafSuccessors() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(X, B);
+		graph.addEdge(X, C);
+		graph.addEdge(C, D);
+		graph.addEdge(C, E);
+		graph.addEdge(E, F);
+		
+		Set<Clazz> leafNodes = graph.getLeafSuccessors(X);
+		assertNotNull(leafNodes);
+		assertEquals(4, leafNodes.size());
+		assertTrue(leafNodes.contains(A));
+		assertTrue(leafNodes.contains(B));
+		assertTrue(leafNodes.contains(D));
+		assertTrue(leafNodes.contains(F));
+		leafNodes = graph.getLeafSuccessors(C);
+		assertNotNull(leafNodes);
+		assertEquals(2, leafNodes.size());
+		assertTrue(leafNodes.contains(D));
+		assertTrue(leafNodes.contains(F));
+		leafNodes = graph.getLeafSuccessors(A);
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		leafNodes = graph.getLeafSuccessors(B);
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		leafNodes = graph.getLeafSuccessors(E);
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains(F));
+	}
+
+	@Test
+	public void testGetLeafPredecessors() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(X, B);
+		graph.addEdge(X, C);
+		graph.addEdge(C, D);
+		graph.addEdge(C, E);
+		graph.addEdge(E, F);
+		
+		Set<Clazz> leafNodes = graph.getLeafPredecessors(X);
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+		leafNodes = graph.getLeafPredecessors(C);
+		assertNotNull(leafNodes);
+		assertEquals(1, leafNodes.size());
+		assertTrue(leafNodes.contains(X));
 	}
 }

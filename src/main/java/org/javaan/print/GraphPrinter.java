@@ -2,9 +2,10 @@ package org.javaan.print;
 
 import java.io.PrintStream;
 
-import org.javaan.graph.Visitor;
+import org.javaan.graph.NamedObjectVisitor;
+import org.javaan.model.NamedObject;
 
-public class GraphPrinter<N> implements Visitor<N> {
+public class GraphPrinter<N extends NamedObject> implements NamedObjectVisitor<N> {
 
 	private final static String LEVEL_SPACER = " ";
 	
@@ -18,7 +19,7 @@ public class GraphPrinter<N> implements Visitor<N> {
 	}
 	
 	@Override
-	public void visit(N node, int level, boolean hasChilds, boolean isTail) {
+	public void visit(N node, int level) {
 		StringBuilder buffer = new StringBuilder();
 		for (int i=0; i < level; i++) {
 			buffer.append(LEVEL_SPACER);

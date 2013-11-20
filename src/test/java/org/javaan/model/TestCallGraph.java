@@ -3,14 +3,14 @@ package org.javaan.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.Set;
 
-import org.javaan.graph.Visitor;
+import org.javaan.graph.NamedObjectVisitor;
 import org.junit.Test;
-import org.mockito.InOrder;
 
 public class TestCallGraph {
 	
@@ -69,15 +69,14 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		Visitor<Method> visitor = mock(Visitor.class);
-		InOrder order = inOrder(visitor);
+		NamedObjectVisitor<Method> visitor = mock(NamedObjectVisitor.class);
 		
-		callGraph.traverseCallers(METHODE, -1, visitor);
-		order.verify(visitor).visit(METHODE, 0, true, true);
-		order.verify(visitor).visit(METHODD, 1, true, true);
-		order.verify(visitor).visit(METHODC, 2, true, true);
-		order.verify(visitor).visit(METHODA, 3, false, true);
-		order.verifyNoMoreInteractions();
+		callGraph.traverseCallers(METHODE, visitor);
+		verify(visitor).visit(METHODE, 0);
+		verify(visitor).visit(METHODD, 1);
+		verify(visitor).visit(METHODC, 2);
+		verify(visitor).visit(METHODA, 3);
+		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -87,15 +86,15 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		Visitor<Method> visitor = mock(Visitor.class);
-		InOrder order = inOrder(visitor);
-		
-		callGraph.traverseCallees(METHODA, -1, visitor);
-		order.verify(visitor).visit(METHODA, 0, true, true);
-		order.verify(visitor).visit(METHODB, 1, false, false);
-		order.verify(visitor).visit(METHODC, 1, true, true);
-		order.verify(visitor).visit(METHODE, 3, false, true);
-		order.verifyNoMoreInteractions();
+		NamedObjectVisitor<Method> visitor = mock(NamedObjectVisitor.class);
+
+		callGraph.traverseCallees(METHODA, visitor);
+		verify(visitor).visit(METHODA, 0);
+		verify(visitor).visit(METHODB, 1);
+		verify(visitor).visit(METHODC, 1);
+		verify(visitor).visit(METHODD, 2);
+		verify(visitor).visit(METHODE, 3);
+		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test

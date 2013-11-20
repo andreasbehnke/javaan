@@ -2,9 +2,8 @@ package org.javaan.model;
 
 import java.util.Set;
 
-import org.javaan.graph.Digraph;
-import org.javaan.graph.DigraphImpl;
-import org.javaan.graph.Visitor;
+import org.javaan.graph.NamedObjectDirectedGraph;
+import org.javaan.graph.NamedObjectVisitor;
 
 /**
  * Represents the call-graph of all loaded methods. Leaf nodes of the graph represent potential 
@@ -12,10 +11,10 @@ import org.javaan.graph.Visitor;
  */
 public class CallGraph {
 	
-	private final Digraph<Method> callerOfMethod = new DigraphImpl<Method>();
+	private final NamedObjectDirectedGraph<Method> callerOfMethod = new NamedObjectDirectedGraph<Method>();
 	
 	public int size() {
-		return callerOfMethod.size();
+		return callerOfMethod.vertexSet().size();
 	}
 
 	public void addCall(Method caller, Method callee) {
@@ -29,26 +28,26 @@ public class CallGraph {
 	}
 	
 	public Set<Method> getCallers(Method callee) {
-		return callerOfMethod.getParents(callee);
+		return callerOfMethod.sourceVerticesOf(callee);
 	}
 	
 	public Set<Method> getCallees(Method caller) {
-		return callerOfMethod.getChilds(caller);
+		return callerOfMethod.targetVerticesOf(caller);
 	}
 	
-	public void traverseCallers(Method callee, int depth, Visitor<Method> callerVisitor) {
-		callerOfMethod.traversePredecessorsDepthFirst(callee, depth, callerVisitor);
+	public void traverseCallers(Method callee, NamedObjectVisitor<Method> callerVisitor) {
+		callerOfMethod.traversePredecessorsDepthFirst(callee, callerVisitor);
 	}
 	
-	public void traverseCallees(Method caller, int depth, Visitor<Method> calleeVisitor) {
-		callerOfMethod.traverseSuccessorsDepthFirst(caller, depth, calleeVisitor);
+	public void traverseCallees(Method caller, NamedObjectVisitor<Method> calleeVisitor) {
+		callerOfMethod.traverseSuccessorsDepthFirst(caller, calleeVisitor);
 	}
 	
 	public Set<Method> getLeafCallers(Method callee) {
-		return callerOfMethod.getLeafParents(callee);
+		return callerOfMethod.getLeafPredecessors(callee);
 	}
 	
 	public Set<Method> getLeafCallees(Method caller) {
-		return callerOfMethod.getLeafChilds(caller);
+		return callerOfMethod.getLeafSuccessors(caller);
 	}
 }
