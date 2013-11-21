@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-import org.javaan.CallGraphBuilder;
-import org.javaan.ClassContextBuilder;
+import org.javaan.bytecode.CallGraphBuilder;
+import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.graph.NamedObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;

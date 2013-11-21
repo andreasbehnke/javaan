@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.bytecode;
 
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ConstantPoolGen;

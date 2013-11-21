@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.bytecode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.bytecode.CallGraphBuilder;
+import org.javaan.bytecode.ClassContextBuilder;
+import org.javaan.bytecode.JarFileLoader;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Method;
