@@ -1,6 +1,6 @@
-package org.javaan;
+package org.javaan.commands;
 
-import org.javaan.FilterUtil.Matcher;
+import org.javaan.commands.FilterUtil.Matcher;
 import org.javaan.model.Method;
 
 public class MethodMatcher implements Matcher<Method> {

@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.ReturnCodes;
-import org.javaan.SortUtil;
 import org.javaan.model.DuplicatesFinder;
 import org.javaan.model.Type;
 import org.javaan.print.ObjectFormatter;
