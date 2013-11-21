@@ -9,7 +9,7 @@ import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
 /**
- * A directed graph which is constrained to one single target vertex
+ * A directed graph which is constrained to out degree of 1.
  */
 public class SingleTargetDirectedGraph<V extends NamedObject> extends NamedObjectDirectedGraph<V> {
 
