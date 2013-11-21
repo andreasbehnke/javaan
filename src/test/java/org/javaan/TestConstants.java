@@ -4,6 +4,9 @@ import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
 import org.javaan.model.Method;
 
+/**
+ * Expected values when using the testJar.jar in integration tests.
+ */
 public interface TestConstants {
 
 	public static final String TEST_JAR_FILE = "src/test/resources/testJar.jar";

@@ -12,7 +12,7 @@ import org.javaan.ClassContextBuilder;
 import org.javaan.FilterUtil;
 import org.javaan.MethodMatcher;
 import org.javaan.SortUtil;
-import org.javaan.graph.Visitor;
+import org.javaan.graph.NamedObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Method;
@@ -31,14 +31,14 @@ abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return options;
 	}
 	
-	protected abstract void traverse(CallGraph callGraph, Method method, int maxDepth, Visitor<Method> graphPrinter);
+	protected abstract void traverse(CallGraph callGraph, Method method, NamedObjectVisitor<Method> graphPrinter);
 	
 	protected abstract Set<Method> collectLeafMethods(CallGraph callGraph, Method method);
 	
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<Method> methods, ObjectFormatter<Method> formatter) {
-		Visitor<Method> printer = new GraphPrinter<Method>(output, formatter);
+		NamedObjectVisitor<Method> printer = new GraphPrinter<Method>(output, formatter);
 		for (Method method : methods) {
-			traverse(callGraph, method, -1, printer);
+			traverse(callGraph, method, printer);
 			output.println();
 			output.println("--");
 			output.println();

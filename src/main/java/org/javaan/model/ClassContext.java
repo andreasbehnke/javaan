@@ -4,30 +4,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.Digraph;
-import org.javaan.graph.DigraphImpl;
-import org.javaan.graph.ParentChildGraph;
-import org.javaan.graph.ParentChildGraphImpl;
-import org.javaan.graph.SingleChildGraph;
-import org.javaan.graph.SingleChildGraphImpl;
+import org.javaan.graph.BidirectionalMap;
+import org.javaan.graph.NamedObjectDirectedGraph;
+import org.javaan.graph.SingleTargetDirectedGraph;
 
 public class ClassContext {
 	
-	private final SingleChildGraph<Clazz> superClass = new SingleChildGraphImpl<Clazz>();
+	private final SingleTargetDirectedGraph<Clazz> superClass = new SingleTargetDirectedGraph<Clazz>();
 
-	private final Digraph<Interface> superInterface = new DigraphImpl<Interface>();
+	private final NamedObjectDirectedGraph<Interface> superInterface = new NamedObjectDirectedGraph<Interface>();
 	
-	private final ParentChildGraph<Clazz, Interface> interfaceOfClass = new ParentChildGraphImpl<Clazz, Interface>();
+	private final BidirectionalMap<Clazz, Interface> interfaceOfClass = new BidirectionalMap<Clazz, Interface>();
 	
-	private final ParentChildGraph<Clazz, Method> methodsOfClass = new ParentChildGraphImpl<Clazz, Method>();
+	private final BidirectionalMap<Clazz, Method> methodsOfClass = new BidirectionalMap<Clazz, Method>();
 	
-	private final ParentChildGraph<Interface, Method> methodsOfInterface = new ParentChildGraphImpl<Interface, Method>();
+	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>();
 
 	public void addClass(Clazz className) {
 		if (className == null) {
 			throw new IllegalArgumentException("Parameter className must not be null");
 		}
-		superClass.addNode(className);
+		superClass.addVertex(className);
 		interfaceOfClass.addParent(className);
 	}
 
@@ -44,27 +41,27 @@ public class ClassContext {
 	}
 	
 	public boolean containsClass(Clazz className) {
-		return superClass.containsNode(className);
+		return superClass.containsVertex(className);
 	}
 	
 	public Set<Clazz> getClasses() {
-		return superClass.getNodes();
+		return superClass.vertexSet();
 	}
 
 	public Clazz getSuperClass(Clazz className) {
-		return superClass.getChild(className);
+		return superClass.targetVertexOf(className);
 	}
 	
 	public List<Clazz> getSuperClassHierachy(Clazz className) {
-		return superClass.getPath(className);
+		return superClass.successorPathOf(className);
 	}
 	
 	public Set<Clazz> getSpecializationsOfClass(Clazz className) {
-		return superClass.getPredecessors(className);
+		return superClass.predecessorsOf(className);
 	}
 	
 	public void addInterface(Interface interfaceName) {
-		superInterface.addNode(interfaceName);
+		superInterface.addVertex(interfaceName);
 	}
 
 	public void addSuperInterface(Interface interfaceName, Interface superInterfaceName) {
@@ -72,26 +69,26 @@ public class ClassContext {
 	}
 	
 	public boolean containsInterface(Interface interfaceName) {
-		return superInterface.containsNode(interfaceName);
+		return superInterface.containsVertex(interfaceName);
 	}
 	
 	public Set<Interface> getInterfaces() {
-		return superInterface.getNodes();
+		return superInterface.vertexSet();
 	}
 
 	public Set<Interface> getSuperInterfaces(Interface interfaceName) {
-		return superInterface.getSuccessors(interfaceName);
+		return superInterface.successorsOf(interfaceName);
 	}
 	
 	public Set<Interface> getSpecializationOfInterface(Interface interfaceName) {
-		return superInterface.getPredecessors(interfaceName);
+		return superInterface.predecessorsOf(interfaceName);
 	}
 	
 	public void addInterfaceOfClass(Clazz className, Interface interfaceName) {
-		if (!superInterface.containsNode(interfaceName)) {
+		if (!superInterface.containsVertex(interfaceName)) {
 			throw new IllegalArgumentException("Unknown interface " + interfaceName);
 		}
-		if (!superClass.containsNode(className)) {
+		if (!superClass.containsVertex(className)) {
 			throw new IllegalArgumentException("Unknown class " + className);
 		}
 		interfaceOfClass.addEdge(className, interfaceName);
@@ -101,13 +98,13 @@ public class ClassContext {
 		Set<Interface> childs = interfaceOfClass.getChilds(className);
 		Set<Interface> interfaces = new HashSet<Interface>(childs);
 		for (Interface interfaceName : childs) {
-			interfaces.addAll(superInterface.getSuccessors(interfaceName));
+			interfaces.addAll(superInterface.successorsOf(interfaceName));
 		}
 		return interfaces;
 	}
 	
 	public Set<Interface> getInterfacesOfClass(Clazz className) {
-		List<Clazz> superClasses = superClass.getPath(className);
+		List<Clazz> superClasses = superClass.successorPathOf(className);
 		Set<Interface> interfaces = new HashSet<Interface>();
 		for (Clazz superClassName : superClasses) {
 			interfaces.addAll(getDirectIntefacesOfClass(superClassName));
@@ -117,7 +114,7 @@ public class ClassContext {
 	
 	public Set<Clazz> getImplementations(Interface interfaceName) {
 		Set<Clazz> implementingClasses = new HashSet<Clazz>();
-		Set<Interface> interfaces = superInterface.getPredecessors(interfaceName);
+		Set<Interface> interfaces = superInterface.predecessorsOf(interfaceName);
 		interfaces.add(interfaceName);
 		Set<Clazz> classes = new HashSet<Clazz>();
 		// find direct implementations of all specialized interfaces
@@ -127,7 +124,7 @@ public class ClassContext {
 		// find all specializations of implementations
 		for (Clazz className : classes) {
 			implementingClasses.add(className);
-			implementingClasses.addAll(superClass.getPredecessors(className));
+			implementingClasses.addAll(superClass.predecessorsOf(className));
 		}
 		return implementingClasses;
 	}
@@ -136,13 +133,13 @@ public class ClassContext {
 		Type typeName = method.getType();
 		switch (typeName.getJavaType()) {
 		case CLASS:
-			if (!superClass.containsNode((Clazz)typeName)) {
+			if (!superClass.containsVertex((Clazz)typeName)) {
 				throw new IllegalArgumentException("Unknown class " + typeName);
 			}
 			methodsOfClass.addEdge((Clazz)typeName, method);
 			break;
 		case INTERFACE:
-			if (!superInterface.containsNode((Interface)typeName)) {
+			if (!superInterface.containsVertex((Interface)typeName)) {
 				throw new IllegalArgumentException("Unknown interface " + typeName);
 			}
 			methodsOfInterface.addEdge((Interface)typeName, method);
