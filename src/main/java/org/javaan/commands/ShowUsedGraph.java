@@ -15,7 +15,6 @@ import org.javaan.model.Clazz;
 import org.javaan.model.Type;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
-import org.javaan.print.PrintUtil;
 import org.javaan.print.TypeFormatter;
 
 public class ShowUsedGraph extends BaseTypeLoadingCommand {
