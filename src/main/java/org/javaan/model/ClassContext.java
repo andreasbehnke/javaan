@@ -61,10 +61,19 @@ public class ClassContext {
 	}
 	
 	public void addInterface(Interface interfaceName) {
+		if (interfaceName == null) {
+			throw new IllegalArgumentException("Parameter interfaceName must not be null");
+		}
 		superInterface.addVertex(interfaceName);
 	}
 
 	public void addSuperInterface(Interface interfaceName, Interface superInterfaceName) {
+		if (interfaceName == null) {
+			throw new IllegalArgumentException("Parameter interfaceName must not be null");
+		}
+		if (superInterfaceName == null) {
+			throw new IllegalArgumentException("Parameter superInterfaceName must not be null");
+		}
 		superInterface.addEdge(interfaceName, superInterfaceName);
 	}
 	
