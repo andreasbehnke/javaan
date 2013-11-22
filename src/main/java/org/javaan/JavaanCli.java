@@ -17,6 +17,7 @@ import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
 import org.javaan.commands.ShowCalleeGraph;
 import org.javaan.commands.ShowCallerGraph;
+import org.javaan.commands.ShowUsedGraph;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -61,6 +62,7 @@ public class JavaanCli {
 		commands.addCommand(new ListDuplicates());
 		commands.addCommand(new ShowCallerGraph());
 		commands.addCommand(new ShowCalleeGraph());
+		commands.addCommand(new ShowUsedGraph());
 		System.exit(new JavaanCli(args, commands).execute().getValue());
 	}
 	

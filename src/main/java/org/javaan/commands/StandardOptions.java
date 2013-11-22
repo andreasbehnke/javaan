@@ -37,5 +37,5 @@ public interface StandardOptions {
 	static final Option METHOD = new Option(StandardOptions.OPT_METHOD, true, "Filter methods by <arg>. The format of a matching method is '<canonical class name> - <methodname><signature>'. "
 			+ "All methods which contain <arg> in name will match.");
 
-	static final Option LEAVES = new Option(StandardOptions.OPT_LEAVES, "leaves", false, "Only display leaf elements of tree.");
+	static final Option LEAVES = new Option(StandardOptions.OPT_LEAVES, "leaves", false, "Only display leaf elements of graph.");
 }
