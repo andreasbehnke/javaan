@@ -156,6 +156,14 @@ public class TestNamedObjectDirectedGraph {
 		verifyNoMoreInteractions(visitor);
 	}
 
+	@Test
+	public void testTraverseSuccessorsDepthFirstUnknownStartVertex() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+
+		graph.traverseSuccessorsDepthFirst(X, visitor);
+		verifyNoMoreInteractions(visitor);
+	}
 
 	@Test
 	public void testTraversePredecessorsDepthFirst() {

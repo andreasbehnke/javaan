@@ -69,6 +69,9 @@ public class NamedObjectDirectedGraph<V extends NamedObject> extends DefaultDire
 	}
 
 	private void traverseGraph(DirectedGraph<V, NamedObjectEdge<V>> graph, V startVertex, NamedObjectVisitor<V> visitor) {
+		if (!containsVertex(startVertex)) {
+			return;
+		}
 		TraversalListener<V, NamedObjectEdge<V>> listener = new NamedObjectTraversalListener<V>(visitor);
 		GraphIterator<V, NamedObjectEdge<V>> iterator = new DepthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
 		iterator.addTraversalListener(listener);
