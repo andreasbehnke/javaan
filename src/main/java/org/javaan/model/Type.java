@@ -42,13 +42,5 @@ public abstract class Type extends NamedObjectBase {
 		return filePath;
 	}
 	
-	public Interface createInterface() {
-		return new Interface(javaClass, filePath);
-	}
-	
-	public Clazz createClass() {
-		return new Clazz(javaClass, filePath);
-	}
-	
 	public abstract JavaType getJavaType();
 }
