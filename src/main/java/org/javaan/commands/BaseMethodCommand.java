@@ -19,7 +19,10 @@ import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
 
-abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
+/**
+ * Abstract base class for {@link ShowCalleeGraph} and {@link ShowCallerGraph}
+ */
+abstract class BaseMethodCommand extends BaseTypeLoadingCommand {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {

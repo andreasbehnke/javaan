@@ -6,7 +6,7 @@ import org.javaan.graph.NamedObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Method;
 
-public class ShowCalleeGraph extends BaseCallGraphCommand {
+public class ShowCalleeGraph extends BaseMethodCommand {
 
 	private final static String NAME = "callees";
 
