@@ -30,7 +30,11 @@ public class CallGraph {
 			throw new IllegalArgumentException("Parameter callee must not be null");
 		}
 		callerOfMethod.addEdge(caller, callee);
-		usageOfType.addEdge(caller.getType(), callee.getType());
+		Type typeOfCaller = caller.getType();
+		Type typeOfCallee = callee.getType();
+		if (!typeOfCaller.equals(typeOfCallee)) {
+			usageOfType.addEdge(typeOfCaller, typeOfCallee);
+		}
 	}
 	
 	public Set<Method> getCallers(Method callee) {
@@ -65,6 +69,14 @@ public class CallGraph {
 		usageOfType.traversePredecessorsDepthFirst(used, usingVisitor);
 	}
 
+	public Set<Type> getLeafUsedTypes(Type using) {
+		return usageOfType.getLeafSuccessors(using);
+	}
+	
+	public Set<Type> getLeafUsingTypes(Type using) {
+		return usageOfType.getLeafPredecessors(using);
+	}
+	
 	/**
 	 * @return list of type sets which take part in a using dependency cycle
 	 */

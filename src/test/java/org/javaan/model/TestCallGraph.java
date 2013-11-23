@@ -148,7 +148,7 @@ public class TestCallGraph {
 		CallGraph callGraph = new CallGraph();
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
-		callGraph.addCall(METHODC, METHODD);
+		callGraph.addCall(METHODC, METHODD); 
 		callGraph.addCall(METHODD, METHODE);
 		NamedObjectVisitor<Type> visitor = mock(NamedObjectVisitor.class);
 
@@ -173,6 +173,34 @@ public class TestCallGraph {
 		verify(visitor).visit(B, 1);
 		verify(visitor).visit(A, 2);
 		verifyNoMoreInteractions(visitor);
+	}
+	
+	@Test
+	public void testGetLeafUsedTypes() {
+		CallGraph callGraph = new CallGraph();
+		callGraph.addCall(METHODA, METHODB);
+		callGraph.addCall(METHODA, METHODC);
+		callGraph.addCall(METHODC, METHODD);
+		callGraph.addCall(METHODD, METHODE);
+		
+		Set<Type> leaves = callGraph.getLeafUsedTypes(A);
+		assertNotNull(leaves);
+		assertEquals(1, leaves.size());
+		assertTrue(leaves.contains(C));
+	}
+	
+	@Test
+	public void testGetLeafUsingTypes() {
+		CallGraph callGraph = new CallGraph();
+		callGraph.addCall(METHODA, METHODB); // A --> A
+		callGraph.addCall(METHODA, METHODC); // A --> A
+		callGraph.addCall(METHODC, METHODD); // A --> B
+		callGraph.addCall(METHODD, METHODE); // B --> C
+		
+		Set<Type> leaves = callGraph.getLeafUsingTypes(C);
+		assertNotNull(leaves);
+		assertEquals(1, leaves.size());
+		assertTrue(leaves.contains(A));
 	}
 	
 	@Test

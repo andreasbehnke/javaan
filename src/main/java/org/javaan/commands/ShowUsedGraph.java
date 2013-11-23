@@ -62,8 +62,7 @@ public class ShowUsedGraph extends BaseGraphCommand<Type> {
 	
 	@Override
 	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type namedObject) {
-		// TODO Auto-generated method stub
-		return null;
+		return callGraph.getLeafUsedTypes(namedObject);
 	}
 	
 	@Override
