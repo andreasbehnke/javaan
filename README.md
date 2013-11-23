@@ -7,7 +7,7 @@ fixing broken builds which produce archives with duplicate classes. It provides 
 class dependency and class hierarchy.
 
 Javaan uses the [apache BCEL library](http://commons.apache.org/proper/commons-bcel) for parsing java byte
-code and the [graph library JGraphT](http://jgrapht.org/) for 
+code and the [graph library JGraphT](http://jgrapht.org/) for building the dependency graph and class graph.
 
 ### Examples
 
@@ -69,6 +69,6 @@ For a complete command reference help type:
 
  * Andreas Behnke
  
-### Licence
+### License
 
 Javaan is licensed under the Apache License 2.0, view the LICENSE file for details
