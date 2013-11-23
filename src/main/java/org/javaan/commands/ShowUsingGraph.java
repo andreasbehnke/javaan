@@ -6,12 +6,12 @@ import org.javaan.graph.NamedObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Type;
 
-public class ShowUsedGraph extends BaseDependencyCommand {
+public class ShowUsingGraph extends BaseDependencyCommand {
 
-	private final static String NAME = "used";
+	private final static String NAME = "using";
 
-	private final static String DESCRIPTION = "Display the graph of classes being used by another class. "
-			+ "This is the top down view of the class dependency graph.";
+	private final static String DESCRIPTION = "Display the graph of classes using another class. "
+			+ "This is the bottom up view of the class dependency graph.";
 
 	@Override
 	public String getName() {
@@ -31,5 +31,6 @@ public class ShowUsedGraph extends BaseDependencyCommand {
 	@Override
 	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type namedObject) {
 		return callGraph.getLeafUsedTypes(namedObject);
-	}	
+	}
+
 }

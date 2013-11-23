@@ -32,7 +32,7 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 	
 	protected abstract void traverse(CallGraph callGraph, N namedObject, NamedObjectVisitor<N> graphPrinter);
 	
-	protected abstract Set<N> collectLeafObjects(CallGraph callGraph, N method);
+	protected abstract Set<N> collectLeafObjects(CallGraph callGraph, N namedObject);
 
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<N> namedObjects, ObjectFormatter<N> formatter) {
 		NamedObjectVisitor<N> printer = new GraphPrinter<N>(output, formatter);
