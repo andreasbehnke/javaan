@@ -6,7 +6,7 @@ import org.javaan.graph.NamedObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Type;
 
-public class ShowUsingGraph extends BaseDependencyCommand {
+public class ShowUsingGraph extends BaseDependencyGraphCommand {
 
 	private final static String NAME = "using";
 
@@ -25,12 +25,12 @@ public class ShowUsingGraph extends BaseDependencyCommand {
 
 	@Override
 	protected void traverse(CallGraph callGraph, Type namedObject, NamedObjectVisitor<Type> graphPrinter) {
-		callGraph.traverseUsedTypes(namedObject, graphPrinter);
+		callGraph.traverseUsingTypes(namedObject, graphPrinter);
 	}
 
 	@Override
 	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type namedObject) {
-		return callGraph.getLeafUsedTypes(namedObject);
+		return callGraph.getLeafUsingTypes(namedObject);
 	}
 
 }

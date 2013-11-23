@@ -22,8 +22,6 @@ import org.javaan.print.PrintUtil;
  */
 abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCommand {
 
-	protected abstract boolean isPrintLeaves(CommandLine commandLine);
-	
 	protected abstract String filterCriteria(CommandLine commandLine);
 	
 	protected abstract Collection<N> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria);
@@ -33,6 +31,10 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 	protected abstract void traverse(CallGraph callGraph, N namedObject, NamedObjectVisitor<N> graphPrinter);
 	
 	protected abstract Set<N> collectLeafObjects(CallGraph callGraph, N namedObject);
+
+	protected boolean isPrintLeaves(CommandLine commandLine) {
+		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
+	}
 
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<N> namedObjects, ObjectFormatter<N> formatter) {
 		NamedObjectVisitor<N> printer = new GraphPrinter<N>(output, formatter);
@@ -48,7 +50,7 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 			PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, namedObject)), formatter.format(namedObject) , "\n\t", ", ");
 		}
 	}
-	
+
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
 		String criteria = filterCriteria(commandLine);
@@ -63,5 +65,4 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 			printGraph(callGraph, output, input, formatter);
 		}
 	}
-
 }

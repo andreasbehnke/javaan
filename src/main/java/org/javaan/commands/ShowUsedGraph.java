@@ -6,7 +6,7 @@ import org.javaan.graph.NamedObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Type;
 
-public class ShowUsedGraph extends BaseDependencyCommand {
+public class ShowUsedGraph extends BaseDependencyGraphCommand {
 
 	private final static String NAME = "used";
 

@@ -14,18 +14,13 @@ import org.javaan.print.TypeFormatter;
 /**
  * Base command for all class dependency commands
  */
-public abstract class BaseDependencyCommand extends BaseGraphCommand<Type> {
+public abstract class BaseDependencyGraphCommand extends BaseGraphCommand<Type> {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		options.addOption(StandardOptions.FILTER);
 		options.addOption(StandardOptions.LEAVES);
 		return options;
-	}
-
-	@Override
-	protected boolean isPrintLeaves(CommandLine commandLine) {
-		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
 
 	@Override
