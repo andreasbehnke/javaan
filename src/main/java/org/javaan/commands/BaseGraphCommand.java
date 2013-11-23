@@ -18,7 +18,7 @@ import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
 
 /**
- * Abstract base class for all commands which need to process graph
+ * Abstract base class for all commands which process graphs
  */
 abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCommand {
 
@@ -37,11 +37,12 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<N> namedObjects, ObjectFormatter<N> formatter) {
 		NamedObjectVisitor<N> printer = new GraphPrinter<N>(output, formatter);
 		for (N namedObject : namedObjects) {
+			output.println(String.format("%s:",formatter.format(namedObject)));
 			traverse(callGraph, namedObject, printer);
 			output.println("\n--\n");
 		}
 	}
-	
+
 	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<N> namedObjects, ObjectFormatter<N> formatter) {
 		for (N namedObject : namedObjects) {
 			PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, namedObject)), formatter.format(namedObject) , "\n\t", ", ");
@@ -50,16 +51,16 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 	
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
-		String criteria = commandLine.getOptionValue(StandardOptions.OPT_METHOD);
-		boolean printLeaves = commandLine.hasOption(StandardOptions.OPT_LEAVES);
+		String criteria = filterCriteria(commandLine);
+		boolean printLeaves = isPrintLeaves(commandLine);
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext, types).build();
-		Collection<N> methods = getInput(classContext, callGraph, criteria);
+		Collection<N> input = getInput(classContext, callGraph, criteria);
 		ObjectFormatter<N> formatter = getFormatter();
 		if (printLeaves) {
-			printLeafObjects(callGraph, output, methods, formatter);
+			printLeafObjects(callGraph, output, input, formatter);
 		} else {
-			printGraph(callGraph, output, methods, formatter);
+			printGraph(callGraph, output, input, formatter);
 		}
 	}
 
