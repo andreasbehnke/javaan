@@ -23,6 +23,14 @@
 			<lineEnding>windows</lineEnding>
         </fileSet>
         <fileSet>
+            <directory>${basedir}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>README.md</include>
+                <include>LICENSE</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>${project.build.directory}</directory>
             <outputDirectory>/lib</outputDirectory>
             <includes>
