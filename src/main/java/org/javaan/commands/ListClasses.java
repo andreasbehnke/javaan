@@ -94,13 +94,13 @@ public class ListClasses extends BaseTypeLoadingCommand {
 	
 	public void printClassesAndMethods(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
 	
 	public void printClassesAndVirtualMethods(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
 }

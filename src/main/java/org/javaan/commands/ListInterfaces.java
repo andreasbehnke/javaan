@@ -92,13 +92,13 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 	
 	public void printInterfacesAndMethods(PrintStream output, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
 		}
 	}
 	
 	public void printInterfacesAndVirtualMethods(PrintStream output, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
 		}
 	}
 }
