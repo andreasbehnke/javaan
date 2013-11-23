@@ -38,6 +38,7 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 		additionalInformation
 			.addOption(StandardOptions.SUPER_TYPES)
 			.addOption(StandardOptions.SPECIALIZATIONS)
+			.addOption(StandardOptions.IMPLEMENTATIONS)
 			.addOption(StandardOptions.METHODS)
 			.addOption(StandardOptions.VIRTUAL_METHODS);
 		options.addOptionGroup(additionalInformation);
@@ -57,7 +58,7 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 			printInterfacesAndSuperInterfaces(output, interfaces);
 		} else if (commandLine.hasOption(StandardOptions.OPT_SPECIALIZATIONS)) {
 			printInterfacesAndSpecializations(output, interfaces);
-		} else if (commandLine.hasOption(StandardOptions.OPT_IMPLEMENTATION)) {
+		} else if (commandLine.hasOption(StandardOptions.OPT_IMPLEMENTATIONS)) {
 			printInterfacesAndImplementations(output, interfaces);
 		} else if (commandLine.hasOption(StandardOptions.OPT_METHODS)) {
 			printInterfacesAndMethods(output, interfaces);
