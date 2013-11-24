@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Javaan : Java Static Code Analyser" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Javaan</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/andreasbehnke/javaan">View on GitHub</a>
+
+          <h1 id="project_title">Javaan</h1>
+          <h2 id="project_tagline">Java Static Code Analyser</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/andreasbehnke/javaan/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/andreasbehnke/javaan/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>Javaan is a command line tool for analysing java bytecode. It is not bound to the Java programming language 
+but supports parsing of byte code from any java virtual machine based programming language. Javaan helps
+fixing broken builds which produce archives with duplicate classes. It provides an overview about call graphs,
+class dependency and class hierarchy.</p>
+
+<p>Javaan uses the <a href="http://commons.apache.org/proper/commons-bcel">apache BCEL library</a> for parsing java byte
+code and the <a href="http://jgrapht.org/">graph library JGraphT</a> for building the dependency graph and class graph.</p>
+
+<h3>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+<p>List all classes of package org.javaan.commands:</p>
+
+<pre><code>$ javaan classes target/javaan.jar -f org.javaan.commands 
+[C]org.javaan.commands.BaseCallGraphCommand 
+[C]org.javaan.commands.BaseCommand
+[C]org.javaan.commands.BaseDependencyGraphCommand 
+[C]org.javaan.commands.BaseGraphCommand
+[C]org.javaan.commands.BaseTypeLoadingCommand
+[C]org.javaan.commands.FilterUtil
+[C]org.javaan.commands.ListClasses
+[C]org.javaan.commands.ListDuplicates
+[C]org.javaan.commands.ListInterfaces
+[C]org.javaan.commands.MethodMatcher
+[C]org.javaan.commands.NameMatcher
+[C]org.javaan.commands.ShowCalleeGraph
+[C]org.javaan.commands.ShowCallerGraph
+[C]org.javaan.commands.ShowUsedGraph
+[C]org.javaan.commands.ShowUsingGraph
+[C]org.javaan.commands.SortUtil
+[C]org.javaan.commands.SortUtil$1
+</code></pre>
+
+<p>List all interfaces of package org.javaan.graph and their implementations:</p>
+
+<pre><code>$ javaan interfaces target/javaan.jar -f org.javaan.graph -impl
+[I]org.javaan.graph.NamedObjectVisitor: [C]org.javaan.print.GraphPrinter
+</code></pre>
+
+<p>Display callgraphs of all methods of class ListInterfaces:</p>
+
+<pre><code>$ javaan callees target/javaan.jar -method ListClasses | more
+[M]org.javaan.commands.ListClasses - public void &lt;init&gt;():
+[M]org.javaan.commands.ListClasses - public void &lt;init&gt;()
+ [M]org.javaan.commands.BaseCommand - public void &lt;init&gt;()
+
+--
+
+[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options):
+[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options)
+ [M]org.apache.commons.cli.Options - public org.apache.commons.cli.Options addOption(org.apache.commons.cli.Option opt)
+  [M]org.apache.commons.cli.Option - public boolean isRequired()
+  [M]org.apache.commons.cli.Option - public String getLongOpt()
+  [M]org.apache.commons.cli.Option - public boolean hasLongOpt()
+
+[...]
+</code></pre>
+
+<p>Display leaf usage classes of class ListInterfaces:</p>
+
+<pre><code>$ javaan using target/javaan.jar -f ListClasses --leaves
+[C]org.javaan.commands.ListClasses
+    [C]org.javaan.JavaanCli
+</code></pre>
+
+<p>For a complete command reference help type:</p>
+
+<pre><code>$ javaan --help
+</code></pre>
+
+<h3>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h3>
+
+<ul>
+<li>Andreas Behnke</li>
+</ul><h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>Javaan is licensed under the Apache License 2.0, view the LICENSE file for details</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Javaan maintained by <a href="https://github.com/andreasbehnke">andreasbehnke</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-45991963-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
