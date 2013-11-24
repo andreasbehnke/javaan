@@ -1,5 +1,6 @@
 package org.javaan.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -82,6 +83,12 @@ public class CallGraph {
 	 */
 	public List<Set<Type>> getDependencyCycles() {
 		StrongConnectivityInspector<Type, NamedObjectEdge<Type>> inspector = new StrongConnectivityInspector<Type, NamedObjectEdge<Type>>(usageOfType);
-		return inspector.stronglyConnectedSets();
+		List<Set<Type>> cycles = new ArrayList<Set<Type>>();
+		for (Set<Type> cycle : inspector.stronglyConnectedSets()) {
+			if (cycle.size() > 1) { // ignore depedency cycles within one class (these cycles have no impact in software design)
+				cycles.add(cycle);
+			}
+		}
+		return cycles;
 	}
 }

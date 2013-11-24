@@ -13,6 +13,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.text.WordUtils;
 import org.javaan.commands.ListClasses;
+import org.javaan.commands.ListDepdendencyCycles;
 import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
 import org.javaan.commands.ShowCalleeGraph;
@@ -62,6 +63,7 @@ public class JavaanCli {
 		commands.addCommand(new ListClasses());
 		commands.addCommand(new ListInterfaces());
 		commands.addCommand(new ListDuplicates());
+		commands.addCommand(new ListDepdendencyCycles());
 		commands.addCommand(new ShowCallerGraph());
 		commands.addCommand(new ShowCalleeGraph());
 		commands.addCommand(new ShowUsedGraph());

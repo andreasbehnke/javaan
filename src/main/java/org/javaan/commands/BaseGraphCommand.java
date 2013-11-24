@@ -41,7 +41,7 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 		for (N namedObject : namedObjects) {
 			output.println(String.format("%s:",formatter.format(namedObject)));
 			traverse(callGraph, namedObject, printer);
-			output.println("\n--\n");
+			output.println(PrintUtil.BLOCK_SEPARATOR);
 		}
 	}
 
