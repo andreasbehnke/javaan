@@ -33,7 +33,7 @@ public class JavaanCli {
 	private static final int MAX_WIDTH = 80;
 	
 	private static final String HELP_USAGE = "usage:";
-	private static final String HELP_COMMAND = "javaan <command> <files> <options>";
+	private static final String HELP_COMMAND = "javaan <command> <files> <options>\njavaan --help\njavaan <command> --help";
 	private static final String HELP_HEADER = 
 			  "javaan is a tool for static code analysis. It is using byte code analysis to provide "
 			+ "informations about the loaded types. There are several sub commands for different tasks. "
@@ -82,7 +82,7 @@ public class JavaanCli {
 
 	public ReturnCodes execute() {
 		if (args.length < 1) {
-			printUsage();
+			printUsage(false);
 			return ReturnCodes.errorParse;
 		}
 		Command command = commands.getCommand(args[0]);
@@ -100,11 +100,11 @@ public class JavaanCli {
 				printCommandUsage(command, options);
 				return ReturnCodes.ok;
 			} else if (displayHelp && withoutCommand) {
-				printUsage();
+				printUsage(true);
 				return ReturnCodes.ok;
 			} else if (!displayHelp && withoutCommand) {
 				System.out.println(String.format(EXCEPTION_UNKNOWN_COMMAND, args[0]));
-				printUsage();
+				printUsage(false);
 				return ReturnCodes.errorParse;
 			}
 			if (cl.hasOption("v")) {
@@ -116,14 +116,18 @@ public class JavaanCli {
 			String[] params = cl.getArgs();
 			if (params.length < 2) {
 				System.out.println(EXCEPTION_MISSING_FILES);
-				printUsage();
+				printUsage(false);
 				return ReturnCodes.errorParse;
 			}
 			String[] files = Arrays.copyOfRange(params, 1, params.length);
 			return command.execute(cl, files);
 		} catch(ParseException e) {
 			System.out.println(String.format(EXCEPTION_COULD_NOT_PARSE, e.getMessage()));
-			printCommandUsage(command, options);
+			if (withoutCommand) {
+				printUsage(false);
+			} else {
+				printCommandUsage(command, options);
+			}
 			return ReturnCodes.errorParse;
 		} catch (Exception e) {
 			LOG.error(EXCEPTION_COMMAND, e);
@@ -162,7 +166,7 @@ public class JavaanCli {
 		System.out.println();
 	}
 	
-	public void printUsage() {
+	public void printUsage(boolean printFullHelp) {
 		printParagraph(HELP_USAGE);
 		printParagraph(HELP_COMMAND);
 		printParagraph(HELP_HEADER);
@@ -177,19 +181,21 @@ public class JavaanCli {
 							true));
 		}
 		printParagraph(HELP_FOOTER);
-		System.out.println();
-		printParagraph(HELP_COMMAND_DETAILS);
-		for (Command command : commands.getCommands()) {
-			Options options = new Options();
-			options = command.buildCommandLineOptions(options);
-			System.out.println(String.format("\n* %s:\n", command.getName()));
-			printCommandUsage(command, options);
+		if (printFullHelp) {
+			System.out.println();
+			printParagraph(HELP_COMMAND_DETAILS);
+			for (Command command : commands.getCommands()) {
+				Options options = new Options();
+				options = command.buildCommandLineOptions(options);
+				System.out.println(String.format("\n* %s:\n", command.getName()));
+				printCommandUsage(command, options);
+			}
 		}
 	}
 	
 	
 	private void printCommandUsage(Command command, Options options) {
 		new HelpFormatter()
-				.printHelp(command.getHelpCommandLine(), command.getDescription(), options, "");
+				.printHelp(command.getHelpCommandLine() + "\n", command.getDescription(), options, "");
 	}
 }

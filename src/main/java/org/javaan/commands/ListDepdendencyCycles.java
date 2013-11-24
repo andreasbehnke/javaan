@@ -19,7 +19,7 @@ public class ListDepdendencyCycles extends BaseTypeLoadingCommand {
 
 	private final static String NAME = "dependencyCycles";
 	
-	private final static String DESCRIPTION = "Lists all related classes for each dependency cycle in the loaded libraries.";
+	private final static String DESCRIPTION = "List all related classes for each dependency cycle in the loaded libraries.";
 	
 	@Override
 	public String getName() {
