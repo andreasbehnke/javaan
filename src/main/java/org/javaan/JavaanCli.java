@@ -13,10 +13,13 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.text.WordUtils;
 import org.javaan.commands.ListClasses;
+import org.javaan.commands.ListDepdendencyCycles;
 import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
 import org.javaan.commands.ShowCalleeGraph;
 import org.javaan.commands.ShowCallerGraph;
+import org.javaan.commands.ShowUsedGraph;
+import org.javaan.commands.ShowUsingGraph;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -29,7 +32,7 @@ public class JavaanCli {
 	
 	private static final int MAX_WIDTH = 80;
 	
-	private static final String USAGE = "Usage:";
+	private static final String HELP_USAGE = "usage:";
 	private static final String HELP_COMMAND = "javaan <command> <files> <options>";
 	private static final String HELP_HEADER = 
 			  "javaan is a tool for static code analysis. It is using byte code analysis to provide "
@@ -39,7 +42,8 @@ public class JavaanCli {
 	public static final String HELP_COMMANDS = "supported commands:";
 	private static final String HELP_FOOTER = 
 			  "Use javaan <command> --help to display detailed options of command.";
-	
+	private static final String HELP_COMMAND_DETAILS = "command details:";
+
 	private static final String EXCEPTION_MISSING_FILES = "No file list provided";
 	private static final String EXCEPTION_UNKNOWN_COMMAND = "Unknown command: %s";
 	private static final String EXCEPTION_COULD_NOT_PARSE = "Could not parse command line argumeents: %s";
@@ -59,8 +63,11 @@ public class JavaanCli {
 		commands.addCommand(new ListClasses());
 		commands.addCommand(new ListInterfaces());
 		commands.addCommand(new ListDuplicates());
+		commands.addCommand(new ListDepdendencyCycles());
 		commands.addCommand(new ShowCallerGraph());
 		commands.addCommand(new ShowCalleeGraph());
+		commands.addCommand(new ShowUsedGraph());
+		commands.addCommand(new ShowUsingGraph());
 		System.exit(new JavaanCli(args, commands).execute().getValue());
 	}
 	
@@ -89,11 +96,13 @@ public class JavaanCli {
 		try {
 			CommandLine cl = new GnuParser().parse(options, args);
 			boolean displayHelp = cl.hasOption("h");
-			if (displayHelp) {
+			if (displayHelp && !withoutCommand) {
 				printCommandUsage(command, options);
 				return ReturnCodes.ok;
-			}
-			if (!displayHelp && withoutCommand) {
+			} else if (displayHelp && withoutCommand) {
+				printUsage();
+				return ReturnCodes.ok;
+			} else if (!displayHelp && withoutCommand) {
 				System.out.println(String.format(EXCEPTION_UNKNOWN_COMMAND, args[0]));
 				printUsage();
 				return ReturnCodes.errorParse;
@@ -154,7 +163,7 @@ public class JavaanCli {
 	}
 	
 	public void printUsage() {
-		printParagraph(USAGE);
+		printParagraph(HELP_USAGE);
 		printParagraph(HELP_COMMAND);
 		printParagraph(HELP_HEADER);
 		printParagraph(HELP_COMMANDS);
@@ -167,17 +176,20 @@ public class JavaanCli {
 							System.lineSeparator() + indent, 
 							true));
 		}
-		System.out.println();
 		printParagraph(HELP_FOOTER);
+		System.out.println();
+		printParagraph(HELP_COMMAND_DETAILS);
+		for (Command command : commands.getCommands()) {
+			Options options = new Options();
+			options = command.buildCommandLineOptions(options);
+			System.out.println(String.format("\n* %s:\n", command.getName()));
+			printCommandUsage(command, options);
+		}
 	}
 	
 	
 	private void printCommandUsage(Command command, Options options) {
-		if (command == null) {
-			printUsage();
-		} else {
-			new HelpFormatter()
+		new HelpFormatter()
 				.printHelp(command.getHelpCommandLine(), command.getDescription(), options, "");
-		}
 	}
 }

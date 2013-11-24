@@ -29,7 +29,7 @@ public class ShowCallerGraph extends BaseCallGraphCommand {
 	}
 
 	@Override
-	protected Set<Method> collectLeafMethods(CallGraph callGraph, Method method) {
+	protected Set<Method> collectLeafObjects(CallGraph callGraph, Method method) {
 		return callGraph.getLeafCallers(method);
 	}
 }

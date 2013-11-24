@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.bytecode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,6 +12,8 @@ import org.apache.bcel.generic.Instruction;
 import org.apache.bcel.generic.InstructionHandle;
 import org.apache.bcel.generic.InvokeInstruction;
 import org.apache.bcel.generic.MethodGen;
+import org.javaan.bytecode.JarFileLoader;
+import org.javaan.bytecode.SignatureUtil;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
 import org.javaan.model.NamedObjectRepository;

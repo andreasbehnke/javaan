@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.ReturnCodes;
-import org.javaan.SortUtil;
 import org.javaan.model.DuplicatesFinder;
 import org.javaan.model.Type;
 import org.javaan.print.ObjectFormatter;
@@ -53,7 +52,7 @@ private final static String NAME = "duplicates";
 		ObjectFormatter<Type> formatter = new TypeInformationFormatter();
 		for (List<Type> duplicate : duplicates) {
 			PrintUtil.println(output, formatter, duplicate,"", "", "\n");
-			output.println();
+			output.println(PrintUtil.BLOCK_SEPARATOR);
 		}
 	}
 

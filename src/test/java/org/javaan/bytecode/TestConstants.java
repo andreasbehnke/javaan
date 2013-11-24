@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.bytecode;
 
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;

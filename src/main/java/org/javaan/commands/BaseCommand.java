@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.javaan.Command;
-import org.javaan.JarFileLoader;
+import org.javaan.bytecode.JarFileLoader;
 import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

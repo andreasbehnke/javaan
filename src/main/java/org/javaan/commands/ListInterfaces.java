@@ -7,10 +7,7 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
-import org.javaan.ClassContextBuilder;
-import org.javaan.FilterUtil;
-import org.javaan.NameMatcher;
-import org.javaan.SortUtil;
+import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Interface;
 import org.javaan.model.Type;
@@ -41,6 +38,7 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 		additionalInformation
 			.addOption(StandardOptions.SUPER_TYPES)
 			.addOption(StandardOptions.SPECIALIZATIONS)
+			.addOption(StandardOptions.IMPLEMENTATIONS)
 			.addOption(StandardOptions.METHODS)
 			.addOption(StandardOptions.VIRTUAL_METHODS);
 		options.addOptionGroup(additionalInformation);
@@ -60,7 +58,7 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 			printInterfacesAndSuperInterfaces(output, interfaces);
 		} else if (commandLine.hasOption(StandardOptions.OPT_SPECIALIZATIONS)) {
 			printInterfacesAndSpecializations(output, interfaces);
-		} else if (commandLine.hasOption(StandardOptions.OPT_IMPLEMENTATION)) {
+		} else if (commandLine.hasOption(StandardOptions.OPT_IMPLEMENTATIONS)) {
 			printInterfacesAndImplementations(output, interfaces);
 		} else if (commandLine.hasOption(StandardOptions.OPT_METHODS)) {
 			printInterfacesAndMethods(output, interfaces);
@@ -95,13 +93,13 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 	
 	public void printInterfacesAndMethods(PrintStream output, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
 		}
 	}
 	
 	public void printInterfacesAndVirtualMethods(PrintStream output, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
 		}
 	}
 }

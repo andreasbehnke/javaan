@@ -7,10 +7,7 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
-import org.javaan.ClassContextBuilder;
-import org.javaan.FilterUtil;
-import org.javaan.NameMatcher;
-import org.javaan.SortUtil;
+import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
 import org.javaan.model.Type;
@@ -97,13 +94,13 @@ public class ListClasses extends BaseTypeLoadingCommand {
 	
 	public void printClassesAndMethods(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
 	
 	public void printClassesAndVirtualMethods(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t[M]", ", ");
+			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
 }

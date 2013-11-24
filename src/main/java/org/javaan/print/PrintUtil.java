@@ -27,4 +27,6 @@ public class PrintUtil {
 		}
 		output.println();
 	}
+
+	public static final String BLOCK_SEPARATOR = "\n--\n";
 }

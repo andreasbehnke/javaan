@@ -1,4 +1,4 @@
-package org.javaan;
+package org.javaan.commands;
 
 import java.util.ArrayList;
 import java.util.Collection;
