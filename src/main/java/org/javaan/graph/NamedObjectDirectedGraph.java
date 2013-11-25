@@ -113,12 +113,14 @@ public class NamedObjectDirectedGraph<V extends NamedObject> extends DefaultDire
 
 	private Set<V> collectLeafVertices(DirectedGraph<V, NamedObjectEdge<V>> graph, V startVertex) {
 		Set<V> leaves = new HashSet<V>();
-		GraphIterator<V, NamedObjectEdge<V>> iterator = new DepthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
-		iterator.next();
-		while (iterator.hasNext()) {
-			V vertex = iterator.next();
-			if (graph.outDegreeOf(vertex) == 0) {
-				leaves.add(vertex);
+		if (graph.containsVertex(startVertex)) {
+			GraphIterator<V, NamedObjectEdge<V>> iterator = new DepthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
+			iterator.next();
+			while (iterator.hasNext()) {
+				V vertex = iterator.next();
+				if (graph.outDegreeOf(vertex) == 0) {
+					leaves.add(vertex);
+				}
 			}
 		}
 		return leaves;

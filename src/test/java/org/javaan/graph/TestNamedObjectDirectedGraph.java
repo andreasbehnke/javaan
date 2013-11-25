@@ -241,6 +241,14 @@ public class TestNamedObjectDirectedGraph {
 	}
 
 	@Test
+	public void testGetLeafSuccessorsUnknownStartVertex() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		Set<Clazz> leafNodes = graph.getLeafSuccessors(X);
+		assertNotNull(leafNodes);
+		assertEquals(0, leafNodes.size());
+	}
+
+	@Test
 	public void testGetLeafPredecessors() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
 		graph.addEdge(X, A);
