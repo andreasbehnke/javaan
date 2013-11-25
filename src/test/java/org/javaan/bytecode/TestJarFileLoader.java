@@ -25,7 +25,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.List;
 
-import org.javaan.bytecode.JarFileLoader;
 import org.javaan.model.Type;
 import org.junit.Test;
 

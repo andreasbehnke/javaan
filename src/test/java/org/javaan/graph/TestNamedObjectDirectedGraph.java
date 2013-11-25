@@ -23,7 +23,6 @@ package org.javaan.graph;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -32,7 +31,6 @@ import java.util.Set;
 
 import org.javaan.model.Clazz;
 import org.junit.Test;
-import org.mockito.InOrder;
 
 public class TestNamedObjectDirectedGraph {
 

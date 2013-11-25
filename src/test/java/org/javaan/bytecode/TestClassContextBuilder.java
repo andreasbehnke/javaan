@@ -28,8 +28,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.bytecode.ClassContextBuilder;
-import org.javaan.bytecode.JarFileLoader;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;

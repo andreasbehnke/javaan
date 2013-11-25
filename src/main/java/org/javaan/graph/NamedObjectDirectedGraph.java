@@ -31,8 +31,6 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.EdgeReversedGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class NamedObjectDirectedGraph<V extends NamedObject> extends DefaultDirectedGraph<V, NamedObjectEdge<V>> {
 
