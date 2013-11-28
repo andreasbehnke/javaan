@@ -31,8 +31,10 @@ public interface TestConstants {
 
 	public static final String TEST_JAR_FILE = "src/test/resources/testJar.jar";
 	
-	public static final int NUMBER_OF_CLASSES = 6;
-	
+	public static final int NUMBER_OF_CLASSES = 7;
+
+	public static final int NUMBER_OF_EXTERNAL_CLASSES = 1;
+
 	public static final int NUMBER_OF_INTERFACES = 4;
 	
 	public static final int NUMBER_OF_CLASSES_AND_INTERFACES = NUMBER_OF_CLASSES + NUMBER_OF_INTERFACES;
@@ -53,6 +55,10 @@ public interface TestConstants {
 	public static final Clazz CLASS_CALLING_ABSTACT_METHOD = new Clazz("org.javaan.test.jar.ClassCallingAbstractMethod");
 
 	public static final Clazz CLASS_STRING = new Clazz("java.lang.String");
+	
+	public static final Clazz CLASS_EXTENDING_EXTERNAL_CLASS = new Clazz("org.javaan.test.jar.ClassExtendingExternalClass");
+
+	public static final Clazz ABSTRACT_COLLECTION = new Clazz("java.util.AbstractCollection");
 
 	public static final Interface INTERFACE_C = new Interface("org.javaan.test.jar.InterfaceC");
 	
@@ -76,6 +82,8 @@ public interface TestConstants {
 	public static final String SIGNATURE_CALL_ABSTRACT_METHID = "callAbstractMethod(Lorg/javaan/test/jar/AbstractClassA;)V";
 
 	public static final String SIGNATURE_CALL_EXTERNAL_CLASS = "methodCallingExternalClass()V";
+
+	public static final String SIGNATURE_METHOD_ABSTRACT_COLLECTION_SIZE = "size()V";
 
 	
 	public static final Method CLASSA_METHOD_INTERFACE_B = new Method(CLASS_A, null, SIGNATURE_METHOD_INTERFACE_B);
