@@ -52,6 +52,8 @@ public interface TestConstants {
 
 	public static final Clazz CLASS_CALLING_ABSTACT_METHOD = new Clazz("org.javaan.test.jar.ClassCallingAbstractMethod");
 
+	public static final Clazz CLASS_STRING = new Clazz("java.lang.String");
+
 	public static final Interface INTERFACE_C = new Interface("org.javaan.test.jar.InterfaceC");
 	
 	public static final Interface INTERFACE_B = new Interface("org.javaan.test.jar.InterfaceB");
@@ -73,6 +75,8 @@ public interface TestConstants {
 	
 	public static final String SIGNATURE_CALL_ABSTRACT_METHID = "callAbstractMethod(Lorg/javaan/test/jar/AbstractClassA;)V";
 
+	public static final String SIGNATURE_CALL_EXTERNAL_CLASS = "methodCallingExternalClass()V";
+
 	
 	public static final Method CLASSA_METHOD_INTERFACE_B = new Method(CLASS_A, null, SIGNATURE_METHOD_INTERFACE_B);
 	
@@ -87,4 +91,8 @@ public interface TestConstants {
 	public static final Method SPECIALIZATION_CLASS_B_ABSTRACT_METHOD = new Method(SPECIALIZATION_CLASS_B, null, SIGNATURE_ABSTACT_METHOD);
 
 	public static final Method CLASS_CALLING_ABSTACT_METHOD_CALL_ABSTRACT_METHOD = new Method(CLASS_CALLING_ABSTACT_METHOD, null, SIGNATURE_CALL_ABSTRACT_METHID);
+
+	public static final Method CLASSC_CALLING_EXTERNAL_CLASS = new Method(CLASS_C, null, SIGNATURE_CALL_EXTERNAL_CLASS);
+	
+	public static final Method STRING_CONSTRUCTOR = new Method(CLASS_STRING, null, SIGNATURE_CONSTRUCTOR);
 }
