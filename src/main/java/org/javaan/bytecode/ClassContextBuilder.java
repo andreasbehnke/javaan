@@ -58,12 +58,8 @@ public class ClassContextBuilder {
 		return clazz;
 	}
 	
-	private org.javaan.model.Method createMethod(Interface interfaze, Method method) {
-		return new org.javaan.model.Method(interfaze, method, SignatureUtil.createSignature(method));
-	}
-	
-	private org.javaan.model.Method createMethod(Clazz clazz, Method method) {
-		return new org.javaan.model.Method(clazz, method, SignatureUtil.createSignature(method));
+	private org.javaan.model.Method createMethod(Type type, Method method) {
+		return new org.javaan.model.Method(type, method, SignatureUtil.createSignature(method));
 	}
 	
 	private void addType(ClassContext context, Interface interfaze) {
