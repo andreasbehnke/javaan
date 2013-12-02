@@ -46,7 +46,14 @@ public class TestSignatureUtil implements TestConstants {
 	
 	private List<Type> loadClasses() throws IOException {
 		return new JarFileLoader().loadJavaClasses(new String[]{TEST_JAR_FILE});
-	} 
+	}
+	
+	@Test
+	public void testCreateSignatureFromClassMethod() throws ClassNotFoundException, NoSuchMethodException, SecurityException {
+		Class<?> clazz = Class.forName("java.lang.Byte");
+		java.lang.reflect.Method compareMethod = clazz.getMethod("compare", byte.class, byte.class);
+		assertEquals("compare(byte,byte)", SignatureUtil.createSignature(compareMethod));
+	}
 	
 	@Test
 	public void testCreateSignatureFromMethod() throws IOException {

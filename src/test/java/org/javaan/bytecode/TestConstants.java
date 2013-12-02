@@ -33,9 +33,11 @@ public interface TestConstants {
 	
 	public static final int NUMBER_OF_CLASSES = 7;
 
-	public static final int NUMBER_OF_EXTERNAL_CLASSES = 1;
+	public static final int NUMBER_OF_EXTERNAL_CLASSES = 2;
 
 	public static final int NUMBER_OF_INTERFACES = 4;
+	
+	public static final int NUMBER_OF_EXTERNAL_INTERFACES = 2;
 	
 	public static final int NUMBER_OF_CLASSES_AND_INTERFACES = NUMBER_OF_CLASSES + NUMBER_OF_INTERFACES;
 
@@ -69,21 +71,21 @@ public interface TestConstants {
 	public static final Interface SUPER_INTERFACE2_OF_INTERFACE_C = new Interface("org.javaan.test.jar.InterfaceA");
 
 	
-	public static final String SIGNATURE_CONSTRUCTOR = "<init>()V";
+	public static final String SIGNATURE_CONSTRUCTOR = "<init>()";
 	
-	public static final String SIGNATURE_METHOD_INTERFACE_B = "methodInterfaceB(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;";
+	public static final String SIGNATURE_METHOD_INTERFACE_B = "methodInterfaceB(java.lang.String,java.lang.String)";
 	
-	public static final String SIGNATURE_METHOD_CLASS_B = "methodClassB(Lorg/javaan/test/jar/InterfaceC;)V";
+	public static final String SIGNATURE_METHOD_CLASS_B = "methodClassB(org.javaan.test.jar.InterfaceC,byte)";
 	
-	public static final String SIGNATURE_ENTRY_METHOD = "entryMethod(Lorg/javaan/test/jar/InterfaceB;)V";
+	public static final String SIGNATURE_ENTRY_METHOD = "entryMethod(org.javaan.test.jar.InterfaceB)";
 	
-	public static final String SIGNATURE_ABSTACT_METHOD = "abstractMethod()V";
+	public static final String SIGNATURE_ABSTACT_METHOD = "abstractMethod()";
 	
-	public static final String SIGNATURE_CALL_ABSTRACT_METHID = "callAbstractMethod(Lorg/javaan/test/jar/AbstractClassA;)V";
+	public static final String SIGNATURE_CALL_ABSTRACT_METHID = "callAbstractMethod(org.javaan.test.jar.AbstractClassA)";
 
-	public static final String SIGNATURE_CALL_EXTERNAL_CLASS = "methodCallingExternalClass()V";
+	public static final String SIGNATURE_CALL_EXTERNAL_CLASS = "methodCallingExternalClass()";
 
-	public static final String SIGNATURE_METHOD_ABSTRACT_COLLECTION_SIZE = "size()V";
+	public static final String SIGNATURE_METHOD_ABSTRACT_COLLECTION_SIZE = "size()";
 
 	
 	public static final Method CLASSA_METHOD_INTERFACE_B = new Method(CLASS_A, null, SIGNATURE_METHOD_INTERFACE_B);
