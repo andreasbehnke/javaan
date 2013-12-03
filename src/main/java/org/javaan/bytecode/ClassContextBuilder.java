@@ -28,7 +28,7 @@ import org.apache.bcel.classfile.Method;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
-import org.javaan.model.NamedObjectRepository;
+import org.javaan.model.NamedObjectMap;
 import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +45,10 @@ public class ClassContextBuilder {
 	
 	private final ReflectionClassContextBuilder reflectionClassContextBuilder;
 	
-	private final NamedObjectRepository<Type> types;
+	private final NamedObjectMap<Type> types;
 	
 	public ClassContextBuilder(List<Type> types) {
-		this.types = new NamedObjectRepository<Type>(types);
+		this.types = new NamedObjectMap<Type>(types);
 		reflectionClassContextBuilder = new ReflectionClassContextBuilder(context, this.types);
 	}
 

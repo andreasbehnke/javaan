@@ -34,7 +34,7 @@ import org.apache.bcel.generic.InvokeInstruction;
 import org.apache.bcel.generic.MethodGen;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
-import org.javaan.model.NamedObjectRepository;
+import org.javaan.model.NamedObjectMap;
 import org.javaan.model.Type;
 import org.junit.Test;
 
@@ -57,7 +57,7 @@ public class TestSignatureUtil implements TestConstants {
 	
 	@Test
 	public void testCreateSignatureFromMethod() throws IOException {
-		NamedObjectRepository<Type> types = new NamedObjectRepository<Type>(loadClasses());
+		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
 		Interface i = (Interface)types.get(INTERFACE_B.getName());
 		Method method = i.getJavaClass().getMethods()[0]; /* public String methodInterfaceB(String a, String b); */
 		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createSignature(method));
@@ -65,7 +65,7 @@ public class TestSignatureUtil implements TestConstants {
 	
 	@Test
 	public void testCreateSignatureFromInvoke() throws IOException {
-		NamedObjectRepository<Type> types = new NamedObjectRepository<Type>(loadClasses());
+		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
 		Clazz c = (Clazz)types.get(CLASS_B.getName());
 		ConstantPoolGen cpg = new ConstantPoolGen(c.getJavaClass().getConstantPool());
 		Method method = c.getJavaClass().getMethods()[1]; /* void methodClassB(InterfaceC c); */

@@ -10,14 +10,14 @@ import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
 import org.javaan.model.Method;
-import org.javaan.model.NamedObjectRepository;
+import org.javaan.model.NamedObjectMap;
 import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provides methods for adding {@link Interface}s and {@link Clazz}es to {@link ClassContext}.
- * Tries to resolve references using the provided {@link NamedObjectRepository} types. If a type
+ * Tries to resolve references using the provided {@link NamedObjectMap} types. If a type
  * is not found in that repository, tries to resolve type using java reflection and type loading.
  */
 class ReflectionClassContextBuilder {
@@ -28,11 +28,11 @@ class ReflectionClassContextBuilder {
 
 	private final ClassContext context;
 	
-	private final NamedObjectRepository<Type> types;
+	private final NamedObjectMap<Type> types;
 	
 	private final Set<String> missingTypes = new HashSet<String>();
 
-	public ReflectionClassContextBuilder(ClassContext context, NamedObjectRepository<Type> types) {
+	public ReflectionClassContextBuilder(ClassContext context, NamedObjectMap<Type> types) {
 		this.context = context;
 		this.types = types;
 	}

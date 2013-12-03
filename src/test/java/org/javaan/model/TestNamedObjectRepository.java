@@ -35,7 +35,7 @@ public class TestNamedObjectRepository {
 		NamedObject n2 = mock(NamedObject.class);
 		when(n2.getName()).thenReturn("dup");
 		
-		NamedObjectRepository<NamedObject> rep = new NamedObjectRepository<NamedObject>();
+		NamedObjectMap<NamedObject> rep = new NamedObjectMap<NamedObject>();
 		rep.add(n1);
 		rep.add(n2);
 		fail("expecting illegal argument exception");

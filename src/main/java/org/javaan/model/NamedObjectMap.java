@@ -24,13 +24,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NamedObjectRepository<N extends NamedObject> {
+public class NamedObjectMap<N extends NamedObject> {
 	
 	private final Map<String, N> objectMap = new HashMap<String, N>();
 	
-	public NamedObjectRepository() {}
+	public NamedObjectMap() {}
 	
-	public NamedObjectRepository(Collection<N> objects) {
+	public NamedObjectMap(Collection<N> objects) {
 		addAll(objects);
 	}
 	

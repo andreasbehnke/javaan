@@ -30,7 +30,7 @@ import org.javaan.graph.SingleTargetDirectedGraph;
 
 public class ClassContext {
 	
-	private final NamedObjectRepository<Type> types = new NamedObjectRepository<Type>();
+	private final NamedObjectMap<Type> types = new NamedObjectMap<Type>();
 	
 	private final SingleTargetDirectedGraph<Clazz> superClass = new SingleTargetDirectedGraph<Clazz>();
 
