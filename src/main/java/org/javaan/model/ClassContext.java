@@ -30,6 +30,8 @@ import org.javaan.graph.SingleTargetDirectedGraph;
 
 public class ClassContext {
 	
+	private final NamedObjectRepository<Type> types = new NamedObjectRepository<Type>();
+	
 	private final SingleTargetDirectedGraph<Clazz> superClass = new SingleTargetDirectedGraph<Clazz>();
 
 	private final NamedObjectDirectedGraph<Interface> superInterface = new NamedObjectDirectedGraph<Interface>();
@@ -44,6 +46,9 @@ public class ClassContext {
 		if (className == null) {
 			throw new IllegalArgumentException("Parameter className must not be null");
 		}
+		if (!types.contains(className.getName())) {
+			types.add(className);
+		}
 		superClass.addVertex(className);
 		interfaceOfClass.addParent(className);
 	}
@@ -55,9 +60,15 @@ public class ClassContext {
 		if (superClassName == null) {
 			throw new IllegalArgumentException("Parameter superClassName must not be null");
 		}
-		superClass.addEdge(className, superClassName);
+		if (!types.contains(className.getName())) {
+			types.add(className);
+		}
 		interfaceOfClass.addParent(className);
+		if (!types.contains(superClassName.getName())) {
+			types.add(superClassName);
+		}
 		interfaceOfClass.addParent(superClassName);
+		superClass.addEdge(className, superClassName);
 	}
 	
 	public boolean containsClass(Clazz className) {
@@ -84,6 +95,9 @@ public class ClassContext {
 		if (interfaceName == null) {
 			throw new IllegalArgumentException("Parameter interfaceName must not be null");
 		}
+		if (!types.contains(interfaceName.getName())) {
+			types.add(interfaceName);
+		}
 		superInterface.addVertex(interfaceName);
 	}
 
@@ -93,6 +107,12 @@ public class ClassContext {
 		}
 		if (superInterfaceName == null) {
 			throw new IllegalArgumentException("Parameter superInterfaceName must not be null");
+		}
+		if (!types.contains(interfaceName.getName())) {
+			types.add(interfaceName);
+		}
+		if (!types.contains(superInterfaceName.getName())) {
+			types.add(superInterfaceName);
 		}
 		superInterface.addEdge(interfaceName, superInterfaceName);
 	}
@@ -156,6 +176,11 @@ public class ClassContext {
 			implementingClasses.addAll(superClass.predecessorsOf(className));
 		}
 		return implementingClasses;
+	}
+	
+	
+	public Type getType(String className) {
+		return types.get(className);
 	}
 	
 	public void addMethod(Method method) {

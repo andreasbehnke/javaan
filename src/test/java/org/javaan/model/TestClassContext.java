@@ -65,6 +65,9 @@ public class TestClassContext {
 		assertTrue(classes.contains(CLASSA));
 		assertTrue(classes.contains(CLASSB));
 		assertTrue(classes.contains(CLASSC));
+		assertSame(CLASSA, context.getType(CLASSA.getName()));
+		assertSame(CLASSB, context.getType(CLASSB.getName()));
+		assertSame(CLASSC, context.getType(CLASSC.getName()));
 	}
 
 	@Test
@@ -78,7 +81,11 @@ public class TestClassContext {
 		assertEquals(null, context.getSuperClass(CLASSA));
 		assertEquals(CLASSA, context.getSuperClass(CLASSB));
 		assertEquals(null, context.getSuperClass(CLASSY));
-		assertEquals(CLASSY, context.getSuperClass(CLASSX));		
+		assertEquals(CLASSY, context.getSuperClass(CLASSX));
+		assertSame(CLASSA, context.getType(CLASSA.getName()));
+		assertSame(CLASSB, context.getType(CLASSB.getName()));
+		assertSame(CLASSX, context.getType(CLASSX.getName()));
+		assertSame(CLASSY, context.getType(CLASSY.getName()));
 	}
 	
 	@Test
@@ -126,6 +133,9 @@ public class TestClassContext {
 		assertTrue(interfaces.contains(INTERFACEA));
 		assertTrue(interfaces.contains(INTERFACEB));
 		assertTrue(interfaces.contains(INTERFACEC));
+		assertSame(INTERFACEA, context.getType(INTERFACEA.getName()));
+		assertSame(INTERFACEB, context.getType(INTERFACEB.getName()));
+		assertSame(INTERFACEC, context.getType(INTERFACEC.getName()));
 	}
 
 	@Test
@@ -153,6 +163,12 @@ public class TestClassContext {
 		assertNotNull(interfaces);
 		assertEquals(1, interfaces.size());
 		assertTrue(interfaces.contains(INTERFACEY));
+		assertSame(INTERFACEA, context.getType(INTERFACEA.getName()));
+		assertSame(INTERFACEB, context.getType(INTERFACEB.getName()));
+		assertSame(INTERFACEC, context.getType(INTERFACEC.getName()));
+		assertSame(INTERFACED, context.getType(INTERFACED.getName()));
+		assertSame(INTERFACEX, context.getType(INTERFACEX.getName()));
+		assertSame(INTERFACEY, context.getType(INTERFACEY.getName()));
 	}
 	
 	@Test

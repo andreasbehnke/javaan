@@ -55,4 +55,8 @@ public class NamedObjectRepository<N extends NamedObject> {
 	public Collection<N> getNamedObjects() {
 		return objectMap.values();
 	}
+	
+	public boolean contains(String name) {
+		return objectMap.containsKey(name);
+	}
 }
