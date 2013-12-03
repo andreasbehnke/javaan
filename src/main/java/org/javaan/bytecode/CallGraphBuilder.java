@@ -39,6 +39,7 @@ import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
 import org.javaan.model.Method;
 import org.javaan.model.NamedObjectMap;
+import org.javaan.model.NamedObjectRepository;
 import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +96,7 @@ public class CallGraphBuilder {
 
 	private final ClassContext classContext;
 	
-	private final NamedObjectMap<Type> types;
+	private final NamedObjectRepository<Type> types;
 	
 	private final CallGraph callGraph = new CallGraph();
 

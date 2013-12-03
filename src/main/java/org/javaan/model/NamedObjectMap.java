@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NamedObjectMap<N extends NamedObject> {
+public class NamedObjectMap<N extends NamedObject> implements NamedObjectRepository<N> {
 	
 	private final Map<String, N> objectMap = new HashMap<String, N>();
 	
