@@ -22,7 +22,9 @@ package org.javaan.bytecode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
@@ -47,8 +49,15 @@ public class ClassContextBuilder {
 
 	private final NamedObjectRepository<Type> types;
 	
+	private final Set<String> missingTypes;
+	
 	public ClassContextBuilder(List<Type> types) {
 		this.types = new NamedObjectRepository<Type>(types);
+		this.missingTypes = new HashSet<String>();
+	}
+	
+	public Set<String> getMissingTypes() {
+		return missingTypes;
 	}
 	
 	private org.javaan.model.Method createMethod(Type type, java.lang.reflect.Method method) {
@@ -82,6 +91,7 @@ public class ClassContextBuilder {
 			}
 		} catch (ClassNotFoundException e) {
 			LOG.warn("Could not resolve reference to external type: ", className);
+			missingTypes.add(className);
 			return null;
 		}
 		return type;
