@@ -20,10 +20,13 @@ package org.javaan.bytecode;
  * #L%
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.apache.commons.lang3.ClassUtils;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
@@ -32,8 +35,14 @@ import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Creates class context from bytecode, references to classes outside the loaded libraries are resolved
+ * using classloader.
+ */
 public class ClassContextBuilder {
 	
+	private static final String JAVA_LANG_OBJECT = "java.lang.Object";
+
 	private final static Logger LOG = LoggerFactory.getLogger(ClassContextBuilder.class);
 
 	private final NamedObjectRepository<Type> types;
@@ -42,18 +51,54 @@ public class ClassContextBuilder {
 		this.types = new NamedObjectRepository<Type>(types);
 	}
 	
-	private Interface getInterface(String name) {
+	private org.javaan.model.Method createMethod(Type type, java.lang.reflect.Method method) {
+		return new org.javaan.model.Method(type, null, SignatureUtil.createSignature(method));
+	}
+	
+	private void addMethods(ClassContext context, Type type, Class<?> clazz) {
+		clazz.getMethods();
+		for (java.lang.reflect.Method method : clazz.getDeclaredMethods()) {
+			context.addMethod(createMethod(type, method));
+		}
+	}
+	
+	private Type createTypeFromClass(ClassContext context, String className) {
+		ClassLoader classLoader = getClass().getClassLoader();
+		Type type = null;
+		try {
+			Class<?> clazz = classLoader.loadClass(className);
+			if (clazz.isInterface()) {
+				type = new Interface(className);
+				Class<?>[] superInterfaces = clazz.getInterfaces();
+				addInterface(context, (Interface)type, ClassUtils.convertClassesToClassNames(Arrays.asList(superInterfaces)));
+				addMethods(context, type, clazz);
+			} else {
+				type = new Clazz(className);
+				Class<?> superClass = clazz.getSuperclass();
+				String superClassName = (superClass == null) ? null : superClass.getName();
+				Class<?>[] implementedInterfaces = clazz.getInterfaces();
+				addClass(context, (Clazz)type, superClassName, ClassUtils.convertClassesToClassNames(Arrays.asList(implementedInterfaces)));
+				addMethods(context, type, clazz);
+			}
+		} catch (ClassNotFoundException e) {
+			LOG.warn("Could not resolve reference to external type: ", className);
+			return null;
+		}
+		return type;
+	}
+	
+	private Interface getInterface(ClassContext context, String name) {
 		Interface interfaze = (Interface)types.get(name);
 		if (interfaze == null) {
-			interfaze =  new Interface(name);
+			return (Interface)createTypeFromClass(context, name);
 		}
 		return interfaze;
 	}
 	
-	private Clazz getClazz(String name) {
+	private Clazz getClazz(ClassContext context, String name) {
 		Clazz clazz = (Clazz)types.get(name);
 		if (clazz == null) {
-			clazz =  new Clazz(name);
+			return (Clazz)createTypeFromClass(context, name);
 		}
 		return clazz;
 	}
@@ -62,46 +107,57 @@ public class ClassContextBuilder {
 		return new org.javaan.model.Method(type, method, SignatureUtil.createSignature(method));
 	}
 	
-	private void addType(ClassContext context, Interface interfaze) {
-		JavaClass javaClass = interfaze.getJavaClass();
-		String[] interfaces = javaClass.getInterfaceNames();
-		context.addInterface(interfaze);
-		for (String superInterfaceName : interfaces) {
-			context.addSuperInterface(interfaze, getInterface(superInterfaceName));
-		}
+	private void addMethods(ClassContext context, Type type, JavaClass javaClass) {
 		for (Method method : javaClass.getMethods()) {
-			context.addMethod(createMethod(interfaze, method));
+			context.addMethod(createMethod(type, method));
 		}
 	}
 	
-	private void addType(ClassContext context, Clazz clazz) {
-		JavaClass javaClass = clazz.getJavaClass();
-		String superClassName = javaClass.getSuperclassName();
-		if (superClassName == null || "java.lang.Object".equals(superClassName)) {
+	private void addInterface(ClassContext context, Interface interfaze, List<String> superInterfaces) {
+		context.addInterface(interfaze);
+		for (String superInterfaceName : superInterfaces) {
+			context.addSuperInterface(interfaze, getInterface(context, superInterfaceName));
+		}
+	}
+	
+	private void addInterface(ClassContext context, Interface interfaze, JavaClass javaClass) {
+		String[] superInterfaces = javaClass.getInterfaceNames();
+		addInterface(context, interfaze, Arrays.asList(superInterfaces));
+		addMethods(context, interfaze, javaClass);
+	}
+	
+	private void addClass(ClassContext context, Clazz clazz, String superClassName, List<String> interfaceNames) {
+		if (superClassName == null) {
+			superClassName = JAVA_LANG_OBJECT;
+		}
+		if (JAVA_LANG_OBJECT.equals(clazz.getName())) {
 			context.addClass(clazz);
 		} else {
-			context.addSuperClass(clazz, getClazz(superClassName));
+			context.addSuperClass(clazz, getClazz(context, superClassName));
 		}
-		String[] interfaceNames = javaClass.getInterfaceNames();
 		if (interfaceNames != null) {
 			for (String interfaceName : interfaceNames) {
-				Interface interfaze = getInterface(interfaceName);
+				Interface interfaze = getInterface(context, interfaceName);
 				context.addInterface(interfaze);
 				context.addInterfaceOfClass(clazz, interfaze);
 			}
 		}
-		for (Method method : javaClass.getMethods()) {
-			context.addMethod(createMethod(clazz, method));
-		}
+	}
+	
+	private void addClass(ClassContext context, Clazz clazz, JavaClass javaClass) {
+		String superClassName = javaClass.getSuperclassName();
+		String[] interfaceNames = javaClass.getInterfaceNames();
+		addClass(context, clazz, superClassName, Arrays.asList(interfaceNames));
+		addMethods(context, clazz, javaClass);
 	}
 	
 	private void addType(ClassContext context, Type type) {
 		switch (type.getJavaType()) {
 		case CLASS:
-			addType(context, (Clazz)type);
+			addClass(context, (Clazz)type, type.getJavaClass());
 			break;
 		case INTERFACE:
-			addType(context, (Interface)type);
+			addInterface(context, (Interface)type, type.getJavaClass());
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown type: " + type.getJavaType());

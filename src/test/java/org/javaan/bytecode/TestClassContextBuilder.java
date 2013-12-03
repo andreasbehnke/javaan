@@ -54,7 +54,7 @@ public class TestClassContextBuilder implements TestConstants {
 		
 		Set<Interface> interfaces = context.getInterfaces();
 		assertNotNull(interfaces);
-		assertEquals(NUMBER_OF_INTERFACES, interfaces.size());
+		assertEquals(NUMBER_OF_INTERFACES + NUMBER_OF_EXTERNAL_INTERFACES, interfaces.size());
 		
 		interfaces = context.getSuperInterfaces(INTERFACE_C);
 		assertNotNull(interfaces);
@@ -72,9 +72,9 @@ public class TestClassContextBuilder implements TestConstants {
 		assertEquals(2, methods.size());
 		assertTrue(methods.contains(new Method(CLASS_A, null, SIGNATURE_METHOD_INTERFACE_B)));
 		
-		methods =  context.getMethods(CLASS_EXTENDING_EXTERNAL_CLASS);
+		methods =  context.getVirtualMethods(CLASS_EXTENDING_EXTERNAL_CLASS);
 		assertNotNull(methods);
-		assertEquals(17, methods.size());
+		assertEquals(31, methods.size());
 		assertTrue(methods.contains(new Method(CLASS_EXTENDING_EXTERNAL_CLASS, null, SIGNATURE_METHOD_ABSTRACT_COLLECTION_SIZE)));
 	}
 }

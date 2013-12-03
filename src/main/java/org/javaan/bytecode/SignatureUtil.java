@@ -26,34 +26,64 @@ import java.util.List;
 
 import org.apache.bcel.Constants;
 import org.apache.bcel.classfile.Method;
+import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.InvokeInstruction;
 import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.Type;
-import org.apache.commons.lang3.ClassUtils;
 
 /**
  * Creates unique method signatures from methods or invocations
  */
 public class SignatureUtil {
 
-	private static String getClassName(Type type) {
+	private static String getClassSignature(Type type) {
 		byte typeCode = type.getType();
-		if (typeCode == Constants.T_OBJECT) {
+		switch (typeCode) {
+		case Constants.T_OBJECT:
 			ObjectType obj = (ObjectType)type;
 			return obj.getClassName();
-		} else {
+		case Constants.T_ARRAY:
+			ArrayType arr = (ArrayType)type;
+			StringBuilder name = new StringBuilder(getClassSignature(arr.getBasicType()));
+			for(int i = 0; i < arr.getDimensions(); i++) {
+				name.append("[]");
+			}
+			return name.toString();
+		default:
 			return Constants.TYPE_NAMES[typeCode];
 		}
 	}
 	
-	private static List<String> convertTypesToClassNames(Type[] types) {
+	private static List<String> convertTypesToClassSignatures(Type[] types) {
 		List<String> typeNames = new ArrayList<String>();
 		for (Type type : types) {
-			typeNames.add(getClassName(type));
+			typeNames.add(getClassSignature(type));
 		}
 		return typeNames;
 	}
+	
+	private static String getClassSignature(Class<?> cls) {
+		if (cls.isArray()) {
+			StringBuilder dimension = new StringBuilder("[]");
+			Class<?> comp = cls.getComponentType();
+			while(comp.isArray()) {
+				dimension.append("[]");
+				comp = comp.getComponentType();
+			}
+			return comp.getName() + dimension.toString();
+    	} else {
+    		return cls.getName();
+    	}
+	}
+	
+	private static List<String> convertClassesToClassSignatures(List<Class<?>> classes) {
+        List<String> classNames = new ArrayList<String>(classes.size());
+        for (Class<?> cls : classes) {
+        	classNames.add(getClassSignature(cls));
+        }
+        return classNames;
+    }
 
 	private static String createSignature(String methodName, List<String> methodParameterTypes) {
 		StringBuilder builder = new StringBuilder();
@@ -71,18 +101,18 @@ public class SignatureUtil {
 	public static String createSignature(java.lang.reflect.Method method) {
 		return createSignature(
 				method.getName(), 
-				ClassUtils.convertClassesToClassNames(Arrays.asList(method.getParameterTypes())));
+				convertClassesToClassSignatures(Arrays.asList(method.getParameterTypes())));
 	}
 
 	public static String createSignature(Method method) {
 		return createSignature(
 				method.getName(),
-				convertTypesToClassNames(method.getArgumentTypes()));
+				convertTypesToClassSignatures(method.getArgumentTypes()));
 	}
 	
 	public static String createSignature(InvokeInstruction invoke, ConstantPoolGen cpg) {
 		return createSignature(
 				invoke.getMethodName(cpg),
-				convertTypesToClassNames(invoke.getArgumentTypes(cpg)));
+				convertTypesToClassSignatures(invoke.getArgumentTypes(cpg)));
 	}
 }
