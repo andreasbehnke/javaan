@@ -179,7 +179,8 @@ public class ClassContextBuilder {
 		for (Type type : types.getNamedObjects()) {
 			addType(context, type);
 		}
-		LOG.info("Created class context with {} classes and {} interfaces", context.getClasses().size(), context.getInterfaces().size());
+		LOG.info("Created class context with {} classes and {} interfaces, {} references could not be resolved", 
+				new Object[]{context.getClasses().size(), context.getInterfaces().size(), missingTypes.size()});
 		return context;
 	}
 }
