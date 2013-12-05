@@ -43,7 +43,7 @@ class ReflectionClassContextBuilder {
 	}
 
 	private Method createMethod(Type type, java.lang.reflect.Method method) {
-		return new Method(type, null, SignatureUtil.createSignature(method));
+		return Method.create(type, method);
 	}
 
 	private void addMethods(Type type, Class<?> clazz) {
@@ -79,20 +79,12 @@ class ReflectionClassContextBuilder {
 		return type;
 	}
 	
-	private Interface getInterface(String name) {
-		Interface interfaze = (Interface)types.get(name);
-		if (interfaze == null) {
-			return (Interface)createTypeFromClass(name);
+	public Type getType(String name) {
+		Type type = types.get(name);
+		if (type == null) {
+			return createTypeFromClass(name);
 		}
-		return interfaze;
-	}
-
-	private Clazz getClazz(String name) {
-		Clazz clazz = (Clazz)types.get(name);
-		if (clazz == null) {
-			return (Clazz)createTypeFromClass(name);
-		}
-		return clazz;
+		return type;
 	}
 
 	public void addClass(Clazz clazz, String superClassName, List<String> interfaceNames) {
@@ -102,11 +94,11 @@ class ReflectionClassContextBuilder {
 		if (JAVA_LANG_OBJECT.equals(clazz.getName())) {
 			context.addClass(clazz);
 		} else {
-			context.addSuperClass(clazz, getClazz(superClassName));
+			context.addSuperClass(clazz, (Clazz)getType(superClassName));
 		}
 		if (interfaceNames != null) {
 			for (String interfaceName : interfaceNames) {
-				Interface interfaze = getInterface(interfaceName);
+				Interface interfaze = (Interface)getType(interfaceName);
 				context.addInterface(interfaze);
 				context.addInterfaceOfClass(clazz, interfaze);
 			}
@@ -116,7 +108,7 @@ class ReflectionClassContextBuilder {
 	public void addInterface(Interface interfaze, List<String> superInterfaces) {
 		context.addInterface(interfaze);
 		for (String superInterfaceName : superInterfaces) {
-			context.addSuperInterface(interfaze, getInterface(superInterfaceName));
+			context.addSuperInterface(interfaze, (Interface)getType(superInterfaceName));
 		}
 	}
 }

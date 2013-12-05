@@ -43,17 +43,17 @@ public class TestCallGraph {
 
 	private static final Clazz D = new Clazz("classd");
 
-	private final static Method METHODA = new Method(A, null, "methoda");
+	private final static Method METHODA = new Method(A, "methoda");
 
-	private final static Method METHODB = new Method(A, null, "methodb");
+	private final static Method METHODB = new Method(A, "methodb");
 
-	private final static Method METHODC = new Method(A, null, "methodc");
+	private final static Method METHODC = new Method(A, "methodc");
 
-	private final static Method METHODD = new Method(B, null, "methodd");
+	private final static Method METHODD = new Method(B, "methodd");
 
-	private final static Method METHODE = new Method(C, null, "methode");
+	private final static Method METHODE = new Method(C, "methode");
 
-	private final static Method METHODF = new Method(D, null, "methodf");
+	private final static Method METHODF = new Method(D, "methodf");
 
 	@Test
 	public void testGetCallers() {

@@ -53,7 +53,7 @@ public class ClassContextBuilder {
 	}
 
 	private org.javaan.model.Method createMethod(Type type, Method method) {
-		return new org.javaan.model.Method(type, method, SignatureUtil.createSignature(method));
+		return org.javaan.model.Method.create(type, method);
 	}
 	
 	private void addMethods(Type type, JavaClass javaClass) {

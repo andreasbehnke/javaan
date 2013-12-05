@@ -1,5 +1,11 @@
 package org.javaan.model;
 
+import java.lang.reflect.Modifier;
+
+import org.apache.bcel.generic.ConstantPoolGen;
+import org.apache.bcel.generic.MethodGen;
+import org.javaan.bytecode.SignatureUtil;
+
 /*
  * #%L
  * Java Static Code Analysis
@@ -24,20 +30,53 @@ public class Method extends NamedObjectBase {
 	
 	private final Type type;
 	
-	private final org.apache.bcel.classfile.Method javaMethod;
-	
 	private final String signature;
 	
-	private String fullName;
-
-	public Method(Type type, org.apache.bcel.classfile.Method javaMethod, String signature) {
+	private final boolean isAbstract;
+	
+	private final String fullName;
+	
+	private org.apache.bcel.classfile.Method javaMethod;
+	
+	/**
+	 * Constructor used by unit tests
+	 */
+	public Method(Type type, String signature) {
 		super(buildUniqueMethodName(type, signature));
-		this.javaMethod = javaMethod;
-		this.signature = signature;
 		this.type = type;
-		if (javaMethod != null) {
-			this.fullName = buildFullName(type, javaMethod);
-		}
+		this.signature = signature;
+		this.isAbstract = false;
+		this.fullName = buildFullName(type, this.name);
+		
+	}
+	
+	private Method(String name, Type type, String signature, boolean isAbstract, String fullName, org.apache.bcel.classfile.Method javaMethod) {
+		this(name, type, signature, isAbstract, fullName);
+		this.javaMethod = javaMethod;
+	}
+	
+	private Method(String name, Type type, String signature, boolean isAbstract, String fullName) {
+		super(name);
+		this.type = type;
+		this.signature = signature;
+		this.isAbstract = isAbstract;
+		this.fullName = fullName;
+	}
+	
+	public static Method create(Type type, org.apache.bcel.classfile.Method javaMethod) {
+		String signature = SignatureUtil.createSignature(javaMethod);
+		String name = buildUniqueMethodName(type, signature);
+		boolean isAbstract = javaMethod.isAbstract();
+		String fullName = buildFullName(type, javaMethod);
+		return new Method(name, type, signature, isAbstract, fullName, javaMethod);
+	}
+	
+	public static Method create(Type type, java.lang.reflect.Method method) {
+		String signature = SignatureUtil.createSignature(method);
+		String name = buildUniqueMethodName(type, signature);
+		boolean isAbstract = Modifier.isAbstract(method.getModifiers());
+		String fullName = buildFullName(type, method);
+		return new Method(name, type, signature, isAbstract, fullName);
 	}
 
 	private static String buildUniqueMethodName(Type type, String signature) {
@@ -56,10 +95,17 @@ public class Method extends NamedObjectBase {
 		return prefix + type.getName() + " - " + signature;
 	}
 	
-	private static String buildFullName(Type type, org.apache.bcel.classfile.Method javaMethod) {
-		String signature = javaMethod.toString();
+	private static String buildFullName(Type type, String fullSignature) {
 		String typeName = type.getName();
-		return String.format("%s - %s", typeName, signature);
+		return String.format("%s - %s", typeName, fullSignature);
+	}
+	
+	private static String buildFullName(Type type, org.apache.bcel.classfile.Method javaMethod) {
+		return buildFullName(type, javaMethod.toString());
+	}
+	
+	private static String buildFullName(Type type, java.lang.reflect.Method method) {
+		return buildFullName(type, method.toGenericString());
 	}
 
 	public Type getType() {
@@ -74,7 +120,11 @@ public class Method extends NamedObjectBase {
 		return fullName;
 	}
 	
-	public org.apache.bcel.classfile.Method getJavaMethod() {
-		return javaMethod;
+	public boolean isAbstract() {
+		return isAbstract;
+	}
+
+	public MethodGen createMethodGen(Clazz clazz, ConstantPoolGen constantPoolGen) {
+		return new MethodGen(javaMethod, clazz.getName(), constantPoolGen);
 	}
 }

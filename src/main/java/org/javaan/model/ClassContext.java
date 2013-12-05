@@ -28,7 +28,7 @@ import org.javaan.graph.BidirectionalMap;
 import org.javaan.graph.NamedObjectDirectedGraph;
 import org.javaan.graph.SingleTargetDirectedGraph;
 
-public class ClassContext {
+public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final NamedObjectMap<Type> types = new NamedObjectMap<Type>();
 	
@@ -178,8 +178,8 @@ public class ClassContext {
 		return implementingClasses;
 	}
 	
-	
-	public Type getType(String className) {
+	@Override
+	public Type get(String className) {
 		return types.get(className);
 	}
 	

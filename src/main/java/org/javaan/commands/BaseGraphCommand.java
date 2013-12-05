@@ -76,7 +76,7 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 		String criteria = filterCriteria(commandLine);
 		boolean printLeaves = isPrintLeaves(commandLine);
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext, types).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 		Collection<N> input = getInput(classContext, callGraph, criteria);
 		ObjectFormatter<N> formatter = getFormatter();
 		if (printLeaves) {
