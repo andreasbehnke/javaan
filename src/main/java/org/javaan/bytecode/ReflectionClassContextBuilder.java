@@ -75,6 +75,9 @@ class ReflectionClassContextBuilder {
 	}
 	
 	public Type getType(String name) {
+		if (missingTypes.contains(name)) {
+			return null;
+		}
 		Type type = types.get(name);
 		if (type == null) {
 			type = context.get(name);
