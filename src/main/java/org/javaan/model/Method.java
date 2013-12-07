@@ -1,5 +1,6 @@
 package org.javaan.model;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 
 import org.apache.bcel.generic.ConstantPoolGen;
@@ -78,6 +79,14 @@ public class Method extends NamedObjectBase {
 		String fullName = buildFullName(type, method);
 		return new Method(name, type, signature, isAbstract, fullName);
 	}
+	
+	public static Method create(Type type, Constructor<?> constructor) {
+		String signature = SignatureUtil.createSignature(constructor);
+		String name = buildUniqueMethodName(type, signature);
+		boolean isAbstract = Modifier.isAbstract(constructor.getModifiers());
+		String fullName = buildFullName(type, constructor);
+		return new Method(name, type, signature, isAbstract, fullName);
+	}
 
 	private static String buildUniqueMethodName(Type type, String signature) {
 		String prefix = null;
@@ -108,6 +117,10 @@ public class Method extends NamedObjectBase {
 		return buildFullName(type, method.toGenericString());
 	}
 
+	private static String buildFullName(Type type, Constructor<?> constructor) {
+		return buildFullName(type, constructor.toGenericString());
+	}
+	
 	public Type getType() {
 		return type;
 	}

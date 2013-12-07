@@ -1,5 +1,6 @@
 package org.javaan.bytecode;
 
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -42,14 +43,13 @@ class ReflectionClassContextBuilder {
 		return missingTypes;
 	}
 
-	private Method createMethod(Type type, java.lang.reflect.Method method) {
-		return Method.create(type, method);
-	}
-
 	private void addMethods(Type type, Class<?> clazz) {
 		clazz.getMethods();
 		for (java.lang.reflect.Method method : clazz.getDeclaredMethods()) {
-			context.addMethod(createMethod(type, method));
+			context.addMethod(Method.create(type, method));
+		}
+		for (Constructor<?> constructor : clazz.getConstructors()) {
+			context.addMethod(Method.create(type, constructor));
 		}
 	}
 
@@ -82,7 +82,10 @@ class ReflectionClassContextBuilder {
 	public Type getType(String name) {
 		Type type = types.get(name);
 		if (type == null) {
-			return createTypeFromClass(name);
+			type = context.get(name);
+		}
+		if (type == null) {
+			type = createTypeFromClass(name);
 		}
 		return type;
 	}

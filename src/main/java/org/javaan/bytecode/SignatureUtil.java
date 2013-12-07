@@ -20,6 +20,7 @@ package org.javaan.bytecode;
  * #L%
  */
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,8 @@ import org.apache.bcel.generic.Type;
  * Creates unique method signatures from methods or invocations
  */
 public class SignatureUtil {
+	
+	private static final String CONSTRUCTOR_SIGNATURE = "<init>";
 
 	private static String getClassSignature(Type type) {
 		byte typeCode = type.getType();
@@ -102,6 +105,12 @@ public class SignatureUtil {
 		return createSignature(
 				method.getName(), 
 				convertClassesToClassSignatures(Arrays.asList(method.getParameterTypes())));
+	}
+	
+	public static String createSignature(Constructor<?> constructor) {
+		return createSignature(
+				CONSTRUCTOR_SIGNATURE,
+				convertClassesToClassSignatures(Arrays.asList(constructor.getParameterTypes())));
 	}
 
 	public static String createSignature(Method method) {
