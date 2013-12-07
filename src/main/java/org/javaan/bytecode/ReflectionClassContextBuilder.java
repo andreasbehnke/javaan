@@ -72,7 +72,7 @@ class ReflectionClassContextBuilder {
 				addMethods(type, clazz);
 			}
 		} catch (ClassNotFoundException e) {
-			LOG.warn("Could not resolve reference to external type: ", className);
+			LOG.warn("Could not resolve reference to external type: {}", className);
 			missingTypes.add(className);
 			return null;
 		}
@@ -97,13 +97,20 @@ class ReflectionClassContextBuilder {
 		if (JAVA_LANG_OBJECT.equals(clazz.getName())) {
 			context.addClass(clazz);
 		} else {
-			context.addSuperClass(clazz, (Clazz)getType(superClassName));
+			Clazz superClass = (Clazz)getType(superClassName);
+			if (superClass == null) {
+				context.addClass(clazz);
+			} else {
+				context.addSuperClass(clazz, superClass);
+			}
 		}
 		if (interfaceNames != null) {
 			for (String interfaceName : interfaceNames) {
 				Interface interfaze = (Interface)getType(interfaceName);
-				context.addInterface(interfaze);
-				context.addInterfaceOfClass(clazz, interfaze);
+				if (interfaze != null) {
+					context.addInterface(interfaze);
+					context.addInterfaceOfClass(clazz, interfaze);
+				}
 			}
 		}
 	}
@@ -111,7 +118,10 @@ class ReflectionClassContextBuilder {
 	public void addInterface(Interface interfaze, List<String> superInterfaces) {
 		context.addInterface(interfaze);
 		for (String superInterfaceName : superInterfaces) {
-			context.addSuperInterface(interfaze, (Interface)getType(superInterfaceName));
+			Interface superInterface = (Interface)getType(superInterfaceName);
+			if (superInterface != null) {
+				context.addSuperInterface(interfaze, superInterface);
+			}
 		}
 	}
 }
