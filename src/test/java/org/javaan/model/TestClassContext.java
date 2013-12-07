@@ -48,10 +48,12 @@ public class TestClassContext {
 	private static final Method CLASSA_METHODA = new Method(CLASSA, "methoda");
 	private static final Method CLASSA_METHODB = new Method(CLASSA, "methodb");
 	private static final Method CLASSA_METHODC = new Method(CLASSA, "methodc");
+	private static final Method CLASSB_METHODC = new Method(CLASSB, "methodc");
 	
 	private static final Method INTERFACEA_METHODA = new Method(INTERFACEA, "methoda");
 	private static final Method INTERFACEA_METHODB = new Method(INTERFACEA, "methodb");
 	private static final Method INTERFACEA_METHODC = new Method(INTERFACEA, "methodc");
+	private static final Method INTERFACEB_METHODC = new Method(INTERFACEB, "methodc");
 	
 	@Test
 	public void testAddClass() {
@@ -363,19 +365,27 @@ public class TestClassContext {
 		context.addSuperInterface(INTERFACEB, INTERFACEA);
 		
 		context.addMethod(CLASSA_METHODA);
+		context.addMethod(CLASSA_METHODC);
 		context.addMethod(INTERFACEA_METHODA);
+		context.addMethod(INTERFACEA_METHODB);
+		context.addMethod(INTERFACEA_METHODC);
+		context.addMethod(INTERFACEB_METHODC);
+		context.addMethod(CLASSA_METHODB);
+		context.addMethod(CLASSB_METHODC);
 		
 		Set<Method> methods = context.getVirtualMethods(CLASSB);
 		assertNotNull(methods);
-		assertEquals(1, methods.size());
+		assertEquals(4, methods.size());
 		assertTrue(methods.contains(CLASSA_METHODA));
 		
 		methods = context.getVirtualMethods(INTERFACEB);
 		assertNotNull(methods);
-		assertEquals(1, methods.size());
+		assertEquals(4, methods.size());
 		assertTrue(methods.contains(INTERFACEA_METHODA));
 		
 		assertSame(CLASSA_METHODA, context.getVirtualMethod(CLASSB, "methoda"));
 		assertSame(INTERFACEA_METHODA, context.getVirtualMethod(INTERFACEB, "methoda"));
+		assertSame(INTERFACEB_METHODC, context.getVirtualMethod(INTERFACEB, "methodc"));
+		assertSame(CLASSB_METHODC, context.getVirtualMethod(CLASSB, "methodc"));
 	}
 }

@@ -39,6 +39,11 @@ public class GraphPrinter<N extends NamedObject> implements NamedObjectVisitor<N
 	}
 	
 	@Override
+	public boolean finished() {
+		return false;
+	}
+	
+	@Override
 	public void visit(N node, int level) {
 		StringBuilder buffer = new StringBuilder();
 		for (int i=0; i < level; i++) {

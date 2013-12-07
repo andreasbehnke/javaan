@@ -244,11 +244,20 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Method getVirtualMethod(Clazz className, String signature) {
-		return findMethod(getVirtualMethods(className), signature);
+		List<Clazz> superClasses = getSuperClassHierachy(className);
+		for (Clazz clazz : superClasses) {
+			Method method = getMethod(clazz, signature);
+			if (method != null) {
+				return method;
+			}
+		}
+		return null;
 	}
 	
-	public Method getVirtualMethod(Interface interfaceName, String signature) {
-		return findMethod(getVirtualMethods(interfaceName), signature);
+	public Method getVirtualMethod(final Interface interfaceName, final String signature) {
+		InterfaceMethodFinder methodFinder = new InterfaceMethodFinder(this, signature);
+		superInterface.traverseSuccessorsBreadthFirst(interfaceName, methodFinder);
+		return methodFinder.getMethodFound();
 	}
 	
 	public Set<Method> getVirtualMethods(Clazz className) {
