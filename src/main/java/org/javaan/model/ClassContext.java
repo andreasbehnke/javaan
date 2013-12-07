@@ -28,7 +28,9 @@ import org.javaan.graph.BidirectionalMap;
 import org.javaan.graph.NamedObjectDirectedGraph;
 import org.javaan.graph.SingleTargetDirectedGraph;
 
-public class ClassContext {
+public class ClassContext implements NamedObjectRepository<Type> {
+	
+	private final NamedObjectMap<Type> types = new NamedObjectMap<Type>();
 	
 	private final SingleTargetDirectedGraph<Clazz> superClass = new SingleTargetDirectedGraph<Clazz>();
 
@@ -44,6 +46,9 @@ public class ClassContext {
 		if (className == null) {
 			throw new IllegalArgumentException("Parameter className must not be null");
 		}
+		if (!types.contains(className.getName())) {
+			types.add(className);
+		}
 		superClass.addVertex(className);
 		interfaceOfClass.addParent(className);
 	}
@@ -55,9 +60,15 @@ public class ClassContext {
 		if (superClassName == null) {
 			throw new IllegalArgumentException("Parameter superClassName must not be null");
 		}
-		superClass.addEdge(className, superClassName);
+		if (!types.contains(className.getName())) {
+			types.add(className);
+		}
 		interfaceOfClass.addParent(className);
+		if (!types.contains(superClassName.getName())) {
+			types.add(superClassName);
+		}
 		interfaceOfClass.addParent(superClassName);
+		superClass.addEdge(className, superClassName);
 	}
 	
 	public boolean containsClass(Clazz className) {
@@ -84,6 +95,9 @@ public class ClassContext {
 		if (interfaceName == null) {
 			throw new IllegalArgumentException("Parameter interfaceName must not be null");
 		}
+		if (!types.contains(interfaceName.getName())) {
+			types.add(interfaceName);
+		}
 		superInterface.addVertex(interfaceName);
 	}
 
@@ -93,6 +107,12 @@ public class ClassContext {
 		}
 		if (superInterfaceName == null) {
 			throw new IllegalArgumentException("Parameter superInterfaceName must not be null");
+		}
+		if (!types.contains(interfaceName.getName())) {
+			types.add(interfaceName);
+		}
+		if (!types.contains(superInterfaceName.getName())) {
+			types.add(superInterfaceName);
 		}
 		superInterface.addEdge(interfaceName, superInterfaceName);
 	}
@@ -158,6 +178,11 @@ public class ClassContext {
 		return implementingClasses;
 	}
 	
+	@Override
+	public Type get(String className) {
+		return types.get(className);
+	}
+	
 	public void addMethod(Method method) {
 		Type typeName = method.getType();
 		switch (typeName.getJavaType()) {
@@ -219,11 +244,20 @@ public class ClassContext {
 	}
 	
 	public Method getVirtualMethod(Clazz className, String signature) {
-		return findMethod(getVirtualMethods(className), signature);
+		List<Clazz> superClasses = getSuperClassHierachy(className);
+		for (Clazz clazz : superClasses) {
+			Method method = getMethod(clazz, signature);
+			if (method != null) {
+				return method;
+			}
+		}
+		return null;
 	}
 	
-	public Method getVirtualMethod(Interface interfaceName, String signature) {
-		return findMethod(getVirtualMethods(interfaceName), signature);
+	public Method getVirtualMethod(final Interface interfaceName, final String signature) {
+		InterfaceMethodFinder methodFinder = new InterfaceMethodFinder(this, signature);
+		superInterface.traverseSuccessorsBreadthFirst(interfaceName, methodFinder);
+		return methodFinder.getMethodFound();
 	}
 	
 	public Set<Method> getVirtualMethods(Clazz className) {

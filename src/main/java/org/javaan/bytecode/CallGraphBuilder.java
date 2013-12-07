@@ -20,6 +20,7 @@ package org.javaan.bytecode;
  * #L%
  */
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,6 @@ import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
 import org.javaan.model.Method;
-import org.javaan.model.NamedObjectRepository;
 import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,19 +95,19 @@ public class CallGraphBuilder {
 
 	private final ClassContext classContext;
 	
-	private final NamedObjectRepository<Type> types;
+	private final ReflectionClassContextBuilder reflectionClassContextBuilder;
 	
 	private final CallGraph callGraph = new CallGraph();
 
-	public CallGraphBuilder(ClassContext classContext, List<Type> types) {
+	public CallGraphBuilder(final ClassContext classContext) {
 		this.classContext = classContext;
-		this.types = new NamedObjectRepository<Type>(types);
+		this.reflectionClassContextBuilder = new ReflectionClassContextBuilder(classContext, classContext);
 	}
 	
 	private Method getMethod(InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
 		String className = invoke.getClassName(constantPoolGen);
 		String signature = SignatureUtil.createSignature(invoke, constantPoolGen);
-		Type type = types.get(className);
+		Type type = reflectionClassContextBuilder.getType(className);
 		if (type == null) {
 			return null;
 		}
@@ -124,7 +124,7 @@ public class CallGraphBuilder {
 	
 	private void addAbstractMethodCall(Set<Clazz> implementations, Method caller, Method abstractCallee) {
 		for (Clazz implementation : implementations) {
-			Method calleeCandidate = classContext.getMethod(implementation, abstractCallee.getSignature());
+			Method calleeCandidate = classContext.getVirtualMethod(implementation, abstractCallee.getSignature());
 			if (calleeCandidate != null) {
 				callGraph.addCall(caller, calleeCandidate);
 			}
@@ -143,7 +143,7 @@ public class CallGraphBuilder {
 	private void addClassMethodCall(Method caller, InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
 		Method callee = getMethod(invoke, constantPoolGen);
 		if (callee != null) {
-			if (callee.getJavaMethod().isAbstract()) {
+			if (callee.isAbstract()) {
 				// find implementations of abstract method
 				Set<Clazz> implementations = classContext.getSpecializationsOfClass((Clazz)callee.getType());
 				addAbstractMethodCall(implementations, caller, callee);
@@ -154,13 +154,14 @@ public class CallGraphBuilder {
 	}
 	
 	private void processClasses() {
-		for (Clazz clazz : classContext.getClasses()) {
+		List<Clazz> classes = new ArrayList<Clazz>(classContext.getClasses());
+		for (Clazz clazz : classes) {
 			JavaClass javaClass = clazz.getJavaClass();
 			if (javaClass != null) {
 				ConstantPoolGen constantPoolGen = new ConstantPoolGen(javaClass.getConstantPool());
 				Set<Method> methods = classContext.getMethods(clazz);
 				for (Method method : methods) {
-					MethodGen mg = new MethodGen(method.getJavaMethod(), clazz.getName(), constantPoolGen);
+					MethodGen mg = method.createMethodGen(clazz, constantPoolGen);
 					new MethodVisitor(method, mg).start();
 				}
 			}
@@ -171,6 +172,10 @@ public class CallGraphBuilder {
 		LOG.info("Creating method call graph ...");
 		processClasses();
 		LOG.info("Created call graph containg {} methods", callGraph.size());
+		int numberOfMissingTypes = reflectionClassContextBuilder.getMissingTypes().size();
+		if (numberOfMissingTypes > 0) {
+			LOG.warn("Missing types: {} types could not be resoled", numberOfMissingTypes);
+		}
 		return callGraph;
 	}
 }

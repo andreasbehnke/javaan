@@ -45,13 +45,15 @@ public class TestClassContext {
 	private static final Interface INTERFACED = new Interface("d");
 	private static final Interface INTERFACEX = new Interface("x");
 	private static final Interface INTERFACEY = new Interface("y");
-	private static final Method CLASSA_METHODA = new Method(CLASSA, null, "methoda");
-	private static final Method CLASSA_METHODB = new Method(CLASSA, null, "methodb");
-	private static final Method CLASSA_METHODC = new Method(CLASSA, null, "methodc");
+	private static final Method CLASSA_METHODA = new Method(CLASSA, "methoda");
+	private static final Method CLASSA_METHODB = new Method(CLASSA, "methodb");
+	private static final Method CLASSA_METHODC = new Method(CLASSA, "methodc");
+	private static final Method CLASSB_METHODC = new Method(CLASSB, "methodc");
 	
-	private static final Method INTERFACEA_METHODA = new Method(INTERFACEA, null, "methoda");
-	private static final Method INTERFACEA_METHODB = new Method(INTERFACEA, null, "methodb");
-	private static final Method INTERFACEA_METHODC = new Method(INTERFACEA, null, "methodc");
+	private static final Method INTERFACEA_METHODA = new Method(INTERFACEA, "methoda");
+	private static final Method INTERFACEA_METHODB = new Method(INTERFACEA, "methodb");
+	private static final Method INTERFACEA_METHODC = new Method(INTERFACEA, "methodc");
+	private static final Method INTERFACEB_METHODC = new Method(INTERFACEB, "methodc");
 	
 	@Test
 	public void testAddClass() {
@@ -65,6 +67,9 @@ public class TestClassContext {
 		assertTrue(classes.contains(CLASSA));
 		assertTrue(classes.contains(CLASSB));
 		assertTrue(classes.contains(CLASSC));
+		assertSame(CLASSA, context.get(CLASSA.getName()));
+		assertSame(CLASSB, context.get(CLASSB.getName()));
+		assertSame(CLASSC, context.get(CLASSC.getName()));
 	}
 
 	@Test
@@ -78,7 +83,11 @@ public class TestClassContext {
 		assertEquals(null, context.getSuperClass(CLASSA));
 		assertEquals(CLASSA, context.getSuperClass(CLASSB));
 		assertEquals(null, context.getSuperClass(CLASSY));
-		assertEquals(CLASSY, context.getSuperClass(CLASSX));		
+		assertEquals(CLASSY, context.getSuperClass(CLASSX));
+		assertSame(CLASSA, context.get(CLASSA.getName()));
+		assertSame(CLASSB, context.get(CLASSB.getName()));
+		assertSame(CLASSX, context.get(CLASSX.getName()));
+		assertSame(CLASSY, context.get(CLASSY.getName()));
 	}
 	
 	@Test
@@ -126,6 +135,9 @@ public class TestClassContext {
 		assertTrue(interfaces.contains(INTERFACEA));
 		assertTrue(interfaces.contains(INTERFACEB));
 		assertTrue(interfaces.contains(INTERFACEC));
+		assertSame(INTERFACEA, context.get(INTERFACEA.getName()));
+		assertSame(INTERFACEB, context.get(INTERFACEB.getName()));
+		assertSame(INTERFACEC, context.get(INTERFACEC.getName()));
 	}
 
 	@Test
@@ -153,6 +165,12 @@ public class TestClassContext {
 		assertNotNull(interfaces);
 		assertEquals(1, interfaces.size());
 		assertTrue(interfaces.contains(INTERFACEY));
+		assertSame(INTERFACEA, context.get(INTERFACEA.getName()));
+		assertSame(INTERFACEB, context.get(INTERFACEB.getName()));
+		assertSame(INTERFACEC, context.get(INTERFACEC.getName()));
+		assertSame(INTERFACED, context.get(INTERFACED.getName()));
+		assertSame(INTERFACEX, context.get(INTERFACEX.getName()));
+		assertSame(INTERFACEY, context.get(INTERFACEY.getName()));
 	}
 	
 	@Test
@@ -347,19 +365,27 @@ public class TestClassContext {
 		context.addSuperInterface(INTERFACEB, INTERFACEA);
 		
 		context.addMethod(CLASSA_METHODA);
+		context.addMethod(CLASSA_METHODC);
 		context.addMethod(INTERFACEA_METHODA);
+		context.addMethod(INTERFACEA_METHODB);
+		context.addMethod(INTERFACEA_METHODC);
+		context.addMethod(INTERFACEB_METHODC);
+		context.addMethod(CLASSA_METHODB);
+		context.addMethod(CLASSB_METHODC);
 		
 		Set<Method> methods = context.getVirtualMethods(CLASSB);
 		assertNotNull(methods);
-		assertEquals(1, methods.size());
+		assertEquals(4, methods.size());
 		assertTrue(methods.contains(CLASSA_METHODA));
 		
 		methods = context.getVirtualMethods(INTERFACEB);
 		assertNotNull(methods);
-		assertEquals(1, methods.size());
+		assertEquals(4, methods.size());
 		assertTrue(methods.contains(INTERFACEA_METHODA));
 		
 		assertSame(CLASSA_METHODA, context.getVirtualMethod(CLASSB, "methoda"));
 		assertSame(INTERFACEA_METHODA, context.getVirtualMethod(INTERFACEB, "methoda"));
+		assertSame(INTERFACEB_METHODC, context.getVirtualMethod(INTERFACEB, "methodc"));
+		assertSame(CLASSB_METHODC, context.getVirtualMethod(CLASSB, "methodc"));
 	}
 }

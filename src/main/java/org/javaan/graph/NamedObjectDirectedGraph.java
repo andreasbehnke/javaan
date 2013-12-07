@@ -29,6 +29,7 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.EdgeReversedGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
@@ -88,25 +89,41 @@ public class NamedObjectDirectedGraph<V extends NamedObject> extends DefaultDire
 		return predecessors;
 	}
 
-	private void traverseGraph(DirectedGraph<V, NamedObjectEdge<V>> graph, V startVertex, NamedObjectVisitor<V> visitor) {
+	private void traverseGraph(DirectedGraph<V, NamedObjectEdge<V>> graph, V startVertex, NamedObjectVisitor<V> visitor, boolean depthFirst) {
 		if (!containsVertex(startVertex)) {
 			return;
 		}
-		TraversalListener<V, NamedObjectEdge<V>> listener = new NamedObjectTraversalListener<V>(visitor);
-		GraphIterator<V, NamedObjectEdge<V>> iterator = new DepthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
+		TraversalListener<V, NamedObjectEdge<V>> listener = null;
+		GraphIterator<V, NamedObjectEdge<V>> iterator = null;
+		if (depthFirst) {
+			listener = new NamedObjectDepthFirstTraversalListener<V>(visitor);
+			iterator = new DepthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
+		} else {
+			listener = new NamedObjectBreadthFirstTraversalListener<V>(visitor);
+			iterator = new BreadthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
+		}
 		iterator.addTraversalListener(listener);
-		while (iterator.hasNext()) {
+		while (iterator.hasNext() && !visitor.finished()) {
 			iterator.next();
 		}
 	}
 
 	public void traverseSuccessorsDepthFirst(V startVertex, NamedObjectVisitor<V> visitor) {
-		traverseGraph(this, startVertex, visitor);
+		traverseGraph(this, startVertex, visitor, true);
 	}
 
 	public void traversePredecessorsDepthFirst(V startVertex, NamedObjectVisitor<V> visitor) {
 		DirectedGraph<V, NamedObjectEdge<V>> graph = new EdgeReversedGraph<V, NamedObjectEdge<V>>(this);
-		traverseGraph(graph, startVertex, visitor);
+		traverseGraph(graph, startVertex, visitor, true);
+	}
+
+	public void traverseSuccessorsBreadthFirst(V startVertex, NamedObjectVisitor<V> visitor) {
+		traverseGraph(this, startVertex, visitor, false);
+	}
+
+	public void traversePredecessorsBreadthFirst(V startVertex, NamedObjectVisitor<V> visitor) {
+		DirectedGraph<V, NamedObjectEdge<V>> graph = new EdgeReversedGraph<V, NamedObjectEdge<V>>(this);
+		traverseGraph(graph, startVertex, visitor, false);
 	}
 
 	private Set<V> collectLeafVertices(DirectedGraph<V, NamedObjectEdge<V>> graph, V startVertex) {

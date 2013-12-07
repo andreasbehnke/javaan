@@ -59,7 +59,7 @@ public class ListDepdendencyCycles extends BaseTypeLoadingCommand {
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext, types).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 		List<Set<Type>> cycles = callGraph.getDependencyCycles();
 		printCycles(output, cycles);
 	}

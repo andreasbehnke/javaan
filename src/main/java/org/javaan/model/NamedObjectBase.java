@@ -22,7 +22,7 @@ package org.javaan.model;
 
 public abstract class NamedObjectBase implements NamedObject {
 
-	private final String name;
+	protected final String name;
 	
 	protected NamedObjectBase(String name) {
 		this.name = name;

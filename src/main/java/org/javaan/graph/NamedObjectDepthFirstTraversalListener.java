@@ -31,16 +31,17 @@ import org.slf4j.LoggerFactory;
  * Adapter between the simpler {@link NamedObjectVisitor} interface and the more
  * specific {@link TraversalListener} interface from the jgrapht library. This keeps
  * the code clean from intrusive dependencies on jgrapht library.
+ * Adapter for depth first traversal supports level information for the {@link NamedObjectVisitor}.visit method.
  */
-class NamedObjectTraversalListener<V extends NamedObject> extends TraversalListenerAdapter<V, NamedObjectEdge<V>> {
+class NamedObjectDepthFirstTraversalListener<V extends NamedObject> extends TraversalListenerAdapter<V, NamedObjectEdge<V>> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(NamedObjectTraversalListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(NamedObjectDepthFirstTraversalListener.class);
 	
 	private final NamedObjectVisitor<V> visitor;
 	
 	private int level = 0;
 	
-	public NamedObjectTraversalListener(NamedObjectVisitor<V> visitor) {
+	public NamedObjectDepthFirstTraversalListener(NamedObjectVisitor<V> visitor) {
 		this.visitor = visitor;
 	}
 

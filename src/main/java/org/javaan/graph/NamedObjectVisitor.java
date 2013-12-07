@@ -27,5 +27,13 @@ import org.javaan.model.NamedObject;
  */
 public interface NamedObjectVisitor<N extends NamedObject> {
 
+	/**
+	 * @return true, if graph iteration is finished.
+	 */
+	boolean finished();
+
+	/**
+	 * Visit the next {@link NamedObject} N at graph depth = level.
+	 */
 	void visit(N named, int level);
 }

@@ -28,7 +28,7 @@ public abstract class Type extends NamedObjectBase {
 		CLASS,
 		INTERFACE
 	}
-	
+
 	private final JavaClass javaClass;
 	
 	private final String filePath;

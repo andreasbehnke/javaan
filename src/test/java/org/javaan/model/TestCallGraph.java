@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -43,17 +44,17 @@ public class TestCallGraph {
 
 	private static final Clazz D = new Clazz("classd");
 
-	private final static Method METHODA = new Method(A, null, "methoda");
+	private final static Method METHODA = new Method(A, "methoda");
 
-	private final static Method METHODB = new Method(A, null, "methodb");
+	private final static Method METHODB = new Method(A, "methodb");
 
-	private final static Method METHODC = new Method(A, null, "methodc");
+	private final static Method METHODC = new Method(A, "methodc");
 
-	private final static Method METHODD = new Method(B, null, "methodd");
+	private final static Method METHODD = new Method(B, "methodd");
 
-	private final static Method METHODE = new Method(C, null, "methode");
+	private final static Method METHODE = new Method(C, "methode");
 
-	private final static Method METHODF = new Method(D, null, "methodf");
+	private final static Method METHODF = new Method(D, "methodf");
 
 	@Test
 	public void testGetCallers() {
@@ -103,6 +104,7 @@ public class TestCallGraph {
 		NamedObjectVisitor<Method> visitor = mock(NamedObjectVisitor.class);
 		
 		callGraph.traverseCallers(METHODE, visitor);
+		verify(visitor, times(4)).finished();
 		verify(visitor).visit(METHODE, 0);
 		verify(visitor).visit(METHODD, 1);
 		verify(visitor).visit(METHODC, 2);
@@ -120,6 +122,7 @@ public class TestCallGraph {
 		NamedObjectVisitor<Method> visitor = mock(NamedObjectVisitor.class);
 
 		callGraph.traverseCallees(METHODA, visitor);
+		verify(visitor, times(5)).finished();
 		verify(visitor).visit(METHODA, 0);
 		verify(visitor).visit(METHODB, 1);
 		verify(visitor).visit(METHODC, 1);
@@ -173,6 +176,7 @@ public class TestCallGraph {
 		NamedObjectVisitor<Type> visitor = mock(NamedObjectVisitor.class);
 
 		callGraph.traverseUsedTypes(A, visitor);
+		verify(visitor, times(3)).finished();
 		verify(visitor).visit(A, 0);
 		verify(visitor).visit(B, 1);
 		verify(visitor).visit(C, 2);
@@ -189,6 +193,7 @@ public class TestCallGraph {
 		NamedObjectVisitor<Type> visitor = mock(NamedObjectVisitor.class);
 
 		callGraph.traverseUsingTypes(C, visitor);
+		verify(visitor, times(3)).finished();
 		verify(visitor).visit(C, 0);
 		verify(visitor).visit(B, 1);
 		verify(visitor).visit(A, 2);

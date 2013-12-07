@@ -45,16 +45,18 @@ public class TestCallGraphBuilder implements TestConstants {
 		List<Type> classes = loadClasses();
 		
 		ClassContext classContext = new ClassContextBuilder(classes).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext, classes).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 		
 		assertNotNull(callGraph);
 		
+		// class calling interface method
 		Set<Method> callers = callGraph.getCallers(CLASSA_METHOD_INTERFACE_B);
 		assertNotNull(callers);
 		assertEquals(2, callers.size());
 		assertTrue(callers.contains(CLASSB_METHOD_CLASS_B));
 		assertTrue(callers.contains(CLASSC_ENTRY_METHOD));
 		
+		// callees of method
 		Set<Method> callees = callGraph.getCallees(CLASSC_ENTRY_METHOD);
 		assertNotNull(callees);
 		assertEquals(3, callees.size());
@@ -62,9 +64,17 @@ public class TestCallGraphBuilder implements TestConstants {
 		assertTrue(callees.contains(CLASSA_METHOD_INTERFACE_B));
 		assertTrue(callees.contains(CLASSB_CONSTRUCTOR));
 		
+		// abstract method call
 		callees = callGraph.getCallees(CLASS_CALLING_ABSTACT_METHOD_CALL_ABSTRACT_METHOD);
 		assertNotNull(callees);
 		assertEquals(1, callees.size());
 		assertTrue(callees.contains(SPECIALIZATION_CLASS_B_ABSTRACT_METHOD));
+		
+		// external method call (String constructor)
+		assertTrue(classContext.getMethods().contains(CLASSC_CALLING_EXTERNAL_CLASS));
+		callers = callGraph.getCallers(STRING_CONSTRUCTOR);
+		assertNotNull(callers);
+		assertEquals(1, callers.size());
+		assertTrue(callers.contains(CLASSC_CALLING_EXTERNAL_CLASS));
  	}
 }
