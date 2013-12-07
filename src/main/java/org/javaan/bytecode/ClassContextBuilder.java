@@ -52,13 +52,9 @@ public class ClassContextBuilder {
 		reflectionClassContextBuilder = new ReflectionClassContextBuilder(context, this.types);
 	}
 
-	private org.javaan.model.Method createMethod(Type type, Method method) {
-		return org.javaan.model.Method.create(type, method);
-	}
-	
 	private void addMethods(Type type, JavaClass javaClass) {
 		for (Method method : javaClass.getMethods()) {
-			context.addMethod(createMethod(type, method));
+			context.addMethod(org.javaan.model.Method.create(type, method));
 		}
 	}
 	

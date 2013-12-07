@@ -74,7 +74,7 @@ public class TestClassContextBuilder implements TestConstants {
 		
 		methods =  context.getVirtualMethods(CLASS_EXTENDING_EXTERNAL_CLASS);
 		assertNotNull(methods);
-		assertEquals(31, methods.size());
+		assertEquals(32, methods.size());
 		assertTrue(methods.contains(new Method(CLASS_EXTENDING_EXTERNAL_CLASS, SIGNATURE_METHOD_ABSTRACT_COLLECTION_SIZE)));
 	}
 }
