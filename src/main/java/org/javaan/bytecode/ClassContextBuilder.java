@@ -89,8 +89,12 @@ public class ClassContextBuilder {
 		for (Type type : types.getNamedObjects()) {
 			addType(type);
 		}
-		LOG.info("Created class context with {} classes and {} interfaces, {} references could not be resolved", 
-				new Object[]{context.getClasses().size(), context.getInterfaces().size(), reflectionClassContextBuilder.getMissingTypes().size()});
+		LOG.info("Created class context with {} classes and {} interfaces", 
+				new Object[]{context.getClasses().size(), context.getInterfaces().size()});
+		int numberOfMissingTypes = reflectionClassContextBuilder.getMissingTypes().size();
+		if (numberOfMissingTypes > 0) {
+			LOG.warn("Missing types: {} types could not be resoled", numberOfMissingTypes);
+		}
 		return context;
 	}
 }

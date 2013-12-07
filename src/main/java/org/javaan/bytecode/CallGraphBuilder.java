@@ -172,6 +172,10 @@ public class CallGraphBuilder {
 		LOG.info("Creating method call graph ...");
 		processClasses();
 		LOG.info("Created call graph containg {} methods", callGraph.size());
+		int numberOfMissingTypes = reflectionClassContextBuilder.getMissingTypes().size();
+		if (numberOfMissingTypes > 0) {
+			LOG.warn("Missing types: {} types could not be resoled", numberOfMissingTypes);
+		}
 		return callGraph;
 	}
 }
