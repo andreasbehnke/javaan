@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 import org.apache.bcel.classfile.Method;
@@ -56,6 +57,14 @@ public class TestSignatureUtil implements TestConstants {
 	}
 	
 	@Test
+	public void testCreateSignatureFromClassConstructor() throws ClassNotFoundException, NoSuchMethodException, SecurityException {
+		Class<?> clazz = Class.forName("java.lang.String");
+		Constructor<?> constructor = clazz.getConstructor();
+		assertEquals(SIGNATURE_CONSTRUCTOR, SignatureUtil.createSignature(constructor));
+	}
+	
+	
+	@Test
 	public void testCreateSignatureFromMethod() throws IOException {
 		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
 		Interface i = (Interface)types.get(INTERFACE_B.getName());
@@ -63,14 +72,8 @@ public class TestSignatureUtil implements TestConstants {
 		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createSignature(method));
 	}
 	
-	@Test
-	public void testCreateSignatureFromInvoke() throws IOException {
-		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
-		Clazz c = (Clazz)types.get(CLASS_B.getName());
-		ConstantPoolGen cpg = new ConstantPoolGen(c.getJavaClass().getConstantPool());
-		Method method = c.getJavaClass().getMethods()[1]; /* void methodClassB(InterfaceC c); */
-		MethodGen mg = new MethodGen(method, c.getName(), cpg);
-        InvokeInstruction invoke = null;
+	private InvokeInstruction getFirstInvokeInstruction(MethodGen mg) {
+		InvokeInstruction invoke = null;
 		for (InstructionHandle ih = mg.getInstructionList().getStart(); ih != null; ih = ih.getNext()) {
             Instruction i = ih.getInstruction();
             if (i instanceof InvokeInstruction) {
@@ -78,6 +81,27 @@ public class TestSignatureUtil implements TestConstants {
             }
         }
 		assertNotNull(invoke);
+		return invoke;
+	}
+	
+	@Test
+	public void testCreateSignatureFromInvoke() throws IOException {
+		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
+		Clazz classb = (Clazz)types.get(CLASS_B.getName());
+		ConstantPoolGen cpg = new ConstantPoolGen(classb.getJavaClass().getConstantPool());
+		Method method = classb.getJavaClass().getMethods()[1]; /* void methodClassB(InterfaceC c); */
+		MethodGen mg = new MethodGen(method, classb.getName(), cpg);
+		InvokeInstruction invoke = getFirstInvokeInstruction(mg);
+
 		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createSignature(invoke, cpg));
+		
+		// signature of constructor invoke
+		Clazz classc = (Clazz)types.get(CLASS_C.getName());
+		cpg = new ConstantPoolGen(classc.getJavaClass().getConstantPool());
+		method = classc.getJavaClass().getMethods()[2]; /* public void methodCallingExternalClass() { ... */
+		mg = new MethodGen(method, classc.getName(), cpg);
+        invoke = getFirstInvokeInstruction(mg);
+        
+        assertEquals(SIGNATURE_CONSTRUCTOR, SignatureUtil.createSignature(invoke, cpg));
 	}
 }
