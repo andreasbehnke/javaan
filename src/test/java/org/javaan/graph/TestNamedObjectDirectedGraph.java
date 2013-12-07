@@ -20,17 +20,14 @@ package org.javaan.graph;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Set;
 
 import org.javaan.model.Clazz;
 import org.junit.Test;
+import org.mockito.verification.VerificationMode;
 
 public class TestNamedObjectDirectedGraph {
 
@@ -148,6 +145,7 @@ public class TestNamedObjectDirectedGraph {
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traverseSuccessorsDepthFirst(X, visitor);
+		verify(visitor, times(8)).finished();
 		verify(visitor).visit(X, 0);
 		verify(visitor).visit(A, 1);
 		verify(visitor).visit(B, 1);
@@ -156,6 +154,31 @@ public class TestNamedObjectDirectedGraph {
 		verify(visitor).visit(E, 2);
 		verify(visitor).visit(F, 3);
 		verify(visitor).visit(G, 1);
+		verifyNoMoreInteractions(visitor);
+	}
+	
+	@Test
+	public void testTraverseSuccessorsBreadthFirst() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(X, B);
+		graph.addEdge(X, C);
+		graph.addEdge(C, D);
+		graph.addEdge(C, E);
+		graph.addEdge(E, F);
+		graph.addEdge(X, G);
+		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		
+		graph.traverseSuccessorsBreadthFirst(X, visitor);
+		verify(visitor, times(8)).finished();
+		verify(visitor).visit(X, -1);
+		verify(visitor).visit(A, -1);
+		verify(visitor).visit(B, -1);
+		verify(visitor).visit(C, -1);
+		verify(visitor).visit(G, -1);
+		verify(visitor).visit(D, -1);
+		verify(visitor).visit(E, -1);
+		verify(visitor).visit(F, -1);
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -168,9 +191,28 @@ public class TestNamedObjectDirectedGraph {
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 
 		graph.traverseSuccessorsDepthFirst(X, visitor);
+		verify(visitor, times(3)).finished();
 		verify(visitor).visit(X, 0);
 		verify(visitor).visit(A, 1);
 		verify(visitor).visit(B, 2);
+		verifyNoMoreInteractions(visitor);
+	}
+
+	@Test
+	public void testTraverseSuccessorsDepthFirstDisruption() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(X, B);
+		graph.addEdge(X, C);
+		graph.addEdge(C, D);
+		graph.addEdge(C, E);
+		graph.addEdge(E, F);
+		graph.addEdge(X, G);
+		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		when(visitor.finished()).thenReturn(true);
+		
+		graph.traverseSuccessorsDepthFirst(X, visitor);
+		verify(visitor).finished();
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -196,6 +238,7 @@ public class TestNamedObjectDirectedGraph {
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traversePredecessorsDepthFirst(F, visitor);
+		verify(visitor, times(5)).finished();
 		verify(visitor).visit(F, 0);
 		verify(visitor).visit(E, 1);
 		verify(visitor).visit(C, 2);
@@ -203,7 +246,29 @@ public class TestNamedObjectDirectedGraph {
 		verify(visitor).visit(Y, 1);
 		verifyNoMoreInteractions(visitor);
 	}
-	
+
+	@Test
+	public void testTraversePredecessorsBreadthFirst() {
+		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		graph.addEdge(X, A);
+		graph.addEdge(X, B);
+		graph.addEdge(X, C);
+		graph.addEdge(C, D);
+		graph.addEdge(C, E);
+		graph.addEdge(E, F);
+		graph.addEdge(Y, F);
+		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		
+		graph.traversePredecessorsBreadthFirst(F, visitor);
+		verify(visitor, times(5)).finished();
+		verify(visitor).visit(F, -1);
+		verify(visitor).visit(E, -1);
+		verify(visitor).visit(Y, -1);
+		verify(visitor).visit(C, -1);
+		verify(visitor).visit(X, -1);
+		verifyNoMoreInteractions(visitor);
+	}
+
 	@Test
 	public void testGetLeafSuccessors() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
