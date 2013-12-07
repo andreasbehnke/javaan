@@ -14,8 +14,6 @@ import org.javaan.model.Method;
 import org.javaan.model.NamedObjectMap;
 import org.javaan.model.NamedObjectRepository;
 import org.javaan.model.Type;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides methods for adding {@link Interface}s and {@link Clazz}es to {@link ClassContext}.
@@ -24,8 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 class ReflectionClassContextBuilder {
 	
-	private final static Logger LOG = LoggerFactory.getLogger(ReflectionClassContextBuilder.class);
-
 	private static final String JAVA_LANG_OBJECT = "java.lang.Object";
 
 	private final ClassContext context;
@@ -72,7 +68,6 @@ class ReflectionClassContextBuilder {
 				addMethods(type, clazz);
 			}
 		} catch (ClassNotFoundException e) {
-			LOG.warn("Could not resolve reference to external type: {}", className);
 			missingTypes.add(className);
 			return null;
 		}
