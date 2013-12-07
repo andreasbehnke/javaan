@@ -124,7 +124,7 @@ public class CallGraphBuilder {
 	
 	private void addAbstractMethodCall(Set<Clazz> implementations, Method caller, Method abstractCallee) {
 		for (Clazz implementation : implementations) {
-			Method calleeCandidate = classContext.getMethod(implementation, abstractCallee.getSignature());
+			Method calleeCandidate = classContext.getVirtualMethod(implementation, abstractCallee.getSignature());
 			if (calleeCandidate != null) {
 				callGraph.addCall(caller, calleeCandidate);
 			}
