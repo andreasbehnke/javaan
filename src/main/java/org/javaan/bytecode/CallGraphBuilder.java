@@ -178,4 +178,8 @@ public class CallGraphBuilder {
 		}
 		return callGraph;
 	}
+
+	public Set<String> getMissingTypes() {
+		return reflectionClassContextBuilder.getMissingTypes();
+	}
 }

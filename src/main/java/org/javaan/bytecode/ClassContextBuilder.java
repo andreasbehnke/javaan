@@ -22,6 +22,7 @@ package org.javaan.bytecode;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
@@ -96,5 +97,9 @@ public class ClassContextBuilder {
 			LOG.warn("Missing types: {} types could not be resoled", numberOfMissingTypes);
 		}
 		return context;
+	}
+	
+	public Set<String> getMissingTypes() {
+		return reflectionClassContextBuilder.getMissingTypes();
 	}
 }
