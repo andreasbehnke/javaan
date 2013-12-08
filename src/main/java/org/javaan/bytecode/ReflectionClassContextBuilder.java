@@ -50,10 +50,9 @@ class ReflectionClassContextBuilder {
 	}
 
 	private Type createTypeFromClass(String className) {
-		ClassLoader classLoader = getClass().getClassLoader();
 		Type type = null;
 		try {
-			Class<?> clazz = classLoader.loadClass(className);
+			Class<?> clazz = Class.forName(className);
 			if (clazz.isInterface()) {
 				type = new Interface(className);
 				Class<?>[] superInterfaces = clazz.getInterfaces();
