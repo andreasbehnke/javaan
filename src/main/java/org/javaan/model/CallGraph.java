@@ -105,7 +105,7 @@ public class CallGraph {
 		StrongConnectivityInspector<Type, NamedObjectEdge<Type>> inspector = new StrongConnectivityInspector<Type, NamedObjectEdge<Type>>(usageOfType);
 		List<Set<Type>> cycles = new ArrayList<Set<Type>>();
 		for (Set<Type> cycle : inspector.stronglyConnectedSets()) {
-			if (cycle.size() > 1) { // ignore depedency cycles within one class (these cycles have no impact in software design)
+			if (cycle.size() > 1) { // ignore dependency cycles within one class (these cycles have no impact in software design)
 				cycles.add(cycle);
 			}
 		}
