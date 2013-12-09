@@ -97,10 +97,11 @@ public class CallGraphBuilder {
 	
 	private final ReflectionClassContextBuilder reflectionClassContextBuilder;
 	
-	private final CallGraph callGraph = new CallGraph();
+	private final CallGraph callGraph;
 
 	public CallGraphBuilder(final ClassContext classContext) {
 		this.classContext = classContext;
+		this.callGraph = new CallGraph(classContext);
 		this.reflectionClassContextBuilder = new ReflectionClassContextBuilder(classContext, classContext);
 	}
 	

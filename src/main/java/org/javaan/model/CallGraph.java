@@ -34,10 +34,16 @@ import org.jgrapht.alg.StrongConnectivityInspector;
  * Type dependencies are created for every method.
  */
 public class CallGraph {
-	
+
 	private final NamedObjectDirectedGraph<Method> callerOfMethod = new NamedObjectDirectedGraph<Method>();
 
 	private final NamedObjectDirectedGraph<Type> usageOfType = new NamedObjectDirectedGraph<Type>();
+
+	private final ClassContext classContext;
+
+	public CallGraph(ClassContext classContext) {
+		this.classContext = classContext;
+	}
 
 	public int size() {
 		return callerOfMethod.vertexSet().size();
@@ -51,11 +57,18 @@ public class CallGraph {
 			throw new IllegalArgumentException("Parameter callee must not be null");
 		}
 		callerOfMethod.addEdge(caller, callee);
-		Type typeOfCaller = caller.getType();
-		Type typeOfCallee = callee.getType();
-		if (!typeOfCaller.equals(typeOfCallee)) {
-			usageOfType.addEdge(typeOfCaller, typeOfCallee);
+		Clazz classOfCaller = (Clazz)caller.getType();
+		Clazz classOfCallee = (Clazz)callee.getType();
+		if (classOfCallee.equals(classOfCaller)) {
+			return;
+		}	
+		if (classContext.getSpecializationsOfClass(classOfCallee).contains(classOfCaller)) {
+			return;
 		}
+		if (classContext.getSpecializationsOfClass(classOfCaller).contains(classOfCallee)) {
+			return;
+		}
+		usageOfType.addEdge(classOfCaller, classOfCallee);
 	}
 	
 	public Set<Method> getCallers(Method callee) {

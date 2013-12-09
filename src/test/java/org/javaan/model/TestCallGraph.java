@@ -55,10 +55,18 @@ public class TestCallGraph {
 	private final static Method METHODE = new Method(C, "methode");
 
 	private final static Method METHODF = new Method(D, "methodf");
+	
+	private ClassContext createClassContext() {
+		ClassContext classContext = new ClassContext();
+		classContext.addClass(A);
+		classContext.addClass(B);
+		classContext.addSuperClass(C, D);
+		return classContext;
+	}
 
 	@Test
 	public void testGetCallers() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		
@@ -77,7 +85,7 @@ public class TestCallGraph {
 
 	@Test
 	public void testGetCallees() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		
@@ -96,7 +104,7 @@ public class TestCallGraph {
 
 	@Test
 	public void testTraverseCallers() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
@@ -114,7 +122,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testTraverseCallees() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
@@ -133,7 +141,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testGetLeafCallers() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
@@ -150,7 +158,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testGetLeafCallees() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
@@ -168,7 +176,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testTraverseUsedTypes() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD); 
@@ -185,7 +193,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testTraverseUsingTypes() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
@@ -202,7 +210,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testGetLeafUsedTypes() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
@@ -216,7 +224,7 @@ public class TestCallGraph {
 	
 	@Test
 	public void testGetLeafUsingTypes() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB); // A --> A
 		callGraph.addCall(METHODA, METHODC); // A --> A
 		callGraph.addCall(METHODC, METHODD); // A --> B
@@ -230,32 +238,22 @@ public class TestCallGraph {
 	
 	@Test
 	public void testGetDependencyCycles() {
-		CallGraph callGraph = new CallGraph();
+		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(METHODA, METHODB);
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
 		callGraph.addCall(METHODE, METHODF);
-		callGraph.addCall(METHODF, METHODE);// first cycle C --> D --> C
+		callGraph.addCall(METHODF, METHODE);// first cycle C --> D --> C: This must be ignored, because D inherits C!
 		callGraph.addCall(METHODD, METHODA);// second cylce A --> B --> A
 
 		List<Set<Type>> cycles = callGraph.getDependencyCycles();
 		assertNotNull(cycles);
-		assertEquals(2, cycles.size());
+		assertEquals(1, cycles.size());
 		Set<Type> setABA = cycles.get(0);
-		Set<Type> setCDC = cycles.get(1);
-		
-		if (setCDC.contains(A)) { // order of cycles is unknown
-			Set<Type> tmp = setABA;
-			setABA = setCDC;
-			setCDC = tmp;
-		}
-		
+
 		assertEquals(2, setABA.size());
 		assertTrue(setABA.contains(A));
 		assertTrue(setABA.contains(B));
-		assertEquals(2, setCDC.size());
-		assertTrue(setCDC.contains(C));
-		assertTrue(setCDC.contains(D));
 	}
 }
