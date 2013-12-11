@@ -37,6 +37,10 @@ public class NamedObjectDirectedGraph<V extends NamedObject> extends DefaultDire
 
 	private static final long serialVersionUID = 1L;
 
+	public NamedObjectDirectedGraph() {
+		super(new NamedObjectEdgeFactory<V>());
+	}
+
 	/**
 	 * Add sourceVertex and targetVertex to graph and create an edge between them.
 	 */
@@ -45,10 +49,6 @@ public class NamedObjectDirectedGraph<V extends NamedObject> extends DefaultDire
 		addVertex(sourceVertex);
 		addVertex(targetVertex);
 		return super.addEdge(sourceVertex, targetVertex);
-	}
-
-	public NamedObjectDirectedGraph() {
-		super(new NamedObjectEdgeFactory<V>());
 	}
 
 	public Set<V> targetVerticesOf(V vertex) {
