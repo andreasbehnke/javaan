@@ -27,7 +27,6 @@ import java.util.Set;
 
 import org.javaan.model.Clazz;
 import org.junit.Test;
-import org.mockito.verification.VerificationMode;
 
 public class TestNamedObjectDirectedGraph {
 
@@ -135,24 +134,31 @@ public class TestNamedObjectDirectedGraph {
 	@Test
 	public void testTraverseSuccessorsDepthFirst() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		graph.addEdge(X, A);
-		graph.addEdge(X, B);
-		graph.addEdge(X, C);
-		graph.addEdge(C, D);
-		graph.addEdge(C, E);
-		graph.addEdge(E, F);
-		graph.addEdge(X, G);
+		NamedObjectEdge<Clazz> X_A = graph.addEdge(X, A);
+		NamedObjectEdge<Clazz> X_B = graph.addEdge(X, B);
+		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
+		NamedObjectEdge<Clazz> C_D = graph.addEdge(C, D);
+		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
+		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
+		NamedObjectEdge<Clazz> X_G = graph.addEdge(X, G);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(8)).finished();
 		verify(visitor).visit(X, 0);
+		verify(visitor).visit(X_A, 0);
 		verify(visitor).visit(A, 1);
+		verify(visitor).visit(X_B, 0);
 		verify(visitor).visit(B, 1);
+		verify(visitor).visit(X_C, 0);
 		verify(visitor).visit(C, 1);
+		verify(visitor).visit(C_D, 1);
 		verify(visitor).visit(D, 2);
+		verify(visitor).visit(C_E, 1);
 		verify(visitor).visit(E, 2);
+		verify(visitor).visit(E_F, 2);
 		verify(visitor).visit(F, 3);
+		verify(visitor).visit(X_G, 0);
 		verify(visitor).visit(G, 1);
 		verifyNoMoreInteractions(visitor);
 	}
@@ -160,24 +166,31 @@ public class TestNamedObjectDirectedGraph {
 	@Test
 	public void testTraverseSuccessorsBreadthFirst() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		graph.addEdge(X, A);
-		graph.addEdge(X, B);
-		graph.addEdge(X, C);
-		graph.addEdge(C, D);
-		graph.addEdge(C, E);
-		graph.addEdge(E, F);
-		graph.addEdge(X, G);
+		NamedObjectEdge<Clazz> X_A = graph.addEdge(X, A);
+		NamedObjectEdge<Clazz> X_B = graph.addEdge(X, B);
+		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
+		NamedObjectEdge<Clazz> C_D = graph.addEdge(C, D);
+		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
+		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
+		NamedObjectEdge<Clazz> X_G = graph.addEdge(X, G);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traverseSuccessorsBreadthFirst(X, visitor);
 		verify(visitor, times(8)).finished();
 		verify(visitor).visit(X, -1);
+		verify(visitor).visit(X_A, -1);
 		verify(visitor).visit(A, -1);
+		verify(visitor).visit(X_B, -1);
 		verify(visitor).visit(B, -1);
+		verify(visitor).visit(X_C, -1);
 		verify(visitor).visit(C, -1);
+		verify(visitor).visit(X_G, -1);
 		verify(visitor).visit(G, -1);
+		verify(visitor).visit(C_D, -1);
 		verify(visitor).visit(D, -1);
+		verify(visitor).visit(C_E, -1);
 		verify(visitor).visit(E, -1);
+		verify(visitor).visit(E_F, -1);
 		verify(visitor).visit(F, -1);
 		verifyNoMoreInteractions(visitor);
 	}
@@ -185,16 +198,19 @@ public class TestNamedObjectDirectedGraph {
 	@Test
 	public void testTraverseSuccessorsDepthFirstCycle() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		graph.addEdge(X, A);
-		graph.addEdge(A, B);
-		graph.addEdge(B, X);
+		NamedObjectEdge<Clazz> X_A = graph.addEdge(X, A);
+		NamedObjectEdge<Clazz> A_B = graph.addEdge(A, B);
+		NamedObjectEdge<Clazz> B_X = graph.addEdge(B, X);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(3)).finished();
 		verify(visitor).visit(X, 0);
+		verify(visitor).visit(X_A, 0);
 		verify(visitor).visit(A, 1);
+		verify(visitor).visit(A_B, 1);
 		verify(visitor).visit(B, 2);
+		verify(visitor).visit(B_X, 2);
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -230,19 +246,23 @@ public class TestNamedObjectDirectedGraph {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		graph.addEdge(X, C);
+		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		graph.addEdge(C, E);
-		graph.addEdge(E, F);
-		graph.addEdge(Y, F);
+		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
+		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
+		NamedObjectEdge<Clazz> Y_F = graph.addEdge(Y, F);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traversePredecessorsDepthFirst(F, visitor);
 		verify(visitor, times(5)).finished();
 		verify(visitor).visit(F, 0);
+		verify(visitor).visit(E_F, 0);
 		verify(visitor).visit(E, 1);
+		verify(visitor).visit(C_E, 1);
 		verify(visitor).visit(C, 2);
+		verify(visitor).visit(X_C, 2);
 		verify(visitor).visit(X, 3);
+		verify(visitor).visit(Y_F, 0);
 		verify(visitor).visit(Y, 1);
 		verifyNoMoreInteractions(visitor);
 	}
@@ -252,19 +272,23 @@ public class TestNamedObjectDirectedGraph {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		graph.addEdge(X, C);
+		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		graph.addEdge(C, E);
-		graph.addEdge(E, F);
-		graph.addEdge(Y, F);
+		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
+		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
+		NamedObjectEdge<Clazz> Y_F = graph.addEdge(Y, F);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traversePredecessorsBreadthFirst(F, visitor);
 		verify(visitor, times(5)).finished();
 		verify(visitor).visit(F, -1);
+		verify(visitor).visit(E_F, -1);
 		verify(visitor).visit(E, -1);
+		verify(visitor).visit(Y_F, -1);
 		verify(visitor).visit(Y, -1);
+		verify(visitor).visit(C_E, -1);
 		verify(visitor).visit(C, -1);
+		verify(visitor).visit(X_C, -1);
 		verify(visitor).visit(X, -1);
 		verifyNoMoreInteractions(visitor);
 	}

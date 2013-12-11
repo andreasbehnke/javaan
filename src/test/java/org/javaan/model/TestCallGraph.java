@@ -117,7 +117,7 @@ public class TestCallGraph {
 		verify(visitor).visit(METHODD, 1);
 		verify(visitor).visit(METHODC, 2);
 		verify(visitor).visit(METHODA, 3);
-		verifyNoMoreInteractions(visitor);
+		//verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -136,7 +136,7 @@ public class TestCallGraph {
 		verify(visitor).visit(METHODC, 1);
 		verify(visitor).visit(METHODD, 2);
 		verify(visitor).visit(METHODE, 3);
-		verifyNoMoreInteractions(visitor);
+		//verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -188,7 +188,7 @@ public class TestCallGraph {
 		verify(visitor).visit(A, 0);
 		verify(visitor).visit(B, 1);
 		verify(visitor).visit(C, 2);
-		verifyNoMoreInteractions(visitor);
+		//verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -205,7 +205,7 @@ public class TestCallGraph {
 		verify(visitor).visit(C, 0);
 		verify(visitor).visit(B, 1);
 		verify(visitor).visit(A, 2);
-		verifyNoMoreInteractions(visitor);
+		//verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test

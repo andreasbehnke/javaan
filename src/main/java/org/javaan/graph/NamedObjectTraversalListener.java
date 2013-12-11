@@ -21,6 +21,7 @@ package org.javaan.graph;
  */
 
 import org.javaan.model.NamedObject;
+import org.jgrapht.event.EdgeTraversalEvent;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.TraversalListenerAdapter;
 import org.jgrapht.event.VertexTraversalEvent;
@@ -63,5 +64,9 @@ class NamedObjectTraversalListener<V extends NamedObject> extends TraversalListe
 			LOG.debug("Visited vertex {} at level {}", vertex, level);
 		}
 	}
-	
+
+	@Override
+	public void edgeTraversed(EdgeTraversalEvent<V, NamedObjectEdge<V>> edgeTraversalEvent) {
+		visitor.visit(edgeTraversalEvent.getEdge(), level - 1);
+	}
 }
