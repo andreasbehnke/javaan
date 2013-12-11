@@ -96,10 +96,10 @@ public class NamedObjectDirectedGraph<V extends NamedObject> extends DefaultDire
 		TraversalListener<V, NamedObjectEdge<V>> listener = null;
 		GraphIterator<V, NamedObjectEdge<V>> iterator = null;
 		if (depthFirst) {
-			listener = new NamedObjectTraversalListener<V>(visitor);
+			listener = new NamedObjectTraversalListener<V>(visitor, true);
 			iterator = new DepthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
 		} else {
-			listener = new NamedObjectBreadthFirstTraversalListener<V>(visitor);
+			listener = new NamedObjectTraversalListener<V>(visitor, false);
 			iterator = new BreadthFirstIterator<V, NamedObjectEdge<V>>(graph, startVertex);
 		}
 		iterator.addTraversalListener(listener);

@@ -40,21 +40,24 @@ class NamedObjectTraversalListener<V extends NamedObject> extends TraversalListe
 	
 	private final NamedObjectVisitor<V> visitor;
 	
+	private final boolean isDepthFirstTraversal;
+	
 	private int level = 0;
 	
-	public NamedObjectTraversalListener(NamedObjectVisitor<V> visitor) {
+	public NamedObjectTraversalListener(NamedObjectVisitor<V> visitor, boolean isDepthFirstTraversal) {
 		this.visitor = visitor;
+		this.isDepthFirstTraversal = isDepthFirstTraversal;
 	}
 
 	@Override
 	public void vertexFinished(VertexTraversalEvent<V> e) {
-		level --;
+		if(isDepthFirstTraversal) level --;
 	}
 
 	@Override
 	public void vertexTraversed(VertexTraversalEvent<V> e) {
 		V vertex = e.getVertex();
-		level ++;
+		if (isDepthFirstTraversal) level ++;
 		visitor.visit(vertex, level - 1);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Visited vertex {} at level {}", vertex, level);
