@@ -34,6 +34,13 @@ public interface NamedObjectVisitor<N extends NamedObject> {
 
 	/**
 	 * Visit the next {@link NamedObject} N at graph depth = level.
+	 * Level will be -1 for breadth first traversal.
 	 */
 	void visit(N named, int level);
+
+	/**
+	 * Visit the next {@link NamedObjectEdge} at graph depth = level.
+	 * Level will be -1 for breadth first traversal.
+	 */
+	void visit(NamedObjectEdge<N> namedEdge, int level);
 }
