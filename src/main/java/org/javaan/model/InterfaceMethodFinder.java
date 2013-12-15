@@ -22,12 +22,12 @@ public class InterfaceMethodFinder implements NamedObjectVisitor<Interface> {
 	}
 
 	@Override
-	public void visit(Interface named, int level) {
+	public void visitVertex(Interface named, int level) {
 		methodFound = context.getMethod(named, signature);
 	}
 
 	@Override
-	public void visit(NamedObjectEdge<Interface> namedEdge, int level) {}
+	public void visitEdge(NamedObjectEdge<Interface> namedEdge, int level) {}
 
 	public Method getMethodFound() {
 		return methodFound;

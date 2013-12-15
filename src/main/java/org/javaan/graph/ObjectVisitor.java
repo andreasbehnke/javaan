@@ -23,6 +23,25 @@ package org.javaan.graph;
 import org.javaan.model.NamedObject;
 
 /**
- * Visits named objects during traversal of {@link NamedObjectDirectedGraph}
+ * Visits objects during traversal of {@link NamedObjectDirectedGraph}. Provides
+ * depth information for depth first traversal.
  */
-public interface NamedObjectVisitor<N extends NamedObject> extends ObjectVisitor<N, NamedObjectEdge<N>> {}
+public interface ObjectVisitor<V, E> {
+
+	/**
+	 * @return true, if graph iteration is finished.
+	 */
+	boolean finished();
+
+	/**
+	 * Visit the next {@link NamedObject} N at graph depth = level.
+	 * Level will be -1 for breadth first traversal.
+	 */
+	void visitVertex(V named, int level);
+
+	/**
+	 * Visit the next {@link NamedObjectEdge} at graph depth = level.
+	 * Level will be -1 for breadth first traversal.
+	 */
+	void visitEdge(E namedEdge, int level);
+}

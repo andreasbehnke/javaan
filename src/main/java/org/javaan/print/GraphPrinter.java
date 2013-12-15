@@ -45,7 +45,7 @@ public class GraphPrinter<N extends NamedObject> implements NamedObjectVisitor<N
 	}
 	
 	@Override
-	public void visit(N node, int level) {
+	public void visitVertex(N node, int level) {
 		StringBuilder buffer = new StringBuilder();
 		for (int i=0; i < level; i++) {
 			buffer.append(LEVEL_SPACER);
@@ -54,5 +54,5 @@ public class GraphPrinter<N extends NamedObject> implements NamedObjectVisitor<N
 	}
 
 	@Override
-	public void visit(NamedObjectEdge<N> namedEdge, int level) {}
+	public void visitEdge(NamedObjectEdge<N> namedEdge, int level) {}
 }

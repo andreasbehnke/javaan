@@ -145,21 +145,21 @@ public class TestNamedObjectDirectedGraph {
 		
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(8)).finished();
-		verify(visitor).visit(X, 0);
-		verify(visitor).visit(X_A, 0);
-		verify(visitor).visit(A, 1);
-		verify(visitor).visit(X_B, 0);
-		verify(visitor).visit(B, 1);
-		verify(visitor).visit(X_C, 0);
-		verify(visitor).visit(C, 1);
-		verify(visitor).visit(C_D, 1);
-		verify(visitor).visit(D, 2);
-		verify(visitor).visit(C_E, 1);
-		verify(visitor).visit(E, 2);
-		verify(visitor).visit(E_F, 2);
-		verify(visitor).visit(F, 3);
-		verify(visitor).visit(X_G, 0);
-		verify(visitor).visit(G, 1);
+		verify(visitor).visitVertex(X, 0);
+		verify(visitor).visitEdge(X_A, 0);
+		verify(visitor).visitVertex(A, 1);
+		verify(visitor).visitEdge(X_B, 0);
+		verify(visitor).visitVertex(B, 1);
+		verify(visitor).visitEdge(X_C, 0);
+		verify(visitor).visitVertex(C, 1);
+		verify(visitor).visitEdge(C_D, 1);
+		verify(visitor).visitVertex(D, 2);
+		verify(visitor).visitEdge(C_E, 1);
+		verify(visitor).visitVertex(E, 2);
+		verify(visitor).visitEdge(E_F, 2);
+		verify(visitor).visitVertex(F, 3);
+		verify(visitor).visitEdge(X_G, 0);
+		verify(visitor).visitVertex(G, 1);
 		verifyNoMoreInteractions(visitor);
 	}
 	
@@ -177,21 +177,21 @@ public class TestNamedObjectDirectedGraph {
 		
 		graph.traverseSuccessorsBreadthFirst(X, visitor);
 		verify(visitor, times(8)).finished();
-		verify(visitor).visit(X, -1);
-		verify(visitor).visit(X_A, -1);
-		verify(visitor).visit(A, -1);
-		verify(visitor).visit(X_B, -1);
-		verify(visitor).visit(B, -1);
-		verify(visitor).visit(X_C, -1);
-		verify(visitor).visit(C, -1);
-		verify(visitor).visit(X_G, -1);
-		verify(visitor).visit(G, -1);
-		verify(visitor).visit(C_D, -1);
-		verify(visitor).visit(D, -1);
-		verify(visitor).visit(C_E, -1);
-		verify(visitor).visit(E, -1);
-		verify(visitor).visit(E_F, -1);
-		verify(visitor).visit(F, -1);
+		verify(visitor).visitVertex(X, -1);
+		verify(visitor).visitEdge(X_A, -1);
+		verify(visitor).visitVertex(A, -1);
+		verify(visitor).visitEdge(X_B, -1);
+		verify(visitor).visitVertex(B, -1);
+		verify(visitor).visitEdge(X_C, -1);
+		verify(visitor).visitVertex(C, -1);
+		verify(visitor).visitEdge(X_G, -1);
+		verify(visitor).visitVertex(G, -1);
+		verify(visitor).visitEdge(C_D, -1);
+		verify(visitor).visitVertex(D, -1);
+		verify(visitor).visitEdge(C_E, -1);
+		verify(visitor).visitVertex(E, -1);
+		verify(visitor).visitEdge(E_F, -1);
+		verify(visitor).visitVertex(F, -1);
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -205,12 +205,12 @@ public class TestNamedObjectDirectedGraph {
 
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(3)).finished();
-		verify(visitor).visit(X, 0);
-		verify(visitor).visit(X_A, 0);
-		verify(visitor).visit(A, 1);
-		verify(visitor).visit(A_B, 1);
-		verify(visitor).visit(B, 2);
-		verify(visitor).visit(B_X, 2);
+		verify(visitor).visitVertex(X, 0);
+		verify(visitor).visitEdge(X_A, 0);
+		verify(visitor).visitVertex(A, 1);
+		verify(visitor).visitEdge(A_B, 1);
+		verify(visitor).visitVertex(B, 2);
+		verify(visitor).visitEdge(B_X, 2);
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -255,15 +255,15 @@ public class TestNamedObjectDirectedGraph {
 		
 		graph.traversePredecessorsDepthFirst(F, visitor);
 		verify(visitor, times(5)).finished();
-		verify(visitor).visit(F, 0);
-		verify(visitor).visit(E_F, 0);
-		verify(visitor).visit(E, 1);
-		verify(visitor).visit(C_E, 1);
-		verify(visitor).visit(C, 2);
-		verify(visitor).visit(X_C, 2);
-		verify(visitor).visit(X, 3);
-		verify(visitor).visit(Y_F, 0);
-		verify(visitor).visit(Y, 1);
+		verify(visitor).visitVertex(F, 0);
+		verify(visitor).visitEdge(E_F, 0);
+		verify(visitor).visitVertex(E, 1);
+		verify(visitor).visitEdge(C_E, 1);
+		verify(visitor).visitVertex(C, 2);
+		verify(visitor).visitEdge(X_C, 2);
+		verify(visitor).visitVertex(X, 3);
+		verify(visitor).visitEdge(Y_F, 0);
+		verify(visitor).visitVertex(Y, 1);
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -281,15 +281,15 @@ public class TestNamedObjectDirectedGraph {
 		
 		graph.traversePredecessorsBreadthFirst(F, visitor);
 		verify(visitor, times(5)).finished();
-		verify(visitor).visit(F, -1);
-		verify(visitor).visit(E_F, -1);
-		verify(visitor).visit(E, -1);
-		verify(visitor).visit(Y_F, -1);
-		verify(visitor).visit(Y, -1);
-		verify(visitor).visit(C_E, -1);
-		verify(visitor).visit(C, -1);
-		verify(visitor).visit(X_C, -1);
-		verify(visitor).visit(X, -1);
+		verify(visitor).visitVertex(F, -1);
+		verify(visitor).visitEdge(E_F, -1);
+		verify(visitor).visitVertex(E, -1);
+		verify(visitor).visitEdge(Y_F, -1);
+		verify(visitor).visitVertex(Y, -1);
+		verify(visitor).visitEdge(C_E, -1);
+		verify(visitor).visitVertex(C, -1);
+		verify(visitor).visitEdge(X_C, -1);
+		verify(visitor).visitVertex(X, -1);
 		verifyNoMoreInteractions(visitor);
 	}
 

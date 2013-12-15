@@ -20,7 +20,6 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.NamedObject;
 import org.jgrapht.event.EdgeTraversalEvent;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.TraversalListenerAdapter;
@@ -29,23 +28,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapter between the simpler {@link NamedObjectVisitor} interface and the more
+ * Adapter between the simpler {@link ObjectVisitor} interface and the more
  * specific {@link TraversalListener} interface from the jgrapht library. This keeps
  * the code clean from intrusive dependencies on jgrapht library.
- * Adapter for depth first traversal supports level information for the {@link NamedObjectVisitor}.visit method,
+ * Adapter for depth first traversal supports level information for the {@link ObjectVisitor}.visit method,
  * for breadth first traversal level will always be -1.
  */
-class NamedObjectTraversalListener<V extends NamedObject> extends TraversalListenerAdapter<V, NamedObjectEdge<V>> {
+class ObjectTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(NamedObjectTraversalListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ObjectTraversalListener.class);
 	
-	private final NamedObjectVisitor<V> visitor;
+	private final ObjectVisitor<V, E> visitor;
 	
 	private final boolean isDepthFirstTraversal;
 	
 	private int level = 0;
 	
-	public NamedObjectTraversalListener(NamedObjectVisitor<V> visitor, boolean isDepthFirstTraversal) {
+	public ObjectTraversalListener(ObjectVisitor<V, E> visitor, boolean isDepthFirstTraversal) {
 		this.visitor = visitor;
 		this.isDepthFirstTraversal = isDepthFirstTraversal;
 	}
@@ -59,14 +58,14 @@ class NamedObjectTraversalListener<V extends NamedObject> extends TraversalListe
 	public void vertexTraversed(VertexTraversalEvent<V> e) {
 		V vertex = e.getVertex();
 		if (isDepthFirstTraversal) level ++;
-		visitor.visit(vertex, level - 1);
+		visitor.visitVertex(vertex, level - 1);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Visited vertex {} at level {}", vertex, level);
 		}
 	}
 
 	@Override
-	public void edgeTraversed(EdgeTraversalEvent<V, NamedObjectEdge<V>> edgeTraversalEvent) {
-		visitor.visit(edgeTraversalEvent.getEdge(), level - 1);
+	public void edgeTraversed(EdgeTraversalEvent<V, E> edgeTraversalEvent) {
+		visitor.visitEdge(edgeTraversalEvent.getEdge(), level - 1);
 	}
 }

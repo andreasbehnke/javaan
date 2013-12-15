@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.List;
 import java.util.Set;
@@ -113,10 +112,10 @@ public class TestCallGraph {
 		
 		callGraph.traverseCallers(METHODE, visitor);
 		verify(visitor, times(4)).finished();
-		verify(visitor).visit(METHODE, 0);
-		verify(visitor).visit(METHODD, 1);
-		verify(visitor).visit(METHODC, 2);
-		verify(visitor).visit(METHODA, 3);
+		verify(visitor).visitVertex(METHODE, 0);
+		verify(visitor).visitVertex(METHODD, 1);
+		verify(visitor).visitVertex(METHODC, 2);
+		verify(visitor).visitVertex(METHODA, 3);
 		//verifyNoMoreInteractions(visitor);
 	}
 	
@@ -131,11 +130,11 @@ public class TestCallGraph {
 
 		callGraph.traverseCallees(METHODA, visitor);
 		verify(visitor, times(5)).finished();
-		verify(visitor).visit(METHODA, 0);
-		verify(visitor).visit(METHODB, 1);
-		verify(visitor).visit(METHODC, 1);
-		verify(visitor).visit(METHODD, 2);
-		verify(visitor).visit(METHODE, 3);
+		verify(visitor).visitVertex(METHODA, 0);
+		verify(visitor).visitVertex(METHODB, 1);
+		verify(visitor).visitVertex(METHODC, 1);
+		verify(visitor).visitVertex(METHODD, 2);
+		verify(visitor).visitVertex(METHODE, 3);
 		//verifyNoMoreInteractions(visitor);
 	}
 	
@@ -185,9 +184,9 @@ public class TestCallGraph {
 
 		callGraph.traverseUsedTypes(A, visitor);
 		verify(visitor, times(3)).finished();
-		verify(visitor).visit(A, 0);
-		verify(visitor).visit(B, 1);
-		verify(visitor).visit(C, 2);
+		verify(visitor).visitVertex(A, 0);
+		verify(visitor).visitVertex(B, 1);
+		verify(visitor).visitVertex(C, 2);
 		//verifyNoMoreInteractions(visitor);
 	}
 	
@@ -202,9 +201,9 @@ public class TestCallGraph {
 
 		callGraph.traverseUsingTypes(C, visitor);
 		verify(visitor, times(3)).finished();
-		verify(visitor).visit(C, 0);
-		verify(visitor).visit(B, 1);
-		verify(visitor).visit(A, 2);
+		verify(visitor).visitVertex(C, 0);
+		verify(visitor).visitVertex(B, 1);
+		verify(visitor).visitVertex(A, 2);
 		//verifyNoMoreInteractions(visitor);
 	}
 	
