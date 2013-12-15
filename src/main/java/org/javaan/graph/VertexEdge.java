@@ -22,7 +22,7 @@ package org.javaan.graph;
 
 
 /**
- * Edge with reference to source and target vertex
+ * Edge with references to source and target vertex
  */
 public class VertexEdge<V> {
 
