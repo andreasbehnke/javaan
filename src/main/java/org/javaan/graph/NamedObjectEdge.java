@@ -20,9 +20,6 @@ package org.javaan.graph;
  * #L%
  */
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.javaan.model.NamedObject;
 import org.javaan.model.NamedObjectBase;
 
@@ -51,21 +48,5 @@ public class NamedObjectEdge<V extends NamedObject> extends NamedObjectBase {
 
 	public V getTarget() {
 		return target;
-	}
-	
-	public static <V extends NamedObject> Set<V> getTargetSet(Set<NamedObjectEdge<V>> edges) {
-		Set<V> namedObjects = new HashSet<V>();
-		for (NamedObjectEdge<V> namedObjectEdge : edges) {
-			namedObjects.add(namedObjectEdge.getTarget());
-		}
-		return namedObjects;
-	}
-	
-	public static <V extends NamedObject> Set<V> getSourceSet(Set<NamedObjectEdge<V>> edges) {
-		Set<V> namedObjects = new HashSet<V>();
-		for (NamedObjectEdge<V> namedObjectEdge : edges) {
-			namedObjects.add(namedObjectEdge.getSource());
-		}
-		return namedObjects;
 	}
 }
