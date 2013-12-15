@@ -20,10 +20,9 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.NamedObject;
 
 /**
- * Visits objects during traversal of {@link NamedObjectDirectedGraph}. Provides
+ * Visits objects during traversal of {@link TraversalDirectedGraph}. Provides
  * depth information for depth first traversal.
  */
 public interface ObjectVisitor<V, E> {
@@ -34,14 +33,14 @@ public interface ObjectVisitor<V, E> {
 	boolean finished();
 
 	/**
-	 * Visit the next {@link NamedObject} N at graph depth = level.
+	 * Visit the next vertex at graph depth = level.
 	 * Level will be -1 for breadth first traversal.
 	 */
-	void visitVertex(V named, int level);
+	void visitVertex(V vertex, int level);
 
 	/**
-	 * Visit the next {@link VertexEdge} at graph depth = level.
+	 * Visit the next edge at graph depth = level.
 	 * Level will be -1 for breadth first traversal.
 	 */
-	void visitEdge(E namedEdge, int level);
+	void visitEdge(E edge, int level);
 }
