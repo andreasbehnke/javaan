@@ -29,6 +29,13 @@ public class TraversalDirectedGraph<V, E> extends GraphDelegator<V, E> implement
 		addVertex(targetVertex);
 		return super.addEdge(sourceVertex, targetVertex);
 	}
+	
+	@Override
+	public boolean addEdge(V sourceVertex, V targetVertex, E edge) {
+		addVertex(sourceVertex);
+		addVertex(targetVertex);
+		return super.addEdge(sourceVertex, targetVertex, edge);
+	}
 
 	private Set<V> getTargetSet(Set<E> edges) {
 		Set<V> targets = new HashSet<V>();
