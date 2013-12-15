@@ -22,7 +22,7 @@ package org.javaan.print;
 
 import java.io.PrintStream;
 
-import org.javaan.graph.NamedObjectEdge;
+import org.javaan.graph.VertexEdge;
 import org.javaan.graph.NamedObjectVisitor;
 import org.javaan.model.NamedObject;
 
@@ -54,5 +54,5 @@ public class GraphPrinter<N extends NamedObject> implements NamedObjectVisitor<N
 	}
 
 	@Override
-	public void visitEdge(NamedObjectEdge<N> namedEdge, int level) {}
+	public void visitEdge(VertexEdge<N> namedEdge, int level) {}
 }

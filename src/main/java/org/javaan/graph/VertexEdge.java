@@ -20,19 +20,26 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.NamedObject;
-import org.jgrapht.EdgeFactory;
 
 /**
- * Implementation of the {@link EdgeFactory} for {@link NamedObject} as vertex type.
- * Edges are of type NamedObjectEdge and the identifier is produced by concatenation 
- * of source and target name.
+ * Edge with reference to source and target vertex
  */
-public class NamedObjectEdgeFactory<V extends NamedObject> implements EdgeFactory<V, NamedObjectEdge<V>> {
+public class VertexEdge<V> {
 
-	@Override
-	public NamedObjectEdge<V> createEdge(V sourceVertex, V targetVertex) {
-		return new NamedObjectEdge<V>(sourceVertex, targetVertex);
+	private final V source;
+	
+	private final V target;
+
+	public VertexEdge(V source, V target) {
+		this.source = source;
+		this.target = target;
+	}
+	
+	public V getSource() {
+		return source;
 	}
 
+	public V getTarget() {
+		return target;
+	}
 }

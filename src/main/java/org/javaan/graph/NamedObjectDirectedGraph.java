@@ -25,13 +25,13 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
 public class NamedObjectDirectedGraph<V extends NamedObject> 
-	extends TraversalDirectedGraph<V, NamedObjectEdge<V>> 
-	implements DirectedGraph<V, NamedObjectEdge<V>> {
+	extends TraversalDirectedGraph<V, VertexEdge<V>> 
+	implements DirectedGraph<V, VertexEdge<V>> {
 
 	private static final long serialVersionUID = 1L;
 
 	public NamedObjectDirectedGraph() {
-		super(new DefaultDirectedGraph<V, NamedObjectEdge<V>>(new NamedObjectEdgeFactory<V>()));
+		super(new DefaultDirectedGraph<V, VertexEdge<V>>(new VertexEdgeFactory<V>()));
 	}
 
 }

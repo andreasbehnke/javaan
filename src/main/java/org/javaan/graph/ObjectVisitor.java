@@ -40,7 +40,7 @@ public interface ObjectVisitor<V, E> {
 	void visitVertex(V named, int level);
 
 	/**
-	 * Visit the next {@link NamedObjectEdge} at graph depth = level.
+	 * Visit the next {@link VertexEdge} at graph depth = level.
 	 * Level will be -1 for breadth first traversal.
 	 */
 	void visitEdge(E namedEdge, int level);

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.javaan.graph.NamedObjectDirectedGraph;
-import org.javaan.graph.NamedObjectEdge;
+import org.javaan.graph.VertexEdge;
 import org.javaan.graph.NamedObjectVisitor;
 import org.jgrapht.alg.StrongConnectivityInspector;
 
@@ -115,7 +115,7 @@ public class CallGraph {
 	 * @return list of type sets which take part in a using dependency cycle
 	 */
 	public List<Set<Type>> getDependencyCycles() {
-		StrongConnectivityInspector<Type, NamedObjectEdge<Type>> inspector = new StrongConnectivityInspector<Type, NamedObjectEdge<Type>>(usageOfType);
+		StrongConnectivityInspector<Type, VertexEdge<Type>> inspector = new StrongConnectivityInspector<Type, VertexEdge<Type>>(usageOfType);
 		List<Set<Type>> cycles = new ArrayList<Set<Type>>();
 		for (Set<Type> cycle : inspector.stronglyConnectedSets()) {
 			if (cycle.size() > 1) { // ignore dependency cycles within one class (these cycles have no impact in software design)

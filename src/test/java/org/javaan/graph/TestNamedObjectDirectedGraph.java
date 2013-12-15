@@ -134,13 +134,13 @@ public class TestNamedObjectDirectedGraph {
 	@Test
 	public void testTraverseSuccessorsDepthFirst() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		NamedObjectEdge<Clazz> X_A = graph.addEdge(X, A);
-		NamedObjectEdge<Clazz> X_B = graph.addEdge(X, B);
-		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
-		NamedObjectEdge<Clazz> C_D = graph.addEdge(C, D);
-		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
-		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
-		NamedObjectEdge<Clazz> X_G = graph.addEdge(X, G);
+		VertexEdge<Clazz> X_A = graph.addEdge(X, A);
+		VertexEdge<Clazz> X_B = graph.addEdge(X, B);
+		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
+		VertexEdge<Clazz> C_D = graph.addEdge(C, D);
+		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
+		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
+		VertexEdge<Clazz> X_G = graph.addEdge(X, G);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traverseSuccessorsDepthFirst(X, visitor);
@@ -166,13 +166,13 @@ public class TestNamedObjectDirectedGraph {
 	@Test
 	public void testTraverseSuccessorsBreadthFirst() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		NamedObjectEdge<Clazz> X_A = graph.addEdge(X, A);
-		NamedObjectEdge<Clazz> X_B = graph.addEdge(X, B);
-		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
-		NamedObjectEdge<Clazz> C_D = graph.addEdge(C, D);
-		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
-		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
-		NamedObjectEdge<Clazz> X_G = graph.addEdge(X, G);
+		VertexEdge<Clazz> X_A = graph.addEdge(X, A);
+		VertexEdge<Clazz> X_B = graph.addEdge(X, B);
+		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
+		VertexEdge<Clazz> C_D = graph.addEdge(C, D);
+		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
+		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
+		VertexEdge<Clazz> X_G = graph.addEdge(X, G);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traverseSuccessorsBreadthFirst(X, visitor);
@@ -198,9 +198,9 @@ public class TestNamedObjectDirectedGraph {
 	@Test
 	public void testTraverseSuccessorsDepthFirstCycle() {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		NamedObjectEdge<Clazz> X_A = graph.addEdge(X, A);
-		NamedObjectEdge<Clazz> A_B = graph.addEdge(A, B);
-		NamedObjectEdge<Clazz> B_X = graph.addEdge(B, X);
+		VertexEdge<Clazz> X_A = graph.addEdge(X, A);
+		VertexEdge<Clazz> A_B = graph.addEdge(A, B);
+		VertexEdge<Clazz> B_X = graph.addEdge(B, X);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 
 		graph.traverseSuccessorsDepthFirst(X, visitor);
@@ -246,11 +246,11 @@ public class TestNamedObjectDirectedGraph {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
+		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
-		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
-		NamedObjectEdge<Clazz> Y_F = graph.addEdge(Y, F);
+		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
+		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
+		VertexEdge<Clazz> Y_F = graph.addEdge(Y, F);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traversePredecessorsDepthFirst(F, visitor);
@@ -272,11 +272,11 @@ public class TestNamedObjectDirectedGraph {
 		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		NamedObjectEdge<Clazz> X_C = graph.addEdge(X, C);
+		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		NamedObjectEdge<Clazz> C_E = graph.addEdge(C, E);
-		NamedObjectEdge<Clazz> E_F = graph.addEdge(E, F);
-		NamedObjectEdge<Clazz> Y_F = graph.addEdge(Y, F);
+		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
+		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
+		VertexEdge<Clazz> Y_F = graph.addEdge(Y, F);
 		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
 		
 		graph.traversePredecessorsBreadthFirst(F, visitor);
