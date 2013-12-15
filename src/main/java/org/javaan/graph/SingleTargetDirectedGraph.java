@@ -31,7 +31,7 @@ import org.jgrapht.traverse.GraphIterator;
 /**
  * A directed graph which is constrained to out degree of 1.
  */
-public class SingleTargetDirectedGraph<V extends NamedObject> extends NamedObjectDirectedGraph<V> {
+public class SingleTargetDirectedGraph<V extends NamedObject> extends VertexEdgeDirectedGraph<V> {
 
 	private static final long serialVersionUID = 1L;
 

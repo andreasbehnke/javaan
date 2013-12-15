@@ -23,10 +23,10 @@ package org.javaan.print;
 import java.io.PrintStream;
 
 import org.javaan.graph.VertexEdge;
-import org.javaan.graph.NamedObjectVisitor;
+import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.javaan.model.NamedObject;
 
-public class GraphPrinter<N extends NamedObject> implements NamedObjectVisitor<N> {
+public class GraphPrinter<N extends NamedObject> implements VertexEdgeObjectVisitor<N> {
 
 	private final static String LEVEL_SPACER = " ";
 	

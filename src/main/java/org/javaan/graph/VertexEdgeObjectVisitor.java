@@ -20,9 +20,8 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.NamedObject;
 
 /**
- * Visits named objects during traversal of {@link NamedObjectDirectedGraph}
+ * {@link ObjectVisitor} which uses {@link VertexEdge} for edges 
  */
-public interface NamedObjectVisitor<N extends NamedObject> extends ObjectVisitor<N, VertexEdge<N>> {}
+public interface VertexEdgeObjectVisitor<V> extends ObjectVisitor<V, VertexEdge<V>> {}

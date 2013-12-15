@@ -28,7 +28,7 @@ import java.util.Set;
 import org.apache.commons.cli.CommandLine;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
-import org.javaan.graph.NamedObjectVisitor;
+import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.NamedObject;
@@ -48,7 +48,7 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 	
 	protected abstract ObjectFormatter<N> getFormatter();
 	
-	protected abstract void traverse(CallGraph callGraph, N namedObject, NamedObjectVisitor<N> graphPrinter);
+	protected abstract void traverse(CallGraph callGraph, N namedObject, VertexEdgeObjectVisitor<N> graphPrinter);
 	
 	protected abstract Set<N> collectLeafObjects(CallGraph callGraph, N namedObject);
 
@@ -57,7 +57,7 @@ abstract class BaseGraphCommand<N extends NamedObject> extends BaseTypeLoadingCo
 	}
 
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<N> namedObjects, ObjectFormatter<N> formatter) {
-		NamedObjectVisitor<N> printer = new GraphPrinter<N>(output, formatter);
+		VertexEdgeObjectVisitor<N> printer = new GraphPrinter<N>(output, formatter);
 		for (N namedObject : namedObjects) {
 			output.println(String.format("%s:",formatter.format(namedObject)));
 			traverse(callGraph, namedObject, printer);

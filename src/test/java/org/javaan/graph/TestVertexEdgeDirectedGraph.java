@@ -20,34 +20,39 @@ package org.javaan.graph;
  * #L%
  */
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.Set;
 
-import org.javaan.model.Clazz;
 import org.junit.Test;
 
-public class TestNamedObjectDirectedGraph {
+public class TestVertexEdgeDirectedGraph {
 
-	private static final Clazz A = new Clazz("a");
-	private static final Clazz B = new Clazz("b");
-	private static final Clazz C = new Clazz("c");
-	private static final Clazz D = new Clazz("d");
-	private static final Clazz E = new Clazz("e");
-	private static final Clazz F = new Clazz("f");
-	private static final Clazz G = new Clazz("g");
-	private static final Clazz X = new Clazz("x");
-	private static final Clazz Y = new Clazz("y");
+	private static final String A = "a";
+	private static final String B = "b";
+	private static final String C = "c";
+	private static final String D = "d";
+	private static final String E = "e";
+	private static final String F = "f";
+	private static final String G = "g";
+	private static final String X = "x";
+	private static final String Y = "y";
 
 	@Test
 	public void testTargetVerticesOf() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
 		
-		Set<Clazz> childs = graph.targetVerticesOf(B);
+		Set<String> childs = graph.targetVerticesOf(B);
 		assertNotNull(childs);
 		assertEquals(0, childs.size());
 		
@@ -65,12 +70,12 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testSourceVerticesOf() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(Y, A);
 		
-		Set<Clazz> childs = graph.sourceVerticesOf(B);
+		Set<String> childs = graph.sourceVerticesOf(B);
 		assertNotNull(childs);
 		assertEquals(1, childs.size());
 		assertTrue(childs.contains(X));
@@ -88,12 +93,12 @@ public class TestNamedObjectDirectedGraph {
 	
 	@Test
 	public void testSuccessorsOf() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
 		
-		Set<Clazz> successors = graph.successorsOf(X);
+		Set<String> successors = graph.successorsOf(X);
 		assertNotNull(successors);
 		assertEquals(3, successors.size());
 		assertTrue(successors.contains(A));
@@ -103,13 +108,13 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testPredecessorsOf() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
 		graph.addEdge(D, C);
 		
-		Set<Clazz> predecessors = graph.predecessorsOf(X);
+		Set<String> predecessors = graph.predecessorsOf(X);
 		assertNotNull(predecessors);
 		assertEquals(0, predecessors.size());
 		
@@ -133,15 +138,15 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirst() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		VertexEdge<Clazz> X_A = graph.addEdge(X, A);
-		VertexEdge<Clazz> X_B = graph.addEdge(X, B);
-		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
-		VertexEdge<Clazz> C_D = graph.addEdge(C, D);
-		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
-		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
-		VertexEdge<Clazz> X_G = graph.addEdge(X, G);
-		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
+		VertexEdge<String> X_A = graph.addEdge(X, A);
+		VertexEdge<String> X_B = graph.addEdge(X, B);
+		VertexEdge<String> X_C = graph.addEdge(X, C);
+		VertexEdge<String> C_D = graph.addEdge(C, D);
+		VertexEdge<String> C_E = graph.addEdge(C, E);
+		VertexEdge<String> E_F = graph.addEdge(E, F);
+		VertexEdge<String> X_G = graph.addEdge(X, G);
+		VertexEdgeObjectVisitor<String> visitor = mock(VertexEdgeObjectVisitor.class);
 		
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(8)).finished();
@@ -165,15 +170,15 @@ public class TestNamedObjectDirectedGraph {
 	
 	@Test
 	public void testTraverseSuccessorsBreadthFirst() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		VertexEdge<Clazz> X_A = graph.addEdge(X, A);
-		VertexEdge<Clazz> X_B = graph.addEdge(X, B);
-		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
-		VertexEdge<Clazz> C_D = graph.addEdge(C, D);
-		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
-		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
-		VertexEdge<Clazz> X_G = graph.addEdge(X, G);
-		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
+		VertexEdge<String> X_A = graph.addEdge(X, A);
+		VertexEdge<String> X_B = graph.addEdge(X, B);
+		VertexEdge<String> X_C = graph.addEdge(X, C);
+		VertexEdge<String> C_D = graph.addEdge(C, D);
+		VertexEdge<String> C_E = graph.addEdge(C, E);
+		VertexEdge<String> E_F = graph.addEdge(E, F);
+		VertexEdge<String> X_G = graph.addEdge(X, G);
+		VertexEdgeObjectVisitor<String> visitor = mock(VertexEdgeObjectVisitor.class);
 		
 		graph.traverseSuccessorsBreadthFirst(X, visitor);
 		verify(visitor, times(8)).finished();
@@ -197,11 +202,11 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstCycle() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		VertexEdge<Clazz> X_A = graph.addEdge(X, A);
-		VertexEdge<Clazz> A_B = graph.addEdge(A, B);
-		VertexEdge<Clazz> B_X = graph.addEdge(B, X);
-		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
+		VertexEdge<String> X_A = graph.addEdge(X, A);
+		VertexEdge<String> A_B = graph.addEdge(A, B);
+		VertexEdge<String> B_X = graph.addEdge(B, X);
+		VertexEdgeObjectVisitor<String> visitor = mock(VertexEdgeObjectVisitor.class);
 
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(3)).finished();
@@ -216,7 +221,7 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstDisruption() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -224,7 +229,7 @@ public class TestNamedObjectDirectedGraph {
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
 		graph.addEdge(X, G);
-		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		VertexEdgeObjectVisitor<String> visitor = mock(VertexEdgeObjectVisitor.class);
 		when(visitor.finished()).thenReturn(true);
 		
 		graph.traverseSuccessorsDepthFirst(X, visitor);
@@ -234,8 +239,8 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstUnknownStartVertex() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
+		VertexEdgeObjectVisitor<String> visitor = mock(VertexEdgeObjectVisitor.class);
 
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verifyNoMoreInteractions(visitor);
@@ -243,15 +248,15 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testTraversePredecessorsDepthFirst() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
+		VertexEdge<String> X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
-		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
-		VertexEdge<Clazz> Y_F = graph.addEdge(Y, F);
-		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		VertexEdge<String> C_E = graph.addEdge(C, E);
+		VertexEdge<String> E_F = graph.addEdge(E, F);
+		VertexEdge<String> Y_F = graph.addEdge(Y, F);
+		VertexEdgeObjectVisitor<String> visitor = mock(VertexEdgeObjectVisitor.class);
 		
 		graph.traversePredecessorsDepthFirst(F, visitor);
 		verify(visitor, times(5)).finished();
@@ -269,15 +274,15 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testTraversePredecessorsBreadthFirst() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		VertexEdge<Clazz> X_C = graph.addEdge(X, C);
+		VertexEdge<String> X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		VertexEdge<Clazz> C_E = graph.addEdge(C, E);
-		VertexEdge<Clazz> E_F = graph.addEdge(E, F);
-		VertexEdge<Clazz> Y_F = graph.addEdge(Y, F);
-		NamedObjectVisitor<Clazz> visitor = mock(NamedObjectVisitor.class);
+		VertexEdge<String> C_E = graph.addEdge(C, E);
+		VertexEdge<String> E_F = graph.addEdge(E, F);
+		VertexEdge<String> Y_F = graph.addEdge(Y, F);
+		VertexEdgeObjectVisitor<String> visitor = mock(VertexEdgeObjectVisitor.class);
 		
 		graph.traversePredecessorsBreadthFirst(F, visitor);
 		verify(visitor, times(5)).finished();
@@ -295,7 +300,7 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testGetLeafSuccessors() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -303,7 +308,7 @@ public class TestNamedObjectDirectedGraph {
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
 		
-		Set<Clazz> leafNodes = graph.getLeafSuccessors(X);
+		Set<String> leafNodes = graph.getLeafSuccessors(X);
 		assertNotNull(leafNodes);
 		assertEquals(4, leafNodes.size());
 		assertTrue(leafNodes.contains(A));
@@ -329,15 +334,15 @@ public class TestNamedObjectDirectedGraph {
 
 	@Test
 	public void testGetLeafSuccessorsUnknownStartVertex() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
-		Set<Clazz> leafNodes = graph.getLeafSuccessors(X);
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
+		Set<String> leafNodes = graph.getLeafSuccessors(X);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
 	}
 
 	@Test
 	public void testGetLeafPredecessors() {
-		NamedObjectDirectedGraph<Clazz> graph = new NamedObjectDirectedGraph<Clazz>();
+		VertexEdgeDirectedGraph<String> graph = new VertexEdgeDirectedGraph<String>();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -345,7 +350,7 @@ public class TestNamedObjectDirectedGraph {
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
 		
-		Set<Clazz> leafNodes = graph.getLeafPredecessors(X);
+		Set<String> leafNodes = graph.getLeafPredecessors(X);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
 		leafNodes = graph.getLeafPredecessors(C);

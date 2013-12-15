@@ -20,17 +20,16 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.NamedObject;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
-public class NamedObjectDirectedGraph<V extends NamedObject> 
+public class VertexEdgeDirectedGraph<V> 
 	extends TraversalDirectedGraph<V, VertexEdge<V>> 
 	implements DirectedGraph<V, VertexEdge<V>> {
 
 	private static final long serialVersionUID = 1L;
 
-	public NamedObjectDirectedGraph() {
+	public VertexEdgeDirectedGraph() {
 		super(new DefaultDirectedGraph<V, VertexEdge<V>>(new VertexEdgeFactory<V>()));
 	}
 

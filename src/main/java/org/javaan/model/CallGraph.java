@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.NamedObjectDirectedGraph;
+import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdge;
-import org.javaan.graph.NamedObjectVisitor;
+import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.jgrapht.alg.StrongConnectivityInspector;
 
 /**
@@ -35,9 +35,9 @@ import org.jgrapht.alg.StrongConnectivityInspector;
  */
 public class CallGraph {
 
-	private final NamedObjectDirectedGraph<Method> callerOfMethod = new NamedObjectDirectedGraph<Method>();
+	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final NamedObjectDirectedGraph<Type> usageOfType = new NamedObjectDirectedGraph<Type>();
+	private final VertexEdgeDirectedGraph<Type> usageOfType = new VertexEdgeDirectedGraph<Type>();
 
 	private final ClassContext classContext;
 
@@ -79,11 +79,11 @@ public class CallGraph {
 		return callerOfMethod.targetVerticesOf(caller);
 	}
 	
-	public void traverseCallers(Method callee, NamedObjectVisitor<Method> callerVisitor) {
+	public void traverseCallers(Method callee, VertexEdgeObjectVisitor<Method> callerVisitor) {
 		callerOfMethod.traversePredecessorsDepthFirst(callee, callerVisitor);
 	}
 	
-	public void traverseCallees(Method caller, NamedObjectVisitor<Method> calleeVisitor) {
+	public void traverseCallees(Method caller, VertexEdgeObjectVisitor<Method> calleeVisitor) {
 		callerOfMethod.traverseSuccessorsDepthFirst(caller, calleeVisitor);
 	}
 	
@@ -95,11 +95,11 @@ public class CallGraph {
 		return callerOfMethod.getLeafSuccessors(caller);
 	}
 
-	public void traverseUsedTypes(Type using, NamedObjectVisitor<Type> usedVisitor) {
+	public void traverseUsedTypes(Type using, VertexEdgeObjectVisitor<Type> usedVisitor) {
 		usageOfType.traverseSuccessorsDepthFirst(using, usedVisitor);
 	}
 	
-	public void traverseUsingTypes(Type used, NamedObjectVisitor<Type> usingVisitor) {
+	public void traverseUsingTypes(Type used, VertexEdgeObjectVisitor<Type> usingVisitor) {
 		usageOfType.traversePredecessorsDepthFirst(used, usingVisitor);
 	}
 
