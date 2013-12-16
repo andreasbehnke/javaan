@@ -24,8 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.graph.ExternalEdgeDirectedGraph;
+import org.javaan.graph.ObjectVisitor;
 import org.javaan.graph.VertexEdgeDirectedGraph;
-import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.jgrapht.alg.StrongConnectivityInspector;
 
@@ -37,7 +38,7 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final VertexEdgeDirectedGraph<Type> usageOfType = new VertexEdgeDirectedGraph<Type>();
+	private final ExternalEdgeDirectedGraph<Clazz, Method> usageOfClass = new ExternalEdgeDirectedGraph<Clazz, Method>();
 
 	private final ClassContext classContext;
 
@@ -68,7 +69,7 @@ public class CallGraph {
 		if (classContext.getSpecializationsOfClass(classOfCaller).contains(classOfCallee)) {
 			return;
 		}
-		usageOfType.addEdge(classOfCaller, classOfCallee);
+		usageOfClass.addEdge(classOfCaller, classOfCallee, callee);
 	}
 	
 	public Set<Method> getCallers(Method callee) {
@@ -95,29 +96,29 @@ public class CallGraph {
 		return callerOfMethod.getLeafSuccessors(caller);
 	}
 
-	public void traverseUsedTypes(Type using, VertexEdgeObjectVisitor<Type> usedVisitor) {
-		usageOfType.traverseSuccessorsDepthFirst(using, usedVisitor);
+	public void traverseUsedTypes(Clazz using, ObjectVisitor<Clazz, Method> usedVisitor) {
+		usageOfClass.traverseSuccessorsDepthFirst(using, usedVisitor);
 	}
 	
-	public void traverseUsingTypes(Type used, VertexEdgeObjectVisitor<Type> usingVisitor) {
-		usageOfType.traversePredecessorsDepthFirst(used, usingVisitor);
+	public void traverseUsingTypes(Clazz used, ObjectVisitor<Clazz, Method> usingVisitor) {
+		usageOfClass.traversePredecessorsDepthFirst(used, usingVisitor);
 	}
 
-	public Set<Type> getLeafUsedTypes(Type using) {
-		return usageOfType.getLeafSuccessors(using);
+	public Set<Clazz> getLeafUsedTypes(Clazz using) {
+		return usageOfClass.getLeafSuccessors(using);
 	}
 	
-	public Set<Type> getLeafUsingTypes(Type using) {
-		return usageOfType.getLeafPredecessors(using);
+	public Set<Clazz> getLeafUsingTypes(Clazz using) {
+		return usageOfClass.getLeafPredecessors(using);
 	}
 	
 	/**
 	 * @return list of type sets which take part in a using dependency cycle
 	 */
-	public List<Set<Type>> getDependencyCycles() {
-		StrongConnectivityInspector<Type, VertexEdge<Type>> inspector = new StrongConnectivityInspector<Type, VertexEdge<Type>>(usageOfType);
-		List<Set<Type>> cycles = new ArrayList<Set<Type>>();
-		for (Set<Type> cycle : inspector.stronglyConnectedSets()) {
+	public List<Set<Clazz>> getDependencyCycles() {
+		StrongConnectivityInspector<Clazz, Method> inspector = new StrongConnectivityInspector<Clazz, Method>(usageOfClass);
+		List<Set<Clazz>> cycles = new ArrayList<Set<Clazz>>();
+		for (Set<Clazz> cycle : inspector.stronglyConnectedSets()) {
 			if (cycle.size() > 1) { // ignore dependency cycles within one class (these cycles have no impact in software design)
 				cycles.add(cycle);
 			}

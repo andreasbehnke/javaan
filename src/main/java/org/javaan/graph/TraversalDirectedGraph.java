@@ -91,8 +91,7 @@ public class TraversalDirectedGraph<V, E> extends GraphDelegator<V, E> implement
 		return predecessors;
 	}
 
-	private void traverseGraph(DirectedGraph<V, E> graph, V startVertex, ObjectVisitor<V, E> visitor,
-			boolean depthFirst) {
+	private void traverseGraph(DirectedGraph<V, E> graph, V startVertex, ObjectVisitor<V, E> visitor, boolean depthFirst) {
 				if (!containsVertex(startVertex)) {
 					return;
 				}

@@ -22,17 +22,20 @@ package org.javaan.print;
 
 import java.io.PrintStream;
 import java.util.Collection;
-
 public class PrintUtil {
-	
+
+	public static final String BLOCK_SEPARATOR = "\n--\n";
+
+	private final static String LEVEL_SPACER = " ";
+
 	public static <E> void println(PrintStream output, Collection<E> elements, String prefix, String linePrefix, String separator) {
 		println(output, null, elements, prefix, linePrefix, separator);
 	}
 	
-	public static <E> void println(PrintStream output, ObjectFormatter<E> formatter, Collection<E> elements, String prefix, String linePrefix, String separator) {
+	public static <F> void println(PrintStream output, ObjectFormatter<F> formatter, Collection<F> elements, String prefix, String linePrefix, String separator) {
 		output.print(prefix);
 		boolean first = true;
-		for (E e : elements) {
+		for (F e : elements) {
 			if(first) {
 				first = false;
 			} else {
@@ -47,6 +50,12 @@ public class PrintUtil {
 		}
 		output.println();
 	}
-
-	public static final String BLOCK_SEPARATOR = "\n--\n";
+	
+	public static <F> void indent(PrintStream output, ObjectFormatter<F> formatter, F element, int indentWidth) {
+		StringBuilder buffer = new StringBuilder();
+		for (int i=0; i < indentWidth; i++) {
+			buffer.append(LEVEL_SPACER);
+		}
+		output.append(buffer).append(formatter.format(element)).println();
+	}
 }

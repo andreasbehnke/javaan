@@ -30,6 +30,7 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.graph.ObjectVisitor;
 import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.junit.Test;
 
@@ -180,7 +181,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD); 
 		callGraph.addCall(METHODD, METHODE);
-		VertexEdgeObjectVisitor<Type> visitor = mock(VertexEdgeObjectVisitor.class);
+		ObjectVisitor<Clazz, Method> visitor = mock(ObjectVisitor.class);
 
 		callGraph.traverseUsedTypes(A, visitor);
 		verify(visitor, times(3)).finished();
@@ -197,7 +198,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		VertexEdgeObjectVisitor<Type> visitor = mock(VertexEdgeObjectVisitor.class);
+		ObjectVisitor<Clazz, Method> visitor = mock(ObjectVisitor.class);
 
 		callGraph.traverseUsingTypes(C, visitor);
 		verify(visitor, times(3)).finished();
@@ -215,7 +216,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
 		
-		Set<Type> leaves = callGraph.getLeafUsedTypes(A);
+		Set<Clazz> leaves = callGraph.getLeafUsedTypes(A);
 		assertNotNull(leaves);
 		assertEquals(1, leaves.size());
 		assertTrue(leaves.contains(C));
@@ -229,7 +230,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODC, METHODD); // A --> B
 		callGraph.addCall(METHODD, METHODE); // B --> C
 		
-		Set<Type> leaves = callGraph.getLeafUsingTypes(C);
+		Set<Clazz> leaves = callGraph.getLeafUsingTypes(C);
 		assertNotNull(leaves);
 		assertEquals(1, leaves.size());
 		assertTrue(leaves.contains(A));
@@ -246,10 +247,10 @@ public class TestCallGraph {
 		callGraph.addCall(METHODF, METHODE);// first cycle C --> D --> C: This must be ignored, because D inherits C!
 		callGraph.addCall(METHODD, METHODA);// second cylce A --> B --> A
 
-		List<Set<Type>> cycles = callGraph.getDependencyCycles();
+		List<Set<Clazz>> cycles = callGraph.getDependencyCycles();
 		assertNotNull(cycles);
 		assertEquals(1, cycles.size());
-		Set<Type> setABA = cycles.get(0);
+		Set<Clazz> setABA = cycles.get(0);
 
 		assertEquals(2, setABA.size());
 		assertTrue(setABA.contains(A));

@@ -20,22 +20,36 @@ package org.javaan.commands;
  * #L%
  */
 
-import java.util.ArrayList;
+import java.io.PrintStream;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+import org.javaan.bytecode.CallGraphBuilder;
+import org.javaan.bytecode.ClassContextBuilder;
+import org.javaan.graph.ObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
+import org.javaan.model.Clazz;
+import org.javaan.model.Method;
 import org.javaan.model.Type;
+import org.javaan.print.ClazzFormatter;
+import org.javaan.print.GraphPrinter;
+import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
-import org.javaan.print.TypeFormatter;
+import org.javaan.print.PrintUtil;
 
 /**
  * Base command for all class dependency commands
  */
-public abstract class BaseDependencyGraphCommand extends BaseGraphCommand<Type> {
+public abstract class BaseDependencyGraphCommand extends BaseTypeLoadingCommand {
 
+	protected abstract void traverse(CallGraph callGraph, Clazz clazz, ObjectVisitor<Clazz, Method> graphPrinter);
+
+	protected abstract Set<Clazz> collectLeafObjects(CallGraph callGraph, Clazz clazz);
+	
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		options.addOption(StandardOptions.FILTER);
@@ -43,23 +57,53 @@ public abstract class BaseDependencyGraphCommand extends BaseGraphCommand<Type> 
 		return options;
 	}
 
-	@Override
-	protected String filterCriteria(CommandLine commandLine) {
+	private String filterCriteria(CommandLine commandLine) {
 		return commandLine.getOptionValue(StandardOptions.OPT_FILTER);
 	}
 
-	@Override
-	protected ObjectFormatter<Type> getFormatter() {
-		return new TypeFormatter();
+	private ObjectFormatter<Clazz> getClazzFormatter() {
+		return new ClazzFormatter();
 	}
 
-	@Override
-	protected Collection<Type> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria) {
-		Collection<Type> types = new ArrayList<Type>();
-		types.addAll(classContext.getClasses());
-		types.addAll(classContext.getInterfaces());
-		return SortUtil.sort(FilterUtil.filter(types, new NameMatcher<Type>(filterCriteria)));
+	private ObjectFormatter<Method> getMethodFormatter() {
+		return new MethodFormatter();
 	}
-
 	
+	private Collection<Clazz> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria) {
+		return SortUtil.sort(FilterUtil.filter(classContext.getClasses(), new NameMatcher<Clazz>(filterCriteria)));
+	}
+
+	private boolean isPrintLeaves(CommandLine commandLine) {
+		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
+	}
+
+	private void printGraph(CallGraph callGraph, PrintStream output, Collection<Clazz> clazzes, ObjectFormatter<Clazz> clazzFormatter, ObjectFormatter<Method> methodFormatter) {
+				ObjectVisitor<Clazz, Method> printer = new GraphPrinter<Clazz, Method>(output, clazzFormatter, methodFormatter);
+				for (Clazz clazz : clazzes) {
+					output.println(String.format("%s:",clazzFormatter.format(clazz)));
+					traverse(callGraph, clazz, printer);
+					output.println(PrintUtil.BLOCK_SEPARATOR);
+				}
+			}
+
+	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<Clazz> clazzes, ObjectFormatter<Clazz> formatter) {
+				for (Clazz clazz : clazzes) {
+					PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, clazz)), formatter.format(clazz) , "\n\t", ", ");
+				}
+			}
+
+	@Override
+	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+		String criteria = filterCriteria(commandLine);
+		boolean printLeaves = isPrintLeaves(commandLine);
+		ClassContext classContext = new ClassContextBuilder(types).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		Collection<Clazz> input = getInput(classContext, callGraph, criteria);
+		ObjectFormatter<Clazz> clazzFormatter = getClazzFormatter();
+		if (printLeaves) {
+			printLeafObjects(callGraph, output, input, clazzFormatter);
+		} else {
+			printGraph(callGraph, output, input, clazzFormatter, getMethodFormatter());
+		}
+	}	
 }

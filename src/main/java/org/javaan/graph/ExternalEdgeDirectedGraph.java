@@ -12,9 +12,16 @@ public class ExternalEdgeDirectedGraph<V, E> extends TraversalDirectedGraph<V, E
 	private static final long serialVersionUID = 1L;
 
 	public ExternalEdgeDirectedGraph() {
-		super(new DefaultDirectedGraph<V, E>((EdgeFactory<V, E>)null));
+		super(new DefaultDirectedGraph<V, E>(new EdgeFactory<V, E>() {
+
+			@Override
+			public E createEdge(V sourceVertex, V targetVertex) {
+				throw new UnsupportedOperationException();
+			}
+			
+		}));
 	}
-	
+
 	@Override
 	public E addEdge(V source, V target) {
 		throw new UnsupportedOperationException();

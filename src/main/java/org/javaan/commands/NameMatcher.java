@@ -27,12 +27,22 @@ public class NameMatcher<E extends NamedObject> implements Matcher<E> {
 	
 	private final String criteria;
 
+	private boolean matchAll = false;
+	
 	public NameMatcher(String criteria) {
-		this.criteria = criteria.toLowerCase();
+		if (criteria == null) {
+			matchAll = true;
+			this.criteria = null;
+		} else {
+			this.criteria = criteria.toLowerCase();
+		}
 	}
 
 	@Override
 	public boolean accept(E e) {
+		if (matchAll) {
+			return true;
+		}
 		return e.getName().toLowerCase().contains(criteria);
 	}
 }
