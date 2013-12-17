@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.javaan.graph.ExternalEdgeDirectedGraph;
-import org.javaan.graph.ObjectVisitor;
+import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.jgrapht.alg.StrongConnectivityInspector;
@@ -96,11 +96,11 @@ public class CallGraph {
 		return callerOfMethod.getLeafSuccessors(caller);
 	}
 
-	public void traverseUsedTypes(Clazz using, ObjectVisitor<Clazz, Method> usedVisitor) {
+	public void traverseUsedTypes(Clazz using, GraphVisitor<Clazz, Method> usedVisitor) {
 		usageOfClass.traverseSuccessorsDepthFirst(using, usedVisitor);
 	}
 	
-	public void traverseUsingTypes(Clazz used, ObjectVisitor<Clazz, Method> usingVisitor) {
+	public void traverseUsingTypes(Clazz used, GraphVisitor<Clazz, Method> usingVisitor) {
 		usageOfClass.traversePredecessorsDepthFirst(used, usingVisitor);
 	}
 

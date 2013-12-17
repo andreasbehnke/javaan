@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.ObjectVisitor;
+import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.junit.Test;
 
@@ -181,7 +181,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD); 
 		callGraph.addCall(METHODD, METHODE);
-		ObjectVisitor<Clazz, Method> visitor = mock(ObjectVisitor.class);
+		GraphVisitor<Clazz, Method> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsedTypes(A, visitor);
 		verify(visitor, times(3)).finished();
@@ -198,7 +198,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		ObjectVisitor<Clazz, Method> visitor = mock(ObjectVisitor.class);
+		GraphVisitor<Clazz, Method> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsingTypes(C, visitor);
 		verify(visitor, times(3)).finished();

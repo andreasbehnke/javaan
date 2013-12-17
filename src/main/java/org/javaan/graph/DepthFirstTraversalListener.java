@@ -31,10 +31,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapter between the simpler {@link ObjectVisitor} interface and the more
+ * Adapter between the simpler {@link GraphVisitor} interface and the more
  * specific {@link TraversalListener} interface from the jgrapht library. This keeps
  * the code clean from intrusive dependencies on jgrapht library.
- * Supports level information for the {@link ObjectVisitor}.visit method.
+ * Supports level information for the {@link GraphVisitor}.visit method.
  */
 class DepthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 
@@ -42,11 +42,11 @@ class DepthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 	
 	private final Graph<V, E> graph;
 	
-	private final ObjectVisitor<V, E> visitor;
+	private final GraphVisitor<V, E> visitor;
 	
 	private final Stack<V> stack = new Stack<V>();
 	
-	public DepthFirstTraversalListener(Graph<V, E> graph, ObjectVisitor<V, E> visitor) {
+	public DepthFirstTraversalListener(Graph<V, E> graph, GraphVisitor<V, E> visitor) {
 		this.graph = graph;
 		this.visitor = visitor;
 	}

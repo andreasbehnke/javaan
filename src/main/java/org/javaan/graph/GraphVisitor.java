@@ -25,7 +25,7 @@ package org.javaan.graph;
  * Visits objects during traversal of {@link TraversalDirectedGraph}. Provides
  * depth information for depth first traversal.
  */
-public interface ObjectVisitor<V, E> {
+public interface GraphVisitor<V, E> {
 
 	/**
 	 * @return true, if graph iteration is finished.
