@@ -26,11 +26,11 @@ public class GraphPrinter<V, E> implements ObjectVisitor<V, E> {
 
 	@Override
 	public void visitVertex(V vertex, int level) {
-		PrintUtil.indent(output, vertexFormatter, vertex, level * 2);
+		PrintUtil.indent(output, vertexFormatter, vertex, level * 2 + 1);
 	}
 
 	@Override
 	public void visitEdge(E edge, int level) {
-		PrintUtil.indent(output, edgeFormatter, edge, level * 2 + 1);
+		PrintUtil.indent(output, edgeFormatter, edge, level * 2);
 	}
 }
