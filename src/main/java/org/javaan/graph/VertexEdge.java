@@ -31,6 +31,13 @@ public class VertexEdge<V> {
 	private final V target;
 
 	public VertexEdge(V source, V target) {
+		if (source == null) {
+			throw new IllegalArgumentException("Parameter source must not be null");
+		}
+		if (target == null) {
+			throw new IllegalArgumentException("Parameter target must not be null");
+		}
+		
 		this.source = source;
 		this.target = target;
 	}
@@ -41,5 +48,10 @@ public class VertexEdge<V> {
 
 	public V getTarget() {
 		return target;
+	}
+	
+	@Override
+	public String toString() {
+		return source + " --> " + target;
 	}
 }

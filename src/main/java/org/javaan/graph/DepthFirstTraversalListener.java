@@ -20,7 +20,10 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.jgrapht.event.EdgeTraversalEvent;
+import java.util.Set;
+import java.util.Stack;
+
+import org.jgrapht.Graph;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.TraversalListenerAdapter;
 import org.jgrapht.event.VertexTraversalEvent;
@@ -31,41 +34,46 @@ import org.slf4j.LoggerFactory;
  * Adapter between the simpler {@link ObjectVisitor} interface and the more
  * specific {@link TraversalListener} interface from the jgrapht library. This keeps
  * the code clean from intrusive dependencies on jgrapht library.
- * Adapter for depth first traversal supports level information for the {@link ObjectVisitor}.visit method,
- * for breadth first traversal level will always be -1.
+ * Supports level information for the {@link ObjectVisitor}.visit method.
  */
-class ObjectTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
+class DepthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ObjectTraversalListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DepthFirstTraversalListener.class);
+	
+	private final Graph<V, E> graph;
 	
 	private final ObjectVisitor<V, E> visitor;
 	
-	private final boolean isDepthFirstTraversal;
+	private final Stack<V> stack = new Stack<V>();
 	
-	private int level = 0;
-	
-	public ObjectTraversalListener(ObjectVisitor<V, E> visitor, boolean isDepthFirstTraversal) {
+	public DepthFirstTraversalListener(Graph<V, E> graph, ObjectVisitor<V, E> visitor) {
+		this.graph = graph;
 		this.visitor = visitor;
-		this.isDepthFirstTraversal = isDepthFirstTraversal;
 	}
 
 	@Override
 	public void vertexFinished(VertexTraversalEvent<V> e) {
-		if(isDepthFirstTraversal) level --;
+		stack.pop();
 	}
 
 	@Override
 	public void vertexTraversed(VertexTraversalEvent<V> e) {
 		V vertex = e.getVertex();
-		if (isDepthFirstTraversal) level ++;
-		visitor.visitVertex(vertex, level - 1);
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Visited vertex {} at level {}", vertex, level);
+		int level = stack.size();
+		if (!stack.empty()) {
+			V predecessor = stack.peek();
+			Set<E> edges = graph.getAllEdges(predecessor, vertex);
+			for (E edge : edges) {
+				visitor.visitEdge(edge, level);
+				//if (LOG.isDebugEnabled()) {
+				LOG.info("Visited edge {} at level {}", edge, level);
+				//}
+			}
 		}
-	}
-
-	@Override
-	public void edgeTraversed(EdgeTraversalEvent<V, E> edgeTraversalEvent) {
-		visitor.visitEdge(edgeTraversalEvent.getEdge(), level - 1);
+		visitor.visitVertex(vertex, level);
+		stack.push(vertex);
+		//if (LOG.isDebugEnabled()) {
+			LOG.info("Visited vertex {} at level {}", vertex, level);
+		//}
 	}
 }

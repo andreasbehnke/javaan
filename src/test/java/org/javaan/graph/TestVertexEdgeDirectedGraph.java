@@ -151,19 +151,19 @@ public class TestVertexEdgeDirectedGraph {
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(8)).finished();
 		verify(visitor).visitVertex(X, 0);
-		verify(visitor).visitEdge(X_A, 0);
+		verify(visitor).visitEdge(X_A, 1);
 		verify(visitor).visitVertex(A, 1);
-		verify(visitor).visitEdge(X_B, 0);
+		verify(visitor).visitEdge(X_B, 1);
 		verify(visitor).visitVertex(B, 1);
-		verify(visitor).visitEdge(X_C, 0);
+		verify(visitor).visitEdge(X_C, 1);
 		verify(visitor).visitVertex(C, 1);
-		verify(visitor).visitEdge(C_D, 1);
+		verify(visitor).visitEdge(C_D, 2);
 		verify(visitor).visitVertex(D, 2);
-		verify(visitor).visitEdge(C_E, 1);
+		verify(visitor).visitEdge(C_E, 2);
 		verify(visitor).visitVertex(E, 2);
-		verify(visitor).visitEdge(E_F, 2);
+		verify(visitor).visitEdge(E_F, 3);
 		verify(visitor).visitVertex(F, 3);
-		verify(visitor).visitEdge(X_G, 0);
+		verify(visitor).visitEdge(X_G, 1);
 		verify(visitor).visitVertex(G, 1);
 		verifyNoMoreInteractions(visitor);
 	}
@@ -211,11 +211,10 @@ public class TestVertexEdgeDirectedGraph {
 		graph.traverseSuccessorsDepthFirst(X, visitor);
 		verify(visitor, times(3)).finished();
 		verify(visitor).visitVertex(X, 0);
-		verify(visitor).visitEdge(X_A, 0);
+		verify(visitor).visitEdge(X_A, 1);
 		verify(visitor).visitVertex(A, 1);
-		verify(visitor).visitEdge(A_B, 1);
+		verify(visitor).visitEdge(A_B, 2);
 		verify(visitor).visitVertex(B, 2);
-		verify(visitor).visitEdge(B_X, 2);
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -261,13 +260,13 @@ public class TestVertexEdgeDirectedGraph {
 		graph.traversePredecessorsDepthFirst(F, visitor);
 		verify(visitor, times(5)).finished();
 		verify(visitor).visitVertex(F, 0);
-		verify(visitor).visitEdge(E_F, 0);
+		verify(visitor).visitEdge(E_F, 1);
 		verify(visitor).visitVertex(E, 1);
-		verify(visitor).visitEdge(C_E, 1);
+		verify(visitor).visitEdge(C_E, 2);
 		verify(visitor).visitVertex(C, 2);
-		verify(visitor).visitEdge(X_C, 2);
+		verify(visitor).visitEdge(X_C, 3);
 		verify(visitor).visitVertex(X, 3);
-		verify(visitor).visitEdge(Y_F, 0);
+		verify(visitor).visitEdge(Y_F, 1);
 		verify(visitor).visitVertex(Y, 1);
 		verifyNoMoreInteractions(visitor);
 	}

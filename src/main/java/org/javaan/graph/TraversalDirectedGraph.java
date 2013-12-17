@@ -92,23 +92,23 @@ public class TraversalDirectedGraph<V, E> extends GraphDelegator<V, E> implement
 	}
 
 	private void traverseGraph(DirectedGraph<V, E> graph, V startVertex, ObjectVisitor<V, E> visitor, boolean depthFirst) {
-				if (!containsVertex(startVertex)) {
-					return;
-				}
-				TraversalListener<V, E> listener = null;
-				GraphIterator<V, E> iterator = null;
-				if (depthFirst) {
-					listener = new ObjectTraversalListener<V, E>(visitor, true);
-					iterator = new DepthFirstIterator<V, E>(graph, startVertex);
-				} else {
-					listener = new ObjectTraversalListener<V, E>(visitor, false);
-					iterator = new BreadthFirstIterator<V, E>(graph, startVertex);
-				}
-				iterator.addTraversalListener(listener);
-				while (iterator.hasNext() && !visitor.finished()) {
-					iterator.next();
-				}
-			}
+		if (!containsVertex(startVertex)) {
+			return;
+		}
+		TraversalListener<V, E> listener = null;
+		GraphIterator<V, E> iterator = null;
+		if (depthFirst) {
+			listener = new DepthFirstTraversalListener<V, E>(graph, visitor);
+			iterator = new DepthFirstIterator<V, E>(graph, startVertex);
+		} else {
+			listener = new BreadthFirstTraversalListener<V, E>(visitor);
+			iterator = new BreadthFirstIterator<V, E>(graph, startVertex);
+		}
+		iterator.addTraversalListener(listener);
+		while (iterator.hasNext() && !visitor.finished()) {
+			iterator.next();
+		}
+	}
 
 	public void traverseSuccessorsDepthFirst(V startVertex, ObjectVisitor<V, E> visitor) {
 		traverseGraph(this, startVertex, visitor, true);
