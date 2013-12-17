@@ -23,9 +23,9 @@ package org.javaan.print;
 import java.io.PrintStream;
 
 import org.javaan.graph.VertexEdge;
-import org.javaan.graph.VertexEdgeObjectVisitor;
+import org.javaan.graph.VertexEdgeGraphVisitor;
 
-public class VertexEdgeGraphPrinter<V> implements VertexEdgeObjectVisitor<V> {
+public class VertexEdgeGraphPrinter<V> implements VertexEdgeGraphVisitor<V> {
 
 	private final ObjectFormatter<V> formatter;
 	

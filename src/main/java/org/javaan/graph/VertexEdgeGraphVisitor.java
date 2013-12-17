@@ -24,4 +24,4 @@ package org.javaan.graph;
 /**
  * {@link GraphVisitor} which uses {@link VertexEdge} for edges 
  */
-public interface VertexEdgeObjectVisitor<V> extends GraphVisitor<V, VertexEdge<V>> {}
+public interface VertexEdgeGraphVisitor<V> extends GraphVisitor<V, VertexEdge<V>> {}

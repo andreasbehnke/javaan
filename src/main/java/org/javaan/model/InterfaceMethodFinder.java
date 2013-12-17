@@ -1,9 +1,9 @@
 package org.javaan.model;
 
 import org.javaan.graph.VertexEdge;
-import org.javaan.graph.VertexEdgeObjectVisitor;
+import org.javaan.graph.VertexEdgeGraphVisitor;
 
-public class InterfaceMethodFinder implements VertexEdgeObjectVisitor<Interface> {
+public class InterfaceMethodFinder implements VertexEdgeGraphVisitor<Interface> {
 	
 	private final String signature;
 	

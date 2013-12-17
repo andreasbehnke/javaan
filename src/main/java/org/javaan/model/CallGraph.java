@@ -27,7 +27,7 @@ import java.util.Set;
 import org.javaan.graph.ExternalEdgeDirectedGraph;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeDirectedGraph;
-import org.javaan.graph.VertexEdgeObjectVisitor;
+import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.jgrapht.alg.StrongConnectivityInspector;
 
 /**
@@ -80,11 +80,11 @@ public class CallGraph {
 		return callerOfMethod.targetVerticesOf(caller);
 	}
 	
-	public void traverseCallers(Method callee, VertexEdgeObjectVisitor<Method> callerVisitor) {
+	public void traverseCallers(Method callee, VertexEdgeGraphVisitor<Method> callerVisitor) {
 		callerOfMethod.traversePredecessorsDepthFirst(callee, callerVisitor);
 	}
 	
-	public void traverseCallees(Method caller, VertexEdgeObjectVisitor<Method> calleeVisitor) {
+	public void traverseCallees(Method caller, VertexEdgeGraphVisitor<Method> calleeVisitor) {
 		callerOfMethod.traverseSuccessorsDepthFirst(caller, calleeVisitor);
 	}
 	
