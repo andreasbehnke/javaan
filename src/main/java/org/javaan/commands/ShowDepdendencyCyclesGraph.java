@@ -70,7 +70,7 @@ public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 		int index = 1;
 		for (Set<Clazz> cycle : cycles) {
 			PrintUtil.println(output, formatter, SortUtil.sort(cycle), "Cycle " + index + ": ", "\t\n", ", ");
-			output.println(PrintUtil.BLOCK_SEPARATOR);
+			PrintUtil.printSeparator(output);
 			index++;
 		}
 	}

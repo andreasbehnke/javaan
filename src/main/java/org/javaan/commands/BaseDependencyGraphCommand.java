@@ -82,7 +82,7 @@ public abstract class BaseDependencyGraphCommand extends BaseTypeLoadingCommand 
 				for (Clazz clazz : clazzes) {
 					output.println(String.format("%s:",clazzFormatter.format(clazz)));
 					traverse(callGraph, clazz, printer);
-					output.println(PrintUtil.BLOCK_SEPARATOR);
+					PrintUtil.printSeparator(output);
 				}
 			}
 

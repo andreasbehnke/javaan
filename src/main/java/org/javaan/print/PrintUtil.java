@@ -24,9 +24,9 @@ import java.io.PrintStream;
 import java.util.Collection;
 public class PrintUtil {
 
-	public static final String BLOCK_SEPARATOR = "\n--\n";
+	private static final String BLOCK_SEPARATOR = "\n--\n";
 
-	private final static String LEVEL_SPACER = " ";
+	private static final String LEVEL_SPACER = " ";
 
 	public static <E> void println(PrintStream output, Collection<E> elements, String prefix, String linePrefix, String separator) {
 		println(output, null, elements, prefix, linePrefix, separator);
@@ -57,5 +57,9 @@ public class PrintUtil {
 			buffer.append(LEVEL_SPACER);
 		}
 		output.append(buffer).append(formatter.format(element)).println();
+	}
+	
+	public static void printSeparator(PrintStream output) {
+		output.println(PrintUtil.BLOCK_SEPARATOR);
 	}
 }

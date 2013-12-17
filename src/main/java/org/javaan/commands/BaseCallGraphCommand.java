@@ -77,7 +77,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 				for (Method method : methods) {
 					output.println(String.format("%s:",formatter.format(method)));
 					traverse(callGraph, method, printer);
-					output.println(PrintUtil.BLOCK_SEPARATOR);
+					PrintUtil.printSeparator(output);
 				}
 			}
 
