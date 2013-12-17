@@ -3,8 +3,9 @@ package org.javaan.print;
 import java.io.PrintStream;
 
 import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.GraphVisitorAdapter;
 
-public class GraphPrinter<V, E> implements GraphVisitor<V, E> {
+public class GraphPrinter<V, E> extends GraphVisitorAdapter<V, E> implements GraphVisitor<V, E> {
 	
 	private final ObjectFormatter<V> vertexFormatter;
 	
@@ -16,12 +17,6 @@ public class GraphPrinter<V, E> implements GraphVisitor<V, E> {
 		this.output = output;
 		this.vertexFormatter = vertexFormatter;
 		this.edgeFormatter = edgeFormatter;
-	}
-	
-	
-	@Override
-	public boolean finished() {
-		return false;
 	}
 
 	@Override

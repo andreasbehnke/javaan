@@ -1,5 +1,7 @@
 package org.javaan.graph;
 
+import org.jgrapht.Graph;
+
 /*
  * #%L
  * Java Static Code Analysis
@@ -31,6 +33,11 @@ public interface GraphVisitor<V, E> {
 	 * @return true, if graph iteration is finished.
 	 */
 	boolean finished();
+	
+	/**
+	 * Visit the next graph with number 'index'
+	 */
+	void visitGraph(Graph<V, E> graph, int index);
 
 	/**
 	 * Visit the next vertex at graph depth = level.
