@@ -20,19 +20,32 @@ package org.javaan.print;
  * #L%
  */
 
-import org.javaan.model.Type;
+import java.io.PrintStream;
 
-public class TypeFormatter implements ObjectFormatter<Type> {
+import org.javaan.graph.VertexEdge;
+import org.javaan.graph.VertexEdgeObjectVisitor;
+
+public class VertexEdgeGraphPrinter<V> implements VertexEdgeObjectVisitor<V> {
+
+	private final ObjectFormatter<V> formatter;
+	
+	private final PrintStream output;
+	
+	public VertexEdgeGraphPrinter(PrintStream output, ObjectFormatter<V> formatter) {
+		this.output = output;
+		this.formatter = formatter;
+	}
+	
+	@Override
+	public boolean finished() {
+		return false;
+	}
+	
+	@Override
+	public void visitVertex(V node, int level) {
+		PrintUtil.indent(output, formatter, node, level);
+	}
 
 	@Override
-	public String format(Type type) {
-		switch (type.getJavaType()) {
-		case CLASS:
-			return "[C]" + type.getName();
-		case INTERFACE:
-			return "[I]" + type.getName();
-		default:
-			throw new IllegalArgumentException("Unknown java type: " + type); // this should never happen
-		}
-	}
+	public void visitEdge(VertexEdge<V> namedEdge, int level) {}
 }

@@ -20,20 +20,17 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.NamedObject;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 
-/**
- * Visits named objects during traversal of {@link NamedObjectDirectedGraph}
- */
-public interface NamedObjectVisitor<N extends NamedObject> {
+public class VertexEdgeDirectedGraph<V> 
+	extends TraversalDirectedGraph<V, VertexEdge<V>> 
+	implements DirectedGraph<V, VertexEdge<V>> {
 
-	/**
-	 * @return true, if graph iteration is finished.
-	 */
-	boolean finished();
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Visit the next {@link NamedObject} N at graph depth = level.
-	 */
-	void visit(N named, int level);
+	public VertexEdgeDirectedGraph() {
+		super(new DefaultDirectedGraph<V, VertexEdge<V>>(new VertexEdgeFactory<V>()));
+	}
+
 }

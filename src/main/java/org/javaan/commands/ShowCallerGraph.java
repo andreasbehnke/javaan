@@ -22,7 +22,7 @@ package org.javaan.commands;
 
 import java.util.Set;
 
-import org.javaan.graph.NamedObjectVisitor;
+import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Method;
 
@@ -44,7 +44,7 @@ public class ShowCallerGraph extends BaseCallGraphCommand {
 	}
 
 	@Override
-	protected void traverse(CallGraph callGraph, Method method, NamedObjectVisitor<Method> graphPrinter) {
+	protected void traverse(CallGraph callGraph, Method method, VertexEdgeObjectVisitor<Method> graphPrinter) {
 		callGraph.traverseCallers(method, graphPrinter);
 	}
 

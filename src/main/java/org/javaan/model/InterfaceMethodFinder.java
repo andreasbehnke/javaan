@@ -1,8 +1,9 @@
 package org.javaan.model;
 
-import org.javaan.graph.NamedObjectVisitor;
+import org.javaan.graph.VertexEdge;
+import org.javaan.graph.VertexEdgeObjectVisitor;
 
-public class InterfaceMethodFinder implements NamedObjectVisitor<Interface> {
+public class InterfaceMethodFinder implements VertexEdgeObjectVisitor<Interface> {
 	
 	private final String signature;
 	
@@ -21,9 +22,12 @@ public class InterfaceMethodFinder implements NamedObjectVisitor<Interface> {
 	}
 
 	@Override
-	public void visit(Interface named, int level) {
+	public void visitVertex(Interface named, int level) {
 		methodFound = context.getMethod(named, signature);
 	}
+
+	@Override
+	public void visitEdge(VertexEdge<Interface> namedEdge, int level) {}
 
 	public Method getMethodFound() {
 		return methodFound;

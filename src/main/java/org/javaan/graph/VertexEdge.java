@@ -1,4 +1,4 @@
-package org.javaan.commands;
+package org.javaan.graph;
 
 /*
  * #%L
@@ -20,29 +20,38 @@ package org.javaan.commands;
  * #L%
  */
 
-import org.javaan.commands.FilterUtil.Matcher;
-import org.javaan.model.NamedObject;
 
-public class NameMatcher<E extends NamedObject> implements Matcher<E> {
-	
-	private final String criteria;
+/**
+ * Edge with references to source and target vertex
+ */
+public class VertexEdge<V> {
 
-	private boolean matchAll = false;
+	private final V source;
 	
-	public NameMatcher(String criteria) {
-		if (criteria == null) {
-			matchAll = true;
-			this.criteria = null;
-		} else {
-			this.criteria = criteria.toLowerCase();
+	private final V target;
+
+	public VertexEdge(V source, V target) {
+		if (source == null) {
+			throw new IllegalArgumentException("Parameter source must not be null");
 		}
+		if (target == null) {
+			throw new IllegalArgumentException("Parameter target must not be null");
+		}
+		
+		this.source = source;
+		this.target = target;
+	}
+	
+	public V getSource() {
+		return source;
 	}
 
+	public V getTarget() {
+		return target;
+	}
+	
 	@Override
-	public boolean accept(E e) {
-		if (matchAll) {
-			return true;
-		}
-		return e.getName().toLowerCase().contains(criteria);
+	public String toString() {
+		return source + " --> " + target;
 	}
 }

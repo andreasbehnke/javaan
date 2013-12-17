@@ -1,4 +1,4 @@
-package org.javaan.commands;
+package org.javaan.graph;
 
 /*
  * #%L
@@ -20,29 +20,16 @@ package org.javaan.commands;
  * #L%
  */
 
-import org.javaan.commands.FilterUtil.Matcher;
-import org.javaan.model.NamedObject;
+import org.jgrapht.EdgeFactory;
 
-public class NameMatcher<E extends NamedObject> implements Matcher<E> {
-	
-	private final String criteria;
-
-	private boolean matchAll = false;
-	
-	public NameMatcher(String criteria) {
-		if (criteria == null) {
-			matchAll = true;
-			this.criteria = null;
-		} else {
-			this.criteria = criteria.toLowerCase();
-		}
-	}
+/**
+ * Implementation of the {@link EdgeFactory} for {@link VertexEdge} as edge type.
+ */
+public class VertexEdgeFactory<V> implements EdgeFactory<V, VertexEdge<V>> {
 
 	@Override
-	public boolean accept(E e) {
-		if (matchAll) {
-			return true;
-		}
-		return e.getName().toLowerCase().contains(criteria);
+	public VertexEdge<V> createEdge(V sourceVertex, V targetVertex) {
+		return new VertexEdge<V>(sourceVertex, targetVertex);
 	}
+
 }

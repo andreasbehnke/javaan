@@ -20,21 +20,34 @@ package org.javaan.commands;
  * #L%
  */
 
+import java.io.PrintStream;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+import org.javaan.bytecode.CallGraphBuilder;
+import org.javaan.bytecode.ClassContextBuilder;
+import org.javaan.graph.VertexEdgeObjectVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Method;
+import org.javaan.model.Type;
+import org.javaan.print.VertexEdgeGraphPrinter;
 import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
+import org.javaan.print.PrintUtil;
 
 /**
  * Base command for all method call graph commands
  */
-public abstract class BaseCallGraphCommand extends BaseGraphCommand<Method> {
+public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
+	protected abstract void traverse(CallGraph callGraph, Method method, VertexEdgeObjectVisitor<Method> graphPrinter);
+
+	protected abstract Set<Method> collectLeafObjects(CallGraph callGraph, Method method);
+	
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		options.addOption(StandardOptions.METHOD);
@@ -42,19 +55,51 @@ public abstract class BaseCallGraphCommand extends BaseGraphCommand<Method> {
 		return options;
 	}
 
-	@Override
-	protected String filterCriteria(CommandLine commandLine) {
+	private String filterCriteria(CommandLine commandLine) {
 		return commandLine.getOptionValue(StandardOptions.OPT_METHOD);
 	}
 
-	@Override
-	protected ObjectFormatter<Method> getFormatter() {
+	private ObjectFormatter<Method> getFormatter() {
 		return new MethodFormatter();
 	}
 
-	@Override
-	protected Collection<Method> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria) {
+	private Collection<Method> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria) {
 		return SortUtil.sort(FilterUtil.filter(classContext.getMethods(), new MethodMatcher(filterCriteria)));
 	}
 
+	private boolean isPrintLeaves(CommandLine commandLine) {
+		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
+	}
+
+	private void printGraph(CallGraph callGraph, PrintStream output, Collection<Method> methods,
+			ObjectFormatter<Method> formatter) {
+				VertexEdgeObjectVisitor<Method> printer = new VertexEdgeGraphPrinter<Method>(output, formatter);
+				for (Method method : methods) {
+					output.println(String.format("%s:",formatter.format(method)));
+					traverse(callGraph, method, printer);
+					output.println(PrintUtil.BLOCK_SEPARATOR);
+				}
+			}
+
+	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<Method> methods,
+			ObjectFormatter<Method> formatter) {
+				for (Method method : methods) {
+					PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, method)), formatter.format(method) , "\n\t", ", ");
+				}
+			}
+
+	@Override
+	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+		String criteria = filterCriteria(commandLine);
+		boolean printLeaves = isPrintLeaves(commandLine);
+		ClassContext classContext = new ClassContextBuilder(types).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		Collection<Method> input = getInput(classContext, callGraph, criteria);
+		ObjectFormatter<Method> formatter = getFormatter();
+		if (printLeaves) {
+			printLeafObjects(callGraph, output, input, formatter);
+		} else {
+			printGraph(callGraph, output, input, formatter);
+		}
+	}
 }

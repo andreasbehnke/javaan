@@ -20,19 +20,27 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.NamedObject;
-import org.jgrapht.EdgeFactory;
 
 /**
- * Implementation of the {@link EdgeFactory} for {@link NamedObject} as vertex type.
- * Edges are of type NamedObjectEdge and the identifier is produced by concatenation 
- * of source and target name.
+ * Visits objects during traversal of {@link TraversalDirectedGraph}. Provides
+ * depth information for depth first traversal.
  */
-public class NamedObjectEdgeFactory<V extends NamedObject> implements EdgeFactory<V, NamedObjectEdge<V>> {
+public interface ObjectVisitor<V, E> {
 
-	@Override
-	public NamedObjectEdge<V> createEdge(V sourceVertex, V targetVertex) {
-		return new NamedObjectEdge<V>(sourceVertex, targetVertex);
-	}
+	/**
+	 * @return true, if graph iteration is finished.
+	 */
+	boolean finished();
 
+	/**
+	 * Visit the next vertex at graph depth = level.
+	 * Level will be -1 for breadth first traversal.
+	 */
+	void visitVertex(V vertex, int level);
+
+	/**
+	 * Visit the next edge at graph depth = level.
+	 * Level will be -1 for breadth first traversal.
+	 */
+	void visitEdge(E edge, int level);
 }

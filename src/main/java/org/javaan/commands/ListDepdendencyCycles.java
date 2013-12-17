@@ -30,10 +30,11 @@ import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
+import org.javaan.model.Clazz;
 import org.javaan.model.Type;
+import org.javaan.print.ClazzFormatter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
-import org.javaan.print.TypeFormatter;
 
 public class ListDepdendencyCycles extends BaseTypeLoadingCommand {
 
@@ -60,14 +61,14 @@ public class ListDepdendencyCycles extends BaseTypeLoadingCommand {
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext).build();
-		List<Set<Type>> cycles = callGraph.getDependencyCycles();
+		List<Set<Clazz>> cycles = callGraph.getDependencyCycles();
 		printCycles(output, cycles);
 	}
 	
-	public void printCycles(PrintStream output, List<Set<Type>> cycles) {
-		ObjectFormatter<Type> formatter = new TypeFormatter();
+	public void printCycles(PrintStream output, List<Set<Clazz>> cycles) {
+		ObjectFormatter<Clazz> formatter = new ClazzFormatter();
 		int index = 1;
-		for (Set<Type> cycle : cycles) {
+		for (Set<Clazz> cycle : cycles) {
 			PrintUtil.println(output, formatter, SortUtil.sort(cycle), "Cycle " + index + ": ", "\t\n", ", ");
 			output.println(PrintUtil.BLOCK_SEPARATOR);
 			index++;

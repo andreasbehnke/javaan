@@ -22,9 +22,10 @@ package org.javaan.commands;
 
 import java.util.Set;
 
-import org.javaan.graph.NamedObjectVisitor;
+import org.javaan.graph.ObjectVisitor;
 import org.javaan.model.CallGraph;
-import org.javaan.model.Type;
+import org.javaan.model.Clazz;
+import org.javaan.model.Method;
 
 public class ShowUsingGraph extends BaseDependencyGraphCommand {
 
@@ -44,13 +45,13 @@ public class ShowUsingGraph extends BaseDependencyGraphCommand {
 	}
 
 	@Override
-	protected void traverse(CallGraph callGraph, Type namedObject, NamedObjectVisitor<Type> graphPrinter) {
-		callGraph.traverseUsingTypes(namedObject, graphPrinter);
+	protected void traverse(CallGraph callGraph, Clazz clazz, ObjectVisitor<Clazz, Method> graphPrinter) {
+		callGraph.traverseUsingTypes(clazz, graphPrinter);
 	}
 
 	@Override
-	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type namedObject) {
-		return callGraph.getLeafUsingTypes(namedObject);
+	protected Set<Clazz> collectLeafObjects(CallGraph callGraph, Clazz clazz) {
+		return callGraph.getLeafUsingTypes(clazz);
 	}
 
 }

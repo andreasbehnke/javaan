@@ -31,11 +31,11 @@ import org.jgrapht.traverse.GraphIterator;
 /**
  * A directed graph which is constrained to out degree of 1.
  */
-public class SingleTargetDirectedGraph<V extends NamedObject> extends NamedObjectDirectedGraph<V> {
+public class SingleTargetDirectedGraph<V extends NamedObject> extends VertexEdgeDirectedGraph<V> {
 
 	private static final long serialVersionUID = 1L;
 
-	public NamedObjectEdge<V> addEdge(V sourceVertex, V targetVertex) {
+	public VertexEdge<V> addEdge(V sourceVertex, V targetVertex) {
 		if (containsVertex(sourceVertex)  && outDegreeOf(sourceVertex) > 0) {
 			throw new IllegalArgumentException("source vertex " + sourceVertex + " already contains a target vertex!");
 		}
@@ -52,7 +52,7 @@ public class SingleTargetDirectedGraph<V extends NamedObject> extends NamedObjec
 
 	public List<V> successorPathOf(V vertex) {
 		List<V> path = new ArrayList<V>();
-		GraphIterator<V, NamedObjectEdge<V>> iterator = new DepthFirstIterator<V, NamedObjectEdge<V>>(this, vertex);
+		GraphIterator<V, VertexEdge<V>> iterator = new DepthFirstIterator<V, VertexEdge<V>>(this, vertex);
 		while(iterator.hasNext()) {
 			path.add(iterator.next());
 		}
