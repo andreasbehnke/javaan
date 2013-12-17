@@ -36,11 +36,11 @@ import org.javaan.print.ClazzFormatter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
 
-public class ListDepdendencyCycles extends BaseTypeLoadingCommand {
+public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
-	private final static String NAME = "dependencyCycles";
+	private final static String NAME = "cycles";
 	
-	private final static String DESCRIPTION = "List all related classes for each dependency cycle in the loaded libraries.";
+	private final static String DESCRIPTION = "Show call graph for each dependency cycle in the loaded libraries. Cycles within class hierachies are omitted.";
 	
 	@Override
 	public String getName() {
