@@ -2,9 +2,13 @@ package org.javaan.print;
 
 import java.io.PrintStream;
 
-import org.javaan.graph.ObjectVisitor;
+import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.GraphVisitorAdapter;
+import org.jgrapht.Graph;
 
-public class GraphPrinter<V, E> implements ObjectVisitor<V, E> {
+public class GraphPrinter<V, E> extends GraphVisitorAdapter<V, E> implements GraphVisitor<V, E> {
+	
+	private static final String DEFAULT_GRAPH_SEPARATOR_FORMAT = "graph %s:";
 	
 	private final ObjectFormatter<V> vertexFormatter;
 	
@@ -12,16 +16,23 @@ public class GraphPrinter<V, E> implements ObjectVisitor<V, E> {
 	
 	private final PrintStream output;
 	
+	private final String graphSeparatorFormat;
+	
 	public GraphPrinter(PrintStream output, ObjectFormatter<V> vertexFormatter, ObjectFormatter<E> edgeFormatter) {
+		this(output, vertexFormatter, edgeFormatter, DEFAULT_GRAPH_SEPARATOR_FORMAT);
+	}
+	
+	public GraphPrinter(PrintStream output, ObjectFormatter<V> vertexFormatter, ObjectFormatter<E> edgeFormatter, String graphSeparatorFormat) {
 		this.output = output;
 		this.vertexFormatter = vertexFormatter;
 		this.edgeFormatter = edgeFormatter;
+		this.graphSeparatorFormat = graphSeparatorFormat;
 	}
 	
-	
 	@Override
-	public boolean finished() {
-		return false;
+	public void visitGraph(Graph<V, E> graph, int index) {
+		PrintUtil.printSeparator(output);
+		output.format(graphSeparatorFormat, index).println();
 	}
 
 	@Override

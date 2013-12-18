@@ -91,8 +91,8 @@ public class TraversalDirectedGraph<V, E> extends GraphDelegator<V, E> implement
 		return predecessors;
 	}
 
-	private void traverseGraph(DirectedGraph<V, E> graph, V startVertex, ObjectVisitor<V, E> visitor, boolean depthFirst) {
-		if (!containsVertex(startVertex)) {
+	private void traverseGraph(DirectedGraph<V, E> graph, V startVertex, GraphVisitor<V, E> visitor, boolean depthFirst) {
+		if (startVertex != null && !containsVertex(startVertex)) {
 			return;
 		}
 		TraversalListener<V, E> listener = null;
@@ -110,20 +110,28 @@ public class TraversalDirectedGraph<V, E> extends GraphDelegator<V, E> implement
 		}
 	}
 
-	public void traverseSuccessorsDepthFirst(V startVertex, ObjectVisitor<V, E> visitor) {
+	public void traverseDepthFirst(GraphVisitor<V, E> visitor) {
+		traverseGraph(this, null, visitor, true);
+	}
+	
+	public void traverseSuccessorsDepthFirst(V startVertex, GraphVisitor<V, E> visitor) {
 		traverseGraph(this, startVertex, visitor, true);
 	}
 
-	public void traversePredecessorsDepthFirst(V startVertex, ObjectVisitor<V, E> visitor) {
+	public void traversePredecessorsDepthFirst(V startVertex, GraphVisitor<V, E> visitor) {
 		DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
 		traverseGraph(graph, startVertex, visitor, true);
 	}
 
-	public void traverseSuccessorsBreadthFirst(V startVertex, ObjectVisitor<V, E> visitor) {
+	public void traverseBreadthFirst(GraphVisitor<V, E> visitor) {
+		traverseGraph(this, null, visitor, false);
+	}
+
+	public void traverseSuccessorsBreadthFirst(V startVertex, GraphVisitor<V, E> visitor) {
 		traverseGraph(this, startVertex, visitor, false);
 	}
 
-	public void traversePredecessorsBreadthFirst(V startVertex, ObjectVisitor<V, E> visitor) {
+	public void traversePredecessorsBreadthFirst(V startVertex, GraphVisitor<V, E> visitor) {
 		DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
 		traverseGraph(graph, startVertex, visitor, false);
 	}

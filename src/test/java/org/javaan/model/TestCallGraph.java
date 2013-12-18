@@ -30,8 +30,8 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.ObjectVisitor;
-import org.javaan.graph.VertexEdgeObjectVisitor;
+import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.junit.Test;
 
 public class TestCallGraph {
@@ -109,7 +109,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		VertexEdgeObjectVisitor<Method> visitor = mock(VertexEdgeObjectVisitor.class);
+		VertexEdgeGraphVisitor<Method> visitor = mock(VertexEdgeGraphVisitor.class);
 		
 		callGraph.traverseCallers(METHODE, visitor);
 		verify(visitor, times(4)).finished();
@@ -127,7 +127,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		VertexEdgeObjectVisitor<Method> visitor = mock(VertexEdgeObjectVisitor.class);
+		VertexEdgeGraphVisitor<Method> visitor = mock(VertexEdgeGraphVisitor.class);
 
 		callGraph.traverseCallees(METHODA, visitor);
 		verify(visitor, times(5)).finished();
@@ -181,7 +181,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD); 
 		callGraph.addCall(METHODD, METHODE);
-		ObjectVisitor<Clazz, Method> visitor = mock(ObjectVisitor.class);
+		GraphVisitor<Clazz, Method> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsedTypes(A, visitor);
 		verify(visitor, times(3)).finished();
@@ -198,7 +198,7 @@ public class TestCallGraph {
 		callGraph.addCall(METHODA, METHODC);
 		callGraph.addCall(METHODC, METHODD);
 		callGraph.addCall(METHODD, METHODE);
-		ObjectVisitor<Clazz, Method> visitor = mock(ObjectVisitor.class);
+		GraphVisitor<Clazz, Method> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsingTypes(C, visitor);
 		verify(visitor, times(3)).finished();

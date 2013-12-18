@@ -29,7 +29,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
-import org.javaan.graph.ObjectVisitor;
+import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
@@ -46,7 +46,7 @@ import org.javaan.print.PrintUtil;
  */
 public abstract class BaseDependencyGraphCommand extends BaseTypeLoadingCommand {
 
-	protected abstract void traverse(CallGraph callGraph, Clazz clazz, ObjectVisitor<Clazz, Method> graphPrinter);
+	protected abstract void traverse(CallGraph callGraph, Clazz clazz, GraphVisitor<Clazz, Method> graphPrinter);
 
 	protected abstract Set<Clazz> collectLeafObjects(CallGraph callGraph, Clazz clazz);
 	
@@ -78,11 +78,11 @@ public abstract class BaseDependencyGraphCommand extends BaseTypeLoadingCommand 
 	}
 
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<Clazz> clazzes, ObjectFormatter<Clazz> clazzFormatter, ObjectFormatter<Method> methodFormatter) {
-				ObjectVisitor<Clazz, Method> printer = new GraphPrinter<Clazz, Method>(output, clazzFormatter, methodFormatter);
+				GraphVisitor<Clazz, Method> printer = new GraphPrinter<Clazz, Method>(output, clazzFormatter, methodFormatter);
 				for (Clazz clazz : clazzes) {
 					output.println(String.format("%s:",clazzFormatter.format(clazz)));
 					traverse(callGraph, clazz, printer);
-					output.println(PrintUtil.BLOCK_SEPARATOR);
+					PrintUtil.printSeparator(output);
 				}
 			}
 

@@ -22,7 +22,7 @@ package org.javaan.commands;
 
 import java.util.Set;
 
-import org.javaan.graph.ObjectVisitor;
+import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Clazz;
 import org.javaan.model.Method;
@@ -45,7 +45,7 @@ public class ShowUsedGraph extends BaseDependencyGraphCommand {
 	}
 
 	@Override
-	protected void traverse(CallGraph callGraph, Clazz clazz, ObjectVisitor<Clazz, Method> graphPrinter) {
+	protected void traverse(CallGraph callGraph, Clazz clazz, GraphVisitor<Clazz, Method> graphPrinter) {
 		callGraph.traverseUsedTypes(clazz, graphPrinter);
 	}
 

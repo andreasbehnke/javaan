@@ -29,7 +29,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
-import org.javaan.graph.VertexEdgeObjectVisitor;
+import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Method;
@@ -44,7 +44,7 @@ import org.javaan.print.PrintUtil;
  */
 public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
-	protected abstract void traverse(CallGraph callGraph, Method method, VertexEdgeObjectVisitor<Method> graphPrinter);
+	protected abstract void traverse(CallGraph callGraph, Method method, VertexEdgeGraphVisitor<Method> graphPrinter);
 
 	protected abstract Set<Method> collectLeafObjects(CallGraph callGraph, Method method);
 	
@@ -73,11 +73,11 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<Method> methods,
 			ObjectFormatter<Method> formatter) {
-				VertexEdgeObjectVisitor<Method> printer = new VertexEdgeGraphPrinter<Method>(output, formatter);
+				VertexEdgeGraphVisitor<Method> printer = new VertexEdgeGraphPrinter<Method>(output, formatter);
 				for (Method method : methods) {
 					output.println(String.format("%s:",formatter.format(method)));
 					traverse(callGraph, method, printer);
-					output.println(PrintUtil.BLOCK_SEPARATOR);
+					PrintUtil.printSeparator(output);
 				}
 			}
 

@@ -8,19 +8,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapter between the simpler {@link ObjectVisitor} interface and the more
+ * Adapter between the simpler {@link GraphVisitor} interface and the more
  * specific {@link TraversalListener} interface from the jgrapht library. This keeps
  * the code clean from intrusive dependencies on jgrapht library.
- * Breadth first traversal does not support level information for the {@link ObjectVisitor}.visit method,
+ * Breadth first traversal does not support level information for the {@link GraphVisitor}.visit method,
  * level will always be -1 .
  */
 class BreadthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(BreadthFirstTraversalListener.class);
 	
-	private final ObjectVisitor<V, E> visitor;
+	private final GraphVisitor<V, E> visitor;
 	
-	public BreadthFirstTraversalListener(ObjectVisitor<V, E> visitor) {
+	public BreadthFirstTraversalListener(GraphVisitor<V, E> visitor) {
 		this.visitor = visitor;
 	}
 

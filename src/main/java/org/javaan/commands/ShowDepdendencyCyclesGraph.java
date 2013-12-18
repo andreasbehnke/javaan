@@ -22,7 +22,6 @@ package org.javaan.commands;
 
 import java.io.PrintStream;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
@@ -31,16 +30,18 @@ import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
+import org.javaan.model.Method;
 import org.javaan.model.Type;
 import org.javaan.print.ClazzFormatter;
+import org.javaan.print.GraphPrinter;
+import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
-import org.javaan.print.PrintUtil;
 
-public class ListDepdendencyCycles extends BaseTypeLoadingCommand {
+public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
-	private final static String NAME = "dependencyCycles";
+	private final static String NAME = "cycles";
 	
-	private final static String DESCRIPTION = "List all related classes for each dependency cycle in the loaded libraries.";
+	private final static String DESCRIPTION = "Show call graph for each dependency cycle in the loaded libraries. Cycles within class hierachies are omitted.";
 	
 	@Override
 	public String getName() {
@@ -61,17 +62,9 @@ public class ListDepdendencyCycles extends BaseTypeLoadingCommand {
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext).build();
-		List<Set<Clazz>> cycles = callGraph.getDependencyCycles();
-		printCycles(output, cycles);
-	}
-	
-	public void printCycles(PrintStream output, List<Set<Clazz>> cycles) {
-		ObjectFormatter<Clazz> formatter = new ClazzFormatter();
-		int index = 1;
-		for (Set<Clazz> cycle : cycles) {
-			PrintUtil.println(output, formatter, SortUtil.sort(cycle), "Cycle " + index + ": ", "\t\n", ", ");
-			output.println(PrintUtil.BLOCK_SEPARATOR);
-			index++;
-		}
+		ObjectFormatter<Clazz> clazzFormatter = new ClazzFormatter();
+		ObjectFormatter<Method> methodFormatter = new MethodFormatter();
+		GraphPrinter<Clazz, Method> printer = new GraphPrinter<Clazz, Method>(output, clazzFormatter, methodFormatter, "cycle %s:");
+		callGraph.traverseDependencyCycles(printer);
 	}
 }

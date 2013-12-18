@@ -72,7 +72,7 @@ private final static String NAME = "duplicates";
 		ObjectFormatter<Type> formatter = new TypeInformationFormatter();
 		for (List<Type> duplicate : duplicates) {
 			PrintUtil.println(output, formatter, duplicate,"", "", "\n");
-			output.println(PrintUtil.BLOCK_SEPARATOR);
+			PrintUtil.printSeparator(output);
 		}
 	}
 
