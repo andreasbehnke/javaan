@@ -1,5 +1,6 @@
 package org.javaan.graph;
 
+import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
@@ -10,6 +11,10 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 public class ExternalEdgeDirectedGraph<V, E> extends TraversalDirectedGraph<V, E> {
 
 	private static final long serialVersionUID = 1L;
+
+	public ExternalEdgeDirectedGraph(DirectedGraph<V, E> delegate) {
+		super(delegate);
+	}
 
 	public ExternalEdgeDirectedGraph() {
 		super(new DefaultDirectedGraph<V, E>(new EdgeFactory<V, E>() {
