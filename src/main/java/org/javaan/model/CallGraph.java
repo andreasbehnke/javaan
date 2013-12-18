@@ -29,6 +29,7 @@ import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.jgrapht.alg.StrongConnectivityInspector;
+import org.jgrapht.graph.DirectedSubgraph;
 
 /**
  * Represents the call-graph of all loaded methods.
@@ -124,5 +125,20 @@ public class CallGraph {
 			}
 		}
 		return cycles;
+	}
+	
+	public void traverseDependencyCycles(GraphVisitor<Clazz, Method> cyclesVisitor) {
+		StrongConnectivityInspector<Clazz, Method> inspector = new StrongConnectivityInspector<Clazz, Method>(usageOfClass);
+		List<DirectedSubgraph<Clazz, Method>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
+		int index = 1;
+		ExternalEdgeDirectedGraph<Clazz, Method> traversalGraph;
+		for (DirectedSubgraph<Clazz, Method> subgraph : cycleGraphs) {
+			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one class (these cycles have no impact in software design)
+				traversalGraph = new ExternalEdgeDirectedGraph<Clazz, Method>(subgraph);
+				cyclesVisitor.visitGraph(traversalGraph, index);
+				traversalGraph.traverseDepthFirst(cyclesVisitor);
+				index++;
+			}
+		}
 	}
 }
