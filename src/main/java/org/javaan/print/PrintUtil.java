@@ -24,9 +24,9 @@ import java.io.PrintStream;
 import java.util.Collection;
 public class PrintUtil {
 
-	private static final String BLOCK_SEPARATOR = "\n--\n";
+	static final String BLOCK_SEPARATOR = "\n--\n";
 
-	private static final String LEVEL_SPACER = " ";
+	static final String LEVEL_SPACER = " ";
 
 	public static <E> void println(PrintStream output, Collection<E> elements, String prefix, String linePrefix, String separator) {
 		println(output, null, elements, prefix, linePrefix, separator);
