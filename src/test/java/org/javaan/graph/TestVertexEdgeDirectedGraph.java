@@ -215,6 +215,7 @@ public class TestVertexEdgeDirectedGraph {
 		verify(visitor).visitVertex(A, 1);
 		verify(visitor).visitEdge(A_B, 2);
 		verify(visitor).visitVertex(B, 2);
+		verify(visitor).visitEdge(B_X, 3);
 		verifyNoMoreInteractions(visitor);
 	}
 
