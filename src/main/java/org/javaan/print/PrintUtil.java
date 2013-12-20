@@ -23,6 +23,7 @@ package org.javaan.print;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.List;
+
 public class PrintUtil {
 
 	static final String BLOCK_SEPARATOR = "\n--\n";

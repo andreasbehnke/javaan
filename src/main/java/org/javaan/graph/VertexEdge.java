@@ -20,7 +20,6 @@ package org.javaan.graph;
  * #L%
  */
 
-
 /**
  * Edge with references to source and target vertex
  */

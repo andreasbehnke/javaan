@@ -1,13 +1,5 @@
 package org.javaan.model;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
-import java.util.List;
-
-import org.apache.bcel.generic.ConstantPoolGen;
-import org.apache.bcel.generic.MethodGen;
-import org.javaan.bytecode.SignatureUtil;
-
 /*
  * #%L
  * Java Static Code Analysis
@@ -27,6 +19,15 @@ import org.javaan.bytecode.SignatureUtil;
  * limitations under the License.
  * #L%
  */
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+import java.util.List;
+
+import org.apache.bcel.generic.ConstantPoolGen;
+import org.apache.bcel.generic.MethodGen;
+import org.javaan.bytecode.SignatureUtil;
+
 /**
  * Represents a java method.
  * 

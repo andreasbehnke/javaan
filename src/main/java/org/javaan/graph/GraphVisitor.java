@@ -1,7 +1,5 @@
 package org.javaan.graph;
 
-import org.jgrapht.Graph;
-
 /*
  * #%L
  * Java Static Code Analysis
@@ -22,6 +20,7 @@ import org.jgrapht.Graph;
  * #L%
  */
 
+import org.jgrapht.Graph;
 
 /**
  * Visits objects during traversal of {@link TraversalDirectedGraph}. Provides
