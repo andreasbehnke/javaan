@@ -107,7 +107,7 @@ public class CallGraphBuilder {
 	
 	private Method getMethod(InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
 		String className = invoke.getClassName(constantPoolGen);
-		String signature = SignatureUtil.createSignature(invoke, constantPoolGen);
+		String signature = SignatureUtil.createMethodSignature(invoke, constantPoolGen);
 		Type type = reflectionClassContextBuilder.getType(className);
 		if (type == null) {
 			return null;

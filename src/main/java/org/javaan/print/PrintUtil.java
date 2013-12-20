@@ -22,6 +22,7 @@ package org.javaan.print;
 
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.List;
 public class PrintUtil {
 
 	static final String BLOCK_SEPARATOR = "\n--\n";
@@ -61,5 +62,22 @@ public class PrintUtil {
 	
 	public static void printSeparator(PrintStream output) {
 		output.println(PrintUtil.BLOCK_SEPARATOR);
+	}
+	
+	public static String createArgumentList(List<String> args) {
+		if (args == null) {
+			return null;
+		}
+		StringBuilder buffer = new StringBuilder();
+		boolean first = true;
+		for (String arg : args) {
+			if (first) {
+				first = false;
+			} else {
+				buffer.append(',');
+			}
+			buffer.append(arg);
+		}
+		return buffer.toString();
 	}
 }

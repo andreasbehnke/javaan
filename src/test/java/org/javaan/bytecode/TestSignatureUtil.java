@@ -50,26 +50,26 @@ public class TestSignatureUtil implements TestConstants {
 	}
 	
 	@Test
-	public void testCreateSignatureFromClassMethod() throws ClassNotFoundException, NoSuchMethodException, SecurityException {
+	public void testCreateMethodSignatureFromClassMethod() throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 		Class<?> clazz = Class.forName("java.lang.Byte");
 		java.lang.reflect.Method compareMethod = clazz.getMethod("compare", byte.class, byte.class);
-		assertEquals("compare(byte,byte)", SignatureUtil.createSignature(compareMethod));
+		assertEquals("compare(byte,byte)", SignatureUtil.createMethodSignature(compareMethod));
 	}
 	
 	@Test
-	public void testCreateSignatureFromClassConstructor() throws ClassNotFoundException, NoSuchMethodException, SecurityException {
+	public void testCreateMethodSignatureFromClassConstructor() throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 		Class<?> clazz = Class.forName("java.lang.String");
 		Constructor<?> constructor = clazz.getConstructor();
-		assertEquals(SIGNATURE_CONSTRUCTOR, SignatureUtil.createSignature(constructor));
+		assertEquals(SIGNATURE_CONSTRUCTOR, SignatureUtil.createMethodSignature(constructor));
 	}
 	
 	
 	@Test
-	public void testCreateSignatureFromMethod() throws IOException {
+	public void testCreateMethodSignatureFromMethod() throws IOException {
 		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
 		Interface i = (Interface)types.get(INTERFACE_B.getName());
 		Method method = i.getJavaClass().getMethods()[0]; /* public String methodInterfaceB(String a, String b); */
-		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createSignature(method));
+		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createMethodSignature(method));
 	}
 	
 	private InvokeInstruction getFirstInvokeInstruction(MethodGen mg) {
@@ -93,7 +93,7 @@ public class TestSignatureUtil implements TestConstants {
 		MethodGen mg = new MethodGen(method, classb.getName(), cpg);
 		InvokeInstruction invoke = getFirstInvokeInstruction(mg);
 
-		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createSignature(invoke, cpg));
+		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createMethodSignature(invoke, cpg));
 		
 		// signature of constructor invoke
 		Clazz classc = (Clazz)types.get(CLASS_C.getName());
@@ -102,6 +102,6 @@ public class TestSignatureUtil implements TestConstants {
 		mg = new MethodGen(method, classc.getName(), cpg);
         invoke = getFirstInvokeInstruction(mg);
         
-        assertEquals(SIGNATURE_CONSTRUCTOR, SignatureUtil.createSignature(invoke, cpg));
+        assertEquals(SIGNATURE_CONSTRUCTOR, SignatureUtil.createMethodSignature(invoke, cpg));
 	}
 }

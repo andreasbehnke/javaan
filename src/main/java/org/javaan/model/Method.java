@@ -2,6 +2,7 @@ package org.javaan.model;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.MethodGen;
@@ -26,16 +27,35 @@ import org.javaan.bytecode.SignatureUtil;
  * limitations under the License.
  * #L%
  */
-
+/**
+ * Represents a java method.
+ * 
+ * methodName: The simple name of the method
+ * signature: The signature consists of the following parts:
+ *  - the full name of return type
+ *  - the simple method name
+ *  - "("
+ *  - list of full parameter names separated by ","
+ *  - ")"
+ * name: The unique name, which consists of the following parts:
+ * 	- Full name of declaring type
+ *  - The constant string " - "
+ *  - signature
+ *  
+ */
 public class Method extends NamedObjectBase {
 	
 	private final Type type;
 	
 	private final String signature;
 	
+	private final String methodName;
+	
 	private final boolean isAbstract;
 	
-	private final String fullName;
+	private final String returnType;
+	
+	private final List<String> paramterTypes;
 	
 	private org.apache.bcel.classfile.Method javaMethod;
 	
@@ -47,78 +67,57 @@ public class Method extends NamedObjectBase {
 		this.type = type;
 		this.signature = signature;
 		this.isAbstract = false;
-		this.fullName = buildFullName(type, this.name);
-		
+		this.returnType = null;
+		this.paramterTypes = null;
+		this.methodName = null;
 	}
 	
-	private Method(String name, Type type, String signature, boolean isAbstract, String fullName, org.apache.bcel.classfile.Method javaMethod) {
-		this(name, type, signature, isAbstract, fullName);
+	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes, org.apache.bcel.classfile.Method javaMethod) {
+		this(name, type, signature, methodName, isAbstract, returnType, parameterTypes);
 		this.javaMethod = javaMethod;
 	}
 	
-	private Method(String name, Type type, String signature, boolean isAbstract, String fullName) {
+	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes) {
 		super(name);
 		this.type = type;
 		this.signature = signature;
+		this.methodName = methodName;
 		this.isAbstract = isAbstract;
-		this.fullName = fullName;
+		this.returnType = returnType;
+		this.paramterTypes = parameterTypes;
 	}
 	
 	public static Method create(Type type, org.apache.bcel.classfile.Method javaMethod) {
-		String signature = SignatureUtil.createSignature(javaMethod);
+		String signature = SignatureUtil.createMethodSignature(javaMethod);
 		String name = buildUniqueMethodName(type, signature);
+		String methodName = javaMethod.getName();
 		boolean isAbstract = javaMethod.isAbstract();
-		String fullName = buildFullName(type, javaMethod);
-		return new Method(name, type, signature, isAbstract, fullName, javaMethod);
+		String returnType = SignatureUtil.createClassSignature(javaMethod.getReturnType());
+		List<String> paramterTypes = SignatureUtil.createClassSignatures(javaMethod.getArgumentTypes());
+		return new Method(name, type, signature, methodName, isAbstract, returnType, paramterTypes, javaMethod);
 	}
 	
 	public static Method create(Type type, java.lang.reflect.Method method) {
-		String signature = SignatureUtil.createSignature(method);
+		String signature = SignatureUtil.createMethodSignature(method);
 		String name = buildUniqueMethodName(type, signature);
+		String methodName = method.getName();
 		boolean isAbstract = Modifier.isAbstract(method.getModifiers());
-		String fullName = buildFullName(type, method);
-		return new Method(name, type, signature, isAbstract, fullName);
+		String returnType = SignatureUtil.createClassSignature(method.getReturnType());
+		List<String> paramterTypes = SignatureUtil.createClassSignatures(method.getParameterTypes());
+		return new Method(name, type, signature, methodName, isAbstract, returnType, paramterTypes);
 	}
 	
 	public static Method create(Type type, Constructor<?> constructor) {
-		String signature = SignatureUtil.createSignature(constructor);
+		String signature = SignatureUtil.createMethodSignature(constructor);
 		String name = buildUniqueMethodName(type, signature);
 		boolean isAbstract = Modifier.isAbstract(constructor.getModifiers());
-		String fullName = buildFullName(type, constructor);
-		return new Method(name, type, signature, isAbstract, fullName);
+		String returnType = "void";
+		List<String> paramterTypes = SignatureUtil.createClassSignatures(constructor.getParameterTypes());
+		return new Method(name, type, signature, SignatureUtil.CONSTRUCTOR_SIGNATURE, isAbstract, returnType, paramterTypes);
 	}
 
 	private static String buildUniqueMethodName(Type type, String signature) {
-		String prefix = null;
-		switch (type.getJavaType()) {
-		case CLASS:
-			prefix = "[C]";
-			break;
-		case INTERFACE:
-			prefix = "[I]";
-			break;
-		default:
-			break;
-		}
-		
-		return prefix + type.getName() + " - " + signature;
-	}
-	
-	private static String buildFullName(Type type, String fullSignature) {
-		String typeName = type.getName();
-		return String.format("%s - %s", typeName, fullSignature);
-	}
-	
-	private static String buildFullName(Type type, org.apache.bcel.classfile.Method javaMethod) {
-		return buildFullName(type, javaMethod.toString());
-	}
-	
-	private static String buildFullName(Type type, java.lang.reflect.Method method) {
-		return buildFullName(type, method.toGenericString());
-	}
-
-	private static String buildFullName(Type type, Constructor<?> constructor) {
-		return buildFullName(type, constructor.toGenericString());
+		return type.getName() + " - " + signature;
 	}
 	
 	public Type getType() {
@@ -129,12 +128,20 @@ public class Method extends NamedObjectBase {
 		return signature;
 	}
 	
-	public String getFullName() {
-		return fullName;
+	public String getMethodName() {
+		return methodName;
 	}
 	
 	public boolean isAbstract() {
 		return isAbstract;
+	}
+	
+	public String getReturnType() {
+		return returnType;
+	}
+	
+	public List<String> getParamterTypes() {
+		return paramterTypes;
 	}
 
 	public MethodGen createMethodGen(Clazz clazz, ConstantPoolGen constantPoolGen) {
