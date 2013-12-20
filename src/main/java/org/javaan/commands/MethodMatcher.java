@@ -43,6 +43,10 @@ public class MethodMatcher implements Matcher<Method> {
 		if (matchAll) {
 			return true;
 		}
-		return method.getFullName().toLowerCase().contains(criteria);
+		boolean match = method.getName().toLowerCase().contains(criteria);
+		if (!match) {
+			match = method.getType().getName().toLowerCase().contains(criteria);
+		}
+		return match;
 	}
 }

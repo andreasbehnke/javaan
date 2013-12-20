@@ -53,13 +53,25 @@ public abstract class Type extends NamedObjectBase {
 		}
 		throw new IllegalArgumentException("Unknown type: " + javaClass.toString());
 	}
-
+	
 	public JavaClass getJavaClass() {
 		return javaClass;
 	}
 
 	public String getFilePath() {
 		return filePath;
+	}
+
+	public static String getShortName(String signature) {
+		int index = signature.lastIndexOf('.');
+		if (index > 0) {
+			return signature.substring(index + 1);
+		}
+		return signature;
+	}
+	
+	public String getShortName() {
+		return getShortName(getName());
 	}
 	
 	public abstract JavaType getJavaType();

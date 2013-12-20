@@ -22,7 +22,6 @@ package org.javaan.bytecode;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.bcel.Constants;
@@ -38,9 +37,9 @@ import org.apache.bcel.generic.Type;
  */
 public class SignatureUtil {
 	
-	private static final String CONSTRUCTOR_SIGNATURE = "<init>";
-
-	private static String getClassSignature(Type type) {
+	public static final String CONSTRUCTOR_SIGNATURE = "<init>";
+	
+	public static String createClassSignature(Type type) {
 		byte typeCode = type.getType();
 		switch (typeCode) {
 		case Constants.T_OBJECT:
@@ -48,7 +47,7 @@ public class SignatureUtil {
 			return obj.getClassName();
 		case Constants.T_ARRAY:
 			ArrayType arr = (ArrayType)type;
-			StringBuilder name = new StringBuilder(getClassSignature(arr.getBasicType()));
+			StringBuilder name = new StringBuilder(createClassSignature(arr.getBasicType()));
 			for(int i = 0; i < arr.getDimensions(); i++) {
 				name.append("[]");
 			}
@@ -58,15 +57,15 @@ public class SignatureUtil {
 		}
 	}
 	
-	private static List<String> convertTypesToClassSignatures(Type[] types) {
+	public static List<String> createClassSignatures(Type[] types) {
 		List<String> typeNames = new ArrayList<String>();
 		for (Type type : types) {
-			typeNames.add(getClassSignature(type));
+			typeNames.add(createClassSignature(type));
 		}
 		return typeNames;
 	}
 	
-	private static String getClassSignature(Class<?> cls) {
+	public static String createClassSignature(Class<?> cls) {
 		if (cls.isArray()) {
 			StringBuilder dimension = new StringBuilder("[]");
 			Class<?> comp = cls.getComponentType();
@@ -80,15 +79,15 @@ public class SignatureUtil {
     	}
 	}
 	
-	private static List<String> convertClassesToClassSignatures(List<Class<?>> classes) {
-        List<String> classNames = new ArrayList<String>(classes.size());
+	public static List<String> createClassSignatures(Class<?>[] classes) {
+        List<String> classNames = new ArrayList<String>(classes.length);
         for (Class<?> cls : classes) {
-        	classNames.add(getClassSignature(cls));
+        	classNames.add(createClassSignature(cls));
         }
         return classNames;
     }
 
-	private static String createSignature(String methodName, List<String> methodParameterTypes) {
+	private static String createMethodSignature(String methodName, List<String> methodParameterTypes) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(methodName).append('(');
 		for (int i = 0; i < methodParameterTypes.size(); i++) {
@@ -101,27 +100,27 @@ public class SignatureUtil {
 		return builder.toString();
 	}
 	
-	public static String createSignature(java.lang.reflect.Method method) {
-		return createSignature(
+	public static String createMethodSignature(java.lang.reflect.Method method) {
+		return createMethodSignature(
 				method.getName(), 
-				convertClassesToClassSignatures(Arrays.asList(method.getParameterTypes())));
+				createClassSignatures(method.getParameterTypes()));
 	}
 	
-	public static String createSignature(Constructor<?> constructor) {
-		return createSignature(
+	public static String createMethodSignature(Constructor<?> constructor) {
+		return createMethodSignature(
 				CONSTRUCTOR_SIGNATURE,
-				convertClassesToClassSignatures(Arrays.asList(constructor.getParameterTypes())));
+				createClassSignatures(constructor.getParameterTypes()));
 	}
 
-	public static String createSignature(Method method) {
-		return createSignature(
+	public static String createMethodSignature(Method method) {
+		return createMethodSignature(
 				method.getName(),
-				convertTypesToClassSignatures(method.getArgumentTypes()));
+				createClassSignatures(method.getArgumentTypes()));
 	}
 	
-	public static String createSignature(InvokeInstruction invoke, ConstantPoolGen cpg) {
-		return createSignature(
+	public static String createMethodSignature(InvokeInstruction invoke, ConstantPoolGen cpg) {
+		return createMethodSignature(
 				invoke.getMethodName(cpg),
-				convertTypesToClassSignatures(invoke.getArgumentTypes(cpg)));
+				createClassSignatures(invoke.getArgumentTypes(cpg)));
 	}
 }
