@@ -13,7 +13,7 @@
 	</organization>
 	<modules>
 		<module>javaan-lib</module>
-		<!--module>javaan-cli</module-->
+		<module>javaan-cli</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -23,11 +23,11 @@
                                 <artifactId>javaan-lib</artifactId>
                                 <version>${project.version}</version>
                         </dependency>
-                        <!--dependency>
+                        <dependency>
                                 <groupId>org.javaan</groupId>
                                 <artifactId>javaan-cli</artifactId>
                                 <version>${project.version}</version>
-                        </dependency-->
+                        </dependency>
                         <!-- external -->
 			<dependency>
 				<groupId>bcel</groupId>
