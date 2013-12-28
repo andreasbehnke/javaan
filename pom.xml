@@ -14,6 +14,7 @@
 	<modules>
 		<module>javaan-lib</module>
 		<module>javaan-cli</module>
+		<module>codeforest</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -26,6 +27,11 @@
                         <dependency>
                                 <groupId>org.javaan</groupId>
                                 <artifactId>javaan-cli</artifactId>
+                                <version>${project.version}</version>
+                        </dependency>
+                        <dependency>
+                                <groupId>org.javaan</groupId>
+                                <artifactId>codeforest</artifactId>
                                 <version>${project.version}</version>
                         </dependency>
                         <!-- external -->
