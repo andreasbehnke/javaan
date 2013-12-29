@@ -8,6 +8,7 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListenerAdapter;
 import org.jgrapht.event.VertexTraversalEvent;
 import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.traverse.GraphIterator;
 
 /**
  * Calculates the width of vertices in a tree using depth first iteration.
@@ -41,7 +42,7 @@ public class TreeWidthCalculator<V, E> extends TraversalListenerAdapter<V, E> {
 
 	public static <V,E> Map<V, Integer> calculateVertexWidth(DirectedGraph<V, E> graph, V startVertex) {
 		TreeWidthCalculator<V, E> calculator = new TreeWidthCalculator<V, E>(graph);
-		DepthFirstIterator<V, E> iterator = new DepthFirstIterator<V, E>(graph, startVertex);
+		GraphIterator<V, E> iterator = new DepthFirstIterator<V, E>(graph, startVertex);
 		iterator.addTraversalListener(calculator);
 		while(iterator.hasNext()) {
 			iterator.next();
