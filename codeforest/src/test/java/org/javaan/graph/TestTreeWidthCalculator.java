@@ -1,9 +1,8 @@
 package org.javaan.graph;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.Map;
-
+import org.codeforest.model.VertexSceneContext;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -43,15 +42,16 @@ public class TestTreeWidthCalculator {
 		graph.addEdge(B, G);
 		graph.addEdge(F, H);
 		
-		Map<String, Integer> widths = TreeWidthCalculator.calculateVertexWidth(graph, A);
-		assertEquals(1, widths.get(H).intValue());
-		assertEquals(1, widths.get(G).intValue());
-		assertEquals(1, widths.get(E).intValue());
-		assertEquals(1, widths.get(D).intValue());
-		assertEquals(1, widths.get(F).intValue());
-		assertEquals(1, widths.get(C).intValue());
-		assertEquals(3, widths.get(B).intValue());
-		assertEquals(4, widths.get(A).intValue());
+		VertexSceneContext<String> context = new VertexSceneContext<String>();
+		new TreeWidthCalculator<String, String>(context, graph).calculateVertexWidth(A);
+		assertEquals(1, context.get(H).getSubTreeWidth());
+		assertEquals(1, context.get(G).getSubTreeWidth());
+		assertEquals(1, context.get(E).getSubTreeWidth());
+		assertEquals(1, context.get(D).getSubTreeWidth());
+		assertEquals(1, context.get(F).getSubTreeWidth());
+		assertEquals(1, context.get(C).getSubTreeWidth());
+		assertEquals(3, context.get(B).getSubTreeWidth());
+		assertEquals(4, context.get(A).getSubTreeWidth());
 	}
 	
 }

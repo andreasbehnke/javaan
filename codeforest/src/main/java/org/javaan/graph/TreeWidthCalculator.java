@@ -1,9 +1,8 @@
 package org.javaan.graph;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
+import org.codeforest.model.VertexSceneContext;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListenerAdapter;
 import org.jgrapht.event.VertexTraversalEvent;
@@ -16,38 +15,40 @@ import org.jgrapht.traverse.GraphIterator;
  */
 public class TreeWidthCalculator<V, E> extends TraversalListenerAdapter<V, E> {
 
-	private final Map<V, Integer> widths = new HashMap<V, Integer>();
+	private final VertexSceneContext<V> context;
 	
 	private final DirectedGraph<V, E> graph;
 	
-	public TreeWidthCalculator(DirectedGraph<V, E> graph) {
+	public TreeWidthCalculator(VertexSceneContext<V> context, DirectedGraph<V, E> graph) {
+		this.context = context;
 		this.graph = graph;
 	}
-	
+
 	@Override
 	public void vertexFinished(VertexTraversalEvent<V> e) {
 		V vertex = e.getVertex();
 		Set<E> outgoingEdges = graph.outgoingEdgesOf(vertex);
 		if (outgoingEdges.size() == 0) {
-			widths.put(vertex, 1);
+			context.get(vertex).setSubTreeWidth(1);
 		} else {
 			int width = 0;
 			for (E edge : outgoingEdges) {
 				V target = graph.getEdgeTarget(edge);
-				width += widths.get(target);
+				width += context.get(target).getSubTreeWidth();
 			}
-			widths.put(vertex, width);
+			context.get(vertex).setSubTreeWidth(width);
 		}
 	}
 
-	public static <V,E> Map<V, Integer> calculateVertexWidth(DirectedGraph<V, E> graph, V startVertex) {
-		TreeWidthCalculator<V, E> calculator = new TreeWidthCalculator<V, E>(graph);
+	public void calculateVertexWidth(V startVertex) {
+		if (context.get(startVertex).getSubTreeWidth() != -1) {
+			return;
+		}
 		GraphIterator<V, E> iterator = new DepthFirstIterator<V, E>(graph, startVertex);
-		iterator.addTraversalListener(calculator);
+		iterator.addTraversalListener(this);
 		while(iterator.hasNext()) {
 			iterator.next();
 		}
-		return calculator.widths;
 	}
 	
 }
