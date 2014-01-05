@@ -1,4 +1,4 @@
-package org.javaan.graph;
+package org.codeforest.graph;
 
 import java.util.Set;
 import java.util.Stack;
@@ -10,6 +10,7 @@ import javax.vecmath.Vector3d;
 
 import org.codeforest.model.SceneData;
 import org.codeforest.model.VertexSceneContext;
+import org.javaan.graph.TraversalDirectedGraph;
 import org.jgrapht.DirectedGraph;
 
 /**

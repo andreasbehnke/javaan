@@ -1,4 +1,4 @@
-package org.javaan.graph;
+package org.codeforest.graph;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,8 @@ import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.vecmath.Vector3d;
 
+import org.codeforest.graph.NodeFactory;
+import org.codeforest.graph.VertexTreeSceneBuilder;
 import org.codeforest.model.SceneData;
 import org.codeforest.model.VertexSceneContext;
 import org.jgrapht.DirectedGraph;

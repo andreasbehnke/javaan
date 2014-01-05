@@ -1,4 +1,4 @@
-package org.javaan.graph;
+package org.codeforest.graph;
 
 import javax.media.j3d.Node;
 

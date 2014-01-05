@@ -1,7 +1,8 @@
-package org.javaan.graph;
+package org.codeforest.graph;
 
 import static org.junit.Assert.assertEquals;
 
+import org.codeforest.graph.TreeWidthCalculator;
 import org.codeforest.model.VertexSceneContext;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
