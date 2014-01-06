@@ -22,7 +22,7 @@ import java.awt.GraphicsConfiguration;
 public class CodeForest extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final String A = "A";
 	private static final String B = "B";
 	private static final String C = "C";
@@ -38,144 +38,144 @@ public class CodeForest extends javax.swing.JFrame {
 	private static final String M = "M";
 	private static final String N = "N";
 	private static final String O = "O";
-	
+
 	private SimpleUniverse univ = null;
-    private BranchGroup scene = null;
-    
-    private javax.swing.JPanel drawingPanel;
+	private BranchGroup scene = null;
 
-    
-    /**
-     * Creates new form HelloUniverse
-     */
-    public CodeForest() {
-         // Initialize the GUI components
-         initComponents();
+	private javax.swing.JPanel drawingPanel;
 
-         // Create Canvas3D and SimpleUniverse; add canvas to drawing panel
-         Canvas3D c = createUniverse();
-         drawingPanel.add(c, java.awt.BorderLayout.CENTER);
+	/**
+	 * Creates new form HelloUniverse
+	 */
+	public CodeForest() {
+		// Initialize the GUI components
+		initComponents();
 
-         // Create the content branch and add it to the universe
-         scene = createSceneGraph();
-         univ.addBranchGraph(scene);
+		// Create Canvas3D and SimpleUniverse; add canvas to drawing panel
+		Canvas3D c = createUniverse();
+		drawingPanel.add(c, java.awt.BorderLayout.CENTER);
 
-         OrbitBehavior orbit = new OrbitBehavior(c);
-         orbit.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), Double.MAX_VALUE));
-         univ.getViewingPlatform().setViewPlatformBehavior(orbit);
-    }
-    
-    
-    public BranchGroup createSceneGraph() {
-         // Create the root of the branch graph
-         BranchGroup objRoot = new BranchGroup();
-         
-         DirectedGraph<String, String> graph = new DefaultDirectedGraph<String, String>(new EdgeFactory<String, String>() {
- 			public String createEdge(String sourceVertex, String targetVertex) {
- 				return sourceVertex + targetVertex;
- 			};
- 		});
- 		graph.addVertex(A);
- 		graph.addVertex(B);
- 		graph.addVertex(C);
- 		graph.addVertex(D);
- 		graph.addVertex(E);
- 		graph.addVertex(F);
- 		graph.addVertex(G);
- 		graph.addVertex(H);
- 		graph.addVertex(I);
- 		graph.addVertex(J);
- 		graph.addVertex(K);
- 		graph.addVertex(L);
- 		graph.addVertex(M);
- 		graph.addVertex(N);
- 		graph.addVertex(O);
- 		graph.addEdge(A, B);
- 		graph.addEdge(A, C);
- 		graph.addEdge(B, D);
- 		graph.addEdge(B, E);
- 		graph.addEdge(B, F);
- 		graph.addEdge(C, G);
- 		graph.addEdge(D, H);
- 		graph.addEdge(D, I);
- 		graph.addEdge(D, J);
- 		graph.addEdge(E, K);
- 		graph.addEdge(E, L);
- 		graph.addEdge(F, M);
- 		graph.addEdge(F, N);
- 		graph.addEdge(G, O);
- 		
- 		NodeFactory<String> shapeFactory = new NodeFactory<String>() {
- 			public Node createNode(String vertex) {
- 				return new ColorCube(0.4);
- 			}
- 		};
- 		VertexSceneContext<String> context = new VertexSceneContext<String>();
- 		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(context, graph, shapeFactory, 2d, 3d);
- 		TransformGroup transformGroup = sceneBuilder.createScene(A);
- 		Bounds bounds = transformGroup.getBounds();
- 		
- 		
- 		objRoot.addChild(transformGroup);
+		// Create the content branch and add it to the universe
+		scene = createSceneGraph();
+		univ.addBranchGraph(scene);
 
-         // Have Java 3D perform optimizations on this scene graph.
-         objRoot.compile();
+		OrbitBehavior orbit = new OrbitBehavior(c);
+		orbit.setSchedulingBounds(new BoundingSphere(
+				new Point3d(0.0, 0.0, 0.0), Double.MAX_VALUE));
+		univ.getViewingPlatform().setViewPlatformBehavior(orbit);
+	}
 
-         return objRoot;
-    }
+	public BranchGroup createSceneGraph() {
+		// Create the root of the branch graph
+		BranchGroup objRoot = new BranchGroup();
 
-    
-    private Canvas3D createUniverse() {
-         // Get the preferred graphics configuration for the default screen
-         GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
+		DirectedGraph<String, String> graph = new DefaultDirectedGraph<String, String>(
+				new EdgeFactory<String, String>() {
+					public String createEdge(String sourceVertex,
+							String targetVertex) {
+						return sourceVertex + targetVertex;
+					};
+				});
+		graph.addVertex(A);
+		graph.addVertex(B);
+		graph.addVertex(C);
+		graph.addVertex(D);
+		graph.addVertex(E);
+		graph.addVertex(F);
+		graph.addVertex(G);
+		graph.addVertex(H);
+		graph.addVertex(I);
+		graph.addVertex(J);
+		graph.addVertex(K);
+		graph.addVertex(L);
+		graph.addVertex(M);
+		graph.addVertex(N);
+		graph.addVertex(O);
+		graph.addEdge(A, B);
+		graph.addEdge(A, C);
+		graph.addEdge(B, D);
+		graph.addEdge(B, E);
+		graph.addEdge(B, F);
+		graph.addEdge(C, G);
+		graph.addEdge(D, H);
+		graph.addEdge(D, I);
+		graph.addEdge(D, J);
+		graph.addEdge(E, K);
+		graph.addEdge(E, L);
+		graph.addEdge(F, M);
+		graph.addEdge(F, N);
+		graph.addEdge(G, O);
 
-         // Create a Canvas3D using the preferred configuration
-         Canvas3D c = new Canvas3D(config);
+		NodeFactory<String> shapeFactory = new NodeFactory<String>() {
+			public Node createNode(String vertex) {
+				return new ColorCube(0.4);
+			}
+		};
+		VertexSceneContext<String> context = new VertexSceneContext<String>();
+		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(
+				context, graph, shapeFactory, 2d, 3d);
+		TransformGroup transformGroup = sceneBuilder.createScene(A);
+		objRoot.addChild(transformGroup);
 
-         // Create simple universe with view branch
-         univ = new SimpleUniverse(c);
+		// Have Java 3D perform optimizations on this scene graph.
+		objRoot.compile();
 
-         // This will move the ViewPlatform back a bit so the
-         // objects in the scene can be viewed.
-         ViewingPlatform viewingPlatform = univ.getViewingPlatform();
-         
-         TransformGroup viewTransform = viewingPlatform.getViewPlatformTransform();
-         Transform3D t3d = new Transform3D();
-         t3d.lookAt(new Point3d(0,0,150), new Point3d(0,0,0), new Vector3d(0,1,0));
-         t3d.invert();
-         viewTransform.setTransform(t3d);
-         
-         View view = univ.getViewer().getView(); 
-         view.setBackClipDistance(100.0);
-         view.setMinimumFrameCycleTime(5);
+		return objRoot;
+	}
 
-         return c;
-    }
+	private Canvas3D createUniverse() {
+		// Get the preferred graphics configuration for the default screen
+		GraphicsConfiguration config = SimpleUniverse
+				.getPreferredConfiguration();
 
-    
-    private void initComponents() {
-         drawingPanel = new javax.swing.JPanel();
+		// Create a Canvas3D using the preferred configuration
+		Canvas3D c = new Canvas3D(config);
 
-         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-         setTitle("HelloUniverse");
-         drawingPanel.setLayout(new java.awt.BorderLayout());
+		// Create simple universe with view branch
+		univ = new SimpleUniverse(c);
 
-         drawingPanel.setPreferredSize(new java.awt.Dimension(500, 500));
-         getContentPane().add(drawingPanel, java.awt.BorderLayout.CENTER);
+		// This will move the ViewPlatform back a bit so the
+		// objects in the scene can be viewed.
+		ViewingPlatform viewingPlatform = univ.getViewingPlatform();
 
-         pack();
-    }
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-         java.awt.EventQueue.invokeLater(new Runnable() {
-              public void run() {
-                   new CodeForest().setVisible(true);
-              }
-         });
-    }
-    
+		TransformGroup viewTransform = viewingPlatform
+				.getViewPlatformTransform();
+		Transform3D t3d = new Transform3D();
+		t3d.lookAt(new Point3d(0, 0, 150), new Point3d(0, 0, 0), new Vector3d(
+				0, 1, 0));
+		t3d.invert();
+		viewTransform.setTransform(t3d);
+
+		View view = univ.getViewer().getView();
+		view.setBackClipDistance(100.0);
+		view.setMinimumFrameCycleTime(5);
+
+		return c;
+	}
+
+	private void initComponents() {
+		drawingPanel = new javax.swing.JPanel();
+
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setTitle("HelloUniverse");
+		drawingPanel.setLayout(new java.awt.BorderLayout());
+
+		drawingPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+		getContentPane().add(drawingPanel, java.awt.BorderLayout.CENTER);
+
+		pack();
+	}
+
+	/**
+	 * @param args
+	 *            the command line arguments
+	 */
+	public static void main(String args[]) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new CodeForest().setVisible(true);
+			}
+		});
+	}
+
 }
