@@ -75,7 +75,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>org.javaan.CodeForest</mainClass>
+									<mainClass>org.codeforest.CodeForest</mainClass>
 								</transformer>
 								<!-- Exclude hash keys of shaded j3d libraries -->
 								<transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
