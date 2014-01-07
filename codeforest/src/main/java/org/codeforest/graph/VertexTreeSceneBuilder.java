@@ -24,13 +24,13 @@ public class VertexTreeSceneBuilder<V, E> {
 
 	private final VertexSceneContext<V> context;
 
-	private final NodeFactory<V> nodeFactory;
+	private final NodeFactory<V, E> nodeFactory;
 	
 	private final double vertexWidth;
 	
 	private final double vertexHeight;
 
-	public VertexTreeSceneBuilder(VertexSceneContext<V> context, DirectedGraph<V, E> graph, NodeFactory<V> nodeFactory, double vertexWidth, double vertexHeight) {
+	public VertexTreeSceneBuilder(VertexSceneContext<V> context, DirectedGraph<V, E> graph, NodeFactory<V, E> nodeFactory, double vertexWidth, double vertexHeight) {
 		this.graph = new TraversalDirectedGraph<V, E>(graph);
 		this.context = context;
 		this.nodeFactory = nodeFactory;
@@ -48,15 +48,21 @@ public class VertexTreeSceneBuilder<V, E> {
 		Node node = nodeFactory.createNode(vertex);
 		transformGroup.addChild(node);
 		sceneData.setNode(node);
+		Vector3d sourceVector = new Vector3d();
 		for (V targetVertex : targetVertices) {
-			double targetWidth = getVertexWidth(targetVertex);
-			x += 0.5 * targetWidth;
+			double halfTargetWidth = getVertexWidth(targetVertex) * 0.5d;
+			x += halfTargetWidth;
 			Transform3D t3d = new Transform3D();
-			t3d.set(new Vector3d(x, vertexHeight, 0));
+			Vector3d targetVector = new Vector3d(x, vertexHeight, 0);
+			t3d.set(targetVector);
 			TransformGroup targetTransformGroup = new TransformGroup(t3d);
 			context.get(targetVertex).setTransformGroup(targetTransformGroup);
 			transformGroup.addChild(targetTransformGroup);
-			x += 0.5 * targetWidth;
+			// create edge
+			E edge = graph.getEdge(vertex, targetVertex);
+			Node edgeNode = nodeFactory.createNode(edge, vertex, targetVertex, sourceVector, targetVector);
+			transformGroup.addChild(edgeNode);
+			x += halfTargetWidth;
 		}
 	}
 

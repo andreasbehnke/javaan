@@ -106,10 +106,23 @@ public class CodeForest extends javax.swing.JFrame {
 		graph.addEdge(F, N);
 		graph.addEdge(G, O);
 
-		NodeFactory<String> shapeFactory = new NodeFactory<String>() {
+		NodeFactory<String, String> shapeFactory = new NodeFactory<String, String>() {
 			public Node createNode(String vertex) {
 				return new ColorCube(0.4);
 			}
+
+			public Node createNode(String edge, String source, String target,
+					Vector3d startVector, Vector3d endVector) {
+				LineArray lines = new LineArray(2, GeometryArray.COORDINATES);
+				lines.setCoordinates(0, new double[] {
+						startVector.x, startVector.y, startVector.z,
+						endVector.x, endVector.y, endVector.z});
+				Appearance appearance = new Appearance();
+				appearance.setColoringAttributes(new ColoringAttributes(255, 0, 0, ColoringAttributes.NICEST));
+				Shape3D shape = new Shape3D(lines, appearance);
+				return shape;
+			}
+			
 		};
 		VertexSceneContext<String> context = new VertexSceneContext<String>();
 		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(

@@ -101,10 +101,16 @@ public class TestVertexTreeSceneBuilder {
 		graph.addEdge(F, N);
 		graph.addEdge(G, O);
 		
-		NodeFactory<String> shapeFactory = new NodeFactory<String>() {
+		NodeFactory<String, String> shapeFactory = new NodeFactory<String, String>() {
 			public Node createNode(String vertex) {
 				return new Shape3D();
 			}
+
+			public Node createNode(String edge, String source, String target,
+					Vector3d startVector, Vector3d endVector) {
+				return null;
+			}
+			
 		};
 		VertexSceneContext<String> context = new VertexSceneContext<String>();
 		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(context, graph, shapeFactory, 2d, 3d);
