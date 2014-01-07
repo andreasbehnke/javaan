@@ -27,10 +27,13 @@ import java.util.Set;
 import org.javaan.graph.BidirectionalMap;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.SingleTargetDirectedGraph;
+import org.javaan.model.Type.JavaType;
 
 public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final NamedObjectMap<Type> types = new NamedObjectMap<Type>();
+	
+	private final BidirectionalMap<Type, Package> packageOfType = new BidirectionalMap<Type, Package>();
 	
 	private final SingleTargetDirectedGraph<Clazz> superClass = new SingleTargetDirectedGraph<Clazz>();
 
@@ -41,14 +44,19 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	private final BidirectionalMap<Clazz, Method> methodsOfClass = new BidirectionalMap<Clazz, Method>();
 	
 	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>();
+	
+	private void addType(Type type) {
+		if (type == null) {
+			throw new IllegalArgumentException("Parameter type must not be null");
+		}
+		if (!types.contains(type.getName())) {
+			types.add(type);
+			packageOfType.addEdge(type, new Package(type));
+		}
+	}
 
 	public void addClass(Clazz className) {
-		if (className == null) {
-			throw new IllegalArgumentException("Parameter className must not be null");
-		}
-		if (!types.contains(className.getName())) {
-			types.add(className);
-		}
+		addType(className);
 		superClass.addVertex(className);
 		interfaceOfClass.addParent(className);
 	}
@@ -60,13 +68,9 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		if (superClassName == null) {
 			throw new IllegalArgumentException("Parameter superClassName must not be null");
 		}
-		if (!types.contains(className.getName())) {
-			types.add(className);
-		}
+		addType(className);
 		interfaceOfClass.addParent(className);
-		if (!types.contains(superClassName.getName())) {
-			types.add(superClassName);
-		}
+		addType(superClassName);
 		interfaceOfClass.addParent(superClassName);
 		superClass.addEdge(className, superClassName);
 	}
@@ -92,12 +96,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public void addInterface(Interface interfaceName) {
-		if (interfaceName == null) {
-			throw new IllegalArgumentException("Parameter interfaceName must not be null");
-		}
-		if (!types.contains(interfaceName.getName())) {
-			types.add(interfaceName);
-		}
+		addType(interfaceName);
 		superInterface.addVertex(interfaceName);
 	}
 
@@ -108,12 +107,8 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		if (superInterfaceName == null) {
 			throw new IllegalArgumentException("Parameter superInterfaceName must not be null");
 		}
-		if (!types.contains(interfaceName.getName())) {
-			types.add(interfaceName);
-		}
-		if (!types.contains(superInterfaceName.getName())) {
-			types.add(superInterfaceName);
-		}
+		addType(interfaceName);
+		addType(superInterfaceName);
 		superInterface.addEdge(interfaceName, superInterfaceName);
 	}
 	
@@ -181,6 +176,34 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	@Override
 	public Type get(String className) {
 		return types.get(className);
+	}
+	
+	public Set<Package> getPackages() {
+		return packageOfType.getChilds();
+	}
+	
+	public Package getPackageOfType(Type type) {
+		return packageOfType.getChilds(type).iterator().next();
+	}
+	
+	public Set<Clazz> getClassesOfPackage(Package package1) {
+		Set<Clazz> classes = new HashSet<Clazz>();
+		for (Type type : packageOfType.getParents(package1)) {
+			if (type.getJavaType() == JavaType.CLASS) {
+				classes.add((Clazz)type);
+			}
+		}
+		return classes;
+	}
+	
+	public Set<Interface> getInterfacesOfPackage(Package package1) {
+		Set<Interface> interfaces = new HashSet<Interface>();
+		for (Type type : packageOfType.getParents(package1)) {
+			if (type.getJavaType() == JavaType.INTERFACE) {
+				interfaces.add((Interface)type);
+			}
+		}
+		return interfaces;
 	}
 	
 	public void addMethod(Method method) {
