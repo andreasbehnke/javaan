@@ -7,10 +7,10 @@ import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.vecmath.Vector3d;
 
-import org.codeforest.graph.NodeFactory;
-import org.codeforest.graph.VertexTreeSceneBuilder;
 import org.codeforest.model.SceneData;
 import org.codeforest.model.VertexSceneContext;
+import org.codeforest.scenegraph.NodeFactory;
+import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;

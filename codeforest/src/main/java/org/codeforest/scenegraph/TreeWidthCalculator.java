@@ -1,4 +1,4 @@
-package org.codeforest.graph;
+package org.codeforest.scenegraph;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package org.codeforest.graph;
+package org.codeforest.scenegraph;
 
 import javax.media.j3d.Node;
 import javax.vecmath.Vector3d;

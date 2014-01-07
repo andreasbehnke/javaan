@@ -7,9 +7,9 @@ import com.sun.j3d.utils.geometry.ColorCube;
 import javax.media.j3d.*;
 import javax.vecmath.*;
 
-import org.codeforest.graph.NodeFactory;
-import org.codeforest.graph.VertexTreeSceneBuilder;
 import org.codeforest.model.VertexSceneContext;
+import org.codeforest.scenegraph.NodeFactory;
+import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
