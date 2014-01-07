@@ -33,6 +33,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.text.WordUtils;
 import org.javaan.commands.ListClasses;
+import org.javaan.commands.ListPackages;
 import org.javaan.commands.ShowDepdendencyCyclesGraph;
 import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
@@ -81,6 +82,7 @@ public class JavaanCli {
 
 	public static void main(String[] args) {
 		CommandMap commands = new CommandMap();
+		commands.addCommand(new ListPackages());
 		commands.addCommand(new ListClasses());
 		commands.addCommand(new ListInterfaces());
 		commands.addCommand(new ListDuplicates());
