@@ -41,14 +41,19 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	private final BidirectionalMap<Clazz, Method> methodsOfClass = new BidirectionalMap<Clazz, Method>();
 	
 	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>();
+	
+	private void addType(Type type) {
+		if (type == null) {
+			throw new IllegalArgumentException("Parameter type must not be null");
+		}
+		if (!types.contains(type.getName())) {
+			types.add(type);
+		}
+		
+	}
 
 	public void addClass(Clazz className) {
-		if (className == null) {
-			throw new IllegalArgumentException("Parameter className must not be null");
-		}
-		if (!types.contains(className.getName())) {
-			types.add(className);
-		}
+		addType(className);
 		superClass.addVertex(className);
 		interfaceOfClass.addParent(className);
 	}
@@ -60,13 +65,9 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		if (superClassName == null) {
 			throw new IllegalArgumentException("Parameter superClassName must not be null");
 		}
-		if (!types.contains(className.getName())) {
-			types.add(className);
-		}
+		addType(className);
 		interfaceOfClass.addParent(className);
-		if (!types.contains(superClassName.getName())) {
-			types.add(superClassName);
-		}
+		addType(superClassName);
 		interfaceOfClass.addParent(superClassName);
 		superClass.addEdge(className, superClassName);
 	}
@@ -92,12 +93,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public void addInterface(Interface interfaceName) {
-		if (interfaceName == null) {
-			throw new IllegalArgumentException("Parameter interfaceName must not be null");
-		}
-		if (!types.contains(interfaceName.getName())) {
-			types.add(interfaceName);
-		}
+		addType(interfaceName);
 		superInterface.addVertex(interfaceName);
 	}
 
@@ -108,12 +104,8 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		if (superInterfaceName == null) {
 			throw new IllegalArgumentException("Parameter superInterfaceName must not be null");
 		}
-		if (!types.contains(interfaceName.getName())) {
-			types.add(interfaceName);
-		}
-		if (!types.contains(superInterfaceName.getName())) {
-			types.add(superInterfaceName);
-		}
+		addType(interfaceName);
+		addType(superInterfaceName);
 		superInterface.addEdge(interfaceName, superInterfaceName);
 	}
 	
@@ -181,6 +173,22 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	@Override
 	public Type get(String className) {
 		return types.get(className);
+	}
+	
+	public Set<Package> getPackages() {
+		return null;
+	}
+	
+	public Package getPackageOfType(Type type) {
+		return null;
+	}
+	
+	public Set<Clazz> getClassesOfPackage(Package package1) {
+		return null;
+	}
+	
+	public Set<Interface> getInterfacesOfPackage(Package package1) {
+		return null;
 	}
 	
 	public void addMethod(Method method) {
