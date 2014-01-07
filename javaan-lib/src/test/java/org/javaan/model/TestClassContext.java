@@ -33,18 +33,23 @@ import org.junit.Test;
 
 public class TestClassContext {
 	
-	private static final Clazz CLASSA = new Clazz("a");
-	private static final Clazz CLASSB = new Clazz("b");
-	private static final Clazz CLASSC = new Clazz("c");
-	private static final Clazz CLASSD = new Clazz("d");
-	private static final Clazz CLASSX = new Clazz("x");
-	private static final Clazz CLASSY = new Clazz("y");
-	private static final Interface INTERFACEA = new Interface("ia");
-	private static final Interface INTERFACEB = new Interface("ib");
-	private static final Interface INTERFACEC = new Interface("ic");
-	private static final Interface INTERFACED = new Interface("id");
-	private static final Interface INTERFACEX = new Interface("ix");
-	private static final Interface INTERFACEY = new Interface("iy");
+	private static final Package PACKAGEABC = new Package("a.b.c");
+	private static final Package PACKAGEDEF = new Package("d.e.f");
+	
+	private static final Clazz CLASSA = new Clazz(PACKAGEABC + ".A");
+	private static final Clazz CLASSB = new Clazz(PACKAGEABC + ".B");
+	private static final Clazz CLASSC = new Clazz(PACKAGEDEF + ".C");
+	private static final Clazz CLASSD = new Clazz("D");
+	private static final Clazz CLASSX = new Clazz("X");
+	private static final Clazz CLASSY = new Clazz(PACKAGEDEF + ".Y");
+	
+	private static final Interface INTERFACEA = new Interface(PACKAGEABC + ".IA");
+	private static final Interface INTERFACEB = new Interface(PACKAGEABC + ".IB");
+	private static final Interface INTERFACEC = new Interface(PACKAGEDEF + ".IC");
+	private static final Interface INTERFACED = new Interface("ID");
+	private static final Interface INTERFACEX = new Interface("IX");
+	private static final Interface INTERFACEY = new Interface(PACKAGEDEF + ".IY");
+	
 	private static final Method CLASSA_METHODA = new Method(CLASSA, "methoda");
 	private static final Method CLASSA_METHODB = new Method(CLASSA, "methodb");
 	private static final Method CLASSA_METHODC = new Method(CLASSA, "methodc");
@@ -70,6 +75,21 @@ public class TestClassContext {
 		assertSame(CLASSA, context.get(CLASSA.getName()));
 		assertSame(CLASSB, context.get(CLASSB.getName()));
 		assertSame(CLASSC, context.get(CLASSC.getName()));
+		Set<Package> packages = context.getPackages();
+		assertNotNull(packages);
+		assertEquals(2, packages.size());
+		assertTrue(packages.contains(PACKAGEABC));
+		assertTrue(packages.contains(PACKAGEDEF));
+		classes = context.getClassesOfPackage(PACKAGEABC);
+		assertNotNull(classes);
+		assertEquals(2, classes.size());
+		assertTrue(classes.contains(CLASSA));
+		assertTrue(classes.contains(CLASSB));
+		classes = context.getClassesOfPackage(PACKAGEDEF);
+		assertNotNull(classes);
+		assertEquals(1, classes.size());
+		assertTrue(classes.contains(CLASSC));
+		assertEquals(PACKAGEABC, context.getPackageOfType(CLASSA));
 	}
 
 	@Test
@@ -88,6 +108,7 @@ public class TestClassContext {
 		assertSame(CLASSB, context.get(CLASSB.getName()));
 		assertSame(CLASSX, context.get(CLASSX.getName()));
 		assertSame(CLASSY, context.get(CLASSY.getName()));
+		assertEquals(PACKAGEDEF, context.getPackageOfType(CLASSY));
 	}
 	
 	@Test
@@ -138,10 +159,25 @@ public class TestClassContext {
 		assertSame(INTERFACEA, context.get(INTERFACEA.getName()));
 		assertSame(INTERFACEB, context.get(INTERFACEB.getName()));
 		assertSame(INTERFACEC, context.get(INTERFACEC.getName()));
+		Set<Package> packages = context.getPackages();
+		assertNotNull(packages);
+		assertEquals(2, packages.size());
+		assertTrue(packages.contains(PACKAGEABC));
+		assertTrue(packages.contains(PACKAGEDEF));
+		interfaces = context.getInterfacesOfPackage(PACKAGEABC);
+		assertNotNull(interfaces);
+		assertEquals(2, interfaces.size());
+		assertTrue(interfaces.contains(INTERFACEA));
+		assertTrue(interfaces.contains(INTERFACEB));
+		interfaces = context.getInterfacesOfPackage(PACKAGEDEF);
+		assertNotNull(interfaces);
+		assertEquals(1, interfaces.size());
+		assertTrue(interfaces.contains(INTERFACEC));
+		assertEquals(PACKAGEABC, context.getPackageOfType(INTERFACEA));
 	}
 
 	@Test
-	public void testGetSuperInterfaces() {
+	public void testAddSuperInterfaces() {
 		ClassContext context = new ClassContext();
 		context.addInterface(INTERFACEA);
 		context.addSuperInterface(INTERFACEB, INTERFACEA);
@@ -171,6 +207,7 @@ public class TestClassContext {
 		assertSame(INTERFACED, context.get(INTERFACED.getName()));
 		assertSame(INTERFACEX, context.get(INTERFACEX.getName()));
 		assertSame(INTERFACEY, context.get(INTERFACEY.getName()));
+		assertEquals(PACKAGEDEF, context.getPackageOfType(INTERFACEY));
 	}
 	
 	@Test

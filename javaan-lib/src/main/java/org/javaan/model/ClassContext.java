@@ -27,10 +27,13 @@ import java.util.Set;
 import org.javaan.graph.BidirectionalMap;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.SingleTargetDirectedGraph;
+import org.javaan.model.Type.JavaType;
 
 public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final NamedObjectMap<Type> types = new NamedObjectMap<Type>();
+	
+	private final BidirectionalMap<Type, Package> packageOfType = new BidirectionalMap<Type, Package>();
 	
 	private final SingleTargetDirectedGraph<Clazz> superClass = new SingleTargetDirectedGraph<Clazz>();
 
@@ -48,8 +51,8 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		if (!types.contains(type.getName())) {
 			types.add(type);
+			packageOfType.addEdge(type, new Package(type));
 		}
-		
 	}
 
 	public void addClass(Clazz className) {
@@ -176,19 +179,31 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Package> getPackages() {
-		return null;
+		return packageOfType.getChilds();
 	}
 	
 	public Package getPackageOfType(Type type) {
-		return null;
+		return packageOfType.getChilds(type).iterator().next();
 	}
 	
 	public Set<Clazz> getClassesOfPackage(Package package1) {
-		return null;
+		Set<Clazz> classes = new HashSet<Clazz>();
+		for (Type type : packageOfType.getParents(package1)) {
+			if (type.getJavaType() == JavaType.CLASS) {
+				classes.add((Clazz)type);
+			}
+		}
+		return classes;
 	}
 	
 	public Set<Interface> getInterfacesOfPackage(Package package1) {
-		return null;
+		Set<Interface> interfaces = new HashSet<Interface>();
+		for (Type type : packageOfType.getParents(package1)) {
+			if (type.getJavaType() == JavaType.INTERFACE) {
+				interfaces.add((Interface)type);
+			}
+		}
+		return interfaces;
 	}
 	
 	public void addMethod(Method method) {
