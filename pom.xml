@@ -11,30 +11,43 @@
 	<organization>
 		<name>Andreas Behnke</name>
 	</organization>
+	<profiles>
+		<profile>
+			<id>codeforest</id>
+			<activation>
+				<property>
+					<name>codeforest</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<modules>
+				<module>codeforest</module>
+			</modules>
+		</profile>
+	</profiles>
 	<modules>
 		<module>javaan-lib</module>
 		<module>javaan-cli</module>
-		<module>codeforest</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
 			<!-- internal -->
-                        <dependency>
-                                <groupId>org.javaan</groupId>
-                                <artifactId>javaan-lib</artifactId>
-                                <version>${project.version}</version>
-                        </dependency>
-                        <dependency>
-                                <groupId>org.javaan</groupId>
-                                <artifactId>javaan-cli</artifactId>
-                                <version>${project.version}</version>
-                        </dependency>
-                        <dependency>
-                                <groupId>org.javaan</groupId>
-                                <artifactId>codeforest</artifactId>
-                                <version>${project.version}</version>
-                        </dependency>
-                        <!-- external -->
+			<dependency>
+			        <groupId>org.javaan</groupId>
+			        <artifactId>javaan-lib</artifactId>
+			        <version>${project.version}</version>
+			</dependency>
+			<dependency>
+			        <groupId>org.javaan</groupId>
+			        <artifactId>javaan-cli</artifactId>
+			        <version>${project.version}</version>
+			</dependency>
+			<dependency>
+			        <groupId>org.javaan</groupId>
+			        <artifactId>codeforest</artifactId>
+			        <version>${project.version}</version>
+			</dependency>
+			<!-- external -->
 			<dependency>
 				<groupId>bcel</groupId>
 				<artifactId>bcel</artifactId>
