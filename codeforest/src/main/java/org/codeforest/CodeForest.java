@@ -8,6 +8,7 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
 
 import org.codeforest.model.VertexSceneContext;
+import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
 import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
@@ -129,7 +130,7 @@ public class CodeForest extends javax.swing.JFrame {
 		};
 		VertexSceneContext<String> context = new VertexSceneContext<String>();
 		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(
-				context, graph, shapeFactory, edgeNodeFactory, 2d, 3d);
+				context, graph, shapeFactory, edgeNodeFactory, new BoxTreeLayout<String>(context, 2d, 3d));
 		TransformGroup transformGroup = sceneBuilder.createScene(A);
 		objRoot.addChild(transformGroup);
 
