@@ -9,7 +9,8 @@ import javax.vecmath.Vector3d;
 
 import org.codeforest.model.SceneData;
 import org.codeforest.model.VertexSceneContext;
-import org.codeforest.scenegraph.NodeFactory;
+import org.codeforest.scenegraph.EdgeNodeFactory;
+import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
@@ -101,11 +102,12 @@ public class TestVertexTreeSceneBuilder {
 		graph.addEdge(F, N);
 		graph.addEdge(G, O);
 		
-		NodeFactory<String, String> shapeFactory = new NodeFactory<String, String>() {
+		VertexNodeFactory<String> shapeFactory = new VertexNodeFactory<String>() {
 			public Node createNode(String vertex) {
 				return new Shape3D();
 			}
-
+		};
+		EdgeNodeFactory<String, String> edgeNodeFactory = new EdgeNodeFactory<String, String>() {
 			public Node createNode(String edge, String source, String target,
 					Vector3d startVector, Vector3d endVector) {
 				return null;
@@ -113,7 +115,7 @@ public class TestVertexTreeSceneBuilder {
 			
 		};
 		VertexSceneContext<String> context = new VertexSceneContext<String>();
-		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(context, graph, shapeFactory, 2d, 3d);
+		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(context, graph, shapeFactory, edgeNodeFactory, 2d, 3d);
 		sceneBuilder.createScene(A);
 		
 		assertTranslation(context.get(A), 0, 0, 0);

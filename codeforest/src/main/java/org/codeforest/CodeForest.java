@@ -8,7 +8,8 @@ import javax.media.j3d.*;
 import javax.vecmath.*;
 
 import org.codeforest.model.VertexSceneContext;
-import org.codeforest.scenegraph.NodeFactory;
+import org.codeforest.scenegraph.EdgeNodeFactory;
+import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
@@ -106,10 +107,12 @@ public class CodeForest extends javax.swing.JFrame {
 		graph.addEdge(F, N);
 		graph.addEdge(G, O);
 
-		NodeFactory<String, String> shapeFactory = new NodeFactory<String, String>() {
+		VertexNodeFactory<String> shapeFactory = new VertexNodeFactory<String>() {
 			public Node createNode(String vertex) {
 				return new ColorCube(0.4);
 			}
+		};
+		EdgeNodeFactory<String, String> edgeNodeFactory = new EdgeNodeFactory<String, String>() {
 
 			public Node createNode(String edge, String source, String target,
 					Vector3d startVector, Vector3d endVector) {
@@ -126,7 +129,7 @@ public class CodeForest extends javax.swing.JFrame {
 		};
 		VertexSceneContext<String> context = new VertexSceneContext<String>();
 		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(
-				context, graph, shapeFactory, 2d, 3d);
+				context, graph, shapeFactory, edgeNodeFactory, 2d, 3d);
 		TransformGroup transformGroup = sceneBuilder.createScene(A);
 		objRoot.addChild(transformGroup);
 

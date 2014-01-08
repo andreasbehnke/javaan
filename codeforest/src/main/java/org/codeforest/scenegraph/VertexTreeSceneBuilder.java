@@ -24,16 +24,19 @@ public class VertexTreeSceneBuilder<V, E> {
 
 	private final VertexSceneContext<V> context;
 
-	private final NodeFactory<V, E> nodeFactory;
+	private final VertexNodeFactory<V> nodeFactory;
+	
+	private final EdgeNodeFactory<V, E> edgeNodeFactory;
 	
 	private final double vertexWidth;
 	
 	private final double vertexHeight;
 
-	public VertexTreeSceneBuilder(VertexSceneContext<V> context, DirectedGraph<V, E> graph, NodeFactory<V, E> nodeFactory, double vertexWidth, double vertexHeight) {
+	public VertexTreeSceneBuilder(VertexSceneContext<V> context, DirectedGraph<V, E> graph, VertexNodeFactory<V> nodeFactory, EdgeNodeFactory<V, E> edgeNodeFactory, double vertexWidth, double vertexHeight) {
 		this.graph = new TraversalDirectedGraph<V, E>(graph);
 		this.context = context;
 		this.nodeFactory = nodeFactory;
+		this.edgeNodeFactory = edgeNodeFactory;
 		this.vertexWidth = vertexWidth;
 		this.vertexHeight = vertexHeight;
 	}
@@ -60,7 +63,7 @@ public class VertexTreeSceneBuilder<V, E> {
 			transformGroup.addChild(targetTransformGroup);
 			// create edge
 			E edge = graph.getEdge(vertex, targetVertex);
-			Node edgeNode = nodeFactory.createNode(edge, vertex, targetVertex, sourceVector, targetVector);
+			Node edgeNode = edgeNodeFactory.createNode(edge, vertex, targetVertex, sourceVector, targetVector);
 			transformGroup.addChild(edgeNode);
 			x += halfTargetWidth;
 		}
