@@ -1,17 +1,24 @@
 package org.codeforest;
 
-import com.sun.j3d.utils.universe.*;
-import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
-import com.sun.j3d.utils.geometry.ColorCube;
+import java.awt.GraphicsConfiguration;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.media.j3d.*;
-import javax.vecmath.*;
+import javax.media.j3d.BoundingSphere;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Canvas3D;
+import javax.media.j3d.Node;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.media.j3d.View;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.codeforest.model.VertexSceneContext;
 import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
 import org.codeforest.scenegraph.LineEdgeFactory;
-import org.codeforest.scenegraph.OneLineLayout;
+import org.codeforest.scenegraph.TableLayout;
 import org.codeforest.scenegraph.TreePlanter;
 import org.codeforest.scenegraph.TreeWidthCalculator;
 import org.codeforest.scenegraph.VertexNodeFactory;
@@ -20,9 +27,10 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
-import java.awt.GraphicsConfiguration;
-import java.util.ArrayList;
-import java.util.List;
+import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
+import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.universe.SimpleUniverse;
+import com.sun.j3d.utils.universe.ViewingPlatform;
 
 /**
  * First test: Display a simple JGraph
@@ -123,8 +131,15 @@ public class CodeForest extends javax.swing.JFrame {
 		EdgeNodeFactory<String, String> edgeNodeFactory = new LineEdgeFactory<String, String>();
 		VertexTreeSceneBuilder<String, String> treeBuilder = new VertexTreeSceneBuilder<String, String>(
 				context, graph, shapeFactory, edgeNodeFactory, new BoxTreeLayout<String>(context, 2d, 3d));
-		TreePlanter<String> planter = new TreePlanter<String>(context, treeBuilder, new OneLineLayout<String>(context, 2d, 2d));
-		
+		context.get(A).setRow(0);
+		context.get(B).setRow(0);
+		context.get(C).setRow(1);
+		context.get(D).setRow(1);
+		context.get(E).setRow(2);
+		context.get(F).setRow(2);
+		context.get(G).setRow(2);
+		TreePlanter<String> planter = new TreePlanter<String>(context, treeBuilder, 
+				new TableLayout<String>(context, 2d, 10d, 2d));
 		List<String> trees = new ArrayList<String>(4);
 		trees.add(A);
 		trees.add(B);

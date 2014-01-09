@@ -3,8 +3,11 @@ package org.codeforest.model;
 import javax.media.j3d.Node;
 import javax.media.j3d.TransformGroup;
 
+import org.codeforest.scenegraph.TableLayout;
+import org.codeforest.scenegraph.VertexTreeSceneBuilder;
+
 /**
- * Holds scene graph references of a vertex
+ * Holds scene graph layout information of a vertex
  */
 public class SceneData {
 
@@ -13,6 +16,8 @@ public class SceneData {
 	private Node node;
 	
 	private int subTreeWidth = -1;
+
+	private int row = -1;
 
 	/**
 	 * Reference to the transform group of vertex
@@ -39,6 +44,7 @@ public class SceneData {
 	/**
 	 * The width of the subtree starting at this vertex.
 	 * Returns -1 if tree width has not been calculated yet.
+	 * Used by {@link VertexTreeSceneBuilder} to calculate tree layout.
 	 */
 	public int getSubTreeWidth() {
 		return subTreeWidth;
@@ -46,5 +52,19 @@ public class SceneData {
 
 	public void setSubTreeWidth(int subTreeWidth) {
 		this.subTreeWidth = subTreeWidth;
+	}
+
+	/**
+	 * The row to place this vertex.
+	 * Returns -1 if table position has not been calculated yet.
+	 * Used by {@link TableLayout} for positioning vertex node.
+	 */
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
 	}
 }
