@@ -2,6 +2,8 @@ package org.codeforest;
 
 import java.awt.GraphicsConfiguration;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +31,7 @@ import org.javaan.bytecode.JarFileLoader;
 import org.javaan.graph.VertexEdge;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
+import org.javaan.model.Package;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.EdgeReversedGraph;
 
@@ -88,11 +91,15 @@ public class CodeForest extends javax.swing.JFrame {
 		// build layout context
 		VertexSceneContext<Clazz> context = new VertexSceneContext<Clazz>();
 
-		// calculate vertex widths for subgraph
+		// calculate vertex widths and row from package
 		TreeWidthCalculator<Clazz, VertexEdge<Clazz>> treeWidthCalculator = 
 				new TreeWidthCalculator<Clazz, VertexEdge<Clazz>>(context, specializationClasses);
+		List<Package> packages = new ArrayList<Package>(classContext.getPackages());
+		Collections.sort(packages);
 		for (Clazz clazz : rootClasses) {
 			treeWidthCalculator.calculateVertexWidth(clazz);
+			int packageIndex = packages.indexOf(classContext.getPackageOfType(clazz));
+			context.get(clazz).setRow(packageIndex);
 		}
 		
 		VertexNodeFactory<Clazz> shapeFactory = new VertexNodeFactory<Clazz>() {
@@ -132,12 +139,12 @@ public class CodeForest extends javax.swing.JFrame {
 		TransformGroup viewTransform = viewingPlatform
 				.getViewPlatformTransform();
 		Transform3D t3d = new Transform3D();
-		t3d.lookAt(new Point3d(0, 0, 150), new Point3d(0, 0, 0), new Vector3d(
+		t3d.lookAt(new Point3d(-100, 100, 500), new Point3d(0, 100, 0), new Vector3d(
 				0, 1, 0));
 		t3d.invert();
 		viewTransform.setTransform(t3d);
 		View view = univ.getViewer().getView();
-		view.setBackClipDistance(100.0);
+		view.setBackClipDistance(1000.0);
 		view.setMinimumFrameCycleTime(5);
 
 		return c;
