@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.javaan.graph.BidirectionalMap;
-import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.SingleTargetDirectedGraph;
+import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.model.Type.JavaType;
 
 public class ClassContext implements NamedObjectRepository<Type> {
@@ -45,6 +45,14 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>();
 	
+	public SingleTargetDirectedGraph<Clazz> getSuperClassGraph() {
+		return superClass;
+	}
+
+	public VertexEdgeDirectedGraph<Interface> getSuperInterfaceGraph() {
+		return superInterface;
+	}
+
 	private void addType(Type type) {
 		if (type == null) {
 			throw new IllegalArgumentException("Parameter type must not be null");
