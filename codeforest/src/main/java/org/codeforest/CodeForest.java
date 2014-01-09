@@ -1,8 +1,9 @@
 package org.codeforest;
 
 import java.awt.GraphicsConfiguration;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
@@ -23,9 +24,13 @@ import org.codeforest.scenegraph.TreePlanter;
 import org.codeforest.scenegraph.TreeWidthCalculator;
 import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
+import org.javaan.bytecode.ClassContextBuilder;
+import org.javaan.bytecode.JarFileLoader;
+import org.javaan.graph.VertexEdge;
+import org.javaan.model.ClassContext;
+import org.javaan.model.Clazz;
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.EdgeReversedGraph;
 
 import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
 import com.sun.j3d.utils.geometry.ColorCube;
@@ -39,37 +44,25 @@ public class CodeForest extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String A = "A";
-	private static final String B = "B";
-	private static final String C = "C";
-	private static final String D = "D";
-	private static final String E = "E";
-	private static final String F = "F";
-	private static final String G = "G";
-	private static final String H = "H";
-	private static final String I = "I";
-	private static final String J = "J";
-	private static final String K = "K";
-	private static final String L = "L";
-	private static final String M = "M";
-	private static final String N = "N";
-	private static final String O = "O";
-
 	private SimpleUniverse univ = null;
+	
 	private BranchGroup scene = null;
 
 	private javax.swing.JPanel drawingPanel;
 
-	public CodeForest() {
+	public CodeForest(String[] fileNames) throws IOException {
 		// Initialize the GUI components
 		initComponents();
+		
+		// create class context
+		ClassContext classContext = createClassContext(fileNames);
 
 		// Create Canvas3D and SimpleUniverse; add canvas to drawing panel
 		Canvas3D c = createUniverse();
 		drawingPanel.add(c, java.awt.BorderLayout.CENTER);
 
 		// Create the content branch and add it to the universe
-		scene = createSceneGraph();
+		scene = createSceneGraph(classContext);
 		univ.addBranchGraph(scene);
 
 		OrbitBehavior orbit = new OrbitBehavior(c);
@@ -77,78 +70,42 @@ public class CodeForest extends javax.swing.JFrame {
 				new Point3d(0.0, 0.0, 0.0), Double.MAX_VALUE));
 		univ.getViewingPlatform().setViewPlatformBehavior(orbit);
 	}
+	
+	private ClassContext createClassContext(String[] fileNames) throws IOException {
+		List<org.javaan.model.Type> types = new JarFileLoader().loadJavaClasses(fileNames);
+		return new ClassContextBuilder(types).build();
+	}
+	
 
-	public BranchGroup createSceneGraph() {
+	private BranchGroup createSceneGraph(ClassContext classContext) {
 		// Create the root of the branch graph
 		BranchGroup objRoot = new BranchGroup();
-
-		DirectedGraph<String, String> graph = new DefaultDirectedGraph<String, String>(
-				new EdgeFactory<String, String>() {
-					public String createEdge(String sourceVertex,
-							String targetVertex) {
-						return sourceVertex + targetVertex;
-					};
-				});
-		graph.addVertex(A);
-		graph.addVertex(B);
-		graph.addVertex(C);
-		graph.addVertex(D);
-		graph.addVertex(E);
-		graph.addVertex(F);
-		graph.addVertex(G);
-		graph.addVertex(H);
-		graph.addVertex(I);
-		graph.addVertex(J);
-		graph.addVertex(K);
-		graph.addVertex(L);
-		graph.addVertex(M);
-		graph.addVertex(N);
-		graph.addVertex(O);
-		graph.addEdge(A, B);
-		graph.addEdge(A, C);
-		graph.addEdge(B, D);
-		graph.addEdge(B, E);
-		graph.addEdge(B, F);
-		graph.addEdge(C, G);
-		graph.addEdge(D, H);
-		graph.addEdge(D, I);
-		graph.addEdge(D, J);
-		graph.addEdge(E, K);
-		graph.addEdge(E, L);
-		graph.addEdge(F, M);
-		graph.addEdge(F, N);
-		graph.addEdge(G, O);
 		
-		VertexSceneContext<String> context = new VertexSceneContext<String>();
-		// calculate vertex widths for subgraph
-		new TreeWidthCalculator<String, String>(context, graph).calculateVertexWidth(A);
+		// retrieve all classes which extend Object
+		Set<Clazz> rootClasses = classContext.getDirectSpecializationsOfClass(new Clazz("java.lang.Object"));
+		DirectedGraph<Clazz, VertexEdge<Clazz>> specializationClasses = new EdgeReversedGraph<>(classContext.getSuperClassGraph());
+		
+		// build layout context
+		VertexSceneContext<Clazz> context = new VertexSceneContext<Clazz>();
 
-		VertexNodeFactory<String> shapeFactory = new VertexNodeFactory<String>() {
-			public Node createNode(String vertex) {
+		// calculate vertex widths for subgraph
+		TreeWidthCalculator<Clazz, VertexEdge<Clazz>> treeWidthCalculator = 
+				new TreeWidthCalculator<Clazz, VertexEdge<Clazz>>(context, specializationClasses);
+		for (Clazz clazz : rootClasses) {
+			treeWidthCalculator.calculateVertexWidth(clazz);
+		}
+		
+		VertexNodeFactory<Clazz> shapeFactory = new VertexNodeFactory<Clazz>() {
+			public Node createNode(Clazz vertex) {
 				return new ColorCube(0.4);
 			}
 		};
-		EdgeNodeFactory<String, String> edgeNodeFactory = new LineEdgeFactory<String, String>();
-		VertexTreeSceneBuilder<String, String> treeBuilder = new VertexTreeSceneBuilder<String, String>(
-				context, graph, shapeFactory, edgeNodeFactory, new BoxTreeLayout<String>(context, 2d, 3d));
-		context.get(A).setRow(0);
-		context.get(B).setRow(0);
-		context.get(C).setRow(1);
-		context.get(D).setRow(1);
-		context.get(E).setRow(2);
-		context.get(F).setRow(2);
-		context.get(G).setRow(2);
-		TreePlanter<String> planter = new TreePlanter<String>(context, treeBuilder, 
-				new TableLayout<String>(context, 2d, 10d, 2d));
-		List<String> trees = new ArrayList<String>(4);
-		trees.add(A);
-		trees.add(B);
-		trees.add(C);
-		trees.add(D);
-		trees.add(E);
-		trees.add(F);
-		trees.add(G);
-		TransformGroup transformGroup = planter.createScene(trees);
+		EdgeNodeFactory<Clazz, VertexEdge<Clazz>> edgeNodeFactory = new LineEdgeFactory<Clazz, VertexEdge<Clazz>>();
+		VertexTreeSceneBuilder<Clazz, VertexEdge<Clazz>> treeBuilder = new VertexTreeSceneBuilder<Clazz, VertexEdge<Clazz>>(
+				context, specializationClasses, shapeFactory, edgeNodeFactory, new BoxTreeLayout<Clazz>(context, 2d, 3d));
+		
+		TreePlanter<Clazz> planter = new TreePlanter<Clazz>(context, treeBuilder, new TableLayout<Clazz>(context, 2d, 10d, 2d));
+		TransformGroup transformGroup = planter.createScene(rootClasses);
 		objRoot.addChild(transformGroup);
 
 		// Have Java 3D perform optimizations on this scene graph.
@@ -200,13 +157,16 @@ public class CodeForest extends javax.swing.JFrame {
 	}
 
 	/**
-	 * @param args
-	 *            the command line arguments
+	 * @param args List of jar files
 	 */
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new CodeForest().setVisible(true);
+				try {
+					new CodeForest(args).setVisible(true);
+				} catch (IOException e) {
+					System.out.println("Could not load libraries: " +  e);
+				}
 			}
 		});
 	}
