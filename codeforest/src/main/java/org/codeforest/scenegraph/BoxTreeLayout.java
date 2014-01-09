@@ -4,7 +4,7 @@ import javax.vecmath.Vector3d;
 
 import org.codeforest.model.VertexSceneContext;
 
-public class BoxTreeLayout<V> implements Layout<V> {
+public class BoxTreeLayout<V> implements GraphLayout<V> {
 
 	private final VertexSceneContext<V> context;
 	
@@ -14,9 +14,7 @@ public class BoxTreeLayout<V> implements Layout<V> {
 
 	private double x;
 	
-	public BoxTreeLayout(VertexSceneContext<V> context, double vertexWidth,
-			double vertexHeight) {
-		super();
+	public BoxTreeLayout(VertexSceneContext<V> context, double vertexWidth, double vertexHeight) {
 		this.context = context;
 		this.vertexWidth = vertexWidth;
 		this.vertexHeight = vertexHeight;

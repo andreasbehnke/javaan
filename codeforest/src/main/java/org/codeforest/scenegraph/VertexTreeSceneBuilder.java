@@ -28,9 +28,9 @@ public class VertexTreeSceneBuilder<V, E> {
 	
 	private final EdgeNodeFactory<V, E> edgeNodeFactory;
 	
-	private final Layout<V> layout;
+	private final GraphLayout<V> layout;
 	
-	public VertexTreeSceneBuilder(VertexSceneContext<V> context, DirectedGraph<V, E> graph, VertexNodeFactory<V> nodeFactory, EdgeNodeFactory<V, E> edgeNodeFactory, Layout<V> layout) {
+	public VertexTreeSceneBuilder(VertexSceneContext<V> context, DirectedGraph<V, E> graph, VertexNodeFactory<V> nodeFactory, EdgeNodeFactory<V, E> edgeNodeFactory, GraphLayout<V> layout) {
 		this.graph = new TraversalDirectedGraph<V, E>(graph);
 		this.context = context;
 		this.nodeFactory = nodeFactory;
