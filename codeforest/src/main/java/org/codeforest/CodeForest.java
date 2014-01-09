@@ -52,9 +52,6 @@ public class CodeForest extends javax.swing.JFrame {
 
 	private javax.swing.JPanel drawingPanel;
 
-	/**
-	 * Creates new form HelloUniverse
-	 */
 	public CodeForest() {
 		// Initialize the GUI components
 		initComponents();
