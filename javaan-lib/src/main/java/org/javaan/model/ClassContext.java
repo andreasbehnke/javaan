@@ -95,6 +95,10 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		return superClass.predecessorsOf(className);
 	}
 	
+	public Set<Clazz> getDirectSpecializationsOfClass(Clazz className) {
+		return superClass.sourceVerticesOf(className);
+	}
+	
 	public void addInterface(Interface interfaceName) {
 		addType(interfaceName);
 		superInterface.addVertex(interfaceName);

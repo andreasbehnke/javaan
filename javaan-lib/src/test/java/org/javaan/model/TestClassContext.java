@@ -127,6 +127,25 @@ public class TestClassContext {
 	}
 	
 	@Test
+	public void testGetDirectSpecializationOfClass() {
+		ClassContext context = new ClassContext();
+		context.addClass(CLASSA);
+		context.addSuperClass(CLASSB, CLASSA);
+		context.addSuperClass(CLASSC, CLASSB);
+		context.addSuperClass(CLASSD, CLASSA);
+
+		Set<Clazz> spec = context.getDirectSpecializationsOfClass(CLASSA);
+		assertNotNull(spec);
+		assertEquals(2, spec.size());
+		assertTrue(spec.contains(CLASSB));
+		assertTrue(spec.contains(CLASSD));
+		
+		spec = context.getDirectSpecializationsOfClass(CLASSD);
+		assertNotNull(spec);
+		assertEquals(0, spec.size());
+	}
+	
+	@Test
 	public void testGetSpecializationOfClass() {
 		ClassContext context = new ClassContext();
 		context.addClass(CLASSA);
