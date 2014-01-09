@@ -1,21 +1,36 @@
 package org.codeforest;
 
-import com.sun.j3d.utils.universe.*;
-import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
-import com.sun.j3d.utils.geometry.ColorCube;
+import java.awt.GraphicsConfiguration;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.media.j3d.*;
-import javax.vecmath.*;
+import javax.media.j3d.BoundingSphere;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Canvas3D;
+import javax.media.j3d.Node;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.media.j3d.View;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.codeforest.model.VertexSceneContext;
+import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
+import org.codeforest.scenegraph.LineEdgeFactory;
+import org.codeforest.scenegraph.TableLayout;
+import org.codeforest.scenegraph.TreePlanter;
+import org.codeforest.scenegraph.TreeWidthCalculator;
 import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
-import java.awt.GraphicsConfiguration;
+import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
+import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.universe.SimpleUniverse;
+import com.sun.j3d.utils.universe.ViewingPlatform;
 
 /**
  * First test: Display a simple JGraph
@@ -45,9 +60,6 @@ public class CodeForest extends javax.swing.JFrame {
 
 	private javax.swing.JPanel drawingPanel;
 
-	/**
-	 * Creates new form HelloUniverse
-	 */
 	public CodeForest() {
 		// Initialize the GUI components
 		initComponents();
@@ -106,31 +118,37 @@ public class CodeForest extends javax.swing.JFrame {
 		graph.addEdge(F, M);
 		graph.addEdge(F, N);
 		graph.addEdge(G, O);
+		
+		VertexSceneContext<String> context = new VertexSceneContext<String>();
+		// calculate vertex widths for subgraph
+		new TreeWidthCalculator<String, String>(context, graph).calculateVertexWidth(A);
 
 		VertexNodeFactory<String> shapeFactory = new VertexNodeFactory<String>() {
 			public Node createNode(String vertex) {
 				return new ColorCube(0.4);
 			}
 		};
-		EdgeNodeFactory<String, String> edgeNodeFactory = new EdgeNodeFactory<String, String>() {
-
-			public Node createNode(String edge, String source, String target,
-					Vector3d startVector, Vector3d endVector) {
-				LineArray lines = new LineArray(2, GeometryArray.COORDINATES);
-				lines.setCoordinates(0, new double[] {
-						startVector.x, startVector.y, startVector.z,
-						endVector.x, endVector.y, endVector.z});
-				Appearance appearance = new Appearance();
-				appearance.setColoringAttributes(new ColoringAttributes(255, 0, 0, ColoringAttributes.NICEST));
-				Shape3D shape = new Shape3D(lines, appearance);
-				return shape;
-			}
-			
-		};
-		VertexSceneContext<String> context = new VertexSceneContext<String>();
-		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(
-				context, graph, shapeFactory, edgeNodeFactory, 2d, 3d);
-		TransformGroup transformGroup = sceneBuilder.createScene(A);
+		EdgeNodeFactory<String, String> edgeNodeFactory = new LineEdgeFactory<String, String>();
+		VertexTreeSceneBuilder<String, String> treeBuilder = new VertexTreeSceneBuilder<String, String>(
+				context, graph, shapeFactory, edgeNodeFactory, new BoxTreeLayout<String>(context, 2d, 3d));
+		context.get(A).setRow(0);
+		context.get(B).setRow(0);
+		context.get(C).setRow(1);
+		context.get(D).setRow(1);
+		context.get(E).setRow(2);
+		context.get(F).setRow(2);
+		context.get(G).setRow(2);
+		TreePlanter<String> planter = new TreePlanter<String>(context, treeBuilder, 
+				new TableLayout<String>(context, 2d, 10d, 2d));
+		List<String> trees = new ArrayList<String>(4);
+		trees.add(A);
+		trees.add(B);
+		trees.add(C);
+		trees.add(D);
+		trees.add(E);
+		trees.add(F);
+		trees.add(G);
+		TransformGroup transformGroup = planter.createScene(trees);
 		objRoot.addChild(transformGroup);
 
 		// Have Java 3D perform optimizations on this scene graph.
@@ -161,7 +179,6 @@ public class CodeForest extends javax.swing.JFrame {
 				0, 1, 0));
 		t3d.invert();
 		viewTransform.setTransform(t3d);
-
 		View view = univ.getViewer().getView();
 		view.setBackClipDistance(100.0);
 		view.setMinimumFrameCycleTime(5);
