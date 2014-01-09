@@ -10,6 +10,7 @@ import javax.vecmath.*;
 import org.codeforest.model.VertexSceneContext;
 import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
+import org.codeforest.scenegraph.LineEdgeFactory;
 import org.codeforest.scenegraph.OneLineLayout;
 import org.codeforest.scenegraph.TreePlanter;
 import org.codeforest.scenegraph.TreeWidthCalculator;
@@ -122,21 +123,7 @@ public class CodeForest extends javax.swing.JFrame {
 				return new ColorCube(0.4);
 			}
 		};
-		EdgeNodeFactory<String, String> edgeNodeFactory = new EdgeNodeFactory<String, String>() {
-
-			public Node createNode(String edge, String source, String target,
-					Vector3d startVector, Vector3d endVector) {
-				LineArray lines = new LineArray(2, GeometryArray.COORDINATES);
-				lines.setCoordinates(0, new double[] {
-						startVector.x, startVector.y, startVector.z,
-						endVector.x, endVector.y, endVector.z});
-				Appearance appearance = new Appearance();
-				appearance.setColoringAttributes(new ColoringAttributes(255, 0, 0, ColoringAttributes.NICEST));
-				Shape3D shape = new Shape3D(lines, appearance);
-				return shape;
-			}
-			
-		};
+		EdgeNodeFactory<String, String> edgeNodeFactory = new LineEdgeFactory<String, String>();
 		VertexTreeSceneBuilder<String, String> treeBuilder = new VertexTreeSceneBuilder<String, String>(
 				context, graph, shapeFactory, edgeNodeFactory, new BoxTreeLayout<String>(context, 2d, 3d));
 		TreePlanter<String> planter = new TreePlanter<String>(context, treeBuilder, new OneLineLayout<String>(context, 2d, 2d));
@@ -146,6 +133,9 @@ public class CodeForest extends javax.swing.JFrame {
 		trees.add(B);
 		trees.add(C);
 		trees.add(D);
+		trees.add(E);
+		trees.add(F);
+		trees.add(G);
 		TransformGroup transformGroup = planter.createScene(trees);
 		objRoot.addChild(transformGroup);
 
