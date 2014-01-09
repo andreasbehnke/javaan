@@ -24,11 +24,13 @@ public class BoxTreeLayout<V> implements GraphLayout<V> {
 		return context.get(vertex).getSubTreeWidth() * vertexWidth;
 	}
 
+	@Override
 	public Vector3d startVertex(V sourceVertex) {
 		x = - 0.5 * getVertexWidth(sourceVertex);
 		return new Vector3d();
 	}
 	
+	@Override
 	public Vector3d processTargetVertex(V targetVertex) {
 		double halfTargetWidth = getVertexWidth(targetVertex) * 0.5d;
 		x += halfTargetWidth;

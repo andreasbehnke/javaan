@@ -41,9 +41,6 @@ public class TreeWidthCalculator<V, E> extends TraversalListenerAdapter<V, E> {
 	}
 
 	public void calculateVertexWidth(V startVertex) {
-		if (context.get(startVertex).getSubTreeWidth() != -1) {
-			return;
-		}
 		GraphIterator<V, E> iterator = new DepthFirstIterator<V, E>(graph, startVertex);
 		iterator.addTraversalListener(this);
 		while(iterator.hasNext()) {

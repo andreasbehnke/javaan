@@ -12,6 +12,7 @@ import org.codeforest.model.SceneData;
 import org.codeforest.model.VertexSceneContext;
 import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
+import org.codeforest.scenegraph.TreeWidthCalculator;
 import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.jgrapht.DirectedGraph;
@@ -117,6 +118,7 @@ public class TestVertexTreeSceneBuilder {
 			
 		};
 		VertexSceneContext<String> context = new VertexSceneContext<String>();
+		new TreeWidthCalculator<>(context, graph).calculateVertexWidth(A);
 		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(context, graph, shapeFactory, edgeNodeFactory, new BoxTreeLayout<String>(context, 2d, 3d));
 		sceneBuilder.createScene(A);
 		

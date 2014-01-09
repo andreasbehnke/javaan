@@ -59,14 +59,7 @@ public class VertexTreeSceneBuilder<V, E> {
 	}
 
 	public TransformGroup createScene(V startVertex) {
-		TransformGroup transformGroup = context.get(startVertex).getTransformGroup();
-		if (transformGroup != null) {
-			// scene for this vertex has been build before, just return it
-			return transformGroup;
-		}
-		// calculate vertex widths for subgraph
-		new TreeWidthCalculator<V, E>(context, graph).calculateVertexWidth(startVertex);
-		transformGroup = new TransformGroup();
+		TransformGroup transformGroup = new TransformGroup();
 		context.get(startVertex).setTransformGroup(transformGroup);
 		Stack<V> stack = new Stack<V>();
 		stack.add(startVertex);

@@ -10,6 +10,9 @@ import javax.vecmath.*;
 import org.codeforest.model.VertexSceneContext;
 import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
+import org.codeforest.scenegraph.OneLineLayout;
+import org.codeforest.scenegraph.TreePlanter;
+import org.codeforest.scenegraph.TreeWidthCalculator;
 import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.jgrapht.DirectedGraph;
@@ -17,6 +20,8 @@ import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
 import java.awt.GraphicsConfiguration;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * First test: Display a simple JGraph
@@ -107,6 +112,10 @@ public class CodeForest extends javax.swing.JFrame {
 		graph.addEdge(F, M);
 		graph.addEdge(F, N);
 		graph.addEdge(G, O);
+		
+		VertexSceneContext<String> context = new VertexSceneContext<String>();
+		// calculate vertex widths for subgraph
+		new TreeWidthCalculator<String, String>(context, graph).calculateVertexWidth(A);
 
 		VertexNodeFactory<String> shapeFactory = new VertexNodeFactory<String>() {
 			public Node createNode(String vertex) {
@@ -128,10 +137,16 @@ public class CodeForest extends javax.swing.JFrame {
 			}
 			
 		};
-		VertexSceneContext<String> context = new VertexSceneContext<String>();
-		VertexTreeSceneBuilder<String, String> sceneBuilder = new VertexTreeSceneBuilder<String, String>(
+		VertexTreeSceneBuilder<String, String> treeBuilder = new VertexTreeSceneBuilder<String, String>(
 				context, graph, shapeFactory, edgeNodeFactory, new BoxTreeLayout<String>(context, 2d, 3d));
-		TransformGroup transformGroup = sceneBuilder.createScene(A);
+		TreePlanter<String> planter = new TreePlanter<String>(context, treeBuilder, new OneLineLayout<String>(context, 2d, 2d));
+		
+		List<String> trees = new ArrayList<String>(4);
+		trees.add(A);
+		trees.add(B);
+		trees.add(C);
+		trees.add(D);
+		TransformGroup transformGroup = planter.createScene(trees);
 		objRoot.addChild(transformGroup);
 
 		// Have Java 3D perform optimizations on this scene graph.
@@ -162,7 +177,6 @@ public class CodeForest extends javax.swing.JFrame {
 				0, 1, 0));
 		t3d.invert();
 		viewTransform.setTransform(t3d);
-
 		View view = univ.getViewer().getView();
 		view.setBackClipDistance(100.0);
 		view.setMinimumFrameCycleTime(5);
