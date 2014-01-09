@@ -36,7 +36,7 @@ public class TableLayout<V> implements Layout<V> {
 		int row = context.get(vertex).getRow();
 		OneLineLayout<V> layout = rows.get(row);
 		if (layout == null) {
-			double z = (vertexBreadth + vertexSpace) * row;
+			double z = (vertexBreadth + vertexSpace) * -row;
 			layout = new OneLineLayout<V>(context, vertexWidth, z, vertexSpace);
 			layout.start();
 			rows.put(row, layout);
