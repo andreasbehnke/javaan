@@ -79,6 +79,16 @@ public class CodeForest extends javax.swing.JFrame {
 		return new ClassContextBuilder(types).build();
 	}
 	
+	private List<Package> getNoneEmptyPackages(ClassContext classContext) {
+		List<Package> packages = new ArrayList<Package>();
+		for (Package package1 : classContext.getPackages()) {
+			if (classContext.getClassesOfPackage(package1).size() > 0) {
+				packages.add(package1);
+			}
+		}
+		Collections.sort(packages);
+		return packages;
+	}
 
 	private BranchGroup createSceneGraph(ClassContext classContext) {
 		// Create the root of the branch graph
@@ -92,10 +102,9 @@ public class CodeForest extends javax.swing.JFrame {
 		VertexSceneContext<Clazz> context = new VertexSceneContext<Clazz>();
 
 		// calculate vertex widths and row from package
+		List<Package> packages = getNoneEmptyPackages(classContext);
 		TreeWidthCalculator<Clazz, VertexEdge<Clazz>> treeWidthCalculator = 
 				new TreeWidthCalculator<Clazz, VertexEdge<Clazz>>(context, specializationClasses);
-		List<Package> packages = new ArrayList<Package>(classContext.getPackages());
-		Collections.sort(packages);
 		for (Clazz clazz : rootClasses) {
 			treeWidthCalculator.calculateVertexWidth(clazz);
 			int packageIndex = packages.indexOf(classContext.getPackageOfType(clazz));
