@@ -50,6 +50,14 @@ public class CallGraph {
 	public int size() {
 		return callerOfMethod.vertexSet().size();
 	}
+	
+	public VertexEdgeDirectedGraph<Method> getCallerOfMethodGraph() {
+		return callerOfMethod;
+	}
+	
+	public ExternalEdgeDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
+		return usageOfClass;
+	}
 
 	public void addCall(Method caller, Method callee) {
 		if (caller == null) {
