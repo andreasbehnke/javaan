@@ -1,4 +1,4 @@
-package org.codeforest.graph;
+package org.codeforest.layout;
 
 import static org.junit.Assert.assertEquals;
 
