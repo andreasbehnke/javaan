@@ -1,4 +1,4 @@
-package org.codeforest.model;
+package org.codeforest.layout;
 
 import javax.media.j3d.Node;
 import javax.media.j3d.TransformGroup;

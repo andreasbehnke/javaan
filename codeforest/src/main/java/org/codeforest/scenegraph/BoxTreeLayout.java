@@ -2,7 +2,7 @@ package org.codeforest.scenegraph;
 
 import javax.vecmath.Vector3d;
 
-import org.codeforest.model.VertexSceneContext;
+import org.codeforest.layout.VertexSceneContext;
 
 public class BoxTreeLayout<V> implements GraphLayout<V> {
 

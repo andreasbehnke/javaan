@@ -2,7 +2,7 @@ package org.codeforest.scenegraph;
 
 import javax.vecmath.Vector3d;
 
-import org.codeforest.model.VertexSceneContext;
+import org.codeforest.layout.VertexSceneContext;
 
 /**
  * Places vertices along one line

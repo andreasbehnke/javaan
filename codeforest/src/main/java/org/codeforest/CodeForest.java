@@ -22,7 +22,7 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.codeforest.model.VertexSceneContext;
+import org.codeforest.layout.VertexSceneContext;
 import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
 import org.codeforest.scenegraph.LineEdgeFactory;

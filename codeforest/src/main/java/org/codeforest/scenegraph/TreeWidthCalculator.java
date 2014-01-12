@@ -2,7 +2,7 @@ package org.codeforest.scenegraph;
 
 import java.util.Set;
 
-import org.codeforest.model.VertexSceneContext;
+import org.codeforest.layout.VertexSceneContext;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListenerAdapter;
 import org.jgrapht.event.VertexTraversalEvent;

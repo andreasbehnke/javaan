@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.vecmath.Vector3d;
 
-import org.codeforest.model.VertexSceneContext;
+import org.codeforest.layout.VertexSceneContext;
 
 public class TableLayout<V> implements Layout<V> {
 	

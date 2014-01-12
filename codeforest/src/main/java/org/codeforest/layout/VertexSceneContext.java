@@ -1,4 +1,4 @@
-package org.codeforest.model;
+package org.codeforest.layout;
 
 import java.util.HashMap;
 import java.util.Map;
