@@ -22,13 +22,13 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.codeforest.layout.BoxTreeLayout;
+import org.codeforest.layout.TableLayout;
+import org.codeforest.layout.TreeWidthCalculator;
 import org.codeforest.layout.VertexSceneContext;
-import org.codeforest.scenegraph.BoxTreeLayout;
 import org.codeforest.scenegraph.EdgeNodeFactory;
 import org.codeforest.scenegraph.LineEdgeFactory;
-import org.codeforest.scenegraph.TableLayout;
 import org.codeforest.scenegraph.TreePlanter;
-import org.codeforest.scenegraph.TreeWidthCalculator;
 import org.codeforest.scenegraph.VertexNodeConnector;
 import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;

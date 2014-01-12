@@ -8,6 +8,7 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3d;
 
+import org.codeforest.layout.GraphLayout;
 import org.codeforest.layout.SceneData;
 import org.codeforest.layout.VertexSceneContext;
 import org.javaan.graph.TraversalDirectedGraph;

@@ -2,8 +2,8 @@ package org.codeforest.graph;
 
 import static org.junit.Assert.assertEquals;
 
+import org.codeforest.layout.TreeWidthCalculator;
 import org.codeforest.layout.VertexSceneContext;
-import org.codeforest.scenegraph.TreeWidthCalculator;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;

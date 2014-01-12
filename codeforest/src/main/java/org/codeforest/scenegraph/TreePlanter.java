@@ -6,6 +6,7 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3d;
 
+import org.codeforest.layout.Layout;
 import org.codeforest.layout.VertexSceneContext;
 
 /**

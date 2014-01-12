@@ -3,7 +3,6 @@ package org.codeforest.layout;
 import javax.media.j3d.Node;
 import javax.media.j3d.TransformGroup;
 
-import org.codeforest.scenegraph.TableLayout;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 
 /**

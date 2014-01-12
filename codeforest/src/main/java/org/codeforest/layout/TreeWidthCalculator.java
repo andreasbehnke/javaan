@@ -1,8 +1,7 @@
-package org.codeforest.scenegraph;
+package org.codeforest.layout;
 
 import java.util.Set;
 
-import org.codeforest.layout.VertexSceneContext;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListenerAdapter;
 import org.jgrapht.event.VertexTraversalEvent;
