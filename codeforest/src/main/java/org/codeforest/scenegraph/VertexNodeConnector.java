@@ -25,8 +25,7 @@ public class VertexNodeConnector<V, E> {
 	private Vector3d getTranslationOfVertex(V vertex) {
 		Node node = context.get(vertex).getNode();
 		if (node == null) {
-			System.out.println("Warning: missing node for vertex " + vertex);
-			return new Vector3d();
+			return null;
 		}
 		Transform3D t3d = new Transform3D();
 		node.getLocalToVworld(t3d);
@@ -42,7 +41,9 @@ public class VertexNodeConnector<V, E> {
 			V target = graph.getEdgeTarget(edge);
 			Vector3d startVector = getTranslationOfVertex(source);
 			Vector3d endVector = getTranslationOfVertex(target);
-			transformGroup.addChild(edgeFactory.createNode(edge, source, target, startVector, endVector));
+			if (startVector != null && endVector != null) {
+				transformGroup.addChild(edgeFactory.createNode(edge, source, target, startVector, endVector));
+			}
 		}
 		return transformGroup;
 	}
