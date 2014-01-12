@@ -9,13 +9,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
+import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.Node;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.View;
+import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
@@ -110,6 +113,20 @@ public class CodeForest extends javax.swing.JFrame {
 		Collections.sort(packages);
 		return packages;
 	}
+	
+	private Appearance createInheritanceAppearance() {
+		Appearance appearance = new Appearance();
+		ColoringAttributes coloringAttributes = new  ColoringAttributes(new Color3f(1,0,0), ColoringAttributes.NICEST);
+		appearance.setColoringAttributes(coloringAttributes);;
+		return appearance;
+	}
+	
+	private Appearance createUsageAppearance() {
+		Appearance appearance = new Appearance();
+		ColoringAttributes coloringAttributes = new  ColoringAttributes(new Color3f(0,0,1), ColoringAttributes.NICEST);
+		appearance.setColoringAttributes(coloringAttributes);;
+		return appearance;
+	}
 
 	private BranchGroup createSceneGraph(ClassContext classContext, CallGraph callGraph) {
 		// Create the root of the branch graph
@@ -122,24 +139,27 @@ public class CodeForest extends javax.swing.JFrame {
 		DirectedGraph<Clazz, VertexEdge<Clazz>> specializationClasses = new EdgeReversedGraph<>(classContext.getSuperClassGraph());
 		
 		// build layout context
-		VertexSceneContext<Clazz> context = new VertexSceneContext<Clazz>();
+		VertexSceneContext<Clazz> context = new VertexSceneContext<>();
 
 		// calculate vertex widths and row from package
 		List<Package> packages = getNoneEmptyPackages(classContext);
-		TreeWidthCalculator<Clazz, VertexEdge<Clazz>> treeWidthCalculator = 
-				new TreeWidthCalculator<Clazz, VertexEdge<Clazz>>(context, specializationClasses);
+		TreeWidthCalculator<Clazz, VertexEdge<Clazz>> treeWidthCalculator = new TreeWidthCalculator<>(context, specializationClasses);
 		for (Clazz clazz : rootClasses) {
 			treeWidthCalculator.calculateVertexWidth(clazz);
 			int packageIndex = packages.indexOf(classContext.getPackageOfType(clazz));
 			context.get(clazz).setRow(packageIndex);
 		}
 		
+		// create factory for class nodes
 		VertexNodeFactory<Clazz> shapeFactory = new VertexNodeFactory<Clazz>() {
 			public Node createNode(Clazz vertex) {
 				return new ColorCube(0.4);
 			}
 		};
-		EdgeNodeFactory<Clazz, VertexEdge<Clazz>> inheritanceEdgeNodeFactory = new LineEdgeFactory<Clazz, VertexEdge<Clazz>>();
+		
+		// create factory for inheritance edges
+		EdgeNodeFactory<Clazz, VertexEdge<Clazz>> inheritanceEdgeNodeFactory = new LineEdgeFactory<>(createInheritanceAppearance());
+				
 		VertexTreeSceneBuilder<Clazz, VertexEdge<Clazz>> treeBuilder = new VertexTreeSceneBuilder<Clazz, VertexEdge<Clazz>>(
 				context, specializationClasses, shapeFactory, inheritanceEdgeNodeFactory, new BoxTreeLayout<Clazz>(context, 2d, 3d));
 		
@@ -147,7 +167,7 @@ public class CodeForest extends javax.swing.JFrame {
 		TransformGroup transformGroup = planter.createScene(rootClasses);
 		objRoot.addChild(transformGroup);
 		
-		EdgeNodeFactory<Clazz, Method> usageEdgeNodeFactory = new LineEdgeFactory<Clazz, Method>();
+		EdgeNodeFactory<Clazz, Method> usageEdgeNodeFactory = new LineEdgeFactory<Clazz, Method>(createUsageAppearance());
 		VertexNodeConnector<Clazz, Method> connector = new VertexNodeConnector<Clazz, Method>(context, usageEdgeNodeFactory);
 		callGraphBranchGroup = new BranchGroup();
 		callGraphBranchGroup.setCapability(BranchGroup.ALLOW_DETACH);
