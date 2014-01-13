@@ -22,6 +22,8 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.codeforest.graph.CondensedEdge;
+import org.codeforest.graph.CondensedGraphBuilder;
 import org.codeforest.layout.BoxTreeLayout;
 import org.codeforest.layout.TableLayout;
 import org.codeforest.layout.TreeWidthCalculator;
@@ -129,6 +131,10 @@ public class CodeForest extends javax.swing.JFrame {
 	}
 
 	private BranchGroup createSceneGraph(ClassContext classContext, CallGraph callGraph) {
+		DirectedGraph<Clazz, CondensedEdge<Clazz, Method>> condensedCallGraph = 
+				new CondensedGraphBuilder<>(callGraph.getUsageOfClassGraph()).createCondensedGraph();
+		
+		
 		// Create the root of the branch graph
 		objRoot = new BranchGroup();
 		objRoot.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
@@ -167,11 +173,11 @@ public class CodeForest extends javax.swing.JFrame {
 		TransformGroup transformGroup = planter.createScene(rootClasses);
 		objRoot.addChild(transformGroup);
 		
-		EdgeNodeFactory<Clazz, Method> usageEdgeNodeFactory = new LineEdgeFactory<Clazz, Method>(createUsageAppearance());
-		VertexNodeConnector<Clazz, Method> connector = new VertexNodeConnector<Clazz, Method>(context, usageEdgeNodeFactory);
+		EdgeNodeFactory<Clazz, CondensedEdge<Clazz, Method>> usageEdgeNodeFactory = new LineEdgeFactory<>(createUsageAppearance());
+		VertexNodeConnector<Clazz, CondensedEdge<Clazz, Method>> connector = new VertexNodeConnector<>(context, usageEdgeNodeFactory);
 		callGraphBranchGroup = new BranchGroup();
 		callGraphBranchGroup.setCapability(BranchGroup.ALLOW_DETACH);
-		callGraphBranchGroup.addChild(connector.createScene(callGraph.getUsageOfClassGraph()));
+		callGraphBranchGroup.addChild(connector.createScene(condensedCallGraph));
 		return objRoot;
 	}
 
