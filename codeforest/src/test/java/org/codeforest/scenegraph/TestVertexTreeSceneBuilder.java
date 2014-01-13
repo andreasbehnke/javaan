@@ -1,4 +1,4 @@
-package org.codeforest.graph;
+package org.codeforest.scenegraph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
