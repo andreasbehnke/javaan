@@ -1,8 +1,5 @@
-package org.codeforest.graph;
+package org.javaan.graph;
 
-import org.javaan.graph.ExternalEdgeDirectedGraph;
-import org.javaan.graph.GraphVisitorAdapter;
-import org.javaan.graph.TraversalDirectedGraph;
 import org.jgrapht.DirectedGraph;
 
 /**
@@ -26,13 +23,10 @@ public class CondensedGraphBuilder<V, E> {
 				V source = graph.getEdgeSource(edge);
 				CondensedEdge<V, E> condensedEdge = condensedGraph.getEdge(source, target);
 				if (condensedEdge == null) {
-					condensedEdge = condensedGraph.getEdge(target, source);
-				}
-				if (condensedEdge == null) {
-					condensedEdge = new CondensedEdge<V, E>(target, source);
+					condensedEdge = new CondensedEdge<V, E>(source, target);
 					condensedGraph.addEdge(source, target, condensedEdge);
 				}
-				condensedEdge.addEdge(source, target, edge);
+				condensedEdge.addEdge(edge);
 			}
 		});
 		return condensedGraph;
