@@ -11,7 +11,7 @@ public class CondensedEdge<V, E> {
 	
 	private final Set<E> edges = new HashSet<>();
 	
-	public CondensedEdge(V target, V source) {
+	public CondensedEdge(V source, V target) {
 		this.target = target;
 		this.source = source;
 	}
