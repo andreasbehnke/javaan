@@ -28,7 +28,9 @@ import org.javaan.graph.ExternalEdgeDirectedGraph;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeGraphVisitor;
+import org.jgrapht.EdgeFactory;
 import org.jgrapht.alg.StrongConnectivityInspector;
+import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -39,7 +41,16 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final ExternalEdgeDirectedGraph<Clazz, Method> usageOfClass = new ExternalEdgeDirectedGraph<Clazz, Method>();
+	private final ExternalEdgeDirectedGraph<Clazz, Method> usageOfClass = new ExternalEdgeDirectedGraph<Clazz, Method>(
+			new DirectedMultigraph<>(
+					new EdgeFactory<Clazz, Method>() {
+						@Override
+						public Method createEdge(Clazz sourceVertex, Clazz targetVertex) {
+							throw new UnsupportedOperationException();
+						}
+					}
+				)
+			);
 
 	private final ClassContext classContext;
 
@@ -49,6 +60,14 @@ public class CallGraph {
 
 	public int size() {
 		return callerOfMethod.vertexSet().size();
+	}
+	
+	public VertexEdgeDirectedGraph<Method> getCallerOfMethodGraph() {
+		return callerOfMethod;
+	}
+	
+	public ExternalEdgeDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
+		return usageOfClass;
 	}
 
 	public void addCall(Method caller, Method callee) {

@@ -1,4 +1,4 @@
-package org.codeforest.scenegraph;
+package org.codeforest.layout;
 
 import javax.vecmath.Vector3d;
 

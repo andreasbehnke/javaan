@@ -1,8 +1,6 @@
-package org.codeforest.scenegraph;
+package org.codeforest.layout;
 
 import javax.vecmath.Vector3d;
-
-import org.codeforest.model.VertexSceneContext;
 
 /**
  * Places vertices along one line

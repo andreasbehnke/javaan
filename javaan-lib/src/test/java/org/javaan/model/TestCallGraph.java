@@ -52,6 +52,8 @@ public class TestCallGraph {
 
 	private final static Method METHODD = new Method(B, "methodd");
 
+	private final static Method METHODD1 = new Method(B, "methodd1");
+
 	private final static Method METHODE = new Method(C, "methode");
 
 	private final static Method METHODF = new Method(D, "methodf");
@@ -81,6 +83,19 @@ public class TestCallGraph {
 		assertNotNull(callers);
 		assertEquals(1, callers.size());
 		assertTrue(callers.contains(METHODA));
+	}
+	
+	@Test
+	public void testMultipleUsageOfType() {
+		CallGraph callGraph = new CallGraph(createClassContext());
+		callGraph.addCall(METHODA, METHODD);
+		callGraph.addCall(METHODA, METHODD1);
+		
+		Set<Method> outgoingEdgesOfA = callGraph.getUsageOfClassGraph().outgoingEdgesOf(A);
+		assertNotNull(outgoingEdgesOfA);
+		assertEquals(2, outgoingEdgesOfA.size());
+		assertTrue(outgoingEdgesOfA.contains(METHODD));
+		assertTrue(outgoingEdgesOfA.contains(METHODD1));
 	}
 
 	@Test

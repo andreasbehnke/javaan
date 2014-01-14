@@ -1,36 +1,47 @@
 package org.codeforest;
 
 import java.awt.GraphicsConfiguration;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
+import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.Node;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.View;
+import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.codeforest.model.VertexSceneContext;
-import org.codeforest.scenegraph.BoxTreeLayout;
+import org.codeforest.graph.CondensedEdge;
+import org.codeforest.graph.CondensedGraphBuilder;
+import org.codeforest.layout.BoxTreeLayout;
+import org.codeforest.layout.TableLayout;
+import org.codeforest.layout.TreeWidthCalculator;
+import org.codeforest.layout.VertexSceneContext;
 import org.codeforest.scenegraph.EdgeNodeFactory;
 import org.codeforest.scenegraph.LineEdgeFactory;
-import org.codeforest.scenegraph.TableLayout;
 import org.codeforest.scenegraph.TreePlanter;
-import org.codeforest.scenegraph.TreeWidthCalculator;
+import org.codeforest.scenegraph.VertexNodeConnector;
 import org.codeforest.scenegraph.VertexNodeFactory;
 import org.codeforest.scenegraph.VertexTreeSceneBuilder;
+import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.bytecode.JarFileLoader;
 import org.javaan.graph.VertexEdge;
+import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
+import org.javaan.model.Method;
 import org.javaan.model.Package;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.EdgeReversedGraph;
@@ -47,9 +58,13 @@ public class CodeForest extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private SimpleUniverse univ = null;
+	private SimpleUniverse univ;
 	
-	private BranchGroup scene = null;
+	private BranchGroup scene;
+	
+	private BranchGroup objRoot;
+	
+	private BranchGroup callGraphBranchGroup;
 
 	private javax.swing.JPanel drawingPanel;
 
@@ -58,25 +73,36 @@ public class CodeForest extends javax.swing.JFrame {
 		initComponents();
 		
 		// create class context
-		ClassContext classContext = createClassContext(fileNames);
+		List<org.javaan.model.Type> types = new JarFileLoader().loadJavaClasses(fileNames);
+		ClassContext classContext = new ClassContextBuilder(types).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 
 		// Create Canvas3D and SimpleUniverse; add canvas to drawing panel
-		Canvas3D c = createUniverse();
+		final Canvas3D c = createUniverse();
 		drawingPanel.add(c, java.awt.BorderLayout.CENTER);
 
 		// Create the content branch and add it to the universe
-		scene = createSceneGraph(classContext);
+		scene = createSceneGraph(classContext, callGraph);
+		scene.compile();
 		univ.addBranchGraph(scene);
 
-		OrbitBehavior orbit = new OrbitBehavior(c);
-		orbit.setSchedulingBounds(new BoundingSphere(
-				new Point3d(0.0, 0.0, 0.0), Double.MAX_VALUE));
+		final OrbitBehavior orbit = new OrbitBehavior(c, OrbitBehavior.REVERSE_TRANSLATE);
+		orbit.setZoomFactor(10d);
+		orbit.setTransFactors(10d, 10d);
+		orbit.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), Double.MAX_VALUE));
 		univ.getViewingPlatform().setViewPlatformBehavior(orbit);
-	}
-	
-	private ClassContext createClassContext(String[] fileNames) throws IOException {
-		List<org.javaan.model.Type> types = new JarFileLoader().loadJavaClasses(fileNames);
-		return new ClassContextBuilder(types).build();
+		c.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == 'c') {
+					if (callGraphBranchGroup.getParent() == null) {
+						scene.addChild(callGraphBranchGroup);
+					} else {
+						callGraphBranchGroup.detach();
+					}
+				}
+			}
+		});
 	}
 	
 	private List<Package> getNoneEmptyPackages(ClassContext classContext) {
@@ -89,44 +115,69 @@ public class CodeForest extends javax.swing.JFrame {
 		Collections.sort(packages);
 		return packages;
 	}
+	
+	private Appearance createInheritanceAppearance() {
+		Appearance appearance = new Appearance();
+		ColoringAttributes coloringAttributes = new  ColoringAttributes(new Color3f(1,0,0), ColoringAttributes.NICEST);
+		appearance.setColoringAttributes(coloringAttributes);;
+		return appearance;
+	}
+	
+	private Appearance createUsageAppearance() {
+		Appearance appearance = new Appearance();
+		ColoringAttributes coloringAttributes = new  ColoringAttributes(new Color3f(0,0,1), ColoringAttributes.NICEST);
+		appearance.setColoringAttributes(coloringAttributes);;
+		return appearance;
+	}
 
-	private BranchGroup createSceneGraph(ClassContext classContext) {
-		// Create the root of the branch graph
-		BranchGroup objRoot = new BranchGroup();
+	private BranchGroup createSceneGraph(ClassContext classContext, CallGraph callGraph) {
+		DirectedGraph<Clazz, CondensedEdge<Clazz, Method>> condensedCallGraph = 
+				new CondensedGraphBuilder<>(callGraph.getUsageOfClassGraph()).createCondensedGraph();
 		
+		
+		// Create the root of the branch graph
+		objRoot = new BranchGroup();
+		objRoot.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
+		objRoot.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+
 		// retrieve all classes which extend Object
 		Set<Clazz> rootClasses = classContext.getDirectSpecializationsOfClass(new Clazz("java.lang.Object"));
 		DirectedGraph<Clazz, VertexEdge<Clazz>> specializationClasses = new EdgeReversedGraph<>(classContext.getSuperClassGraph());
 		
 		// build layout context
-		VertexSceneContext<Clazz> context = new VertexSceneContext<Clazz>();
+		VertexSceneContext<Clazz> context = new VertexSceneContext<>();
 
 		// calculate vertex widths and row from package
 		List<Package> packages = getNoneEmptyPackages(classContext);
-		TreeWidthCalculator<Clazz, VertexEdge<Clazz>> treeWidthCalculator = 
-				new TreeWidthCalculator<Clazz, VertexEdge<Clazz>>(context, specializationClasses);
+		TreeWidthCalculator<Clazz, VertexEdge<Clazz>> treeWidthCalculator = new TreeWidthCalculator<>(context, specializationClasses);
 		for (Clazz clazz : rootClasses) {
 			treeWidthCalculator.calculateVertexWidth(clazz);
 			int packageIndex = packages.indexOf(classContext.getPackageOfType(clazz));
 			context.get(clazz).setRow(packageIndex);
 		}
 		
+		// create factory for class nodes
 		VertexNodeFactory<Clazz> shapeFactory = new VertexNodeFactory<Clazz>() {
 			public Node createNode(Clazz vertex) {
 				return new ColorCube(0.4);
 			}
 		};
-		EdgeNodeFactory<Clazz, VertexEdge<Clazz>> edgeNodeFactory = new LineEdgeFactory<Clazz, VertexEdge<Clazz>>();
+		
+		// create factory for inheritance edges
+		EdgeNodeFactory<Clazz, VertexEdge<Clazz>> inheritanceEdgeNodeFactory = new LineEdgeFactory<>(createInheritanceAppearance());
+				
 		VertexTreeSceneBuilder<Clazz, VertexEdge<Clazz>> treeBuilder = new VertexTreeSceneBuilder<Clazz, VertexEdge<Clazz>>(
-				context, specializationClasses, shapeFactory, edgeNodeFactory, new BoxTreeLayout<Clazz>(context, 2d, 3d));
+				context, specializationClasses, shapeFactory, inheritanceEdgeNodeFactory, new BoxTreeLayout<Clazz>(context, 2d, 3d));
 		
 		TreePlanter<Clazz> planter = new TreePlanter<Clazz>(context, treeBuilder, new TableLayout<Clazz>(context, 2d, 10d, 2d));
 		TransformGroup transformGroup = planter.createScene(rootClasses);
 		objRoot.addChild(transformGroup);
-
-		// Have Java 3D perform optimizations on this scene graph.
-		objRoot.compile();
-
+		
+		EdgeNodeFactory<Clazz, CondensedEdge<Clazz, Method>> usageEdgeNodeFactory = new LineEdgeFactory<>(createUsageAppearance());
+		VertexNodeConnector<Clazz, CondensedEdge<Clazz, Method>> connector = new VertexNodeConnector<>(context, usageEdgeNodeFactory);
+		callGraphBranchGroup = new BranchGroup();
+		callGraphBranchGroup.setCapability(BranchGroup.ALLOW_DETACH);
+		callGraphBranchGroup.addChild(connector.createScene(condensedCallGraph));
 		return objRoot;
 	}
 

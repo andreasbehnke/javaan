@@ -1,11 +1,9 @@
-package org.codeforest.scenegraph;
+package org.codeforest.layout;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.vecmath.Vector3d;
-
-import org.codeforest.model.VertexSceneContext;
 
 public class TableLayout<V> implements Layout<V> {
 	
