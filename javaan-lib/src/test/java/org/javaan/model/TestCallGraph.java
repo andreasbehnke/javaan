@@ -261,6 +261,7 @@ public class TestCallGraph {
 		callGraph.addCall(C_METHODE, D_METHODF);
 		callGraph.addCall(D_METHODF, C_METHODE);// first cycle C --> D --> C: This must be ignored, because D inherits C!
 		callGraph.addCall(B_METHODD, A_METHODA);// second cylce A --> B --> A
+		callGraph.addCall(C_METHODE, B_METHODD);// third cylce B --> C --> B
 
 		List<Set<Clazz>> cycles = callGraph.getDependencyCycles();
 		assertNotNull(cycles);
