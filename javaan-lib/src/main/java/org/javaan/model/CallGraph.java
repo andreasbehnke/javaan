@@ -24,13 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.ExternalEdgeDirectedGraph;
+import org.javaan.graph.CyclicDirectedMultigraph;
 import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.TraversalDirectedGraph;
+import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeGraphVisitor;
-import org.jgrapht.EdgeFactory;
 import org.jgrapht.alg.StrongConnectivityInspector;
-import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -41,16 +41,10 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final ExternalEdgeDirectedGraph<Clazz, Method> usageOfClass = new ExternalEdgeDirectedGraph<Clazz, Method>(
-			new DirectedMultigraph<>(
-					new EdgeFactory<Clazz, Method>() {
-						@Override
-						public Method createEdge(Clazz sourceVertex, Clazz targetVertex) {
-							throw new UnsupportedOperationException();
-						}
-					}
-				)
-			);
+	private final TraversalDirectedGraph<Clazz, Method> usageOfClass = 
+			new TraversalDirectedGraph<Clazz, Method>(
+					new CyclicDirectedMultigraph<Clazz, Method>(
+							new UnsupportedEdgeFactory<Clazz, Method>()));
 
 	private final ClassContext classContext;
 
@@ -66,7 +60,7 @@ public class CallGraph {
 		return callerOfMethod;
 	}
 	
-	public ExternalEdgeDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
+	public TraversalDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
 		return usageOfClass;
 	}
 
@@ -150,10 +144,10 @@ public class CallGraph {
 		StrongConnectivityInspector<Clazz, Method> inspector = new StrongConnectivityInspector<Clazz, Method>(usageOfClass);
 		List<DirectedSubgraph<Clazz, Method>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
 		int index = 1;
-		ExternalEdgeDirectedGraph<Clazz, Method> traversalGraph;
+		TraversalDirectedGraph<Clazz, Method> traversalGraph;
 		for (DirectedSubgraph<Clazz, Method> subgraph : cycleGraphs) {
 			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one class (these cycles have no impact in software design)
-				traversalGraph = new ExternalEdgeDirectedGraph<Clazz, Method>(subgraph);
+				traversalGraph = new TraversalDirectedGraph<Clazz, Method>(subgraph);
 				cyclesVisitor.visitGraph(traversalGraph, index);
 				traversalGraph.traverseDepthFirst(cyclesVisitor);
 				index++;

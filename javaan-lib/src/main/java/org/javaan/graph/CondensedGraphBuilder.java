@@ -15,7 +15,9 @@ public class CondensedGraphBuilder<V, E> {
 	}
 	
 	public DirectedGraph<V, CondensedEdge<V, E>> createCondensedGraph() {
-		final ExternalEdgeDirectedGraph<V, CondensedEdge<V, E>> condensedGraph = new ExternalEdgeDirectedGraph<>();
+		final TraversalDirectedGraph<V, CondensedEdge<V, E>> condensedGraph = new TraversalDirectedGraph<V, CondensedEdge<V, E>>(
+				new CyclicDirectedMultigraph<V, CondensedEdge<V, E>>(
+						new UnsupportedEdgeFactory<V, CondensedEdge<V, E>>()));
 		graph.traverseDepthFirst(new GraphVisitorAdapter<V, E>() {
 			@Override
 			public void visitEdge(E edge, int level) {
