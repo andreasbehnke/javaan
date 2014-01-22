@@ -30,7 +30,11 @@ import org.javaan.graph.TraversalDirectedGraph;
 import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeGraphVisitor;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.alg.StrongConnectivityInspector;
+import org.jgrapht.alg.cycle.DirectedSimpleCycles;
+import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -149,18 +153,25 @@ public class CallGraph {
 		return usageOfClass.getLeafPredecessors(using);
 	}
 	
-	/**
-	 * @return list of type sets which take part in a using dependency cycle
-	 */
-	public List<Set<Clazz>> getDependencyCycles() {
-		StrongConnectivityInspector<Clazz, Method> inspector = new StrongConnectivityInspector<Clazz, Method>(usageOfClass);
-		List<Set<Clazz>> cycles = new ArrayList<Set<Clazz>>();
-		for (Set<Clazz> cycle : inspector.stronglyConnectedSets()) {
-			if (cycle.size() > 1) { // ignore dependency cycles within one class (these cycles have no impact in software design)
-				cycles.add(cycle);
+	private static <V> DirectedSimpleCycles<V, ?> createCycleDetector(DirectedGraph<V, ?> graph) {
+		return new JohnsonSimpleCycles<>(graph);
+	}
+	
+	private static <V> List<List<V>> getDependencyCycles(DirectedGraph<V, ?> graph) {
+		List<List<V>> cycles = new ArrayList<>();
+		for (List<V> list : createCycleDetector(graph).findSimpleCycles()) {
+			if (list.size() > 1) {
+				cycles.add(list);
 			}
 		}
 		return cycles;
+	}
+	
+	/**
+	 * @return list of type sets which take part in a using dependency cycle
+	 */
+	public List<List<Clazz>> getDependencyCycles() {
+		return getDependencyCycles(usageOfClass);
 	}
 	
 	public void traverseDependencyCycles(GraphVisitor<Clazz, Method> cyclesVisitor) {
