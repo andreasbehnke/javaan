@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 import java.util.Set;
@@ -132,7 +132,6 @@ public class TestCallGraph {
 		verify(visitor).visitVertex(B_METHODD, 1);
 		verify(visitor).visitVertex(A_METHODC, 2);
 		verify(visitor).visitVertex(A_METHODA, 3);
-		//verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -151,7 +150,6 @@ public class TestCallGraph {
 		verify(visitor).visitVertex(A_METHODC, 1);
 		verify(visitor).visitVertex(B_METHODD, 2);
 		verify(visitor).visitVertex(C_METHODE, 3);
-		//verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -201,9 +199,11 @@ public class TestCallGraph {
 		callGraph.traverseUsedTypes(A, visitor);
 		verify(visitor, times(3)).finished();
 		verify(visitor).visitVertex(A, 0);
+		verify(visitor).visitEdge(B_METHODD, 1);
 		verify(visitor).visitVertex(B, 1);
+		verify(visitor).visitEdge(C_METHODE, 2);
 		verify(visitor).visitVertex(C, 2);
-		//verifyNoMoreInteractions(visitor);
+		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -218,9 +218,11 @@ public class TestCallGraph {
 		callGraph.traverseUsingTypes(C, visitor);
 		verify(visitor, times(3)).finished();
 		verify(visitor).visitVertex(C, 0);
+		verify(visitor).visitEdge(C_METHODE, 1);
 		verify(visitor).visitVertex(B, 1);
+		verify(visitor).visitEdge(B_METHODD, 2);
 		verify(visitor).visitVertex(A, 2);
-		//verifyNoMoreInteractions(visitor);
+		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
