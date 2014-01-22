@@ -168,7 +168,7 @@ public class CallGraph {
 	}
 	
 	/**
-	 * @return list of type sets which take part in a using dependency cycle
+	 * @return list of types which take part in a using dependency cycle
 	 */
 	public List<List<Clazz>> getDependencyCycles() {
 		return getDependencyCycles(usageOfClass);
@@ -205,5 +205,12 @@ public class CallGraph {
 	
 	public Set<Package> getLeafUsingPackages(Package using) {
 		return usageOfPackage.getLeafPredecessors(using);
+	}
+	
+	/**
+	 * @return list of packages which take part in a using dependency cycle
+	 */
+	public List<List<Package>> getPackageDependencyCycles() {
+		return getDependencyCycles(usageOfPackage);
 	}
 }

@@ -337,4 +337,20 @@ public class TestCallGraph {
 		assertEquals(1, leaves.size());
 		assertTrue(leaves.contains(ABC));
 	}
+	
+	@Test
+	public void testGetPacakgeDependencyCycles() {
+		CallGraph callGraph = new CallGraph(createClassContext());
+		callGraph.addCall(A_METHODC, B_METHODD);
+		callGraph.addCall(D_METHODF, C_METHODE);
+		
+		List<List<Package>> cycles = callGraph.getPackageDependencyCycles();
+		assertNotNull(cycles);
+		assertEquals(1, cycles.size());
+		List<Package> cycle = cycles.get(0);
+
+		assertEquals(2, cycle.size());
+		assertTrue(cycle.contains(ABC));
+		assertTrue(cycle.contains(DEF));
+	}
 }
