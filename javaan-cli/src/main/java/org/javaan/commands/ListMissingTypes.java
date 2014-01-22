@@ -33,7 +33,7 @@ import org.javaan.model.Type;
 
 public class ListMissingTypes extends BaseTypeLoadingCommand {
 
-	private final static String NAME = "missingTypes";
+	private final static String NAME = "missing-types";
 
 	private final static String DESCRIPTION = "List types which are referenced by loaded types but could not be resolved.";
 

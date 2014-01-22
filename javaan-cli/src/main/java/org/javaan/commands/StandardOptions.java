@@ -52,7 +52,7 @@ public interface StandardOptions {
 	
 	static final Option METHODS = new Option(OPT_METHODS, "methods", false, "For each type, list methods");
 	
-	static final Option VIRTUAL_METHODS = new Option(OPT_VIRTUAL_METHODS, "virtualMethods", false, "For each type, list all methods and all inherited (virtual) methods");
+	static final Option VIRTUAL_METHODS = new Option(OPT_VIRTUAL_METHODS, "virtual-methods", false, "For each type, list all methods and all inherited (virtual) methods");
 
 	static final Option FILTER = new Option(OPT_FILTER, "filter", true, "Filter types by <arg>. All types which contain <arg> in name will match.");
 
