@@ -174,19 +174,23 @@ public class CallGraph {
 		return getDependencyCycles(usageOfClass);
 	}
 	
-	public void traverseDependencyCycles(GraphVisitor<Clazz, Method> cyclesVisitor) {
-		StrongConnectivityInspector<Clazz, Method> inspector = new StrongConnectivityInspector<Clazz, Method>(usageOfClass);
-		List<DirectedSubgraph<Clazz, Method>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
+	private static <V, E> void traverseDepdendencyCycles(GraphVisitor<V, E> cyclesVisitor, DirectedGraph<V, E> graph) {
+		StrongConnectivityInspector<V, E> inspector = new StrongConnectivityInspector<V, E>(graph);
+		List<DirectedSubgraph<V, E>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
 		int index = 1;
-		TraversalDirectedGraph<Clazz, Method> traversalGraph;
-		for (DirectedSubgraph<Clazz, Method> subgraph : cycleGraphs) {
-			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one class (these cycles have no impact in software design)
-				traversalGraph = new TraversalDirectedGraph<Clazz, Method>(subgraph);
+		TraversalDirectedGraph<V, E> traversalGraph;
+		for (DirectedSubgraph<V, E> subgraph : cycleGraphs) {
+			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one vertex (these cycles have no impact in software design)
+				traversalGraph = new TraversalDirectedGraph<V, E>(subgraph);
 				cyclesVisitor.visitGraph(traversalGraph, index);
 				traversalGraph.traverseDepthFirst(cyclesVisitor);
 				index++;
 			}
 		}
+	}
+	
+	public void traverseDependencyCycles(GraphVisitor<Clazz, Method> cyclesVisitor) {
+		traverseDepdendencyCycles(cyclesVisitor, usageOfClass);
 	}
 	
 	// package usage
