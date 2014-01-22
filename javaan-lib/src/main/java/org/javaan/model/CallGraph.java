@@ -41,17 +41,22 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final TraversalDirectedGraph<Clazz, Method> usageOfClass = 
-			new TraversalDirectedGraph<Clazz, Method>(
-					new CyclicDirectedMultigraph<Clazz, Method>(
-							new UnsupportedEdgeFactory<Clazz, Method>()));
-
+	private final TraversalDirectedGraph<Clazz, Method> usageOfClass = createCyclicDirectedMultigraph();
+	
+	private final TraversalDirectedGraph<Package, Method> usageOfPackage = createCyclicDirectedMultigraph();
+			
 	private final ClassContext classContext;
+	
+	private static <V, E> TraversalDirectedGraph<V, E> createCyclicDirectedMultigraph() {
+		return new TraversalDirectedGraph<V, E>(
+				new CyclicDirectedMultigraph<V, E>(
+						new UnsupportedEdgeFactory<V, E>()));
+	}
 
 	public CallGraph(ClassContext classContext) {
 		this.classContext = classContext;
 	}
-
+	
 	public int size() {
 		return callerOfMethod.vertexSet().size();
 	}
@@ -63,15 +68,8 @@ public class CallGraph {
 	public TraversalDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
 		return usageOfClass;
 	}
-
-	public void addCall(Method caller, Method callee) {
-		if (caller == null) {
-			throw new IllegalArgumentException("Parameter caller must not be null");
-		}
-		if (callee == null) {
-			throw new IllegalArgumentException("Parameter callee must not be null");
-		}
-		callerOfMethod.addEdge(caller, callee);
+	
+	private void addUsageOfClass(Method caller, Method callee) {
 		Clazz classOfCaller = (Clazz)caller.getType();
 		Clazz classOfCallee = (Clazz)callee.getType();
 		if (classOfCallee.equals(classOfCaller)) {
@@ -85,6 +83,29 @@ public class CallGraph {
 		}
 		usageOfClass.addEdge(classOfCaller, classOfCallee, callee);
 	}
+	
+	private void addUsageOfPackage(Method caller, Method callee) {
+		Package packageOfCaller = classContext.getPackageOfType(caller.getType());
+		Package packageOfCallee = classContext.getPackageOfType(callee.getType());
+		if (packageOfCaller.equals(packageOfCallee)) {
+			return;
+		}	
+		usageOfPackage.addEdge(packageOfCaller, packageOfCallee, callee);
+	}
+
+	public void addCall(Method caller, Method callee) {
+		if (caller == null) {
+			throw new IllegalArgumentException("Parameter caller must not be null");
+		}
+		if (callee == null) {
+			throw new IllegalArgumentException("Parameter callee must not be null");
+		}
+		callerOfMethod.addEdge(caller, callee);
+		addUsageOfClass(caller, callee);
+		addUsageOfPackage(caller, callee);
+	}
+	
+	// method calls
 	
 	public Set<Method> getCallers(Method callee) {
 		return callerOfMethod.sourceVerticesOf(callee);
@@ -109,6 +130,8 @@ public class CallGraph {
 	public Set<Method> getLeafCallees(Method caller) {
 		return callerOfMethod.getLeafSuccessors(caller);
 	}
+	
+	// class usage
 
 	public void traverseUsedTypes(Clazz using, GraphVisitor<Clazz, Method> usedVisitor) {
 		usageOfClass.traverseSuccessorsDepthFirst(using, usedVisitor);
@@ -153,5 +176,23 @@ public class CallGraph {
 				index++;
 			}
 		}
+	}
+	
+	// package usage
+	
+	public void traverseUsedPackages(Package using, GraphVisitor<Package, Method> usedVisitor) {
+		usageOfPackage.traverseSuccessorsDepthFirst(using, usedVisitor);
+	}
+	
+	public void traverseUsingPackages(Package used, GraphVisitor<Package, Method> usingVisitor) {
+		usageOfPackage.traversePredecessorsDepthFirst(used, usingVisitor);
+	}
+
+	public Set<Package> getLeafUsedPackages(Package using) {
+		return usageOfPackage.getLeafSuccessors(using);
+	}
+	
+	public Set<Package> getLeafUsingPackages(Package using) {
+		return usageOfPackage.getLeafPredecessors(using);
 	}
 }

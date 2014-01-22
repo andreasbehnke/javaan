@@ -23,8 +23,6 @@ package org.javaan.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -36,13 +34,17 @@ import org.junit.Test;
 
 public class TestCallGraph {
 	
-	private static final Clazz A = new Clazz("classa");
+	private static final Package ABC = new Package("a.b.c");
+	
+	private static final Package DEF = new Package("d.e.f");
+	
+	private static final Clazz A = new Clazz("a.b.c.classa");
 
-	private static final Clazz B = new Clazz("classb");
+	private static final Clazz B = new Clazz("d.e.f.classb");
 
-	private static final Clazz C = new Clazz("classc");
+	private static final Clazz C = new Clazz("a.b.c.classc");
 
-	private static final Clazz D = new Clazz("classd");
+	private static final Clazz D = new Clazz("d.e.f.classd");
 
 	private final static Method A_METHODA = new Method(A, "methoda");
 
@@ -272,5 +274,41 @@ public class TestCallGraph {
 		assertEquals(2, setABA.size());
 		assertTrue(setABA.contains(A));
 		assertTrue(setABA.contains(B));
+	}
+	
+	@Test
+	public void testTraverseUsedPackages() {
+		CallGraph callGraph = new CallGraph(createClassContext());
+		callGraph.addCall(A_METHODA, A_METHODB);
+		callGraph.addCall(A_METHODA, A_METHODC);
+		callGraph.addCall(A_METHODC, B_METHODD); 
+		callGraph.addCall(B_METHODD, C_METHODE);
+		GraphVisitor<Package, Method> visitor = mock(GraphVisitor.class);
+
+		callGraph.traverseUsedPackages(ABC, visitor);
+		verify(visitor, times(2)).finished();
+		verify(visitor).visitVertex(ABC, 0);
+		verify(visitor).visitEdge(B_METHODD, 1);
+		verify(visitor).visitVertex(DEF, 1);
+		verify(visitor).visitEdge(C_METHODE, 2);
+		verifyNoMoreInteractions(visitor);
+	}
+
+	@Test
+	public void testTraverseUsingPackages() {
+		CallGraph callGraph = new CallGraph(createClassContext());
+		callGraph.addCall(A_METHODA, A_METHODB);
+		callGraph.addCall(A_METHODA, A_METHODC);
+		callGraph.addCall(A_METHODC, B_METHODD); 
+		callGraph.addCall(B_METHODD, C_METHODE);
+		GraphVisitor<Package, Method> visitor = mock(GraphVisitor.class);
+
+		callGraph.traverseUsingPackages(DEF, visitor);
+		verify(visitor, times(2)).finished();
+		verify(visitor).visitVertex(DEF, 0);
+		verify(visitor).visitEdge(B_METHODD, 1);
+		verify(visitor).visitVertex(ABC, 1);
+		verify(visitor).visitEdge(C_METHODE, 2);
+		verifyNoMoreInteractions(visitor);
 	}
 }
