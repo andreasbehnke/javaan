@@ -217,4 +217,8 @@ public class CallGraph {
 	public List<List<Package>> getPackageDependencyCycles() {
 		return getDependencyCycles(usageOfPackage);
 	}
+	
+	public void traversePackageDependencyCycles(GraphVisitor<Package, Method> cyclesVisitor) {
+		traverseDepdendencyCycles(cyclesVisitor, usageOfPackage);
+	}
 }
