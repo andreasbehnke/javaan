@@ -311,4 +311,30 @@ public class TestCallGraph {
 		verify(visitor).visitEdge(C_METHODE, 2);
 		verifyNoMoreInteractions(visitor);
 	}
+	
+	@Test
+	public void testGetLeafUsedPackages() {
+		CallGraph callGraph = new CallGraph(createClassContext());
+		callGraph.addCall(A_METHODA, B_METHODD);
+		callGraph.addCall(A_METHODA, C_METHODE);
+		callGraph.addCall(A_METHODC, D_METHODF);
+		
+		Set<Package> leaves = callGraph.getLeafUsedPackages(ABC);
+		assertNotNull(leaves);
+		assertEquals(1, leaves.size());
+		assertTrue(leaves.contains(DEF));
+	}
+	
+	@Test
+	public void testGetLeafUsingPackages() {
+		CallGraph callGraph = new CallGraph(createClassContext());
+		callGraph.addCall(A_METHODA, B_METHODD);
+		callGraph.addCall(A_METHODA, C_METHODE);
+		callGraph.addCall(A_METHODC, D_METHODF);
+		
+		Set<Package> leaves = callGraph.getLeafUsingPackages(DEF);
+		assertNotNull(leaves);
+		assertEquals(1, leaves.size());
+		assertTrue(leaves.contains(ABC));
+	}
 }
