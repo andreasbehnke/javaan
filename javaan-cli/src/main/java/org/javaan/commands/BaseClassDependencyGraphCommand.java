@@ -9,14 +9,14 @@ import org.javaan.print.ClazzFormatter;
 import org.javaan.print.ObjectFormatter;
 
 public abstract class BaseClassDependencyGraphCommand extends BaseDependencyGraphCommand<Clazz> {
-	
-	@Override
-	protected Collection<Clazz> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria) {
-		return SortUtil.sort(FilterUtil.filter(classContext.getClasses(), new NameMatcher<Clazz>(filterCriteria)));
-	}
 
 	@Override
 	protected ObjectFormatter<Clazz> getTypeFormatter() {
 		return new ClazzFormatter();
+	}
+	
+	@Override
+	protected Collection<Clazz> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria) {
+		return SortUtil.sort(FilterUtil.filter(classContext.getClasses(), new NameMatcher<Clazz>(filterCriteria)));
 	}
 }
