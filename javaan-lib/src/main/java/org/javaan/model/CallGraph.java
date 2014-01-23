@@ -21,6 +21,7 @@ package org.javaan.model;
  */
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +32,6 @@ import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
@@ -203,12 +203,44 @@ public class CallGraph {
 		usageOfPackage.traversePredecessorsDepthFirst(used, usingVisitor);
 	}
 
+	/**
+	 * For each type contained in package retrieves the leave used types.
+	 * Returns set of packages of these leave types.
+	 */
 	public Set<Package> getLeafUsedPackages(Package using) {
-		return usageOfPackage.getLeafSuccessors(using);
+		Set<Clazz> usedTypes = new HashSet<>();
+		Set<Clazz> typesOfPackage = classContext.getClassesOfPackage(using);
+		for (Clazz clazz : typesOfPackage) {
+			usedTypes.addAll(getLeafUsedTypes(clazz));
+		}
+		Set<Package> usedPackages = new HashSet<>();
+		for (Clazz clazz : usedTypes) {
+			Package used = classContext.getPackageOfType(clazz);
+			if (!used.equals(using)) {
+				usedPackages.add(used);
+			}
+		}
+		return usedPackages;
 	}
 	
-	public Set<Package> getLeafUsingPackages(Package using) {
-		return usageOfPackage.getLeafPredecessors(using);
+	/**
+	 * For each type contained in package retrieves the leave using types.
+	 * Returns set of packages of these leave types.
+	 */
+	public Set<Package> getLeafUsingPackages(Package used) {
+		Set<Clazz> usingTypes = new HashSet<>();
+		Set<Clazz> typesOfPackage = classContext.getClassesOfPackage(used);
+		for (Clazz clazz : typesOfPackage) {
+			usingTypes.addAll(getLeafUsingTypes(clazz));
+		}
+		Set<Package> usingPackages = new HashSet<>();
+		for (Clazz clazz : usingTypes) {
+			Package using = classContext.getPackageOfType(clazz);
+			if (!used.equals(using)) {
+				usingPackages.add(using);
+			}
+		}
+		return usingPackages;
 	}
 	
 	/**
