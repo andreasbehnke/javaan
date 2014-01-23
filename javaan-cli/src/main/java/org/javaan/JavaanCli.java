@@ -40,6 +40,7 @@ import org.javaan.commands.ListInterfaces;
 import org.javaan.commands.ListMissingTypes;
 import org.javaan.commands.ShowCalleeGraph;
 import org.javaan.commands.ShowCallerGraph;
+import org.javaan.commands.ShowPackageDepdendencyCyclesGraph;
 import org.javaan.commands.ShowPackageUsedGraph;
 import org.javaan.commands.ShowPackageUsingGraph;
 import org.javaan.commands.ShowUsedGraph;
@@ -94,6 +95,7 @@ public class JavaanCli {
 		commands.addCommand(new ShowCalleeGraph());
 		commands.addCommand(new ShowUsedGraph());
 		commands.addCommand(new ShowUsingGraph());
+		commands.addCommand(new ShowPackageDepdendencyCyclesGraph());
 		commands.addCommand(new ShowPackageUsedGraph());
 		commands.addCommand(new ShowPackageUsingGraph());
 		System.exit(new JavaanCli(args, commands).execute().getValue());
