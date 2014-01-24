@@ -57,28 +57,12 @@ public class TraversalDirectedGraph<V, E> extends GraphDelegator<V, E> implement
 		return super.addEdge(sourceVertex, targetVertex, edge);
 	}
 
-	private Set<V> getTargetSet(Set<E> edges) {
-		Set<V> targets = new HashSet<V>();
-		for (E e : edges) {
-			targets.add(getEdgeTarget(e));
-		}
-		return targets;
-	}
-
-	private Set<V> getSourceSet(Set<E> edges) {
-		Set<V> sources = new HashSet<V>();
-		for (E e : edges) {
-			sources.add(getEdgeSource(e));
-		}
-		return sources;
-	}
-
 	public Set<V> targetVerticesOf(V vertex) {
-		return getTargetSet(outgoingEdgesOf(vertex));
+		return DirectedGraphUtils.targetVerticesOf(vertex, this);
 	}
 
 	public Set<V> sourceVerticesOf(V vertex) {
-		return getSourceSet(incomingEdgesOf(vertex));
+		return DirectedGraphUtils.sourceVerticesOf(vertex, this);
 	}
 
 	public Set<V> successorsOf(V vertex) {

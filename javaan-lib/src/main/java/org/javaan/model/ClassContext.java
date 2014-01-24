@@ -218,6 +218,10 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		return interfaces;
 	}
 	
+	public Set<Type> getTypesOfPackage(Package package1) {
+		return packageOfType.getParents(package1);
+	}
+	
 	public void addMethod(Method method) {
 		Type typeName = method.getType();
 		switch (typeName.getJavaType()) {

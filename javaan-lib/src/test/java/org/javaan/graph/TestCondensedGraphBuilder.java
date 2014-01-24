@@ -1,4 +1,4 @@
-package org.codeforest.graph;
+package org.javaan.graph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.javaan.graph.CondensedEdge;
+import org.javaan.graph.CondensedGraphBuilder;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.graph.DirectedMultigraph;
@@ -33,23 +35,19 @@ public class TestCondensedGraphBuilder {
 	private void assertEdgeAB(CondensedEdge<String, String> edgeAB) {
 		assertEquals(A, edgeAB.getSource());
 		assertEquals(B, edgeAB.getTarget());
-		assertNotNull(edgeAB.getEdgesFromSourceToTarget());
-		assertEquals(2, edgeAB.getEdgesFromSourceToTarget().size());
-		assertTrue(edgeAB.getEdgesFromSourceToTarget().contains(EDGE_AB_1));
-		assertTrue(edgeAB.getEdgesFromSourceToTarget().contains(EDGE_AB_2));
+		assertNotNull(edgeAB.getEdges());
+		assertEquals(2, edgeAB.getEdges().size());
+		assertTrue(edgeAB.getEdges().contains(EDGE_AB_1));
+		assertTrue(edgeAB.getEdges().contains(EDGE_AB_2));
 	}
 	
 	private void assertEdgeAC(CondensedEdge<String, String> edgeAC) {
 		assertEquals(A, edgeAC.getSource());
 		assertEquals(C, edgeAC.getTarget());
-		assertNotNull(edgeAC.getEdgesFromSourceToTarget());
-		assertEquals(2, edgeAC.getEdgesFromSourceToTarget().size());
-		assertTrue(edgeAC.getEdgesFromSourceToTarget().contains(EDGE_AC_1));
-		assertTrue(edgeAC.getEdgesFromSourceToTarget().contains(EDGE_AC_2));
-		assertNotNull(edgeAC.getEdgesFromTargetToSource());
-		assertEquals(1, edgeAC.getEdgesFromTargetToSource().size());
-		assertTrue(edgeAC.getEdgesFromTargetToSource().contains(EDGE_CA_1));
-		
+		assertNotNull(edgeAC.getEdges());
+		assertEquals(2, edgeAC.getEdges().size());
+		assertTrue(edgeAC.getEdges().contains(EDGE_AC_1));
+		assertTrue(edgeAC.getEdges().contains(EDGE_AC_2));		
 	}
 	
 	@Test

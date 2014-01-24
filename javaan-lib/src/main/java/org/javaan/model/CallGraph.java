@@ -21,16 +21,20 @@ package org.javaan.model;
  */
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.ExternalEdgeDirectedGraph;
+import org.javaan.graph.CyclicDirectedMultigraph;
 import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.TraversalDirectedGraph;
+import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeGraphVisitor;
-import org.jgrapht.EdgeFactory;
+import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.StrongConnectivityInspector;
-import org.jgrapht.graph.DirectedMultigraph;
+import org.jgrapht.alg.cycle.DirectedSimpleCycles;
+import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -41,23 +45,22 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final ExternalEdgeDirectedGraph<Clazz, Method> usageOfClass = new ExternalEdgeDirectedGraph<Clazz, Method>(
-			new DirectedMultigraph<>(
-					new EdgeFactory<Clazz, Method>() {
-						@Override
-						public Method createEdge(Clazz sourceVertex, Clazz targetVertex) {
-							throw new UnsupportedOperationException();
-						}
-					}
-				)
-			);
-
+	private final TraversalDirectedGraph<Clazz, Method> usageOfClass = createCyclicDirectedMultigraph();
+	
+	private final TraversalDirectedGraph<Package, Method> usageOfPackage = createCyclicDirectedMultigraph();
+			
 	private final ClassContext classContext;
+	
+	private static <V, E> TraversalDirectedGraph<V, E> createCyclicDirectedMultigraph() {
+		return new TraversalDirectedGraph<V, E>(
+				new CyclicDirectedMultigraph<V, E>(
+						new UnsupportedEdgeFactory<V, E>()));
+	}
 
 	public CallGraph(ClassContext classContext) {
 		this.classContext = classContext;
 	}
-
+	
 	public int size() {
 		return callerOfMethod.vertexSet().size();
 	}
@@ -66,18 +69,11 @@ public class CallGraph {
 		return callerOfMethod;
 	}
 	
-	public ExternalEdgeDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
+	public TraversalDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
 		return usageOfClass;
 	}
-
-	public void addCall(Method caller, Method callee) {
-		if (caller == null) {
-			throw new IllegalArgumentException("Parameter caller must not be null");
-		}
-		if (callee == null) {
-			throw new IllegalArgumentException("Parameter callee must not be null");
-		}
-		callerOfMethod.addEdge(caller, callee);
+	
+	private void addUsageOfClass(Method caller, Method callee) {
 		Clazz classOfCaller = (Clazz)caller.getType();
 		Clazz classOfCallee = (Clazz)callee.getType();
 		if (classOfCallee.equals(classOfCaller)) {
@@ -91,6 +87,29 @@ public class CallGraph {
 		}
 		usageOfClass.addEdge(classOfCaller, classOfCallee, callee);
 	}
+	
+	private void addUsageOfPackage(Method caller, Method callee) {
+		Package packageOfCaller = classContext.getPackageOfType(caller.getType());
+		Package packageOfCallee = classContext.getPackageOfType(callee.getType());
+		if (packageOfCaller.equals(packageOfCallee)) {
+			return;
+		}	
+		usageOfPackage.addEdge(packageOfCaller, packageOfCallee, callee);
+	}
+
+	public void addCall(Method caller, Method callee) {
+		if (caller == null) {
+			throw new IllegalArgumentException("Parameter caller must not be null");
+		}
+		if (callee == null) {
+			throw new IllegalArgumentException("Parameter callee must not be null");
+		}
+		callerOfMethod.addEdge(caller, callee);
+		addUsageOfClass(caller, callee);
+		addUsageOfPackage(caller, callee);
+	}
+	
+	// method calls
 	
 	public Set<Method> getCallers(Method callee) {
 		return callerOfMethod.sourceVerticesOf(callee);
@@ -115,6 +134,8 @@ public class CallGraph {
 	public Set<Method> getLeafCallees(Method caller) {
 		return callerOfMethod.getLeafSuccessors(caller);
 	}
+	
+	// class usage
 
 	public void traverseUsedTypes(Clazz using, GraphVisitor<Clazz, Method> usedVisitor) {
 		usageOfClass.traverseSuccessorsDepthFirst(using, usedVisitor);
@@ -132,32 +153,104 @@ public class CallGraph {
 		return usageOfClass.getLeafPredecessors(using);
 	}
 	
-	/**
-	 * @return list of type sets which take part in a using dependency cycle
-	 */
-	public List<Set<Clazz>> getDependencyCycles() {
-		StrongConnectivityInspector<Clazz, Method> inspector = new StrongConnectivityInspector<Clazz, Method>(usageOfClass);
-		List<Set<Clazz>> cycles = new ArrayList<Set<Clazz>>();
-		for (Set<Clazz> cycle : inspector.stronglyConnectedSets()) {
-			if (cycle.size() > 1) { // ignore dependency cycles within one class (these cycles have no impact in software design)
-				cycles.add(cycle);
+	private static <V> DirectedSimpleCycles<V, ?> createCycleDetector(DirectedGraph<V, ?> graph) {
+		return new JohnsonSimpleCycles<>(graph);
+	}
+	
+	private static <V> List<List<V>> getDependencyCycles(DirectedGraph<V, ?> graph) {
+		List<List<V>> cycles = new ArrayList<>();
+		for (List<V> list : createCycleDetector(graph).findSimpleCycles()) {
+			if (list.size() > 1) {
+				cycles.add(list);
 			}
 		}
 		return cycles;
 	}
 	
-	public void traverseDependencyCycles(GraphVisitor<Clazz, Method> cyclesVisitor) {
-		StrongConnectivityInspector<Clazz, Method> inspector = new StrongConnectivityInspector<Clazz, Method>(usageOfClass);
-		List<DirectedSubgraph<Clazz, Method>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
+	/**
+	 * @return list of types which take part in a using dependency cycle
+	 */
+	public List<List<Clazz>> getDependencyCycles() {
+		return getDependencyCycles(usageOfClass);
+	}
+	
+	private static <V, E> void traverseDepdendencyCycles(GraphVisitor<V, E> cyclesVisitor, DirectedGraph<V, E> graph) {
+		StrongConnectivityInspector<V, E> inspector = new StrongConnectivityInspector<V, E>(graph);
+		List<DirectedSubgraph<V, E>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
 		int index = 1;
-		ExternalEdgeDirectedGraph<Clazz, Method> traversalGraph;
-		for (DirectedSubgraph<Clazz, Method> subgraph : cycleGraphs) {
-			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one class (these cycles have no impact in software design)
-				traversalGraph = new ExternalEdgeDirectedGraph<Clazz, Method>(subgraph);
+		TraversalDirectedGraph<V, E> traversalGraph;
+		for (DirectedSubgraph<V, E> subgraph : cycleGraphs) {
+			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one vertex (these cycles have no impact in software design)
+				traversalGraph = new TraversalDirectedGraph<V, E>(subgraph);
 				cyclesVisitor.visitGraph(traversalGraph, index);
 				traversalGraph.traverseDepthFirst(cyclesVisitor);
 				index++;
 			}
 		}
+	}
+	
+	public void traverseDependencyCycles(GraphVisitor<Clazz, Method> cyclesVisitor) {
+		traverseDepdendencyCycles(cyclesVisitor, usageOfClass);
+	}
+	
+	// package usage
+	
+	public void traverseUsedPackages(Package using, GraphVisitor<Package, Method> usedVisitor) {
+		usageOfPackage.traverseSuccessorsDepthFirst(using, usedVisitor);
+	}
+	
+	public void traverseUsingPackages(Package used, GraphVisitor<Package, Method> usingVisitor) {
+		usageOfPackage.traversePredecessorsDepthFirst(used, usingVisitor);
+	}
+
+	/**
+	 * For each type contained in package retrieves the leave used types.
+	 * Returns set of packages of these leave types.
+	 */
+	public Set<Package> getLeafUsedPackages(Package using) {
+		Set<Clazz> usedTypes = new HashSet<>();
+		Set<Clazz> typesOfPackage = classContext.getClassesOfPackage(using);
+		for (Clazz clazz : typesOfPackage) {
+			usedTypes.addAll(getLeafUsedTypes(clazz));
+		}
+		Set<Package> usedPackages = new HashSet<>();
+		for (Clazz clazz : usedTypes) {
+			Package used = classContext.getPackageOfType(clazz);
+			if (!used.equals(using)) {
+				usedPackages.add(used);
+			}
+		}
+		return usedPackages;
+	}
+	
+	/**
+	 * For each type contained in package retrieves the leave using types.
+	 * Returns set of packages of these leave types.
+	 */
+	public Set<Package> getLeafUsingPackages(Package used) {
+		Set<Clazz> usingTypes = new HashSet<>();
+		Set<Clazz> typesOfPackage = classContext.getClassesOfPackage(used);
+		for (Clazz clazz : typesOfPackage) {
+			usingTypes.addAll(getLeafUsingTypes(clazz));
+		}
+		Set<Package> usingPackages = new HashSet<>();
+		for (Clazz clazz : usingTypes) {
+			Package using = classContext.getPackageOfType(clazz);
+			if (!used.equals(using)) {
+				usingPackages.add(using);
+			}
+		}
+		return usingPackages;
+	}
+	
+	/**
+	 * @return list of packages which take part in a using dependency cycle
+	 */
+	public List<List<Package>> getPackageDependencyCycles() {
+		return getDependencyCycles(usageOfPackage);
+	}
+	
+	public void traversePackageDependencyCycles(GraphVisitor<Package, Method> cyclesVisitor) {
+		traverseDepdendencyCycles(cyclesVisitor, usageOfPackage);
 	}
 }

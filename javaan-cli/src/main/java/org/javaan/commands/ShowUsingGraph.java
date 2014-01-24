@@ -27,7 +27,7 @@ import org.javaan.model.CallGraph;
 import org.javaan.model.Clazz;
 import org.javaan.model.Method;
 
-public class ShowUsingGraph extends BaseDependencyGraphCommand {
+public class ShowUsingGraph extends BaseClassDependencyGraphCommand {
 
 	private final static String NAME = "using";
 

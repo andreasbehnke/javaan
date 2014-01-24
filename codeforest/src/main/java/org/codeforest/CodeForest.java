@@ -22,8 +22,6 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.codeforest.graph.CondensedEdge;
-import org.codeforest.graph.CondensedGraphBuilder;
 import org.codeforest.layout.BoxTreeLayout;
 import org.codeforest.layout.TableLayout;
 import org.codeforest.layout.TreeWidthCalculator;
@@ -37,6 +35,8 @@ import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.bytecode.JarFileLoader;
+import org.javaan.graph.CondensedEdge;
+import org.javaan.graph.CondensedGraphBuilder;
 import org.javaan.graph.VertexEdge;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;

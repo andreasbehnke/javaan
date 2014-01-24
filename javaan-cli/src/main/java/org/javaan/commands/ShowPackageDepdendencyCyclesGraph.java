@@ -22,21 +22,27 @@ package org.javaan.commands;
 
 import java.io.PrintStream;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
+import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
+import org.javaan.model.Method;
+import org.javaan.model.Package;
 import org.javaan.model.Type;
+import org.javaan.print.GraphPrinter;
+import org.javaan.print.MethodFormatter;
+import org.javaan.print.ObjectFormatter;
+import org.javaan.print.PackageFormatter;
 
-public class ListMissingTypes extends BaseTypeLoadingCommand {
+public class ShowPackageDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
-	private final static String NAME = "missing-types";
-
-	private final static String DESCRIPTION = "List types which are referenced by loaded types but could not be resolved.";
-
+	private final static String NAME = "package-cycles";
+	
+	private final static String DESCRIPTION = "Show call graph for each package dependency cycle in the loaded libraries.";
+	
 	@Override
 	public String getName() {
 		return NAME;
@@ -54,16 +60,11 @@ public class ListMissingTypes extends BaseTypeLoadingCommand {
 
 	@Override
 	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
-		ClassContextBuilder classContextBuilder = new ClassContextBuilder(types);
-		ClassContext classContext = classContextBuilder.build();
-		Set<String> missingTypes = classContextBuilder.getMissingTypes();
-		CallGraphBuilder callGraphBuilder = new CallGraphBuilder(classContext);
-		callGraphBuilder.build();
-		missingTypes.addAll(callGraphBuilder.getMissingTypes());
-		List<String> sortedMissingTypes = SortUtil.sort(missingTypes);
-		for (String missingType : sortedMissingTypes) {
-			output.println(missingType);
-		}
+		ClassContext classContext = new ClassContextBuilder(types).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		ObjectFormatter<Package> packageFormatter = new PackageFormatter();
+		ObjectFormatter<Method> methodFormatter = new MethodFormatter();
+		GraphPrinter<Package, Method> printer = new GraphPrinter<>(output, packageFormatter, methodFormatter, "cycle %s:");
+		callGraph.traversePackageDependencyCycles(printer);
 	}
-
 }
