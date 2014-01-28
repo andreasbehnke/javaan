@@ -1,8 +1,6 @@
 package org.javaan.graph;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -54,5 +52,17 @@ public class TestMinimumEdgesCycleCut {
 		assertEquals(2, cutPoints.size());
 		assertTrue(cutPoints.contains(new CutPoint<String, String>("a", "b")));
 		assertTrue(cutPoints.contains(new CutPoint<String, String>("e", "b")));
+	}
+	
+	@Test
+	public void testCutCycles() throws IOException {
+		DirectedPseudograph<String, String> source = createGraph();
+		DirectedMultigraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<String, String>());
+		target = new MinimumEdgesCycleCut<String, String>(source, target).cutCycles();
+		
+		assertTrue(source.edgeSet().contains("a-->b:ab1"));
+		assertFalse(target.edgeSet().contains("a-->b:ab1"));
+		assertTrue(source.edgeSet().contains("e-->b:eb1"));
+		assertFalse(target.edgeSet().contains("e-->b:eb1"));
 	}
 }

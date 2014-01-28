@@ -1,8 +1,11 @@
 package org.javaan.graph;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.jgrapht.Graphs;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.TiernanSimpleCycles;
 import org.jgrapht.graph.DirectedMultigraph;
@@ -59,6 +62,16 @@ public class MinimumEdgesCycleCut<V, E> {
 	}
 	
 	public DirectedMultigraph<V, E> cutCycles() {
+		Set<CutPoint<V, E>> cutPoints = new HashSet<>(findCutPoints());
+		Graphs.addAllVertices(targetGraph, sourceGraph.vertexSet());
+		for (E e : sourceGraph.edgeSet()) {
+            V s = sourceGraph.getEdgeSource(e);
+            V t = sourceGraph.getEdgeTarget(e);
+            CutPoint<V, E> cp = new CutPoint<>(s, t);
+            if (!cutPoints.contains(cp)) {
+            	targetGraph.addEdge(s, t, e);
+            }
+        }
 		return targetGraph;
 	}
 }
