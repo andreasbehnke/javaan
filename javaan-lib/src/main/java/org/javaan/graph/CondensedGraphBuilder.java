@@ -1,6 +1,7 @@
 package org.javaan.graph;
 
 import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DirectedPseudograph;
 
 /**
  * Creates a graph with single edge between two vertices from input multigraph (supports multiple edges).
@@ -16,7 +17,7 @@ public class CondensedGraphBuilder<V, E> {
 	
 	public DirectedGraph<V, CondensedEdge<V, E>> createCondensedGraph() {
 		final TraversalDirectedGraph<V, CondensedEdge<V, E>> condensedGraph = new TraversalDirectedGraph<V, CondensedEdge<V, E>>(
-				new CyclicDirectedMultigraph<V, CondensedEdge<V, E>>(
+				new DirectedPseudograph<V, CondensedEdge<V, E>>(
 						new UnsupportedEdgeFactory<V, CondensedEdge<V, E>>()));
 		graph.traverseDepthFirst(new GraphVisitorAdapter<V, E>() {
 			@Override

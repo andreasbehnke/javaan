@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.CyclicDirectedMultigraph;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.TraversalDirectedGraph;
 import org.javaan.graph.UnsupportedEdgeFactory;
@@ -35,6 +34,7 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
+import org.jgrapht.graph.DirectedPseudograph;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -45,15 +45,15 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final TraversalDirectedGraph<Clazz, Method> usageOfClass = createCyclicDirectedMultigraph();
+	private final TraversalDirectedGraph<Clazz, Method> usageOfClass = createDirectedPseudograph();
 	
-	private final TraversalDirectedGraph<Package, Method> usageOfPackage = createCyclicDirectedMultigraph();
+	private final TraversalDirectedGraph<Package, Method> usageOfPackage = createDirectedPseudograph();
 			
 	private final ClassContext classContext;
 	
-	private static <V, E> TraversalDirectedGraph<V, E> createCyclicDirectedMultigraph() {
+	private static <V, E> TraversalDirectedGraph<V, E> createDirectedPseudograph() {
 		return new TraversalDirectedGraph<V, E>(
-				new CyclicDirectedMultigraph<V, E>(
+				new DirectedPseudograph<V, E>(
 						new UnsupportedEdgeFactory<V, E>()));
 	}
 
@@ -252,5 +252,15 @@ public class CallGraph {
 	
 	public void traversePackageDependencyCycles(GraphVisitor<Package, Method> cyclesVisitor) {
 		traverseDepdendencyCycles(cyclesVisitor, usageOfPackage);
+	}
+	
+	/**
+	 * @return topological sorted list of packages. Because package dependency graph may contain
+	 * cycles, the topological sort can not applied directly to that graph. Instead, the cycles are
+	 * cut at the point of minimum count of dependencies between two packages before topological sort
+	 * is applied.
+	 */
+	public List<Package> getTopologicalSortedPackages() {
+		return null;
 	}
 }
