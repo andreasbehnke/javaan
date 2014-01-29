@@ -56,6 +56,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	public Options buildCommandLineOptions(Options options) {
 		options.addOption(StandardOptions.FILTER);
 		options.addOption(StandardOptions.LEAVES);
+		options.addOption(StandardOptions.TOPOLOGICAL_SORT);
 		return options;
 	}
 
@@ -69,6 +70,10 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 
 	protected boolean isPrintLeaves(CommandLine commandLine) {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
+	}
+	
+	protected boolean isTopologicalSort(CommandLine commandLine) {
+		return commandLine.hasOption(StandardOptions.OPT_TOPOLOGICAL_SORT);
 	}
 
 	protected void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Method> methodFormatter) {
@@ -87,7 +92,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	}
 
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+	protected void execute(PrintStream output, List<Type> types) {
 		String criteria = filterCriteria(commandLine);
 		boolean printLeaves = isPrintLeaves(commandLine);
 		ClassContext classContext = new ClassContextBuilder(types).build();

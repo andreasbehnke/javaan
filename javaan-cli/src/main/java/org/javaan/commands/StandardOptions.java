@@ -42,6 +42,8 @@ public interface StandardOptions {
 	
 	static final String OPT_LEAVES = "l";
 	
+	static final String OPT_TOPOLOGICAL_SORT = "topo";
+	
 	static final Option SUPER_TYPES = new Option(OPT_SUPER, "super", false, "For each type, list the hierachy of super types");
 	
 	static final Option SPECIALIZATIONS = new Option(OPT_SPECIALIZATIONS, "specializations", false, "For each type, list specialization types");
@@ -60,4 +62,6 @@ public interface StandardOptions {
 			+ "All methods which contain <arg> in name will match.");
 
 	static final Option LEAVES = new Option(OPT_LEAVES, "leaves", false, "Only display leaf elements of graph.");
+	
+	static final Option TOPOLOGICAL_SORT = new Option(OPT_TOPOLOGICAL_SORT, "topological-sort", false, "Sort dependency graph in topological order. Starts with types having no dependencies.");
 }

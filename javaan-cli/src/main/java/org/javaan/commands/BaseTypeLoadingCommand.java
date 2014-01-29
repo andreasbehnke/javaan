@@ -35,6 +35,8 @@ import org.javaan.model.Type;
  * A warning message is shown if the loaded types contain duplicates.
  */
 public abstract class BaseTypeLoadingCommand extends BaseCommand {
+	
+	protected CommandLine commandLine;
 
 	@Override
 	public ReturnCodes execute(CommandLine commandLine, String[] files) {
@@ -46,7 +48,8 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 						+ "Use command \"javaan listDuplicates\" to find out duplicate types.");
 				types = new ArrayList<Type>(finder.createUniqueSet());
 			}
-			execute(commandLine, System.out, types);
+			this.commandLine = commandLine;
+			execute(System.out, types);
 		} catch (IOException e) {
 			LOG.error("Could not load class files from libraries", e);
 			return ReturnCodes.errorCommand;
@@ -54,5 +57,5 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 		return ReturnCodes.ok;
 	}
 	
-	protected abstract void execute(CommandLine commandLine, PrintStream output, List<Type> types);
+	protected abstract void execute(PrintStream output, List<Type> types);
 }

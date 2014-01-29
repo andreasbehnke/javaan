@@ -89,7 +89,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 			}
 
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+	protected void execute(PrintStream output, List<Type> types) {
 		String criteria = filterCriteria(commandLine);
 		boolean printLeaves = isPrintLeaves(commandLine);
 		ClassContext classContext = new ClassContextBuilder(types).build();

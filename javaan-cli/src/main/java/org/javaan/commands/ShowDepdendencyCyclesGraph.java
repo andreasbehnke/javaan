@@ -23,7 +23,6 @@ package org.javaan.commands;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
@@ -59,7 +58,7 @@ public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+	protected void execute(PrintStream output, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 		ObjectFormatter<Clazz> clazzFormatter = new ClazzFormatter();
