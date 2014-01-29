@@ -59,19 +59,19 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		return options;
 	}
 
-	private String filterCriteria(CommandLine commandLine) {
+	protected String filterCriteria(CommandLine commandLine) {
 		return commandLine.getOptionValue(StandardOptions.OPT_FILTER);
 	}
 
-	private ObjectFormatter<Method> getMethodFormatter() {
+	protected ObjectFormatter<Method> getMethodFormatter() {
 		return new MethodFormatter();
 	}
 
-	private boolean isPrintLeaves(CommandLine commandLine) {
+	protected boolean isPrintLeaves(CommandLine commandLine) {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
 
-	private void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Method> methodFormatter) {
+	protected void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Method> methodFormatter) {
 		GraphVisitor<T, Method> printer = new GraphPrinter<T, Method>(output, typeFormatter, methodFormatter);
 		for (T type : types) {
 			output.println(String.format("%s:",typeFormatter.format(type)));
@@ -80,7 +80,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		}
 	}
 
-	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> formatter) {
+	protected void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> formatter) {
 		for (T type : types) {
 			PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, type)), formatter.format(type) , "\n\t", ", ");
 		}
