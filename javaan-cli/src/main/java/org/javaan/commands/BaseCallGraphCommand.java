@@ -55,7 +55,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return options;
 	}
 
-	private String filterCriteria(CommandLine commandLine) {
+	private String filterCriteria() {
 		return commandLine.getOptionValue(StandardOptions.OPT_METHOD);
 	}
 
@@ -67,7 +67,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return SortUtil.sort(FilterUtil.filter(classContext.getMethods(), new MethodMatcher(filterCriteria)));
 	}
 
-	private boolean isPrintLeaves(CommandLine commandLine) {
+	private boolean isPrintLeaves() {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
 
@@ -90,8 +90,8 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
 	@Override
 	protected void execute(PrintStream output, List<Type> types) {
-		String criteria = filterCriteria(commandLine);
-		boolean printLeaves = isPrintLeaves(commandLine);
+		String criteria = filterCriteria();
+		boolean printLeaves = isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 		Collection<Method> input = getInput(classContext, callGraph, criteria);

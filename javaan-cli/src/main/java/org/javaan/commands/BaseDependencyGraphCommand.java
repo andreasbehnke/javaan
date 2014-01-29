@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
@@ -60,7 +59,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		return options;
 	}
 
-	protected String filterCriteria(CommandLine commandLine) {
+	protected String filterCriteria() {
 		return commandLine.getOptionValue(StandardOptions.OPT_FILTER);
 	}
 
@@ -68,11 +67,11 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		return new MethodFormatter();
 	}
 
-	protected boolean isPrintLeaves(CommandLine commandLine) {
+	protected boolean isPrintLeaves() {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
 	
-	protected boolean isTopologicalSort(CommandLine commandLine) {
+	protected boolean isTopologicalSort() {
 		return commandLine.hasOption(StandardOptions.OPT_TOPOLOGICAL_SORT);
 	}
 
@@ -93,8 +92,8 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 
 	@Override
 	protected void execute(PrintStream output, List<Type> types) {
-		String criteria = filterCriteria(commandLine);
-		boolean printLeaves = isPrintLeaves(commandLine);
+		String criteria = filterCriteria();
+		boolean printLeaves = isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 		Collection<T> input = getInput(classContext, callGraph, criteria);
