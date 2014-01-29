@@ -5,11 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jgrapht.DirectedGraph;
 import org.jgrapht.Graphs;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.TiernanSimpleCycles;
-import org.jgrapht.graph.DirectedMultigraph;
-import org.jgrapht.graph.DirectedPseudograph;
 
 /**
  * Given a directed <a href="http://mathworld.wolfram.com/Pseudograph.html">pseudograph</a> g, 
@@ -18,11 +17,11 @@ import org.jgrapht.graph.DirectedPseudograph;
  */
 public class MinimumEdgesCycleCut<V, E> {
 
-	private final DirectedPseudograph<V, E> sourceGraph;
+	private final DirectedGraph<V, E> sourceGraph;
 	
-	private final DirectedMultigraph<V, E> targetGraph;
+	private final DirectedGraph<V, E> targetGraph;
 
-	public MinimumEdgesCycleCut(DirectedPseudograph<V, E> source, DirectedMultigraph<V, E> target) {
+	public MinimumEdgesCycleCut(DirectedGraph<V, E> source, DirectedGraph<V, E> target) {
 		this.sourceGraph = source;
 		this.targetGraph = target;
 	}
@@ -61,7 +60,7 @@ public class MinimumEdgesCycleCut<V, E> {
 		return cutPoints;
 	}
 	
-	public DirectedMultigraph<V, E> cutCycles() {
+	public DirectedGraph<V, E> cutCycles() {
 		Set<CutPoint<V, E>> cutPoints = new HashSet<>(findCutPoints());
 		Graphs.addAllVertices(targetGraph, sourceGraph.vertexSet());
 		for (E e : sourceGraph.edgeSet()) {

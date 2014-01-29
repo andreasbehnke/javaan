@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.util.List;
 
 import org.javaan.graph.SimpleGraphReader.ObjectProducer;
+import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedPseudograph;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class TestMinimumEdgesCycleCut {
 	@Test
 	public void testCutCycles() throws IOException {
 		DirectedPseudograph<String, String> source = createGraph();
-		DirectedMultigraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<String, String>());
+		DirectedGraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<String, String>());
 		target = new MinimumEdgesCycleCut<String, String>(source, target).cutCycles();
 		
 		assertTrue(source.edgeSet().contains("a-->b:ab1"));
