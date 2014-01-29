@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.MinimumEdgesCycleCut;
+import org.javaan.graph.TopologicalMultigraphSort;
 import org.javaan.graph.TraversalDirectedGraph;
 import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdgeDirectedGraph;
@@ -34,6 +36,7 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
+import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedPseudograph;
 import org.jgrapht.graph.DirectedSubgraph;
 
@@ -261,6 +264,8 @@ public class CallGraph {
 	 * is applied.
 	 */
 	public List<Package> getTopologicalSortedPackages() {
-		return null;
+		DirectedGraph<Package, Method> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<Package, Method>());
+		target = new MinimumEdgesCycleCut<>(usageOfPackage, target).cutCycles();
+		return new TopologicalMultigraphSort<>(target).sort();
 	}
 }

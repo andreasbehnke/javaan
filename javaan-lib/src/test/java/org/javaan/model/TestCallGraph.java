@@ -23,7 +23,10 @@ package org.javaan.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.List;
 import java.util.Set;
@@ -38,6 +41,10 @@ public class TestCallGraph {
 	
 	private static final Package DEF = new Package("d.e.f");
 	
+	private static final Package GHI = new Package("g.h.i");
+	
+	private static final Package JKL = new Package("j.k.l");
+	
 	private static final Clazz A = new Clazz("a.b.c.classa");
 
 	private static final Clazz B = new Clazz("d.e.f.classb");
@@ -45,7 +52,11 @@ public class TestCallGraph {
 	private static final Clazz C = new Clazz("a.b.c.classc");
 
 	private static final Clazz D = new Clazz("d.e.f.classd");
+	
+	private static final Clazz E = new Clazz("g.h.i.classe");
 
+	private static final Clazz F = new Clazz("j.k.l.classf");
+	
 	private final static Method A_METHODA = new Method(A, "methoda");
 
 	private final static Method A_METHODB = new Method(A, "methodb");
@@ -59,6 +70,10 @@ public class TestCallGraph {
 	private final static Method C_METHODE = new Method(C, "methode");
 
 	private final static Method D_METHODF = new Method(D, "methodf");
+	
+	private final static Method E_METHODG = new Method(E, "methodg");
+	
+	private final static Method F_METHODH = new Method(F, "methodh");
 	
 	private ClassContext createClassContext() {
 		ClassContext classContext = new ClassContext();
@@ -339,7 +354,7 @@ public class TestCallGraph {
 	}
 	
 	@Test
-	public void testGetPacakgeDependencyCycles() {
+	public void testGetPackageDependencyCycles() {
 		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(A_METHODC, B_METHODD);
 		callGraph.addCall(D_METHODF, C_METHODE);
@@ -352,5 +367,34 @@ public class TestCallGraph {
 		assertEquals(2, cycle.size());
 		assertTrue(cycle.contains(ABC));
 		assertTrue(cycle.contains(DEF));
+	}
+	
+	@Test
+	public void testGetTopologicalSortedPackages() {
+		ClassContext classContext = new ClassContext();
+		classContext.addClass(A);
+		classContext.addClass(B);
+		classContext.addClass(C);
+		classContext.addClass(D);
+		classContext.addClass(E);
+		classContext.addClass(F);
+		
+		CallGraph callGraph = new CallGraph(classContext);
+		callGraph.addCall(A_METHODB, B_METHODD);
+		callGraph.addCall(A_METHODB, B_METHODD1);
+		callGraph.addCall(A_METHODB, D_METHODF);
+		callGraph.addCall(B_METHODD, A_METHODB); // cycle should be cut!
+		callGraph.addCall(C_METHODE, E_METHODG);
+		callGraph.addCall(D_METHODF, E_METHODG);
+		callGraph.addCall(D_METHODF, F_METHODH);
+		callGraph.addCall(E_METHODG, F_METHODH);
+		
+		List<Package> packages = callGraph.getTopologicalSortedPackages();
+		assertNotNull(packages);
+		assertEquals(4, packages.size());
+		assertEquals(ABC, packages.get(0));
+		assertEquals(DEF, packages.get(1));
+		assertEquals(GHI, packages.get(2));
+		assertEquals(JKL, packages.get(3));
 	}
 }
