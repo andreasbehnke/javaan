@@ -4,10 +4,15 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.List;
 
 import org.javaan.graph.SimpleGraphReader.ObjectProducer;
 import org.jgrapht.DirectedGraph;
+import org.jgrapht.EdgeFactory;
+import org.jgrapht.VertexFactory;
+import org.jgrapht.generate.CompleteGraphGenerator;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedPseudograph;
 import org.junit.Test;
@@ -26,7 +31,15 @@ public class TestMinimumEdgesCycleCut {
 			+ "E c e ce1 \n" // second cycle c -> e -> b -> c
 			+ "E c e ce2 \n"
 			+ "E c e ce3 \n"
-			+ "E e b eb1";
+			+ "E e b eb1 \n"
+			+ "E x y xy1 \n" // disconnected parts
+			+ "E y x yx1 \n"
+			+ "E y x yx2 \n"
+			+ "V s \n"
+			+ "V t \n"
+			+ "E x v xv \n"
+			+ "E v v vv1 \n" // self-cycle
+			+ "E v v vv2 \n";
 
 	private DirectedPseudograph<String, String> createGraph() throws IOException {
 		DirectedPseudograph<String, String> graph = new DirectedPseudograph<String, String>(new UnsupportedEdgeFactory<String, String>());
@@ -50,9 +63,11 @@ public class TestMinimumEdgesCycleCut {
 		DirectedMultigraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<String, String>());
 		List<CutPoint<String, String>> cutPoints = new MinimumEdgesCycleCut<>(createGraph(), target).findCutPoints();
 		assertNotNull(cutPoints);
-		assertEquals(2, cutPoints.size());
+		assertEquals(4, cutPoints.size());
 		assertTrue(cutPoints.contains(new CutPoint<String, String>("a", "b")));
 		assertTrue(cutPoints.contains(new CutPoint<String, String>("e", "b")));
+		assertTrue(cutPoints.contains(new CutPoint<String, String>("x", "y")));
+		assertTrue(cutPoints.contains(new CutPoint<String, String>("v", "v")));
 	}
 	
 	@Test
@@ -63,7 +78,39 @@ public class TestMinimumEdgesCycleCut {
 		
 		assertTrue(source.edgeSet().contains("a-->b:ab1"));
 		assertFalse(target.edgeSet().contains("a-->b:ab1"));
+
 		assertTrue(source.edgeSet().contains("e-->b:eb1"));
 		assertFalse(target.edgeSet().contains("e-->b:eb1"));
+		
+		assertTrue(source.edgeSet().contains("x-->y:xy1"));
+		assertFalse(target.edgeSet().contains("x-->y:xy1"));
+
+		assertTrue(source.edgeSet().contains("v-->v:vv1"));
+		assertTrue(source.edgeSet().contains("v-->v:vv2"));
+		assertFalse(target.edgeSet().contains("v-->v:vv1"));
+		assertFalse(target.edgeSet().contains("v-->v:vv2"));
+	}
+	
+	@Test
+	public void testCutCyclesCompleteGraph() throws IOException {
+		CompleteGraphGenerator<String, String> generator = new CompleteGraphGenerator<>(10);
+		DirectedGraph<String, String> graph = new DefaultDirectedGraph<>(new EdgeFactory<String, String>() {
+			@Override
+			public String createEdge(String sourceVertex, String targetVertex) {
+				return sourceVertex + targetVertex;
+			}
+		});
+		generator.generateGraph(graph, new VertexFactory<String>() {
+			
+			private int count = 0;
+			
+			@Override
+			public String createVertex() {
+				count ++;
+				return "V" + count;
+			}
+		}, new HashMap<String, String>());
+		DirectedGraph<String, String> target = new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<String, String>());
+		target = new MinimumEdgesCycleCut<String, String>(graph, target).cutCycles();
 	}
 }
