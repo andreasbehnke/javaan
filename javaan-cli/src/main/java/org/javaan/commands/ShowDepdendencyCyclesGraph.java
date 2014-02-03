@@ -23,19 +23,18 @@ package org.javaan.commands;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
-import org.javaan.model.Method;
+import org.javaan.model.Dependency;
 import org.javaan.model.Type;
 import org.javaan.print.ClazzFormatter;
 import org.javaan.print.GraphPrinter;
-import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
+import org.javaan.print.SimpleDependencyFormatter;
 
 public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
@@ -59,12 +58,12 @@ public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(CommandLine commandLine, PrintStream output, List<Type> types) {
+	protected void execute(PrintStream output, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(classContext).build();
 		ObjectFormatter<Clazz> clazzFormatter = new ClazzFormatter();
-		ObjectFormatter<Method> methodFormatter = new MethodFormatter();
-		GraphPrinter<Clazz, Method> printer = new GraphPrinter<Clazz, Method>(output, clazzFormatter, methodFormatter, "cycle %s:");
+		ObjectFormatter<Dependency> dependencyFormatter = new SimpleDependencyFormatter();
+		GraphPrinter<Clazz, Dependency> printer = new GraphPrinter<Clazz, Dependency>(output, clazzFormatter, dependencyFormatter, "cycle %s:");
 		callGraph.traverseDependencyCycles(printer);
 	}
 }

@@ -20,9 +20,7 @@ package org.javaan.model;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -30,13 +28,19 @@ import java.util.Set;
 
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeGraphVisitor;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.internal.matchers.Any;
 
 public class TestCallGraph {
 	
 	private static final Package ABC = new Package("a.b.c");
 	
 	private static final Package DEF = new Package("d.e.f");
+	
+	private static final Package GHI = new Package("g.h.i");
+	
+	private static final Package JKL = new Package("j.k.l");
 	
 	private static final Clazz A = new Clazz("a.b.c.classa");
 
@@ -45,7 +49,11 @@ public class TestCallGraph {
 	private static final Clazz C = new Clazz("a.b.c.classc");
 
 	private static final Clazz D = new Clazz("d.e.f.classd");
+	
+	private static final Clazz E = new Clazz("g.h.i.classe");
 
+	private static final Clazz F = new Clazz("j.k.l.classf");
+	
 	private final static Method A_METHODA = new Method(A, "methoda");
 
 	private final static Method A_METHODB = new Method(A, "methodb");
@@ -59,6 +67,10 @@ public class TestCallGraph {
 	private final static Method C_METHODE = new Method(C, "methode");
 
 	private final static Method D_METHODF = new Method(D, "methodf");
+	
+	private final static Method E_METHODG = new Method(E, "methodg");
+	
+	private final static Method F_METHODH = new Method(F, "methodh");
 	
 	private ClassContext createClassContext() {
 		ClassContext classContext = new ClassContext();
@@ -93,11 +105,13 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, B_METHODD);
 		callGraph.addCall(A_METHODA, B_METHODD1);
 		
-		Set<Method> outgoingEdgesOfA = callGraph.getUsageOfClassGraph().outgoingEdgesOf(A);
+		Set<Dependency> outgoingEdgesOfA = callGraph.getUsageOfClassGraph().outgoingEdgesOf(A);
 		assertNotNull(outgoingEdgesOfA);
-		assertEquals(2, outgoingEdgesOfA.size());
-		assertTrue(outgoingEdgesOfA.contains(B_METHODD));
-		assertTrue(outgoingEdgesOfA.contains(B_METHODD1));
+		assertEquals(1, outgoingEdgesOfA.size());
+		Dependency d = outgoingEdgesOfA.iterator().next();
+		assertTrue(d.getCallees().contains(B_METHODD));
+		assertTrue(d.getCallees().contains(B_METHODD1));
+		assertEquals("a.b.c.classa-->d.e.f.classb", d.getName());
 	}
 
 	@Test
@@ -196,14 +210,14 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, A_METHODC);
 		callGraph.addCall(A_METHODC, B_METHODD); 
 		callGraph.addCall(B_METHODD, C_METHODE);
-		GraphVisitor<Clazz, Method> visitor = mock(GraphVisitor.class);
+		GraphVisitor<Clazz, Dependency> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsedTypes(A, visitor);
 		verify(visitor, times(3)).finished();
 		verify(visitor).visitVertex(A, 0);
-		verify(visitor).visitEdge(B_METHODD, 1);
+		verify(visitor).visitEdge(any(Dependency.class), eq(1));
 		verify(visitor).visitVertex(B, 1);
-		verify(visitor).visitEdge(C_METHODE, 2);
+		verify(visitor).visitEdge(any(Dependency.class), eq(2));
 		verify(visitor).visitVertex(C, 2);
 		verifyNoMoreInteractions(visitor);
 	}
@@ -215,14 +229,14 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, A_METHODC);
 		callGraph.addCall(A_METHODC, B_METHODD);
 		callGraph.addCall(B_METHODD, C_METHODE);
-		GraphVisitor<Clazz, Method> visitor = mock(GraphVisitor.class);
+		GraphVisitor<Clazz, Dependency> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsingTypes(C, visitor);
 		verify(visitor, times(3)).finished();
 		verify(visitor).visitVertex(C, 0);
-		verify(visitor).visitEdge(C_METHODE, 1);
+		verify(visitor).visitEdge(any(Dependency.class), eq(1));
 		verify(visitor).visitVertex(B, 1);
-		verify(visitor).visitEdge(B_METHODD, 2);
+		verify(visitor).visitEdge(any(Dependency.class), eq(2));
 		verify(visitor).visitVertex(A, 2);
 		verifyNoMoreInteractions(visitor);
 	}
@@ -283,14 +297,14 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, A_METHODC);
 		callGraph.addCall(A_METHODC, B_METHODD); 
 		callGraph.addCall(B_METHODD, C_METHODE);
-		GraphVisitor<Package, Method> visitor = mock(GraphVisitor.class);
+		GraphVisitor<Package, Dependency> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsedPackages(ABC, visitor);
 		verify(visitor, times(2)).finished();
 		verify(visitor).visitVertex(ABC, 0);
-		verify(visitor).visitEdge(B_METHODD, 1);
+		verify(visitor).visitEdge(any(Dependency.class), eq(1));
 		verify(visitor).visitVertex(DEF, 1);
-		verify(visitor).visitEdge(C_METHODE, 2);
+		verify(visitor).visitEdge(any(Dependency.class), eq(2));
 		verifyNoMoreInteractions(visitor);
 	}
 
@@ -301,14 +315,14 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, A_METHODC);
 		callGraph.addCall(A_METHODC, B_METHODD); 
 		callGraph.addCall(B_METHODD, C_METHODE);
-		GraphVisitor<Package, Method> visitor = mock(GraphVisitor.class);
+		GraphVisitor<Package, Dependency> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseUsingPackages(DEF, visitor);
 		verify(visitor, times(2)).finished();
 		verify(visitor).visitVertex(DEF, 0);
-		verify(visitor).visitEdge(B_METHODD, 1);
+		verify(visitor).visitEdge(any(Dependency.class), eq(1));
 		verify(visitor).visitVertex(ABC, 1);
-		verify(visitor).visitEdge(C_METHODE, 2);
+		verify(visitor).visitEdge(any(Dependency.class), eq(2));
 		verifyNoMoreInteractions(visitor);
 	}
 	
@@ -339,7 +353,7 @@ public class TestCallGraph {
 	}
 	
 	@Test
-	public void testGetPacakgeDependencyCycles() {
+	public void testGetPackageDependencyCycles() {
 		CallGraph callGraph = new CallGraph(createClassContext());
 		callGraph.addCall(A_METHODC, B_METHODD);
 		callGraph.addCall(D_METHODF, C_METHODE);
@@ -352,5 +366,35 @@ public class TestCallGraph {
 		assertEquals(2, cycle.size());
 		assertTrue(cycle.contains(ABC));
 		assertTrue(cycle.contains(DEF));
+	}
+	
+	@Ignore("Implemented in feature branch")
+	@Test
+	public void testGetTopologicalSortedPackages() {
+		ClassContext classContext = new ClassContext();
+		classContext.addClass(A);
+		classContext.addClass(B);
+		classContext.addClass(C);
+		classContext.addClass(D);
+		classContext.addClass(E);
+		classContext.addClass(F);
+		
+		CallGraph callGraph = new CallGraph(classContext);
+		callGraph.addCall(A_METHODB, B_METHODD);
+		callGraph.addCall(A_METHODB, B_METHODD1);
+		callGraph.addCall(A_METHODB, D_METHODF);
+		callGraph.addCall(B_METHODD, A_METHODB); // cycle should be cut!
+		callGraph.addCall(C_METHODE, E_METHODG);
+		callGraph.addCall(D_METHODF, E_METHODG);
+		callGraph.addCall(D_METHODF, F_METHODH);
+		callGraph.addCall(E_METHODG, F_METHODH);
+		
+		List<Package> packages = callGraph.getTopologicalSortedPackages();
+		assertNotNull(packages);
+		assertEquals(4, packages.size());
+		assertEquals(ABC, packages.get(0));
+		assertEquals(DEF, packages.get(1));
+		assertEquals(GHI, packages.get(2));
+		assertEquals(JKL, packages.get(3));
 	}
 }

@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.CyclicDirectedMultigraph;
+import org.apache.commons.lang3.NotImplementedException;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.TraversalDirectedGraph;
 import org.javaan.graph.UnsupportedEdgeFactory;
@@ -35,6 +35,7 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -45,15 +46,15 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final TraversalDirectedGraph<Clazz, Method> usageOfClass = createCyclicDirectedMultigraph();
+	private final TraversalDirectedGraph<Clazz, Dependency> usageOfClass = createDirectedGraph();
 	
-	private final TraversalDirectedGraph<Package, Method> usageOfPackage = createCyclicDirectedMultigraph();
+	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = createDirectedGraph();
 			
 	private final ClassContext classContext;
 	
-	private static <V, E> TraversalDirectedGraph<V, E> createCyclicDirectedMultigraph() {
+	private static <V, E> TraversalDirectedGraph<V, E> createDirectedGraph() {
 		return new TraversalDirectedGraph<V, E>(
-				new CyclicDirectedMultigraph<V, E>(
+				new DefaultDirectedGraph<V, E>(
 						new UnsupportedEdgeFactory<V, E>()));
 	}
 
@@ -69,7 +70,7 @@ public class CallGraph {
 		return callerOfMethod;
 	}
 	
-	public TraversalDirectedGraph<Clazz, Method> getUsageOfClassGraph() {
+	public TraversalDirectedGraph<Clazz, Dependency> getUsageOfClassGraph() {
 		return usageOfClass;
 	}
 	
@@ -85,7 +86,7 @@ public class CallGraph {
 		if (classContext.getSpecializationsOfClass(classOfCaller).contains(classOfCallee)) {
 			return;
 		}
-		usageOfClass.addEdge(classOfCaller, classOfCallee, callee);
+		Dependency.addDependency(usageOfClass, classOfCaller, classOfCallee, callee);
 	}
 	
 	private void addUsageOfPackage(Method caller, Method callee) {
@@ -93,8 +94,8 @@ public class CallGraph {
 		Package packageOfCallee = classContext.getPackageOfType(callee.getType());
 		if (packageOfCaller.equals(packageOfCallee)) {
 			return;
-		}	
-		usageOfPackage.addEdge(packageOfCaller, packageOfCallee, callee);
+		}
+		Dependency.addDependency(usageOfPackage, packageOfCaller, packageOfCallee, callee);
 	}
 
 	public void addCall(Method caller, Method callee) {
@@ -137,11 +138,11 @@ public class CallGraph {
 	
 	// class usage
 
-	public void traverseUsedTypes(Clazz using, GraphVisitor<Clazz, Method> usedVisitor) {
+	public void traverseUsedTypes(Clazz using, GraphVisitor<Clazz, Dependency> usedVisitor) {
 		usageOfClass.traverseSuccessorsDepthFirst(using, usedVisitor);
 	}
 	
-	public void traverseUsingTypes(Clazz used, GraphVisitor<Clazz, Method> usingVisitor) {
+	public void traverseUsingTypes(Clazz used, GraphVisitor<Clazz, Dependency> usingVisitor) {
 		usageOfClass.traversePredecessorsDepthFirst(used, usingVisitor);
 	}
 
@@ -189,17 +190,17 @@ public class CallGraph {
 		}
 	}
 	
-	public void traverseDependencyCycles(GraphVisitor<Clazz, Method> cyclesVisitor) {
+	public void traverseDependencyCycles(GraphVisitor<Clazz, Dependency> cyclesVisitor) {
 		traverseDepdendencyCycles(cyclesVisitor, usageOfClass);
 	}
 	
 	// package usage
 	
-	public void traverseUsedPackages(Package using, GraphVisitor<Package, Method> usedVisitor) {
+	public void traverseUsedPackages(Package using, GraphVisitor<Package, Dependency> usedVisitor) {
 		usageOfPackage.traverseSuccessorsDepthFirst(using, usedVisitor);
 	}
 	
-	public void traverseUsingPackages(Package used, GraphVisitor<Package, Method> usingVisitor) {
+	public void traverseUsingPackages(Package used, GraphVisitor<Package, Dependency> usingVisitor) {
 		usageOfPackage.traversePredecessorsDepthFirst(used, usingVisitor);
 	}
 
@@ -250,7 +251,17 @@ public class CallGraph {
 		return getDependencyCycles(usageOfPackage);
 	}
 	
-	public void traversePackageDependencyCycles(GraphVisitor<Package, Method> cyclesVisitor) {
+	public void traversePackageDependencyCycles(GraphVisitor<Package, Dependency> cyclesVisitor) {
 		traverseDepdendencyCycles(cyclesVisitor, usageOfPackage);
+	}
+	
+	/**
+	 * @return topological sorted list of packages. Because package dependency graph may contain
+	 * cycles, the topological sort can not applied directly to that graph. Instead, the cycles are
+	 * cut at the point of minimum count of dependencies between two packages before topological sort
+	 * is applied.
+	 */
+	public List<Package> getTopologicalSortedPackages() {
+		throw new NotImplementedException("implemented in feature branch!");
 	}
 }

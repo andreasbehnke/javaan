@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
-import org.javaan.model.Method;
+import org.javaan.model.Dependency;
 import org.javaan.model.Package;
 
 public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
@@ -25,7 +25,7 @@ public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
 	}
 
 	@Override
-	protected void traverse(CallGraph callGraph, Package type, GraphVisitor<Package, Method> graphPrinter) {
+	protected void traverse(CallGraph callGraph, Package type, GraphVisitor<Package, Dependency> graphPrinter) {
 		callGraph.traverseUsedPackages(type, graphPrinter);
 	}
 

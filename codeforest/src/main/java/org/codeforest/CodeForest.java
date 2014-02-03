@@ -41,6 +41,7 @@ import org.javaan.graph.VertexEdge;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
+import org.javaan.model.Dependency;
 import org.javaan.model.Method;
 import org.javaan.model.Package;
 import org.jgrapht.DirectedGraph;
@@ -131,7 +132,7 @@ public class CodeForest extends javax.swing.JFrame {
 	}
 
 	private BranchGroup createSceneGraph(ClassContext classContext, CallGraph callGraph) {
-		DirectedGraph<Clazz, CondensedEdge<Clazz, Method>> condensedCallGraph = 
+		DirectedGraph<Clazz, CondensedEdge<Clazz, Dependency>> condensedCallGraph = 
 				new CondensedGraphBuilder<>(callGraph.getUsageOfClassGraph()).createCondensedGraph();
 		
 		
@@ -173,8 +174,8 @@ public class CodeForest extends javax.swing.JFrame {
 		TransformGroup transformGroup = planter.createScene(rootClasses);
 		objRoot.addChild(transformGroup);
 		
-		EdgeNodeFactory<Clazz, CondensedEdge<Clazz, Method>> usageEdgeNodeFactory = new LineEdgeFactory<>(createUsageAppearance());
-		VertexNodeConnector<Clazz, CondensedEdge<Clazz, Method>> connector = new VertexNodeConnector<>(context, usageEdgeNodeFactory);
+		EdgeNodeFactory<Clazz, CondensedEdge<Clazz, Dependency>> usageEdgeNodeFactory = new LineEdgeFactory<>(createUsageAppearance());
+		VertexNodeConnector<Clazz, CondensedEdge<Clazz, Dependency>> connector = new VertexNodeConnector<>(context, usageEdgeNodeFactory);
 		callGraphBranchGroup = new BranchGroup();
 		callGraphBranchGroup.setCapability(BranchGroup.ALLOW_DETACH);
 		callGraphBranchGroup.addChild(connector.createScene(condensedCallGraph));
