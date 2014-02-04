@@ -1,6 +1,6 @@
 package org.javaan.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
