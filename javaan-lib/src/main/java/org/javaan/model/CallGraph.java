@@ -52,6 +52,8 @@ public class CallGraph {
 			
 	private final ClassContext classContext;
 	
+	private final MethodResolver methodResolver;
+	
 	private static <V, E> TraversalDirectedGraph<V, E> createDirectedGraph() {
 		return new TraversalDirectedGraph<V, E>(
 				new DefaultDirectedGraph<V, E>(
@@ -60,6 +62,7 @@ public class CallGraph {
 
 	public CallGraph(ClassContext classContext) {
 		this.classContext = classContext;
+		this.methodResolver = new ImplementationResolver(classContext);
 	}
 	
 	public int size() {
@@ -97,6 +100,12 @@ public class CallGraph {
 		}
 		Dependency.addDependency(usageOfPackage, packageOfCaller, packageOfCallee, callee);
 	}
+	
+	private void addCallInternal(Method caller, Method callee) {
+		callerOfMethod.addEdge(caller, callee);
+		addUsageOfClass(caller, callee);
+		addUsageOfPackage(caller, callee);
+	}
 
 	public void addCall(Method caller, Method callee) {
 		if (caller == null) {
@@ -105,9 +114,23 @@ public class CallGraph {
 		if (callee == null) {
 			throw new IllegalArgumentException("Parameter callee must not be null");
 		}
-		callerOfMethod.addEdge(caller, callee);
-		addUsageOfClass(caller, callee);
-		addUsageOfPackage(caller, callee);
+		Set<Type> resolvedTypes = methodResolver.resolve(callee);
+		for (Type type : resolvedTypes) {
+			Method calleeCandidate = null;
+			switch (type.getJavaType()) {
+			case CLASS:
+				calleeCandidate = classContext.getVirtualMethod((Clazz)type, callee.getSignature());
+				break;
+			case INTERFACE:
+				calleeCandidate = classContext.getVirtualMethod((Interface)type, callee.getSignature());
+				break;
+			default:
+				throw new IllegalArgumentException("Unknown java type:" + type.getJavaType());
+			}
+			if (calleeCandidate != null) {
+				addCallInternal(caller, calleeCandidate);
+			}
+		}
 	}
 	
 	// method calls

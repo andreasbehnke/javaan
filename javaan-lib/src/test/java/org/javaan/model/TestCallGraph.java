@@ -77,6 +77,13 @@ public class TestCallGraph {
 		classContext.addClass(A);
 		classContext.addClass(B);
 		classContext.addSuperClass(C, D);
+		classContext.addMethod(A_METHODA);
+		classContext.addMethod(A_METHODB);
+		classContext.addMethod(A_METHODC);
+		classContext.addMethod(B_METHODD);
+		classContext.addMethod(B_METHODD1);
+		classContext.addMethod(C_METHODE);
+		classContext.addMethod(D_METHODF);
 		return classContext;
 	}
 

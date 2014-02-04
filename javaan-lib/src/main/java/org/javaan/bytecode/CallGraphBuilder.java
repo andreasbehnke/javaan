@@ -72,22 +72,22 @@ public class CallGraphBuilder {
 
 		@Override
 	    public void visitINVOKEVIRTUAL(INVOKEVIRTUAL invoke) {
-			addClassMethodCall(method, invoke, constantPoolGen);
+			addMethodCall(method, invoke, constantPoolGen);
 	    }
 
 	    @Override
 	    public void visitINVOKEINTERFACE(INVOKEINTERFACE invoke) {
-	    	addInterfaceMethodCall(method, invoke, constantPoolGen);
+	    	addMethodCall(method, invoke, constantPoolGen);
 	    }
 
 	    @Override
 	    public void visitINVOKESPECIAL(INVOKESPECIAL invoke) {
-	    	addClassMethodCall(method, invoke, constantPoolGen);
+	    	addMethodCall(method, invoke, constantPoolGen);
 	    }
 
 	    @Override
 	    public void visitINVOKESTATIC(INVOKESTATIC invoke) {
-	    	addClassMethodCall(method, invoke, constantPoolGen);
+	    	addMethodCall(method, invoke, constantPoolGen);
 	    }
 	}
 	
@@ -120,37 +120,12 @@ public class CallGraphBuilder {
 		default:
 			throw new IllegalArgumentException("Unknown type: " + type);
 		}
-		
 	}
-	
-	private void addAbstractMethodCall(Set<Clazz> implementations, Method caller, Method abstractCallee) {
-		for (Clazz implementation : implementations) {
-			Method calleeCandidate = classContext.getVirtualMethod(implementation, abstractCallee.getSignature());
-			if (calleeCandidate != null) {
-				callGraph.addCall(caller, calleeCandidate);
-			}
-		}
-	}
-	
-	private void addInterfaceMethodCall(Method caller, InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
+
+	private void addMethodCall(Method caller, InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
 		Method callee = getMethod(invoke, constantPoolGen);
 		if (callee != null) {
-			// find implementations of interface
-			Set<Clazz> implementations = classContext.getImplementations((Interface)callee.getType());
-			addAbstractMethodCall(implementations, caller, callee);
-		}
-	}
-	
-	private void addClassMethodCall(Method caller, InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {
-		Method callee = getMethod(invoke, constantPoolGen);
-		if (callee != null) {
-			if (callee.isAbstract()) {
-				// find implementations of abstract method
-				Set<Clazz> implementations = classContext.getSpecializationsOfClass((Clazz)callee.getType());
-				addAbstractMethodCall(implementations, caller, callee);
-			} else {
-				callGraph.addCall(caller, callee);	
-			}
+			callGraph.addCall(caller, callee);
 		}
 	}
 	
