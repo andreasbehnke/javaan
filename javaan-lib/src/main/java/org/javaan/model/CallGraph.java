@@ -81,7 +81,7 @@ public class CallGraph {
 		return callerOfMethod;
 	}
 	
-	public TraversalDirectedGraph<Type, Dependency> getUsageOfClassGraph() {
+	public TraversalDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
 		return usageOfClass;
 	}
 	

@@ -122,7 +122,7 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, B_METHODD);
 		callGraph.addCall(A_METHODA, B_METHODD1);
 		
-		Set<Dependency> outgoingEdgesOfA = callGraph.getUsageOfClassGraph().outgoingEdgesOf(A);
+		Set<Dependency> outgoingEdgesOfA = callGraph.getUsageOfTypeGraph().outgoingEdgesOf(A);
 		assertNotNull(outgoingEdgesOfA);
 		assertEquals(1, outgoingEdgesOfA.size());
 		Dependency d = outgoingEdgesOfA.iterator().next();
