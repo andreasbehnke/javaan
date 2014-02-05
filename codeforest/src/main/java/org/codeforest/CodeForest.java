@@ -76,14 +76,14 @@ public class CodeForest extends javax.swing.JFrame {
 		// create class context
 		List<org.javaan.model.Type> types = new JarFileLoader().loadJavaClasses(fileNames);
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext, false, false).build();
 
 		// Create Canvas3D and SimpleUniverse; add canvas to drawing panel
 		final Canvas3D c = createUniverse();
 		drawingPanel.add(c, java.awt.BorderLayout.CENTER);
 
 		// Create the content branch and add it to the universe
-		scene = createSceneGraph(classContext, callGraph);
+		scene = new BranchGroup(); // TODO! createSceneGraph(classContext, callGraph);
 		scene.compile();
 		univ.addBranchGraph(scene);
 
@@ -130,7 +130,7 @@ public class CodeForest extends javax.swing.JFrame {
 		appearance.setColoringAttributes(coloringAttributes);;
 		return appearance;
 	}
-
+/*
 	private BranchGroup createSceneGraph(ClassContext classContext, CallGraph callGraph) {
 		DirectedGraph<Clazz, CondensedEdge<Clazz, Dependency>> condensedCallGraph = 
 				new CondensedGraphBuilder<>(callGraph.getUsageOfClassGraph()).createCondensedGraph();
@@ -181,7 +181,7 @@ public class CodeForest extends javax.swing.JFrame {
 		callGraphBranchGroup.addChild(connector.createScene(condensedCallGraph));
 		return objRoot;
 	}
-
+*/
 	private Canvas3D createUniverse() {
 		// Get the preferred graphics configuration for the default screen
 		GraphicsConfiguration config = SimpleUniverse

@@ -28,13 +28,12 @@ import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
-import org.javaan.model.Clazz;
 import org.javaan.model.Dependency;
 import org.javaan.model.Type;
-import org.javaan.print.ClazzFormatter;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.SimpleDependencyFormatter;
+import org.javaan.print.TypeFormatter;
 
 public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
@@ -54,16 +53,29 @@ public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
+		options.addOption(StandardOptions.RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+		options.addOption(StandardOptions.RESOLVE_METHOD_IMPLEMENTATIONS);
 		return options;
+	}
+	
+	private boolean resolveDependenciesInClassHierarchy() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+	}
+	
+	private boolean resolveMethodImplementations() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
 	}
 
 	@Override
 	protected void execute(PrintStream output, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext).build();
-		ObjectFormatter<Clazz> clazzFormatter = new ClazzFormatter();
+		CallGraph callGraph = new CallGraphBuilder(
+				classContext, 
+				resolveMethodImplementations(), 
+				resolveDependenciesInClassHierarchy()).build();
+		ObjectFormatter<Type> typeFormatter = new TypeFormatter();
 		ObjectFormatter<Dependency> dependencyFormatter = new SimpleDependencyFormatter();
-		GraphPrinter<Clazz, Dependency> printer = new GraphPrinter<Clazz, Dependency>(output, clazzFormatter, dependencyFormatter, "cycle %s:");
+		GraphPrinter<Type, Dependency> printer = new GraphPrinter<Type, Dependency>(output, typeFormatter, dependencyFormatter, "cycle %s:");
 		callGraph.traverseDependencyCycles(printer);
 	}
 }

@@ -45,7 +45,7 @@ public class TestCallGraphBuilder implements TestConstants {
 		List<Type> classes = loadClasses();
 		
 		ClassContext classContext = new ClassContextBuilder(classes).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext, true, false).build();
 		
 		assertNotNull(callGraph);
 		

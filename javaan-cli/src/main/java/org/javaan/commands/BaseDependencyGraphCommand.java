@@ -61,13 +61,21 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	protected String filterCriteria() {
 		return commandLine.getOptionValue(StandardOptions.OPT_FILTER);
 	}
-
-	protected ObjectFormatter<Dependency> getDependencyFormatter() {
-		return new SimpleDependencyFormatter();
+	
+	private boolean resolveDependenciesInClassHierarchy() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+	}
+	
+	private boolean resolveMethodImplementations() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
 	}
 
 	protected boolean isPrintLeaves() {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
+	}
+	
+	protected ObjectFormatter<Dependency> getDependencyFormatter() {
+		return new SimpleDependencyFormatter();
 	}
 
 	protected void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
@@ -90,7 +98,10 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		String criteria = filterCriteria();
 		boolean printLeaves = isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		CallGraph callGraph = new CallGraphBuilder(
+				classContext, 
+				resolveMethodImplementations(), 
+				resolveDependenciesInClassHierarchy()).build();
 		Collection<T> input = getInput(classContext, callGraph, criteria);
 		ObjectFormatter<T> typeFormatter = getTypeFormatter();
 		if (printLeaves) {

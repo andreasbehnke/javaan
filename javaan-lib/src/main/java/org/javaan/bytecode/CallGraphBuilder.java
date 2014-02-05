@@ -99,9 +99,9 @@ public class CallGraphBuilder {
 	
 	private final CallGraph callGraph;
 
-	public CallGraphBuilder(final ClassContext classContext) {
+	public CallGraphBuilder(final ClassContext classContext, final boolean resolveMethodImplementations, final boolean resolveDependenciesInClassHierarchy) {
 		this.classContext = classContext;
-		this.callGraph = new CallGraph(classContext);
+		this.callGraph = new CallGraph(classContext, resolveMethodImplementations, resolveDependenciesInClassHierarchy);
 		this.reflectionClassContextBuilder = new ReflectionClassContextBuilder(classContext, classContext);
 	}
 	
