@@ -6,4 +6,4 @@ if ([ $ARCH = "x86_64" ] || [ $ARCH = "amd64" ]); then
   NATIVE_LIB_DIR="amd64"
 fi
 export LD_LIBRARY_PATH=$DIR/$NATIVE_LIB_DIR
-java -jar $DIR/codeforest.jar
+java -jar $DIR/codeforest.jar $1
