@@ -54,13 +54,26 @@ public class ShowPackageDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
+		options.addOption(StandardOptions.RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+		options.addOption(StandardOptions.RESOLVE_METHOD_IMPLEMENTATIONS);
 		return options;
+	}
+	
+	private boolean resolveDependenciesInClassHierarchy() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+	}
+	
+	private boolean resolveMethodImplementations() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
 	}
 
 	@Override
 	protected void execute(PrintStream output, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		CallGraph callGraph = new CallGraphBuilder(
+				classContext, 
+				resolveMethodImplementations(), 
+				resolveDependenciesInClassHierarchy()).build();
 		ObjectFormatter<Package> packageFormatter = new PackageFormatter();
 		ObjectFormatter<Dependency> dependencyFormatter = new SimpleDependencyFormatter();
 		GraphPrinter<Package, Dependency> printer = new GraphPrinter<Package, Dependency>(output, packageFormatter, dependencyFormatter, "cycle %s:");

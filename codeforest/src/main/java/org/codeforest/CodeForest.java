@@ -35,16 +35,16 @@ import org.codeforest.scenegraph.VertexTreeSceneBuilder;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.bytecode.JarFileLoader;
-import org.javaan.graph.CondensedEdge;
-import org.javaan.graph.CondensedGraphBuilder;
+import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdge;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
 import org.javaan.model.Dependency;
-import org.javaan.model.Method;
 import org.javaan.model.Package;
+import org.javaan.model.Type.JavaType;
 import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.EdgeReversedGraph;
 
 import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
@@ -76,7 +76,7 @@ public class CodeForest extends javax.swing.JFrame {
 		// create class context
 		List<org.javaan.model.Type> types = new JarFileLoader().loadJavaClasses(fileNames);
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext, true, false).build();
 
 		// Create Canvas3D and SimpleUniverse; add canvas to drawing panel
 		final Canvas3D c = createUniverse();
@@ -130,12 +130,27 @@ public class CodeForest extends javax.swing.JFrame {
 		appearance.setColoringAttributes(coloringAttributes);;
 		return appearance;
 	}
+	
+	private DirectedGraph<Clazz, Dependency> filterClasses(DirectedGraph<org.javaan.model.Type, Dependency> graph) {
+		DirectedGraph<Clazz, Dependency> classDependencyGraph = new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<Clazz, Dependency>());
+		for (org.javaan.model.Type type : graph.vertexSet()) {
+			if (type.getJavaType() == JavaType.CLASS) {
+				classDependencyGraph.addVertex((Clazz)type);
+			}
+		}
+		for (Dependency dependency : graph.edgeSet()) {
+			org.javaan.model.Type source = graph.getEdgeSource(dependency);
+			org.javaan.model.Type target = graph.getEdgeTarget(dependency);
+			if (source.getJavaType() == JavaType.CLASS && target.getJavaType() == JavaType.CLASS) {
+				classDependencyGraph.addEdge((Clazz)source, (Clazz)target, dependency);
+			}
+		}
+		return classDependencyGraph;
+	}
 
 	private BranchGroup createSceneGraph(ClassContext classContext, CallGraph callGraph) {
-		DirectedGraph<Clazz, CondensedEdge<Clazz, Dependency>> condensedCallGraph = 
-				new CondensedGraphBuilder<>(callGraph.getUsageOfClassGraph()).createCondensedGraph();
-		
-		
+		DirectedGraph<Clazz, Dependency> condensedCallGraph = filterClasses(callGraph.getUsageOfTypeGraph());
+
 		// Create the root of the branch graph
 		objRoot = new BranchGroup();
 		objRoot.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
@@ -174,8 +189,8 @@ public class CodeForest extends javax.swing.JFrame {
 		TransformGroup transformGroup = planter.createScene(rootClasses);
 		objRoot.addChild(transformGroup);
 		
-		EdgeNodeFactory<Clazz, CondensedEdge<Clazz, Dependency>> usageEdgeNodeFactory = new LineEdgeFactory<>(createUsageAppearance());
-		VertexNodeConnector<Clazz, CondensedEdge<Clazz, Dependency>> connector = new VertexNodeConnector<>(context, usageEdgeNodeFactory);
+		EdgeNodeFactory<Clazz, Dependency> usageEdgeNodeFactory = new LineEdgeFactory<>(createUsageAppearance());
+		VertexNodeConnector<Clazz, Dependency> connector = new VertexNodeConnector<>(context, usageEdgeNodeFactory);
 		callGraphBranchGroup = new BranchGroup();
 		callGraphBranchGroup.setCapability(BranchGroup.ALLOW_DETACH);
 		callGraphBranchGroup.addChild(connector.createScene(condensedCallGraph));
