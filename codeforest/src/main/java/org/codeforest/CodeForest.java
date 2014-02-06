@@ -76,7 +76,7 @@ public class CodeForest extends javax.swing.JFrame {
 		// create class context
 		List<org.javaan.model.Type> types = new JarFileLoader().loadJavaClasses(fileNames);
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext, false, false).build();
+		CallGraph callGraph = new CallGraphBuilder(classContext, true, false).build();
 
 		// Create Canvas3D and SimpleUniverse; add canvas to drawing panel
 		final Canvas3D c = createUniverse();
