@@ -93,7 +93,7 @@ public class TestMinimumEdgesCycleCut {
 	
 	@Test
 	public void testCutCyclesCompleteGraph() throws IOException {
-		CompleteGraphGenerator<String, String> generator = new CompleteGraphGenerator<>(10);
+		CompleteGraphGenerator<String, String> generator = new CompleteGraphGenerator<>(5);
 		DirectedGraph<String, String> graph = new DefaultDirectedGraph<>(new EdgeFactory<String, String>() {
 			@Override
 			public String createEdge(String sourceVertex, String targetVertex) {

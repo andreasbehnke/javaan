@@ -40,6 +40,7 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 
 	@Override
 	public ReturnCodes execute(CommandLine commandLine, String[] files) {
+		this.commandLine = commandLine;
 		try {
 			List<Type> types = loadTypes(files);
 			DuplicatesFinder<Type> finder = new DuplicatesFinder<Type>(types);
@@ -48,7 +49,6 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 						+ "Use command \"javaan listDuplicates\" to find out duplicate types.");
 				types = new ArrayList<Type>(finder.createUniqueSet());
 			}
-			this.commandLine = commandLine;
 			execute(System.out, types);
 		} catch (IOException e) {
 			LOG.error("Could not load class files from libraries", e);

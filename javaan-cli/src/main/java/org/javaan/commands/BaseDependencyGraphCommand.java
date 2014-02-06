@@ -25,25 +25,27 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
-import org.javaan.model.Method;
+import org.javaan.model.Dependency;
 import org.javaan.model.Type;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
+import org.javaan.print.SimpleDependencyFormatter;
 
 /**
  * Base command for all dependency commands
  */
 public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>> extends BaseTypeLoadingCommand {
 
-	protected abstract void traverse(CallGraph callGraph, T type, GraphVisitor<T, Method> graphPrinter);
+	protected abstract void traverse(CallGraph callGraph, T type, GraphVisitor<T, Dependency> graphPrinter);
 
 	protected abstract Set<T> collectLeafObjects(CallGraph callGraph, T type);
 	
@@ -62,9 +64,13 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	protected String filterCriteria() {
 		return commandLine.getOptionValue(StandardOptions.OPT_FILTER);
 	}
-
-	protected ObjectFormatter<Method> getMethodFormatter() {
-		return new MethodFormatter();
+	
+	private boolean resolveDependenciesInClassHierarchy() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+	}
+	
+	private boolean resolveMethodImplementations() {
+		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
 	}
 
 	protected boolean isPrintLeaves() {
@@ -74,9 +80,13 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	protected boolean isTopologicalSort() {
 		return commandLine.hasOption(StandardOptions.OPT_TOPOLOGICAL_SORT);
 	}
+	
+	protected ObjectFormatter<Dependency> getDependencyFormatter() {
+		return new SimpleDependencyFormatter();
+	}
 
-	protected void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Method> methodFormatter) {
-		GraphVisitor<T, Method> printer = new GraphPrinter<T, Method>(output, typeFormatter, methodFormatter);
+	protected void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
+		GraphVisitor<T, Dependency> printer = new GraphPrinter<>(output, typeFormatter, dependencyFormatter);
 		for (T type : types) {
 			output.println(String.format("%s:",typeFormatter.format(type)));
 			traverse(callGraph, type, printer);
@@ -95,13 +105,16 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		String criteria = filterCriteria();
 		boolean printLeaves = isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
-		CallGraph callGraph = new CallGraphBuilder(classContext).build();
+		CallGraph callGraph = new CallGraphBuilder(
+				classContext, 
+				resolveMethodImplementations(), 
+				resolveDependenciesInClassHierarchy()).build();
 		Collection<T> input = getInput(classContext, callGraph, criteria);
 		ObjectFormatter<T> typeFormatter = getTypeFormatter();
 		if (printLeaves) {
 			printLeafObjects(callGraph, output, input, typeFormatter);
 		} else {
-			printGraph(callGraph, output, input, typeFormatter, getMethodFormatter());
+			printGraph(callGraph, output, input, typeFormatter, getDependencyFormatter());
 		}
 	}	
 }

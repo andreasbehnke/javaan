@@ -56,7 +56,7 @@ public class ListMissingTypes extends BaseTypeLoadingCommand {
 		ClassContextBuilder classContextBuilder = new ClassContextBuilder(types);
 		ClassContext classContext = classContextBuilder.build();
 		Set<String> missingTypes = classContextBuilder.getMissingTypes();
-		CallGraphBuilder callGraphBuilder = new CallGraphBuilder(classContext);
+		CallGraphBuilder callGraphBuilder = new CallGraphBuilder(classContext, false, false);
 		callGraphBuilder.build();
 		missingTypes.addAll(callGraphBuilder.getMissingTypes());
 		List<String> sortedMissingTypes = SortUtil.sort(missingTypes);

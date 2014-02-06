@@ -75,4 +75,12 @@ public abstract class Type extends NamedObjectBase {
 	}
 	
 	public abstract JavaType getJavaType();
+	
+	public Clazz toClazz() {
+		return (Clazz)this;
+	}
+	
+	public Interface toInterface() {
+		return (Interface)this;
+	}
 }

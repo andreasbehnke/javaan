@@ -44,6 +44,10 @@ public interface StandardOptions {
 	
 	static final String OPT_TOPOLOGICAL_SORT = "topo";
 	
+	static final String OPT_RESOLVE_METHOD_IMPLEMENTATIONS = "resolve-method-implementations";
+	
+	static final String OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY = "resolve-dependencies-in-class-hierarchy";
+	
 	static final Option SUPER_TYPES = new Option(OPT_SUPER, "super", false, "For each type, list the hierachy of super types");
 	
 	static final Option SPECIALIZATIONS = new Option(OPT_SPECIALIZATIONS, "specializations", false, "For each type, list specialization types");
@@ -64,4 +68,9 @@ public interface StandardOptions {
 	static final Option LEAVES = new Option(OPT_LEAVES, "leaves", false, "Only display leaf elements of graph.");
 	
 	static final Option TOPOLOGICAL_SORT = new Option(OPT_TOPOLOGICAL_SORT, "topological-sort", false, "Sort dependency graph in topological order. Starts with types having no dependencies.");
+	
+	static final Option RESOLVE_METHOD_IMPLEMENTATIONS = new Option(OPT_RESOLVE_METHOD_IMPLEMENTATIONS, false, "Enables resolve of method implementations for abstract methods.");
+	
+	static final Option RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY = new Option(OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY, false, "Enables resolve of dependencies within class hiearchy.");
+
 }
