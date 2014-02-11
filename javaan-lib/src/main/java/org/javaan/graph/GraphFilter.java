@@ -7,7 +7,7 @@ import org.jgrapht.Graph;
 /**
  * Creates a subgraph of source graph by applying a vertex filter.
  */
-public class GraphFilter<E, V> {
+public class GraphFilter<V, E> {
 
 	private final Graph<V, E> source;
 	
@@ -17,7 +17,7 @@ public class GraphFilter<E, V> {
 		this.source = source;
 		this.target = target;
 	}
-	
+
 	public Graph<V, E> filter(Set<V> vertexFilter) {
 		for (V v : source.vertexSet()) {
 			if (vertexFilter.contains(v)) {
