@@ -57,6 +57,17 @@ public class CallGraph {
 
 	private final boolean resolveDependenciesInClassHierarchy;
 	
+	public class InternalGraphs {
+
+		public VertexEdgeDirectedGraph<Method> getCallerOfMethodGraph() {
+			return callerOfMethod;
+		}
+		
+		public TraversalDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
+			return usageOfClass;
+		}	
+	}
+	
 	private static <V, E> TraversalDirectedGraph<V, E> createDirectedGraph() {
 		return new TraversalDirectedGraph<V, E>(
 				new DefaultDirectedGraph<V, E>(
@@ -73,16 +84,17 @@ public class CallGraph {
 		this.resolveDependenciesInClassHierarchy = resolveDependenciesInClassHierarchy;
 	}
 
+	/**
+	 * Provides access to the internal graph implementations.
+	 * This API is subject to change, so use traversal methods
+	 * for iterating over graphs.
+	 */
+	public InternalGraphs getInternalGraphs() {
+		return new InternalGraphs();
+	}
+
 	public int size() {
 		return callerOfMethod.vertexSet().size();
-	}
-	
-	public VertexEdgeDirectedGraph<Method> getCallerOfMethodGraph() {
-		return callerOfMethod;
-	}
-	
-	public TraversalDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
-		return usageOfClass;
 	}
 	
 	private void addUsageOfType(Method caller, Method callee) {
