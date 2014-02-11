@@ -24,7 +24,6 @@ import java.util.Set;
 
 import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
-import org.javaan.model.Clazz;
 import org.javaan.model.Dependency;
 import org.javaan.model.Type;
 
@@ -50,6 +49,12 @@ public class ShowUsingGraph extends BaseClassDependencyGraphCommand {
 		callGraph.traverseUsingTypes(type, graphPrinter);
 	}
 
+	@Override
+	protected void showGraph2d(CallGraph callGraph, Set<Type> filter) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type type) {
 		return callGraph.getLeafUsingTypes(type);

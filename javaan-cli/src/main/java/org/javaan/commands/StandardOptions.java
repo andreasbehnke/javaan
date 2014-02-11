@@ -46,6 +46,8 @@ public interface StandardOptions {
 	
 	static final String OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY = "resolve-dependencies-in-class-hierarchy";
 	
+	static final String OPT_DISPLAY_2D_GRAPH = "2d";
+	
 	static final Option SUPER_TYPES = new Option(OPT_SUPER, "super", false, "For each type, list the hierachy of super types");
 	
 	static final Option SPECIALIZATIONS = new Option(OPT_SPECIALIZATIONS, "specializations", false, "For each type, list specialization types");
@@ -68,4 +70,7 @@ public interface StandardOptions {
 	static final Option RESOLVE_METHOD_IMPLEMENTATIONS = new Option(OPT_RESOLVE_METHOD_IMPLEMENTATIONS, false, "Enables resolve of method implementations for abstract methods.");
 	
 	static final Option RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY = new Option(OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY, false, "Enables resolve of dependencies within class hiearchy.");
+
+	static final Option DISPLAY_2D_GRAPH = new Option(OPT_DISPLAY_2D_GRAPH, "display-2d-graph", false, "Displays result in a 2D graph representation.");
+
 }
