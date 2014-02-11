@@ -48,12 +48,6 @@ public class ShowUsingGraph extends BaseClassDependencyGraphCommand {
 	protected void traverse(CallGraph callGraph, Type type, GraphVisitor<Type, Dependency> graphPrinter) {
 		callGraph.traverseUsingTypes(type, graphPrinter);
 	}
-
-	@Override
-	protected void showGraph2d(CallGraph callGraph, Set<Type> filter) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type type) {

@@ -98,7 +98,8 @@ public class JavaanCli {
 		commands.addCommand(new ShowPackageDepdendencyCyclesGraph());
 		commands.addCommand(new ShowPackageUsedGraph());
 		commands.addCommand(new ShowPackageUsingGraph());
-		System.exit(new JavaanCli(args, commands).execute().getValue());
+		new JavaanCli(args, commands).execute();
+		//System.exit(new JavaanCli(args, commands).execute().getValue());
 	}
 	
 	private void setLoggerLevel(Level level) {

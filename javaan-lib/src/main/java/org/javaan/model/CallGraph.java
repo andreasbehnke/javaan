@@ -65,7 +65,11 @@ public class CallGraph {
 		
 		public TraversalDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
 			return usageOfClass;
-		}	
+		}
+		
+		public TraversalDirectedGraph<Package, Dependency> getUsageOfPackageGraph() {
+			return usageOfPackage;
+		}
 	}
 	
 	private static <V, E> TraversalDirectedGraph<V, E> createDirectedGraph() {

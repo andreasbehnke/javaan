@@ -28,12 +28,6 @@ public class ShowPackageUsingGraph extends BasePackageDependencyGraphCommand {
 	protected void traverse(CallGraph callGraph, Package type, GraphVisitor<Package, Dependency> graphPrinter) {
 		callGraph.traverseUsingPackages(type, graphPrinter);
 	}
-	
-	@Override
-	protected void showGraph2d(CallGraph callGraph, Set<Package> filter) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	protected Set<Package> collectLeafObjects(CallGraph callGraph, Package type) {

@@ -28,9 +28,12 @@ import java.util.Set;
 
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
+import org.javaan.Graph2dDisplay;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
+import org.javaan.graph.GraphFilter;
 import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Dependency;
@@ -39,6 +42,8 @@ import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
 import org.javaan.print.SimpleDependencyFormatter;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 
 /**
  * Base command for all dependency commands
@@ -47,7 +52,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 
 	protected abstract void traverse(CallGraph callGraph, T type, GraphVisitor<T, Dependency> graphPrinter);
 	
-	protected abstract void showGraph2d(CallGraph callGraph, Set<T> filter);
+	protected abstract Graph<T,	Dependency> getDependencyGraph(CallGraph callGraph);
 
 	protected abstract Set<T> collectLeafObjects(CallGraph callGraph, T type);
 	
@@ -62,6 +67,8 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		outputVariations.addOption(StandardOptions.LEAVES);
 		outputVariations.addOption(StandardOptions.DISPLAY_2D_GRAPH);
 		options.addOptionGroup(outputVariations);
+		options.addOption(StandardOptions.RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+		options.addOption(StandardOptions.RESOLVE_METHOD_IMPLEMENTATIONS);
 		return options;
 	}
 
@@ -119,7 +126,14 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 			printLeafObjects(callGraph, output, input, typeFormatter);
 		} else if (display2dGraph())  {
 			Set<T> filter = new HashSet<>(input);
-			showGraph2d(callGraph, filter);
+			Graph<T, Dependency> graph = getDependencyGraph(callGraph);
+			final Graph<T, Dependency> subgraph = new  GraphFilter<>(
+					graph, new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<T, Dependency>())).filter(filter);
+			java.awt.EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					new Graph2dDisplay(subgraph, getName()).setVisible(true);
+				}
+			});
 		} else {
 			printGraph(callGraph, output, input, typeFormatter, getDependencyFormatter());
 		}

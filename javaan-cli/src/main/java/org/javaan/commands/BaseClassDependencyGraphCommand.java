@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
+import org.javaan.model.Dependency;
 import org.javaan.model.Type;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.TypeFormatter;
+import org.jgrapht.Graph;
 
 public abstract class BaseClassDependencyGraphCommand extends BaseDependencyGraphCommand<Type> {
 
@@ -23,5 +25,10 @@ public abstract class BaseClassDependencyGraphCommand extends BaseDependencyGrap
 		types.addAll(classContext.getClasses());
 		types.addAll(classContext.getInterfaces());
 		return SortUtil.sort(FilterUtil.filter(types, new NameMatcher<Type>(filterCriteria)));
+	}
+	
+	@Override
+	protected Graph<Type, Dependency> getDependencyGraph(CallGraph callGraph) {
+		return callGraph.getInternalGraphs().getUsageOfTypeGraph();
 	}
 }
