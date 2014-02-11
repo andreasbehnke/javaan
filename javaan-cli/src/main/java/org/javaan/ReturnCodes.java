@@ -24,7 +24,10 @@ public enum ReturnCodes {
 	
 	ok(0),
 	errorParse(1),
-	errorCommand(2);
+	errorCommand(2),
+	// this code signals that another thread has been spawn and
+	// the JVM should not be stopped
+	threadSpawn(3);
 
 	private final int value;
 	

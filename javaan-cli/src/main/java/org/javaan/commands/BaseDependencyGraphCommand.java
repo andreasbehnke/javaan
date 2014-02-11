@@ -29,6 +29,7 @@ import java.util.Set;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.javaan.Graph2dDisplay;
+import org.javaan.ReturnCodes;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.graph.GraphFilter;
@@ -134,6 +135,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 					new Graph2dDisplay(subgraph, getName()).setVisible(true);
 				}
 			});
+			returnCode = ReturnCodes.threadSpawn;
 		} else {
 			printGraph(callGraph, output, input, typeFormatter, getDependencyFormatter());
 		}

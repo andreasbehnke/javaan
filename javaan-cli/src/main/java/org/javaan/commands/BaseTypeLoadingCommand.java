@@ -37,6 +37,8 @@ import org.javaan.model.Type;
 public abstract class BaseTypeLoadingCommand extends BaseCommand {
 	
 	protected CommandLine commandLine;
+	
+	protected ReturnCodes returnCode = ReturnCodes.ok;
 
 	@Override
 	public ReturnCodes execute(CommandLine commandLine, String[] files) {
@@ -54,7 +56,7 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 			LOG.error("Could not load class files from libraries", e);
 			return ReturnCodes.errorCommand;
 		}
-		return ReturnCodes.ok;
+		return returnCode;
 	}
 	
 	protected abstract void execute(PrintStream output, List<Type> types);
