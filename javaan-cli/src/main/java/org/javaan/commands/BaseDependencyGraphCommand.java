@@ -45,6 +45,7 @@ import org.javaan.print.PrintUtil;
 import org.javaan.print.SimpleDependencyFormatter;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.Subgraph;
 
 /**
  * Base command for all dependency commands
@@ -122,17 +123,18 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 				resolveMethodImplementations(), 
 				resolveDependenciesInClassHierarchy()).build();
 		Collection<T> input = getInput(classContext, callGraph, criteria);
-		ObjectFormatter<T> typeFormatter = getTypeFormatter();
+		final ObjectFormatter<T> typeFormatter = getTypeFormatter();
 		if (printLeaves) {
 			printLeafObjects(callGraph, output, input, typeFormatter);
 		} else if (display2dGraph())  {
 			Set<T> filter = new HashSet<>(input);
 			Graph<T, Dependency> graph = getDependencyGraph(callGraph);
-			final Graph<T, Dependency> subgraph = new  GraphFilter<>(
-					graph, new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<T, Dependency>())).filter(filter);
+			final Subgraph<T, Dependency, Graph<T, Dependency>> subgraph = new Subgraph<>(graph, filter);
+			/*final Graph<T, Dependency> subgraph = new  GraphFilter<>(
+					graph, new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<T, Dependency>())).filter(filter);*/
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run() {
-					new Graph2dDisplay(subgraph, getName()).setVisible(true);
+					new Graph2dDisplay<T, Dependency>(getName(), subgraph, typeFormatter, getDependencyFormatter()).setVisible(true);
 				}
 			});
 			returnCode = ReturnCodes.threadSpawn;

@@ -47,9 +47,9 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = createDirectedGraph();
+	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = createDependencyGraph();
 	
-	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = createDirectedGraph();
+	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = createDependencyGraph();
 			
 	private final ClassContext classContext;
 	
@@ -72,10 +72,18 @@ public class CallGraph {
 		}
 	}
 	
-	private static <V, E> TraversalDirectedGraph<V, E> createDirectedGraph() {
-		return new TraversalDirectedGraph<V, E>(
-				new DefaultDirectedGraph<V, E>(
-						new UnsupportedEdgeFactory<V, E>()));
+	private static <V> TraversalDirectedGraph<V, Dependency> createDependencyGraph() {
+		return new TraversalDirectedGraph<V, Dependency>(
+				new DefaultDirectedGraph<V, Dependency>(
+						new UnsupportedEdgeFactory<V, Dependency>())) {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public double getEdgeWeight(Dependency e) {
+				return e.getCallees().size();
+			}
+		};
 	}
 
 	public CallGraph(ClassContext classContext, boolean resolveMethodImplementations, boolean resolveDependenciesInClassHierarchy) {

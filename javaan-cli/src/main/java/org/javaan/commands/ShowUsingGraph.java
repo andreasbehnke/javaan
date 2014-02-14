@@ -26,6 +26,8 @@ import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Dependency;
 import org.javaan.model.Type;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.EdgeReversedGraph;
 
 public class ShowUsingGraph extends BaseClassDependencyGraphCommand {
 
@@ -53,5 +55,9 @@ public class ShowUsingGraph extends BaseClassDependencyGraphCommand {
 	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type type) {
 		return callGraph.getLeafUsingTypes(type);
 	}
-
+	
+	@Override
+	protected Graph<Type, Dependency> getDependencyGraph(CallGraph callGraph) {
+		return new EdgeReversedGraph<>(callGraph.getInternalGraphs().getUsageOfTypeGraph());
+	}
 }

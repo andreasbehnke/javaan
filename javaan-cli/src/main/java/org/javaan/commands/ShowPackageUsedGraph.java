@@ -6,6 +6,7 @@ import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Dependency;
 import org.javaan.model.Package;
+import org.jgrapht.Graph;
 
 public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
 
@@ -34,4 +35,8 @@ public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
 		return callGraph.getLeafUsedPackages(type);
 	}
 
+	@Override
+	protected Graph<Package, Dependency> getDependencyGraph(CallGraph callGraph) {
+		return callGraph.getInternalGraphs().getUsageOfPackageGraph();
+	}
 }
