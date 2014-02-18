@@ -32,26 +32,24 @@ import org.javaan.Graph2dDisplay;
 import org.javaan.ReturnCodes;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
-import org.javaan.graph.GraphFilter;
 import org.javaan.graph.GraphVisitor;
-import org.javaan.graph.UnsupportedEdgeFactory;
+import org.javaan.jgraphx.CellStyle;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Dependency;
 import org.javaan.model.Type;
+import org.javaan.print.ConsoleDependencyFormatter;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
-import org.javaan.print.SimpleDependencyFormatter;
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.Subgraph;
 
 /**
  * Base command for all dependency commands
  */
 public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>> extends BaseTypeLoadingCommand {
-
+	
 	protected abstract void traverse(CallGraph callGraph, T type, GraphVisitor<T, Dependency> graphPrinter);
 	
 	protected abstract Graph<T,	Dependency> getDependencyGraph(CallGraph callGraph);
@@ -94,9 +92,11 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		return commandLine.hasOption(StandardOptions.OPT_DISPLAY_2D_GRAPH);
 	}
 	
-	private ObjectFormatter<Dependency> getDependencyFormatter() {
-		return new SimpleDependencyFormatter();
+	private ObjectFormatter<Dependency> getConsoleDependencyFormatter() {
+		return new ConsoleDependencyFormatter();
 	}
+	
+	protected abstract CellStyle<T, Dependency> getDependencyGraphCellStyle();
 
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
 		GraphVisitor<T, Dependency> printer = new GraphPrinter<>(output, typeFormatter, dependencyFormatter);
@@ -130,16 +130,15 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 			Set<T> filter = new HashSet<>(input);
 			Graph<T, Dependency> graph = getDependencyGraph(callGraph);
 			final Subgraph<T, Dependency, Graph<T, Dependency>> subgraph = new Subgraph<>(graph, filter);
-			/*final Graph<T, Dependency> subgraph = new  GraphFilter<>(
-					graph, new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<T, Dependency>())).filter(filter);*/
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run() {
-					new Graph2dDisplay<T, Dependency>(getName(), subgraph, typeFormatter, getDependencyFormatter()).setVisible(true);
+					CellStyle<T, Dependency> cellStyle = getDependencyGraphCellStyle();
+					new Graph2dDisplay<T, Dependency>(getName(), subgraph, cellStyle).setVisible(true);
 				}
 			});
 			returnCode = ReturnCodes.threadSpawn;
 		} else {
-			printGraph(callGraph, output, input, typeFormatter, getDependencyFormatter());
+			printGraph(callGraph, output, input, typeFormatter, getConsoleDependencyFormatter());
 		}
 	}	
 }

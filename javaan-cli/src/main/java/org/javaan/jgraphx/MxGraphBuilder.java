@@ -3,7 +3,6 @@ package org.javaan.jgraphx;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.javaan.print.ObjectFormatter;
 import org.jgrapht.Graph;
 
 import com.mxgraph.model.mxICell;
@@ -15,28 +14,18 @@ public class MxGraphBuilder<V, E> {
 	
 	private Map<V, mxICell> vertexToCell = new HashMap<V, mxICell>();
     
-    private final String edgeStyle;
-    
-    private final String vertexStyle;
-    
-    private final ObjectFormatter<E> edgeFormatter;
-    
-    private final ObjectFormatter<V> vertexFormatter;
-    
+    private final CellStyle<V, E> cellStyle;
+	
     private mxGraph target;
  
-	public MxGraphBuilder(Graph<V, E> source, String vertexStyle, String edgeStyle, 
-			ObjectFormatter<V> vertexFormatter, ObjectFormatter<E> edgeFormatter) {
+	public MxGraphBuilder(Graph<V, E> source, CellStyle<V, E> cellStyle) {
 		this.source = source;
-		this.edgeStyle = edgeStyle;
-		this.vertexStyle = vertexStyle;
-		this.edgeFormatter = edgeFormatter;
-		this.vertexFormatter = vertexFormatter;
+		this.cellStyle = cellStyle;
 	}
 
 	private void addVertices() {
 		for (V vertex : source.vertexSet()) {
-	        mxICell cell = (mxICell)target.insertVertex(null, null, vertexFormatter.format(vertex), 0, 0, 0, 0, vertexStyle);
+	        mxICell cell = (mxICell)target.insertVertex(null, null, cellStyle.getVertexLabel(source, vertex), 0, 0, 0, 0, cellStyle.getVertexStyle(source, vertex));
 	        target.updateCellSize(cell);
 	        vertexToCell.put(vertex, cell);
 		}
@@ -52,10 +41,7 @@ public class MxGraphBuilder<V, E> {
             
             if (sourceCell != null && targetCell != null)
             {
-            	// calculate edge width using logarithm
-            	double edgeWeight = source.getEdgeWeight(edge);
-            	double edgeWidth = Math.log1p(edgeWeight);
-            	mxICell cell = (mxICell)target.insertEdge(null, null, null, sourceCell, targetCell, edgeStyle + "strokeWidth=" + Math.round(edgeWidth) + ";");
+            	mxICell cell = (mxICell)target.insertEdge(null, null, cellStyle.getEdgeLabel(source, edge), sourceCell, targetCell, cellStyle.getEdgeStyle(source, edge));
             	target.updateCellSize(cell);
             }
 		}
