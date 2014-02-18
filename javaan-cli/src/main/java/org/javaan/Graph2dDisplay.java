@@ -1,5 +1,8 @@
 package org.javaan;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 
 import org.javaan.jgraphx.CellStyle;
@@ -13,7 +16,7 @@ import com.mxgraph.view.mxGraph;
 public class Graph2dDisplay<V, E> extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	public Graph2dDisplay(String title, Graph<V, E> input, CellStyle<V, E> cellStyle) {
 		super(title);
 		mxGraph view = new MxGraphBuilder<V, E>(input, cellStyle).build();
@@ -24,10 +27,6 @@ public class Graph2dDisplay<V, E> extends JFrame {
 
 			@Override
 			protected void createHandlers() {
-				//setTransferHandler(createTransferHandler());
-				//panningHandler = createPanningHandler();
-				//selectionCellsHandler = createSelectionCellsHandler();
-				//connectionHandler = createConnectionHandler();
 				graphHandler = createGraphHandler();
 				graphHandler.setLivePreview(true);
 			}
@@ -35,16 +34,19 @@ public class Graph2dDisplay<V, E> extends JFrame {
 		getContentPane().add(graphComponent);
         
         // layout graph
-        //mxOrganicLayout layout = new mxOrganicLayout(view);
         mxHierarchicalLayout layout = new mxHierarchicalLayout(view);
         layout.setInterRankCellSpacing(200d);
-        //layout.setEdgeRouting(false);
-        //layout.setDisableEdgeStyle(false);
         layout.execute(view.getDefaultParent());
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(450, 350);
         
-        pack();
+        final JFrame frame = this;
+        addWindowListener(new WindowAdapter() {
+        	@Override
+        	public void windowClosing(WindowEvent e) {
+        		Settings.putGraph2dFrameLocationAndSize(frame);
+        	}
+		});
+        Settings.setGraph2dFrameLocationAndSize(frame);
 	}
 }
