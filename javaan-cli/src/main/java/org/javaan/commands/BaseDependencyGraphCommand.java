@@ -22,28 +22,37 @@ package org.javaan.commands;
 
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
+import org.javaan.Graph2dDisplay;
+import org.javaan.ReturnCodes;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.graph.GraphVisitor;
+import org.javaan.jgraphx.CellStyle;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Dependency;
 import org.javaan.model.Type;
+import org.javaan.print.ConsoleDependencyFormatter;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
-import org.javaan.print.SimpleDependencyFormatter;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.Subgraph;
 
 /**
  * Base command for all dependency commands
  */
 public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>> extends BaseTypeLoadingCommand {
-
+	
 	protected abstract void traverse(CallGraph callGraph, T type, GraphVisitor<T, Dependency> graphPrinter);
+	
+	protected abstract Graph<T,	Dependency> getDependencyGraph(CallGraph callGraph);
 
 	protected abstract Set<T> collectLeafObjects(CallGraph callGraph, T type);
 	
@@ -54,11 +63,16 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		options.addOption(StandardOptions.FILTER);
-		options.addOption(StandardOptions.LEAVES);
+		OptionGroup outputVariations = new OptionGroup();
+		outputVariations.addOption(StandardOptions.LEAVES);
+		outputVariations.addOption(StandardOptions.DISPLAY_2D_GRAPH);
+		options.addOptionGroup(outputVariations);
+		options.addOption(StandardOptions.RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
+		options.addOption(StandardOptions.RESOLVE_METHOD_IMPLEMENTATIONS);
 		return options;
 	}
 
-	protected String filterCriteria() {
+	private String filterCriteria() {
 		return commandLine.getOptionValue(StandardOptions.OPT_FILTER);
 	}
 	
@@ -70,15 +84,21 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
 	}
 
-	protected boolean isPrintLeaves() {
+	private boolean printLeaves() {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
 	
-	protected ObjectFormatter<Dependency> getDependencyFormatter() {
-		return new SimpleDependencyFormatter();
+	private boolean display2dGraph() {
+		return commandLine.hasOption(StandardOptions.OPT_DISPLAY_2D_GRAPH);
 	}
+	
+	private ObjectFormatter<Dependency> getConsoleDependencyFormatter() {
+		return new ConsoleDependencyFormatter();
+	}
+	
+	protected abstract CellStyle<T, Dependency> getDependencyGraphCellStyle();
 
-	protected void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
+	private void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
 		GraphVisitor<T, Dependency> printer = new GraphPrinter<>(output, typeFormatter, dependencyFormatter);
 		for (T type : types) {
 			output.println(String.format("%s:",typeFormatter.format(type)));
@@ -87,7 +107,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		}
 	}
 
-	protected void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> formatter) {
+	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> formatter) {
 		for (T type : types) {
 			PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, type)), formatter.format(type) , "\n\t", ", ");
 		}
@@ -96,18 +116,29 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	@Override
 	protected void execute(PrintStream output, List<Type> types) {
 		String criteria = filterCriteria();
-		boolean printLeaves = isPrintLeaves();
+		boolean printLeaves = printLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
 				resolveMethodImplementations(), 
 				resolveDependenciesInClassHierarchy()).build();
 		Collection<T> input = getInput(classContext, callGraph, criteria);
-		ObjectFormatter<T> typeFormatter = getTypeFormatter();
+		final ObjectFormatter<T> typeFormatter = getTypeFormatter();
 		if (printLeaves) {
 			printLeafObjects(callGraph, output, input, typeFormatter);
+		} else if (display2dGraph())  {
+			Set<T> filter = new HashSet<>(input);
+			Graph<T, Dependency> graph = getDependencyGraph(callGraph);
+			final Subgraph<T, Dependency, Graph<T, Dependency>> subgraph = new Subgraph<>(graph, filter);
+			java.awt.EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					CellStyle<T, Dependency> cellStyle = getDependencyGraphCellStyle();
+					new Graph2dDisplay<T, Dependency>(getName(), subgraph, cellStyle).setVisible(true);
+				}
+			});
+			returnCode = ReturnCodes.threadSpawn;
 		} else {
-			printGraph(callGraph, output, input, typeFormatter, getDependencyFormatter());
+			printGraph(callGraph, output, input, typeFormatter, getConsoleDependencyFormatter());
 		}
 	}	
 }

@@ -24,4 +24,5 @@ public abstract class BaseClassDependencyGraphCommand extends BaseDependencyGrap
 		types.addAll(classContext.getInterfaces());
 		return SortUtil.sort(FilterUtil.filter(types, new NameMatcher<Type>(filterCriteria)));
 	}
+
 }

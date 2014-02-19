@@ -47,9 +47,9 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = createDirectedGraph();
+	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = createDependencyGraph();
 	
-	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = createDirectedGraph();
+	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = createDependencyGraph();
 			
 	private final ClassContext classContext;
 	
@@ -57,10 +57,33 @@ public class CallGraph {
 
 	private final boolean resolveDependenciesInClassHierarchy;
 	
-	private static <V, E> TraversalDirectedGraph<V, E> createDirectedGraph() {
-		return new TraversalDirectedGraph<V, E>(
-				new DefaultDirectedGraph<V, E>(
-						new UnsupportedEdgeFactory<V, E>()));
+	public class InternalGraphs {
+
+		public VertexEdgeDirectedGraph<Method> getCallerOfMethodGraph() {
+			return callerOfMethod;
+		}
+		
+		public TraversalDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
+			return usageOfClass;
+		}
+		
+		public TraversalDirectedGraph<Package, Dependency> getUsageOfPackageGraph() {
+			return usageOfPackage;
+		}
+	}
+	
+	private static <V> TraversalDirectedGraph<V, Dependency> createDependencyGraph() {
+		return new TraversalDirectedGraph<V, Dependency>(
+				new DefaultDirectedGraph<V, Dependency>(
+						new UnsupportedEdgeFactory<V, Dependency>())) {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public double getEdgeWeight(Dependency e) {
+				return e.getCallees().size();
+			}
+		};
 	}
 
 	public CallGraph(ClassContext classContext, boolean resolveMethodImplementations, boolean resolveDependenciesInClassHierarchy) {
@@ -73,16 +96,17 @@ public class CallGraph {
 		this.resolveDependenciesInClassHierarchy = resolveDependenciesInClassHierarchy;
 	}
 
+	/**
+	 * Provides access to the internal graph implementations.
+	 * This API is subject to change, so use traversal methods
+	 * for iterating over graphs.
+	 */
+	public InternalGraphs getInternalGraphs() {
+		return new InternalGraphs();
+	}
+
 	public int size() {
 		return callerOfMethod.vertexSet().size();
-	}
-	
-	public VertexEdgeDirectedGraph<Method> getCallerOfMethodGraph() {
-		return callerOfMethod;
-	}
-	
-	public TraversalDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
-		return usageOfClass;
 	}
 	
 	private void addUsageOfType(Method caller, Method callee) {

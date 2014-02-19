@@ -32,7 +32,7 @@ import org.javaan.model.Dependency;
 import org.javaan.model.Type;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
-import org.javaan.print.SimpleDependencyFormatter;
+import org.javaan.print.ConsoleDependencyFormatter;
 import org.javaan.print.TypeFormatter;
 
 public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
@@ -74,7 +74,7 @@ public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 				resolveMethodImplementations(), 
 				resolveDependenciesInClassHierarchy()).build();
 		ObjectFormatter<Type> typeFormatter = new TypeFormatter();
-		ObjectFormatter<Dependency> dependencyFormatter = new SimpleDependencyFormatter();
+		ObjectFormatter<Dependency> dependencyFormatter = new ConsoleDependencyFormatter();
 		GraphPrinter<Type, Dependency> printer = new GraphPrinter<Type, Dependency>(output, typeFormatter, dependencyFormatter, "cycle %s:");
 		callGraph.traverseDependencyCycles(printer);
 	}

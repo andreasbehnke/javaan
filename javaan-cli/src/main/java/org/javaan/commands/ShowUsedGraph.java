@@ -23,9 +23,13 @@ package org.javaan.commands;
 import java.util.Set;
 
 import org.javaan.graph.GraphVisitor;
+import org.javaan.jgraphx.CellStyle;
+import org.javaan.jgraphx.DependencyGraphCellStyle;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Dependency;
 import org.javaan.model.Type;
+import org.javaan.print.MethodListDependencyFormatter;
+import org.jgrapht.Graph;
 
 public class ShowUsedGraph extends BaseClassDependencyGraphCommand {
 
@@ -52,5 +56,17 @@ public class ShowUsedGraph extends BaseClassDependencyGraphCommand {
 	@Override
 	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type type) {
 		return callGraph.getLeafUsedTypes(type);
-	}	
+	}
+
+	@Override
+	protected CellStyle<Type, Dependency> getDependencyGraphCellStyle() {
+		return new DependencyGraphCellStyle<>(
+				getTypeFormatter(), 
+				new MethodListDependencyFormatter(5));
+	}
+
+	@Override
+	protected Graph<Type, Dependency> getDependencyGraph(CallGraph callGraph) {
+		return callGraph.getInternalGraphs().getUsageOfTypeGraph();
+	}
 }

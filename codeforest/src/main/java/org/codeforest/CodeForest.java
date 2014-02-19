@@ -149,7 +149,7 @@ public class CodeForest extends javax.swing.JFrame {
 	}
 
 	private BranchGroup createSceneGraph(ClassContext classContext, CallGraph callGraph) {
-		DirectedGraph<Clazz, Dependency> condensedCallGraph = filterClasses(callGraph.getUsageOfTypeGraph());
+		DirectedGraph<Clazz, Dependency> condensedCallGraph = filterClasses(callGraph.getInternalGraphs().getUsageOfTypeGraph());
 
 		// Create the root of the branch graph
 		objRoot = new BranchGroup();
@@ -158,7 +158,7 @@ public class CodeForest extends javax.swing.JFrame {
 
 		// retrieve all classes which extend Object
 		Set<Clazz> rootClasses = classContext.getDirectSpecializationsOfClass(new Clazz("java.lang.Object"));
-		DirectedGraph<Clazz, VertexEdge<Clazz>> specializationClasses = new EdgeReversedGraph<>(classContext.getSuperClassGraph());
+		DirectedGraph<Clazz, VertexEdge<Clazz>> specializationClasses = new EdgeReversedGraph<>(classContext.getInternalGraphs().getSuperClassGraph());
 		
 		// build layout context
 		VertexSceneContext<Clazz> context = new VertexSceneContext<>();
