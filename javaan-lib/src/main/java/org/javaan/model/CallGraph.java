@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.javaan.graph.GraphFactory;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.TraversalDirectedGraph;
-import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdgeDirectedGraph;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.javaan.model.Type.JavaType;
@@ -36,7 +36,6 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
-import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -47,9 +46,9 @@ public class CallGraph {
 
 	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
 
-	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = createDependencyGraph();
+	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
 	
-	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = createDependencyGraph();
+	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = GraphFactory.createDependencyGraph();
 			
 	private final ClassContext classContext;
 	
@@ -72,20 +71,6 @@ public class CallGraph {
 		}
 	}
 	
-	private static <V> TraversalDirectedGraph<V, Dependency> createDependencyGraph() {
-		return new TraversalDirectedGraph<V, Dependency>(
-				new DefaultDirectedGraph<V, Dependency>(
-						new UnsupportedEdgeFactory<V, Dependency>())) {
-			
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public double getEdgeWeight(Dependency e) {
-				return e.getCallees().size();
-			}
-		};
-	}
-
 	public CallGraph(ClassContext classContext, boolean resolveMethodImplementations, boolean resolveDependenciesInClassHierarchy) {
 		this.classContext = classContext;
 		if (resolveMethodImplementations) {
