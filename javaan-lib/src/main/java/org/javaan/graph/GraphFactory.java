@@ -20,4 +20,8 @@ public final class GraphFactory {
 			}
 		};
 	}
+	
+	public static <V> VertexEdgeDirectedGraph<V> createVertexEdgeDirectedGraph() {
+		return new VertexEdgeDirectedGraph<>();
+	}
 }

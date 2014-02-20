@@ -44,7 +44,7 @@ import org.jgrapht.graph.DirectedSubgraph;
  */
 public class CallGraph {
 
-	private final VertexEdgeDirectedGraph<Method> callerOfMethod = new VertexEdgeDirectedGraph<Method>();
+	private final VertexEdgeDirectedGraph<Method> callerOfMethod = GraphFactory.createVertexEdgeDirectedGraph();
 
 	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
 	
