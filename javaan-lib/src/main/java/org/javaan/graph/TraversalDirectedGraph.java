@@ -27,34 +27,16 @@ import java.util.Stack;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.graph.EdgeReversedGraph;
-import org.jgrapht.graph.GraphDelegator;
 import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
-public class TraversalDirectedGraph<V, E> extends GraphDelegator<V, E> implements DirectedGraph<V, E> {
+public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> implements DirectedGraph<V, E> {
 
 	private static final long serialVersionUID = 1L;
 
 	public TraversalDirectedGraph(DirectedGraph<V, E> g) {
 		super(g);
-	}
-
-	/**
-	 * Add sourceVertex and targetVertex to graph and create an edge between them.
-	 */
-	@Override
-	public E addEdge(V sourceVertex, V targetVertex) {
-		addVertex(sourceVertex);
-		addVertex(targetVertex);
-		return super.addEdge(sourceVertex, targetVertex);
-	}
-	
-	@Override
-	public boolean addEdge(V sourceVertex, V targetVertex, E edge) {
-		addVertex(sourceVertex);
-		addVertex(targetVertex);
-		return super.addEdge(sourceVertex, targetVertex, edge);
 	}
 
 	public Set<V> targetVerticesOf(V vertex) {
