@@ -29,7 +29,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.javaan.graph.GraphFactory;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.TraversalDirectedGraph;
-import org.javaan.graph.VertexEdgeDirectedGraph;
+import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.javaan.model.Type.JavaType;
 import org.jgrapht.DirectedGraph;
@@ -44,7 +44,7 @@ import org.jgrapht.graph.DirectedSubgraph;
  */
 public class CallGraph {
 
-	private final VertexEdgeDirectedGraph<Method> callerOfMethod = GraphFactory.createVertexEdgeDirectedGraph();
+	private final TraversalDirectedGraph<Method, VertexEdge<Method>> callerOfMethod = GraphFactory.createVertexEdgeDirectedGraph();
 
 	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
 	
@@ -58,7 +58,7 @@ public class CallGraph {
 	
 	public class InternalGraphs {
 
-		public VertexEdgeDirectedGraph<Method> getCallerOfMethodGraph() {
+		public TraversalDirectedGraph<Method, VertexEdge<Method>> getCallerOfMethodGraph() {
 			return callerOfMethod;
 		}
 		

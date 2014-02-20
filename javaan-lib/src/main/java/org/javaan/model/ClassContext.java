@@ -27,7 +27,8 @@ import java.util.Set;
 import org.javaan.graph.BidirectionalMap;
 import org.javaan.graph.GraphFactory;
 import org.javaan.graph.SingleTargetDirectedGraph;
-import org.javaan.graph.VertexEdgeDirectedGraph;
+import org.javaan.graph.TraversalDirectedGraph;
+import org.javaan.graph.VertexEdge;
 import org.javaan.model.Type.JavaType;
 
 public class ClassContext implements NamedObjectRepository<Type> {
@@ -38,7 +39,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final SingleTargetDirectedGraph<Clazz> superClass = new SingleTargetDirectedGraph<Clazz>();
 
-	private final VertexEdgeDirectedGraph<Interface> superInterface = GraphFactory.createVertexEdgeDirectedGraph();
+	private final TraversalDirectedGraph<Interface, VertexEdge<Interface>> superInterface = GraphFactory.createVertexEdgeDirectedGraph();
 	
 	private final BidirectionalMap<Clazz, Interface> interfaceOfClass = new BidirectionalMap<Clazz, Interface>();
 	
@@ -51,7 +52,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 			return superClass;
 		}
 
-		public VertexEdgeDirectedGraph<Interface> getSuperInterfaceGraph() {
+		public TraversalDirectedGraph<Interface, VertexEdge<Interface>> getSuperInterfaceGraph() {
 			return superInterface;
 		}	
 	}
