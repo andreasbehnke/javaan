@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import org.javaan.model.GraphView;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.graph.EdgeReversedGraph;
@@ -31,7 +32,7 @@ import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
-public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> implements DirectedGraph<V, E> {
+public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> implements DirectedGraph<V, E>, GraphView<V, E> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,14 +40,17 @@ public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E>
 		super(g);
 	}
 
+	@Override
 	public Set<V> targetVerticesOf(V vertex) {
 		return DirectedGraphUtils.targetVerticesOf(vertex, this);
 	}
 
+	@Override
 	public Set<V> sourceVerticesOf(V vertex) {
 		return DirectedGraphUtils.sourceVerticesOf(vertex, this);
 	}
 
+	@Override
 	public Set<V> successorsOf(V vertex) {
 		Set<V> successors = new HashSet<V>();
 		Stack<V> successorStack = new Stack<V>();
@@ -62,6 +66,7 @@ public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E>
 		return successors;
 	}
 
+	@Override
 	public Set<V> predecessorsOf(V vertex) {
 		Set<V> predecessors = new HashSet<V>();
 		Stack<V> predecessorStack = new Stack<V>();
@@ -144,6 +149,33 @@ public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E>
 	public Set<V> getLeafPredecessors(V startVertex) {
 		DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
 		return collectLeafVertices(graph, startVertex);
+	}
+
+	@Override
+	public void traverseDepthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse) {
+		if (reverse) {
+			traversePredecessorsDepthFirst(startVertex, visitor);
+		} else {
+			traverseSuccessorsDepthFirst(startVertex, visitor);
+		}
+	}
+
+	@Override
+	public void traverseBreadthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse) {
+		if (reverse) {
+			traverseSuccessorsBreadthFirst(startVertex, visitor);
+		} else {
+			traversePredecessorsBreadthFirst(startVertex, visitor);
+		}
+	}
+
+	@Override
+	public Set<V> collectLeaves(V startVertex, boolean reverse) {
+		if (reverse) {
+			return getLeafPredecessors(startVertex);
+		} else {
+			return getLeafSuccessors(startVertex);
+		}
 	}
 
 }
