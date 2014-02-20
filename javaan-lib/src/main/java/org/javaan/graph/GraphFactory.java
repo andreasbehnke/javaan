@@ -22,6 +22,9 @@ public final class GraphFactory {
 	}
 	
 	public static <V> TraversalDirectedGraph<V, VertexEdge<V>> createVertexEdgeDirectedGraph() {
-		return new VertexEdgeDirectedGraph<>();
+		return new TraversalDirectedGraph<>(
+				new DefaultDirectedGraph<V, VertexEdge<V>>(
+						new VertexEdgeFactory<V>())
+		);
 	}
 }
