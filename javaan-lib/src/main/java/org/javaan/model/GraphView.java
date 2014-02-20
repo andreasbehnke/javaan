@@ -22,7 +22,9 @@ public interface GraphView<V, E> {
 
 	Set<V> predecessorsOf(V vertex);
 
-	void traverse(V startVertex, GraphVisitor<V, E> visitor, boolean reverse);
+	void traverseDepthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse);
+	
+	void traverseBreadthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse);
 
 	Set<V> collectLeaves(V startVertex, boolean reverse);
 }
