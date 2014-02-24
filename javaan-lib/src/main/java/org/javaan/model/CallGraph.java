@@ -179,7 +179,7 @@ public class CallGraph {
 	}
 	
 	public void traverseCallees(Method caller, VertexEdgeGraphVisitor<Method> calleeVisitor) {
-		callerOfMethod.traverseSuccessorsDepthFirst(caller, calleeVisitor);
+		callerOfMethod.traverseDepthFirst(caller, calleeVisitor, false);
 	}
 	
 	public Set<Method> getLeafCallers(Method callee) {
@@ -193,7 +193,7 @@ public class CallGraph {
 	// class usage
 
 	public void traverseUsedTypes(Type using, GraphVisitor<Type, Dependency> usedVisitor) {
-		usageOfClass.traverseSuccessorsDepthFirst(using, usedVisitor);
+		usageOfClass.traverseDepthFirst(using, usedVisitor, false);
 	}
 	
 	public void traverseUsingTypes(Type used, GraphVisitor<Type, Dependency> usingVisitor) {
@@ -251,7 +251,7 @@ public class CallGraph {
 	// package usage
 	
 	public void traverseUsedPackages(Package using, GraphVisitor<Package, Dependency> usedVisitor) {
-		usageOfPackage.traverseSuccessorsDepthFirst(using, usedVisitor);
+		usageOfPackage.traverseDepthFirst(using, usedVisitor, false);
 	}
 	
 	public void traverseUsingPackages(Package used, GraphVisitor<Package, Dependency> usingVisitor) {

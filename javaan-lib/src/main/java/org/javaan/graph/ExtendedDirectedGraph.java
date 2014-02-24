@@ -120,10 +120,6 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		}
 	}
 
-	public void traverseSuccessorsDepthFirst(V startVertex, GraphVisitor<V, E> visitor) {
-		traverseGraph(this, startVertex, visitor, true);
-	}
-
 	public void traversePredecessorsDepthFirst(V startVertex, GraphVisitor<V, E> visitor) {
 		DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
 		traverseGraph(graph, startVertex, visitor, true);
@@ -171,16 +167,16 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		if (reverse) {
 			traversePredecessorsDepthFirst(startVertex, visitor);
 		} else {
-			traverseSuccessorsDepthFirst(startVertex, visitor);
+			traverseGraph(this, startVertex, visitor, true);
 		}
 	}
 
 	@Override
 	public void traverseBreadthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse) {
 		if (reverse) {
-			traverseSuccessorsBreadthFirst(startVertex, visitor);
-		} else {
 			traversePredecessorsBreadthFirst(startVertex, visitor);
+		} else {
+			traverseSuccessorsBreadthFirst(startVertex, visitor);
 		}
 	}
 

@@ -149,7 +149,7 @@ public class TestExtendedDirectedGraph {
 		VertexEdge<String> X_G = graph.addEdge(X, G);
 		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
 		
-		graph.traverseSuccessorsDepthFirst(X, visitor);
+		graph.traverseDepthFirst(X, visitor, false);
 		verify(visitor, times(8)).finished();
 		verify(visitor).visitVertex(X, 0);
 		verify(visitor).visitEdge(X_A, 1);
@@ -209,7 +209,7 @@ public class TestExtendedDirectedGraph {
 		VertexEdge<String> B_X = graph.addEdge(B, X);
 		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
 
-		graph.traverseSuccessorsDepthFirst(X, visitor);
+		graph.traverseDepthFirst(X, visitor, false);
 		verify(visitor, times(3)).finished();
 		verify(visitor).visitVertex(X, 0);
 		verify(visitor).visitEdge(X_A, 1);
@@ -233,7 +233,7 @@ public class TestExtendedDirectedGraph {
 		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
 		when(visitor.finished()).thenReturn(true);
 		
-		graph.traverseSuccessorsDepthFirst(X, visitor);
+		graph.traverseDepthFirst(X, visitor, false);
 		verify(visitor).finished();
 		verifyNoMoreInteractions(visitor);
 	}
@@ -243,7 +243,7 @@ public class TestExtendedDirectedGraph {
 		ExtendedDirectedGraph<String, VertexEdge<String>> graph = GraphFactory.createVertexEdgeDirectedGraph();
 		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
 
-		graph.traverseSuccessorsDepthFirst(X, visitor);
+		graph.traverseDepthFirst(X, visitor, false);
 		verifyNoMoreInteractions(visitor);
 	}
 
