@@ -285,7 +285,7 @@ public class TestExtendedDirectedGraph {
 		VertexEdge<String> Y_F = graph.addEdge(Y, F);
 		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
 		
-		graph.traversePredecessorsBreadthFirst(F, visitor);
+		graph.traverseBreadthFirst(F, visitor, true);
 		verify(visitor, times(5)).finished();
 		verify(visitor).visitVertex(F, -1);
 		verify(visitor).visitEdge(E_F, -1);

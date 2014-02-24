@@ -120,11 +120,6 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		}
 	}
 
-	public void traversePredecessorsBreadthFirst(V startVertex, GraphVisitor<V, E> visitor) {
-		DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
-		traverseGraph(graph, startVertex, visitor, false);
-	}
-
 	private Set<V> collectLeafVertices(DirectedGraph<V, E> graph, V startVertex) {
 		Set<V> leaves = new HashSet<V>();
 		if (graph.containsVertex(startVertex)) {
@@ -162,7 +157,8 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 	@Override
 	public void traverseBreadthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse) {
 		if (reverse) {
-			traversePredecessorsBreadthFirst(startVertex, visitor);
+			DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
+			traverseGraph(graph, startVertex, visitor, false);
 		} else {
 			traverseGraph(this, startVertex, visitor, false);
 		}
