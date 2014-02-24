@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.javaan.graph.BidirectionalMap;
-import org.javaan.graph.GraphFactory;
 import org.javaan.graph.SingleTargetDirectedGraph;
 import org.javaan.graph.TraversalDirectedGraph;
 import org.javaan.graph.VertexEdge;

@@ -1,6 +1,9 @@
-package org.javaan.graph;
+package org.javaan.model;
 
-import org.javaan.model.Dependency;
+import org.javaan.graph.TraversalDirectedGraph;
+import org.javaan.graph.UnsupportedEdgeFactory;
+import org.javaan.graph.VertexEdge;
+import org.javaan.graph.VertexEdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
 public final class GraphFactory {

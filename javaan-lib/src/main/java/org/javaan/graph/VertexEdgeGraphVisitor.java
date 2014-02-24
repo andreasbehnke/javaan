@@ -1,5 +1,7 @@
 package org.javaan.graph;
 
+import org.javaan.model.GraphVisitor;
+
 /*
  * #%L
  * Java Static Code Analysis

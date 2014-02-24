@@ -20,6 +20,7 @@ package org.javaan.graph;
  * #L%
  */
 
+import org.javaan.model.GraphVisitor;
 import org.jgrapht.Graph;
 
 public abstract class GraphVisitorAdapter<V, E> implements GraphVisitor<V, E> {

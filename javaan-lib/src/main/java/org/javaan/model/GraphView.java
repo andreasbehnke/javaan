@@ -2,8 +2,6 @@ package org.javaan.model;
 
 import java.util.Set;
 
-import org.javaan.graph.GraphVisitor;
-
 /**
  * Abstraction of the graph implementation. Prevents direct dependencies 
  * to internal graph structures and provides convenience functions.

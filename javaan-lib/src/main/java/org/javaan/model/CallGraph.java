@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.javaan.graph.GraphFactory;
-import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.TraversalDirectedGraph;
 import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeGraphVisitor;

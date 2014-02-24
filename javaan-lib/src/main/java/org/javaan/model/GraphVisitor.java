@@ -1,4 +1,4 @@
-package org.javaan.graph;
+package org.javaan.model;
 
 /*
  * #%L
@@ -20,6 +20,7 @@ package org.javaan.graph;
  * #L%
  */
 
+import org.javaan.graph.TraversalDirectedGraph;
 import org.jgrapht.Graph;
 
 /**

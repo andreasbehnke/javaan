@@ -22,11 +22,11 @@ package org.javaan.commands;
 
 import java.util.Set;
 
-import org.javaan.graph.GraphVisitor;
 import org.javaan.jgraphx.CellStyle;
 import org.javaan.jgraphx.DependencyGraphCellStyle;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Dependency;
+import org.javaan.model.GraphVisitor;
 import org.javaan.model.Type;
 import org.javaan.print.MethodListDependencyFormatter;
 import org.jgrapht.Graph;
