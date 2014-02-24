@@ -120,10 +120,6 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		}
 	}
 
-	public void traverseDepthFirst(GraphVisitor<V, E> visitor) {
-		traverseGraph(this, null, visitor, true);
-	}
-	
 	public void traverseSuccessorsDepthFirst(V startVertex, GraphVisitor<V, E> visitor) {
 		traverseGraph(this, startVertex, visitor, true);
 	}

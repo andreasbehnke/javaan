@@ -238,7 +238,7 @@ public class CallGraph {
 			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one vertex (these cycles have no impact in software design)
 				traversalGraph = new ExtendedDirectedGraph<V, E>(subgraph);
 				cyclesVisitor.visitGraph(traversalGraph, index);
-				traversalGraph.traverseDepthFirst(cyclesVisitor);
+				traversalGraph.traverseDepthFirst(null, cyclesVisitor, false);
 				index++;
 			}
 		}
