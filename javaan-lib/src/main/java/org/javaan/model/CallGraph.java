@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.javaan.graph.TraversalDirectedGraph;
+import org.javaan.graph.ExtendedDirectedGraph;
 import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.javaan.model.Type.JavaType;
@@ -42,11 +42,11 @@ import org.jgrapht.graph.DirectedSubgraph;
  */
 public class CallGraph {
 
-	private final TraversalDirectedGraph<Method, VertexEdge<Method>> callerOfMethod = GraphFactory.createVertexEdgeDirectedGraph();
+	private final ExtendedDirectedGraph<Method, VertexEdge<Method>> callerOfMethod = GraphFactory.createVertexEdgeDirectedGraph();
 
-	private final TraversalDirectedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
+	private final ExtendedDirectedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
 	
-	private final TraversalDirectedGraph<Package, Dependency> usageOfPackage = GraphFactory.createDependencyGraph();
+	private final ExtendedDirectedGraph<Package, Dependency> usageOfPackage = GraphFactory.createDependencyGraph();
 			
 	private final ClassContext classContext;
 	
@@ -56,15 +56,15 @@ public class CallGraph {
 	
 	public class InternalGraphs {
 
-		public TraversalDirectedGraph<Method, VertexEdge<Method>> getCallerOfMethodGraph() {
+		public ExtendedDirectedGraph<Method, VertexEdge<Method>> getCallerOfMethodGraph() {
 			return callerOfMethod;
 		}
 		
-		public TraversalDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
+		public ExtendedDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
 			return usageOfClass;
 		}
 		
-		public TraversalDirectedGraph<Package, Dependency> getUsageOfPackageGraph() {
+		public ExtendedDirectedGraph<Package, Dependency> getUsageOfPackageGraph() {
 			return usageOfPackage;
 		}
 	}
@@ -232,10 +232,10 @@ public class CallGraph {
 		StrongConnectivityInspector<V, E> inspector = new StrongConnectivityInspector<V, E>(graph);
 		List<DirectedSubgraph<V, E>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
 		int index = 1;
-		TraversalDirectedGraph<V, E> traversalGraph;
+		ExtendedDirectedGraph<V, E> traversalGraph;
 		for (DirectedSubgraph<V, E> subgraph : cycleGraphs) {
 			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one vertex (these cycles have no impact in software design)
-				traversalGraph = new TraversalDirectedGraph<V, E>(subgraph);
+				traversalGraph = new ExtendedDirectedGraph<V, E>(subgraph);
 				cyclesVisitor.visitGraph(traversalGraph, index);
 				traversalGraph.traverseDepthFirst(cyclesVisitor);
 				index++;

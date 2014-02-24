@@ -24,7 +24,7 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
 public class VertexEdgeDirectedGraph<V> 
-	extends TraversalDirectedGraph<V, VertexEdge<V>> 
+	extends ExtendedDirectedGraph<V, VertexEdge<V>> 
 	implements DirectedGraph<V, VertexEdge<V>> {
 
 	private static final long serialVersionUID = 1L;

@@ -20,11 +20,11 @@ package org.javaan.model;
  * #L%
  */
 
-import org.javaan.graph.TraversalDirectedGraph;
+import org.javaan.graph.ExtendedDirectedGraph;
 import org.jgrapht.Graph;
 
 /**
- * Visits objects during traversal of {@link TraversalDirectedGraph}. Provides
+ * Visits objects during traversal of {@link ExtendedDirectedGraph}. Provides
  * depth information for depth first traversal.
  */
 public interface GraphVisitor<V, E> {

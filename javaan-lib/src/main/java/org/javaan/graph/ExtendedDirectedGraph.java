@@ -33,11 +33,14 @@ import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
-public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> implements DirectedGraph<V, E>, GraphView<V, E> {
+/**
+ * Provides extended graph functionality by implementing {@link DirectedGraph} and {@link GraphView}
+ */
+public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> implements DirectedGraph<V, E>, GraphView<V, E> {
 
 	private static final long serialVersionUID = 1L;
 
-	public TraversalDirectedGraph(DirectedGraph<V, E> g) {
+	public ExtendedDirectedGraph(DirectedGraph<V, E> g) {
 		super(g);
 	}
 	
