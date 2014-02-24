@@ -29,10 +29,7 @@ import java.util.List;
 import org.javaan.model.Clazz;
 import org.junit.Test;
 
-/**
- * TODO: rename me!
- */
-public class TestSingleTargetDirectedGraph {
+public class TestTree {
 	
 	private final static Clazz A = new Clazz("a");
 	private final static Clazz B = new Clazz("b");
@@ -44,7 +41,7 @@ public class TestSingleTargetDirectedGraph {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddEdge() {
-		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
+		Tree<Clazz> graph = new Tree<Clazz>();
 		graph.addEdge(A, X);
 		graph.addEdge(B, X);
 		fail("expecting exception");
@@ -52,14 +49,14 @@ public class TestSingleTargetDirectedGraph {
 
 	@Test
 	public void testSourceVertexOf() {
-		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
+		Tree<Clazz> graph = new Tree<Clazz>();
 		graph.addEdge(A, X);
 		assertEquals(A, graph.sourceVertexOf(X));
 	}
 	
 	@Test
 	public void testPredecessorPathOf() {
-		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
+		Tree<Clazz> graph = new Tree<Clazz>();
 		graph.addEdge(B, A);
 		graph.addEdge(C, B);
 		graph.addEdge(D, C);
@@ -88,7 +85,7 @@ public class TestSingleTargetDirectedGraph {
 	
 	@Test
 	public void testPredecessorPathOfCycle() {
-		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
+		Tree<Clazz> graph = new Tree<Clazz>();
 		graph.addEdge(A, X);
 		graph.addEdge(B, A);
 		graph.addEdge(X, B);

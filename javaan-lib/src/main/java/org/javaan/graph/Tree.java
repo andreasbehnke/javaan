@@ -28,9 +28,9 @@ import org.javaan.model.NamedObject;
 import org.javaan.model.TreeView;
 
 /**
- * TODO: rename me!
+ * Implementation of {@link TreeView}
  */
-public class SingleTargetDirectedGraph<V extends NamedObject> extends VertexEdgeDirectedGraph<V> implements TreeView<V, VertexEdge<V>> {
+public class Tree<V extends NamedObject> extends VertexEdgeDirectedGraph<V> implements TreeView<V, VertexEdge<V>> {
 
 	private static final long serialVersionUID = 1L;
 
