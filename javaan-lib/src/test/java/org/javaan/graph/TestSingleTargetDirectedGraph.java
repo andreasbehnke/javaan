@@ -29,6 +29,9 @@ import java.util.List;
 import org.javaan.model.Clazz;
 import org.junit.Test;
 
+/**
+ * TODO: rename me!
+ */
 public class TestSingleTargetDirectedGraph {
 	
 	private final static Clazz A = new Clazz("a");
@@ -42,28 +45,28 @@ public class TestSingleTargetDirectedGraph {
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddEdge() {
 		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
-		graph.addEdge(X, A);
-		graph.addEdge(X, B);
+		graph.addEdge(A, X);
+		graph.addEdge(B, X);
 		fail("expecting exception");
 	}
 
 	@Test
-	public void testTargetVertexOf() {
+	public void testSourceVertexOf() {
 		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
-		graph.addEdge(X, A);
-		assertEquals(A, graph.targetVertexOf(X));
+		graph.addEdge(A, X);
+		assertEquals(A, graph.sourceVertexOf(X));
 	}
 	
 	@Test
-	public void testSuccessorPathOf() {
+	public void testPredecessorPathOf() {
 		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
-		graph.addEdge(A, B);
-		graph.addEdge(B, C);
-		graph.addEdge(C, D);
-		graph.addEdge(X, Y);
+		graph.addEdge(B, A);
+		graph.addEdge(C, B);
+		graph.addEdge(D, C);
+		graph.addEdge(Y, X);
 		graph.addVertex(Z);
 		
-		List<Clazz> path = graph.successorPathOf(A);
+		List<Clazz> path = graph.predecessorPathOf(A);
 		assertNotNull(path);
 		assertEquals(4, path.size());
 		assertEquals(A, path.get(0));
@@ -71,26 +74,26 @@ public class TestSingleTargetDirectedGraph {
 		assertEquals(C, path.get(2));
 		assertEquals(D, path.get(3));
 		
-		path = graph.successorPathOf(X);
+		path = graph.predecessorPathOf(X);
 		assertNotNull(path);
 		assertEquals(2, path.size());
 		assertEquals(X, path.get(0));
 		assertEquals(Y, path.get(1));
 		
-		path = graph.successorPathOf(Z);
+		path = graph.predecessorPathOf(Z);
 		assertNotNull(path);
 		assertEquals(1, path.size());
 		assertEquals(Z, path.get(0));
 	}
 	
 	@Test
-	public void testSuccessorPathOfCycle() {
+	public void testPredecessorPathOfCycle() {
 		SingleTargetDirectedGraph<Clazz> graph = new SingleTargetDirectedGraph<Clazz>();
-		graph.addEdge(X, A);
-		graph.addEdge(A, B);
-		graph.addEdge(B, X);
+		graph.addEdge(A, X);
+		graph.addEdge(B, A);
+		graph.addEdge(X, B);
 
-		List<Clazz> path = graph.successorPathOf(X);
+		List<Clazz> path = graph.predecessorPathOf(X);
 		assertNotNull(path);
 		assertEquals(3, path.size());
 		assertEquals(X, path.get(0));

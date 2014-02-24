@@ -92,7 +92,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		interfaceOfClass.addParent(className);
 		addType(superClassName);
 		interfaceOfClass.addParent(superClassName);
-		superClass.addEdge(className, superClassName);
+		superClass.addEdge(superClassName, className);
 	}
 	
 	public boolean containsClass(Clazz className) {
@@ -104,19 +104,19 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 
 	public Clazz getSuperClass(Clazz className) {
-		return superClass.targetVertexOf(className);
+		return superClass.sourceVertexOf(className);
 	}
 	
 	public List<Clazz> getSuperClassHierachy(Clazz className) {
-		return superClass.successorPathOf(className);
+		return superClass.predecessorPathOf(className);
 	}
 	
 	public Set<Clazz> getSpecializationsOfClass(Clazz className) {
-		return superClass.predecessorsOf(className);
+		return superClass.successorsOf(className);
 	}
 	
 	public Set<Clazz> getDirectSpecializationsOfClass(Clazz className) {
-		return superClass.sourceVerticesOf(className);
+		return superClass.targetVerticesOf(className);
 	}
 	
 	public void addInterface(Interface interfaceName) {
@@ -172,7 +172,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Interface> getInterfacesOfClass(Clazz className) {
-		List<Clazz> superClasses = superClass.successorPathOf(className);
+		List<Clazz> superClasses = superClass.predecessorPathOf(className);
 		Set<Interface> interfaces = new HashSet<Interface>();
 		for (Clazz superClassName : superClasses) {
 			interfaces.addAll(getDirectIntefacesOfClass(superClassName));
@@ -192,7 +192,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		// find all specializations of implementations
 		for (Clazz className : classes) {
 			implementingClasses.add(className);
-			implementingClasses.addAll(superClass.predecessorsOf(className));
+			implementingClasses.addAll(superClass.successorsOf(className));
 		}
 		return implementingClasses;
 	}

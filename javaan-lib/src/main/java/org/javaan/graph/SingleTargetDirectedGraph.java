@@ -25,36 +25,46 @@ import java.util.List;
 import java.util.Set;
 
 import org.javaan.model.NamedObject;
-import org.jgrapht.traverse.DepthFirstIterator;
-import org.jgrapht.traverse.GraphIterator;
+import org.javaan.model.TreeView;
 
 /**
- * A directed graph which is constrained to out degree of 1.
+ * TODO: rename me!
  */
-public class SingleTargetDirectedGraph<V extends NamedObject> extends VertexEdgeDirectedGraph<V> {
+public class SingleTargetDirectedGraph<V extends NamedObject> extends VertexEdgeDirectedGraph<V> implements TreeView<V, VertexEdge<V>> {
 
 	private static final long serialVersionUID = 1L;
 
 	public VertexEdge<V> addEdge(V sourceVertex, V targetVertex) {
-		if (containsVertex(sourceVertex)  && outDegreeOf(sourceVertex) > 0) {
-			throw new IllegalArgumentException("source vertex " + sourceVertex + " already contains a target vertex!");
+		if (containsVertex(targetVertex)  && inDegreeOf(targetVertex) > 0) {
+			throw new IllegalArgumentException("target vertex " + targetVertex + " already contains a parent vertex!");
 		}
 		return super.addEdge(sourceVertex, targetVertex);
 	}
 
-	public V targetVertexOf(V sourceVertex) {
-		Set<V> targets = targetVerticesOf(sourceVertex);
-		if (targets == null || targets.size() == 0) {
+	@Override
+	public V sourceVertexOf(V vertex) {
+		Set<V> sources = sourceVerticesOf(vertex);
+		if (sources == null || sources.size() == 0) {
 			return null;
 		}
-		return targets.iterator().next();
+		return sources.iterator().next();
+
 	}
 
-	public List<V> successorPathOf(V vertex) {
+	@Override
+	public List<V> predecessorPathOf(V vertex) {
 		List<V> path = new ArrayList<V>();
-		GraphIterator<V, VertexEdge<V>> iterator = new DepthFirstIterator<V, VertexEdge<V>>(this, vertex);
-		while(iterator.hasNext()) {
-			path.add(iterator.next());
+		while(vertex != null) {
+			if (path.contains(vertex)) {
+				break; // cycle detected
+			}
+			path.add(vertex);
+			Set<V> pre = sourceVerticesOf(vertex);
+			if (pre != null && pre.size() > 0) {
+				vertex = pre.iterator().next();
+			} else {
+				break; // no more parent vertices
+			}
 		}
 		return path;
 	}
