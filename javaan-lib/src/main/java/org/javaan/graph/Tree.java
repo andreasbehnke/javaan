@@ -24,17 +24,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.model.NamedObject;
 import org.javaan.model.TreeView;
+import org.jgrapht.DirectedGraph;
 
 /**
  * Implementation of {@link TreeView}
  */
-public class Tree<V extends NamedObject> extends VertexEdgeDirectedGraph<V> implements TreeView<V, VertexEdge<V>> {
+public class Tree<V, E> extends ExtendedDirectedGraph<V, E> implements TreeView<V, E> {
+
+	public Tree(DirectedGraph<V, E> g) {
+		super(g);
+	}
 
 	private static final long serialVersionUID = 1L;
 
-	public VertexEdge<V> addEdge(V sourceVertex, V targetVertex) {
+	public E addEdge(V sourceVertex, V targetVertex) {
 		if (containsVertex(targetVertex)  && inDegreeOf(targetVertex) > 0) {
 			throw new IllegalArgumentException("target vertex " + targetVertex + " already contains a parent vertex!");
 		}

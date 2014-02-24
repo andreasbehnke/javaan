@@ -1,6 +1,7 @@
 package org.javaan.model;
 
 import org.javaan.graph.ExtendedDirectedGraph;
+import org.javaan.graph.Tree;
 import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeFactory;
@@ -23,9 +24,16 @@ public final class GraphFactory {
 			}
 		};
 	}
-	
+
 	public static <V> ExtendedDirectedGraph<V, VertexEdge<V>> createVertexEdgeDirectedGraph() {
 		return new ExtendedDirectedGraph<>(
+				new DefaultDirectedGraph<V, VertexEdge<V>>(
+						new VertexEdgeFactory<V>())
+		);
+	}
+	
+	public static <V> Tree<V, VertexEdge<V>> createVertexEdgeTree() {
+		return new Tree<>(
 				new DefaultDirectedGraph<V, VertexEdge<V>>(
 						new VertexEdgeFactory<V>())
 		);

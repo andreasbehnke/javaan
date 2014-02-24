@@ -36,7 +36,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final BidirectionalMap<Type, Package> packageOfType = new BidirectionalMap<Type, Package>();
 	
-	private final Tree<Clazz> superClass = new Tree<Clazz>();
+	private final Tree<Clazz, VertexEdge<Clazz>> superClass = GraphFactory.createVertexEdgeTree();
 
 	private final ExtendedDirectedGraph<Interface, VertexEdge<Interface>> superInterface = GraphFactory.createVertexEdgeDirectedGraph();
 	
@@ -47,7 +47,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>(); 
 	
 	public class InternalGraphs {
-		public Tree<Clazz> getSuperClassGraph() {
+		public Tree<Clazz, VertexEdge<Clazz>> getSuperClassGraph() {
 			return superClass;
 		}
 
