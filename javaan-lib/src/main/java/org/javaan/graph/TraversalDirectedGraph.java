@@ -40,15 +40,31 @@ public class TraversalDirectedGraph<V, E> extends AddVerticesAutomatically<V, E>
 	public TraversalDirectedGraph(DirectedGraph<V, E> g) {
 		super(g);
 	}
+	
+	private Set<V> getTargetSet(Set<E> edges) {
+		Set<V> targets = new HashSet<V>();
+		for (E e : edges) {
+			targets.add(getEdgeTarget(e));
+		}
+		return targets;
+	}
+
+	private Set<V> getSourceSet(Set<E> edges) {
+		Set<V> sources = new HashSet<V>();
+		for (E e : edges) {
+			sources.add(getEdgeSource(e));
+		}
+		return sources;
+	}
 
 	@Override
 	public Set<V> targetVerticesOf(V vertex) {
-		return DirectedGraphUtils.targetVerticesOf(vertex, this);
+		return getTargetSet(outgoingEdgesOf(vertex));
 	}
 
 	@Override
 	public Set<V> sourceVerticesOf(V vertex) {
-		return DirectedGraphUtils.sourceVerticesOf(vertex, this);
+		return getSourceSet(incomingEdgesOf(vertex));
 	}
 
 	@Override
