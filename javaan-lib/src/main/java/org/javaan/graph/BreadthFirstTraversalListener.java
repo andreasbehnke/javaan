@@ -20,7 +20,6 @@ package org.javaan.graph;
  * #L%
  */
 
-import org.javaan.model.GraphVisitor;
 import org.jgrapht.event.EdgeTraversalEvent;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.TraversalListenerAdapter;

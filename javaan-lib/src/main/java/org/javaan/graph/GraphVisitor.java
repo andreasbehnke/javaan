@@ -1,4 +1,4 @@
-package org.javaan.model;
+package org.javaan.graph;
 
 /*
  * #%L
@@ -20,7 +20,6 @@ package org.javaan.model;
  * #L%
  */
 
-import org.javaan.graph.ExtendedDirectedGraph;
 import org.jgrapht.Graph;
 
 /**

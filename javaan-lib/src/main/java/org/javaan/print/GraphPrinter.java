@@ -22,8 +22,8 @@ package org.javaan.print;
 
 import java.io.PrintStream;
 
+import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.GraphVisitorAdapter;
-import org.javaan.model.GraphVisitor;
 import org.jgrapht.Graph;
 
 public class GraphPrinter<V, E> extends GraphVisitorAdapter<V, E> implements GraphVisitor<V, E> {

@@ -33,6 +33,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import java.util.List;
 import java.util.Set;
 
+import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.junit.Ignore;
 import org.junit.Test;

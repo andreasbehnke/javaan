@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.javaan.model.GraphView;
-import org.javaan.model.GraphVisitor;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.graph.EdgeReversedGraph;

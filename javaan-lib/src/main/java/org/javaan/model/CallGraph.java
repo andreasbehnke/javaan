@@ -27,6 +27,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.javaan.graph.ExtendedDirectedGraph;
+import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.javaan.model.Type.JavaType;
