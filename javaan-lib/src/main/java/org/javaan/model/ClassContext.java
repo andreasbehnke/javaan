@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.javaan.graph.BidirectionalMap;
-import org.javaan.graph.Tree;
 import org.javaan.graph.ExtendedDirectedGraph;
+import org.javaan.graph.Tree;
 import org.javaan.graph.VertexEdge;
 import org.javaan.model.Type.JavaType;
 
@@ -307,7 +307,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	public Method getVirtualMethod(final Interface interfaceName, final String signature) {
 		InterfaceMethodFinder methodFinder = new InterfaceMethodFinder(this, signature);
-		superInterface.traverseSuccessorsBreadthFirst(interfaceName, methodFinder);
+		superInterface.traverseBreadthFirst(interfaceName, methodFinder, false);
 		return methodFinder.getMethodFound();
 	}
 	
