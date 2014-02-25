@@ -2,13 +2,10 @@ package org.javaan.commands;
 
 import java.util.Set;
 
-import org.javaan.jgraphx.CellStyle;
-import org.javaan.jgraphx.DependencyGraphCellStyle;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Dependency;
 import org.javaan.model.GraphView;
 import org.javaan.model.Package;
-import org.javaan.print.NumberOfMethodsDependencyFormatter;
 
 public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
 
@@ -25,13 +22,6 @@ public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
 	@Override
 	public String getDescription() {
 		return DESCRIPTION;
-	}
-
-	@Override
-	protected CellStyle<Package, Dependency> getDependencyGraphCellStyle() {
-		return new DependencyGraphCellStyle<>(
-				getTypeFormatter(), 
-				new NumberOfMethodsDependencyFormatter());
 	}
 
 	@Override
