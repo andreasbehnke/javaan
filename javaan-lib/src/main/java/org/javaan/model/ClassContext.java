@@ -45,26 +45,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	private final BidirectionalMap<Clazz, Method> methodsOfClass = new BidirectionalMap<Clazz, Method>();
 	
 	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>(); 
-	
-	public class InternalGraphs {
-		public Tree<Clazz, VertexEdge<Clazz>> getSuperClassGraph() {
-			return superClass;
-		}
 
-		public ExtendedDirectedGraph<Interface, VertexEdge<Interface>> getSuperInterfaceGraph() {
-			return superInterface;
-		}	
-	}
-
-	/**
-	 * Provides access to the internal graph implementations.
-	 * This API is subject to change, so use traversal methods
-	 * for iterating over graphs.
-	 */
-	public InternalGraphs getInternalGraphs() {
-		return new InternalGraphs();
-	}
-	
 	private void addType(Type type) {
 		if (type == null) {
 			throw new IllegalArgumentException("Parameter type must not be null");
