@@ -120,21 +120,6 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		}
 	}
 
-	private Set<V> collectLeafVertices(DirectedGraph<V, E> graph, V startVertex) {
-		Set<V> leaves = new HashSet<V>();
-		if (graph.containsVertex(startVertex)) {
-			GraphIterator<V, E> iterator = new DepthFirstIterator<V, E>(graph, startVertex);
-			iterator.next();
-			while (iterator.hasNext()) {
-				V vertex = iterator.next();
-				if (graph.outDegreeOf(vertex) == 0) {
-					leaves.add(vertex);
-				}
-			}
-		}
-		return leaves;
-	}
-
 	@Override
 	public void traverseDepthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse) {
 		if (reverse) {
@@ -155,6 +140,21 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		}
 	}
 
+	private Set<V> collectLeafVertices(DirectedGraph<V, E> graph, V startVertex) {
+		Set<V> leaves = new HashSet<V>();
+		if (graph.containsVertex(startVertex)) {
+			GraphIterator<V, E> iterator = new DepthFirstIterator<V, E>(graph, startVertex);
+			iterator.next();
+			while (iterator.hasNext()) {
+				V vertex = iterator.next();
+				if (graph.outDegreeOf(vertex) == 0) {
+					leaves.add(vertex);
+				}
+			}
+		}
+		return leaves;
+	}
+	
 	@Override
 	public Set<V> collectLeaves(V startVertex, boolean reverse) {
 		if (reverse) {
