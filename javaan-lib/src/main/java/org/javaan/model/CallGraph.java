@@ -187,7 +187,7 @@ public class CallGraph {
 	}
 	
 	public Set<Method> getLeafCallees(Method caller) {
-		return callerOfMethod.getLeafSuccessors(caller);
+		return callerOfMethod.collectLeaves(caller, false);
 	}
 	
 	// class usage
@@ -201,7 +201,7 @@ public class CallGraph {
 	}
 
 	public Set<Type> getLeafUsedTypes(Type using) {
-		return usageOfClass.getLeafSuccessors(using);
+		return usageOfClass.collectLeaves(using, false);
 	}
 	
 	public Set<Type> getLeafUsingTypes(Type using) {

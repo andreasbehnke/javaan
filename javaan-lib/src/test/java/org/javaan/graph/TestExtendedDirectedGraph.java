@@ -309,25 +309,25 @@ public class TestExtendedDirectedGraph {
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
 		
-		Set<String> leafNodes = graph.getLeafSuccessors(X);
+		Set<String> leafNodes = graph.collectLeaves(X, false);
 		assertNotNull(leafNodes);
 		assertEquals(4, leafNodes.size());
 		assertTrue(leafNodes.contains(A));
 		assertTrue(leafNodes.contains(B));
 		assertTrue(leafNodes.contains(D));
 		assertTrue(leafNodes.contains(F));
-		leafNodes = graph.getLeafSuccessors(C);
+		leafNodes = graph.collectLeaves(C, false);
 		assertNotNull(leafNodes);
 		assertEquals(2, leafNodes.size());
 		assertTrue(leafNodes.contains(D));
 		assertTrue(leafNodes.contains(F));
-		leafNodes = graph.getLeafSuccessors(A);
+		leafNodes = graph.collectLeaves(A, false);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
-		leafNodes = graph.getLeafSuccessors(B);
+		leafNodes = graph.collectLeaves(B, false);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
-		leafNodes = graph.getLeafSuccessors(E);
+		leafNodes = graph.collectLeaves(E, false);
 		assertNotNull(leafNodes);
 		assertEquals(1, leafNodes.size());
 		assertTrue(leafNodes.contains(F));
@@ -336,7 +336,7 @@ public class TestExtendedDirectedGraph {
 	@Test
 	public void testGetLeafSuccessorsUnknownStartVertex() {
 		ExtendedDirectedGraph<String, VertexEdge<String>> graph = GraphFactory.createVertexEdgeDirectedGraph();
-		Set<String> leafNodes = graph.getLeafSuccessors(X);
+		Set<String> leafNodes = graph.collectLeaves(A, false);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
 	}
