@@ -351,10 +351,10 @@ public class TestExtendedDirectedGraph {
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
 		
-		Set<String> leafNodes = graph.getLeafPredecessors(X);
+		Set<String> leafNodes = graph.collectLeaves(X, true);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
-		leafNodes = graph.getLeafPredecessors(C);
+		leafNodes = graph.collectLeaves(C, true);
 		assertNotNull(leafNodes);
 		assertEquals(1, leafNodes.size());
 		assertTrue(leafNodes.contains(X));

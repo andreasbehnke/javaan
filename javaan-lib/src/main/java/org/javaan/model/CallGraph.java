@@ -183,7 +183,7 @@ public class CallGraph {
 	}
 	
 	public Set<Method> getLeafCallers(Method callee) {
-		return callerOfMethod.getLeafPredecessors(callee);
+		return callerOfMethod.collectLeaves(callee, true);
 	}
 	
 	public Set<Method> getLeafCallees(Method caller) {
@@ -205,7 +205,7 @@ public class CallGraph {
 	}
 	
 	public Set<Type> getLeafUsingTypes(Type using) {
-		return usageOfClass.getLeafPredecessors(using);
+		return usageOfClass.collectLeaves(using, true);
 	}
 	
 	private static <V> DirectedSimpleCycles<V, ?> createCycleDetector(DirectedGraph<V, ?> graph) {

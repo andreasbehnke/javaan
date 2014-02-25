@@ -135,11 +135,6 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		return leaves;
 	}
 
-	public Set<V> getLeafPredecessors(V startVertex) {
-		DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
-		return collectLeafVertices(graph, startVertex);
-	}
-
 	@Override
 	public void traverseDepthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse) {
 		if (reverse) {
@@ -163,7 +158,8 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 	@Override
 	public Set<V> collectLeaves(V startVertex, boolean reverse) {
 		if (reverse) {
-			return getLeafPredecessors(startVertex);
+			DirectedGraph<V, E> graph = new EdgeReversedGraph<V, E>(this);
+			return collectLeafVertices(graph, startVertex);
 		} else {
 			return collectLeafVertices(this, startVertex);
 		}
