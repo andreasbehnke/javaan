@@ -122,10 +122,10 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, B_METHODD);
 		callGraph.addCall(A_METHODA, B_METHODD1);
 		
-		Set<Dependency> outgoingEdgesOfA = callGraph.getInternalGraphs().getUsageOfTypeGraph().outgoingEdgesOf(A);
-		assertNotNull(outgoingEdgesOfA);
-		assertEquals(1, outgoingEdgesOfA.size());
-		Dependency d = outgoingEdgesOfA.iterator().next();
+		Set<Dependency> dependencies = callGraph.getDependenciesOf(A);
+		assertNotNull(dependencies);
+		assertEquals(1, dependencies.size());
+		Dependency d = dependencies.iterator().next();
 		assertTrue(d.getCallees().contains(B_METHODD));
 		assertTrue(d.getCallees().contains(B_METHODD1));
 		assertEquals("a.b.c.classa-->d.e.f.classb", d.getName());

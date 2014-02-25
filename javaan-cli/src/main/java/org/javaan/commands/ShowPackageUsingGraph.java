@@ -7,10 +7,9 @@ import org.javaan.jgraphx.CellStyle;
 import org.javaan.jgraphx.DependencyGraphCellStyle;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Dependency;
+import org.javaan.model.GraphView;
 import org.javaan.model.Package;
 import org.javaan.print.NumberOfMethodsDependencyFormatter;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.EdgeReversedGraph;
 
 public class ShowPackageUsingGraph extends BasePackageDependencyGraphCommand {
 
@@ -47,7 +46,7 @@ public class ShowPackageUsingGraph extends BasePackageDependencyGraphCommand {
 	}
 	
 	@Override
-	protected Graph<Package, Dependency> getDependencyGraph(CallGraph callGraph) {
-		return new EdgeReversedGraph<>(callGraph.getInternalGraphs().getUsageOfPackageGraph());
+	protected GraphView<Package, Dependency> getDependencyGraph(CallGraph callGraph, Set<Package> filter) {
+		return callGraph.getUsageOfPackageGraph(filter, true);
 	}
 }

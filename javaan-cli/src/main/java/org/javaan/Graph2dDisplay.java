@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 import org.javaan.jgraphx.CellStyle;
 import org.javaan.jgraphx.MxGraphBuilder;
-import org.jgrapht.Graph;
+import org.javaan.model.GraphView;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.swing.mxGraphComponent;
@@ -17,7 +17,7 @@ public class Graph2dDisplay<V, E> extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public Graph2dDisplay(String title, Graph<V, E> input, CellStyle<V, E> cellStyle) {
+	public Graph2dDisplay(String title, GraphView<V, E> input, CellStyle<V, E> cellStyle) {
 		super(title);
 		mxGraph view = new MxGraphBuilder<V, E>(input, cellStyle).build();
 		

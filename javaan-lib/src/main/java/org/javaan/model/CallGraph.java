@@ -54,22 +54,7 @@ public class CallGraph {
 	private final MethodResolver methodResolver;
 
 	private final boolean resolveDependenciesInClassHierarchy;
-	
-	public class InternalGraphs {
 
-		public ExtendedDirectedGraph<Method, VertexEdge<Method>> getCallerOfMethodGraph() {
-			return callerOfMethod;
-		}
-		
-		public ExtendedDirectedGraph<Type, Dependency> getUsageOfTypeGraph() {
-			return usageOfClass;
-		}
-		
-		public ExtendedDirectedGraph<Package, Dependency> getUsageOfPackageGraph() {
-			return usageOfPackage;
-		}
-	}
-	
 	public CallGraph(ClassContext classContext, boolean resolveMethodImplementations, boolean resolveDependenciesInClassHierarchy) {
 		this.classContext = classContext;
 		if (resolveMethodImplementations) {
@@ -80,13 +65,16 @@ public class CallGraph {
 		this.resolveDependenciesInClassHierarchy = resolveDependenciesInClassHierarchy;
 	}
 
-	/**
-	 * Provides access to the internal graph implementations.
-	 * This API is subject to change, so use traversal methods
-	 * for iterating over graphs.
-	 */
-	public InternalGraphs getInternalGraphs() {
-		return new InternalGraphs();
+	public GraphView<Method, VertexEdge<Method>> getCallerOfMethodGraph(Set<Method> methodFilter, boolean reversed) {
+		return GraphFactory.createSubgraphView(callerOfMethod, methodFilter, reversed);
+	}
+	
+	public GraphView<Type, Dependency> getUsageOfTypeGraph(Set<Type> typeFilter, boolean reversed) {
+		return GraphFactory.createSubgraphView(usageOfClass, typeFilter, reversed);
+	}
+	
+	public GraphView<Package, Dependency> getUsageOfPackageGraph(Set<Package> packageFilter, boolean reversed) {
+		return GraphFactory.createSubgraphView(usageOfPackage, packageFilter, reversed);
 	}
 
 	public int size() {
@@ -191,6 +179,14 @@ public class CallGraph {
 	}
 	
 	// class usage
+	
+	public Set<Dependency> getDependenciesOf(Type using) {
+		Set<Dependency> dependencies = usageOfClass.outgoingEdgesOf(using);
+		if (dependencies != null && dependencies.size() > 0) {
+			return dependencies;
+		}
+		return null;
+	}
 
 	public void traverseUsedTypes(Type using, GraphVisitor<Type, Dependency> usedVisitor) {
 		usageOfClass.traverseDepthFirst(using, usedVisitor, false);

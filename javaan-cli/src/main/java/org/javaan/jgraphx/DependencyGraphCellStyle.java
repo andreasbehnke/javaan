@@ -2,9 +2,9 @@ package org.javaan.jgraphx;
 
 import org.javaan.model.Clazz;
 import org.javaan.model.Dependency;
+import org.javaan.model.GraphView;
 import org.javaan.model.Interface;
 import org.javaan.print.ObjectFormatter;
-import org.jgrapht.Graph;
 
 public class DependencyGraphCellStyle<T> implements CellStyle<T, Dependency> {
 	
@@ -28,12 +28,12 @@ public class DependencyGraphCellStyle<T> implements CellStyle<T, Dependency> {
 	}
 
 	@Override
-	public String getEdgeLabel(Graph<T, Dependency> g, Dependency edge) {
+	public String getEdgeLabel(GraphView<T, Dependency> g, Dependency edge) {
 		return dependencyFormatter.format(edge);
 	}
 
 	@Override
-	public String getEdgeStyle(Graph<T, Dependency> g, Dependency edge) {
+	public String getEdgeStyle(GraphView<T, Dependency> g, Dependency edge) {
 		// calculate edge width using logarithm
     	double edgeWeight = g.getEdgeWeight(edge);
     	double edgeWidth = Math.log1p(edgeWeight);
@@ -41,12 +41,12 @@ public class DependencyGraphCellStyle<T> implements CellStyle<T, Dependency> {
 	}
 
 	@Override
-	public String getVertexLabel(Graph<T, Dependency> g, T vertex) {
+	public String getVertexLabel(GraphView<T, Dependency> g, T vertex) {
 		return typeFormatter.format(vertex);
 	}
 
 	@Override
-	public String getVertexStyle(Graph<T, Dependency> g, T value) {
+	public String getVertexStyle(GraphView<T, Dependency> g, T value) {
 		String color = PACKAGE_COLOR;
 		if (value instanceof Clazz) {
 			color = CLASS_COLOR;

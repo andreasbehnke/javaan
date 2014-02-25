@@ -1,14 +1,14 @@
 package org.javaan.jgraphx;
 
-import org.jgrapht.Graph;
+import org.javaan.model.GraphView;
 
 public interface CellStyle<V, E> {
 	
-	String getEdgeLabel(Graph<V, E> g, E edge);
+	String getEdgeLabel(GraphView<V, E> g, E edge);
 	
-	String getEdgeStyle(Graph<V, E> g, E value);
+	String getEdgeStyle(GraphView<V, E> g, E value);
 	
-	String getVertexLabel(Graph<V, E> g, V vertex);
+	String getVertexLabel(GraphView<V, E> g, V vertex);
 	
-	String getVertexStyle(Graph<V, E> g, V value);
+	String getVertexStyle(GraphView<V, E> g, V value);
 }

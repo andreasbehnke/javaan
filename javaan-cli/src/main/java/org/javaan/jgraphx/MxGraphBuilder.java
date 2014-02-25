@@ -3,14 +3,14 @@ package org.javaan.jgraphx;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jgrapht.Graph;
+import org.javaan.model.GraphView;
 
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph;
 
 public class MxGraphBuilder<V, E> {
 	
-	private final Graph<V, E> source;
+	private final GraphView<V, E> source;
 	
 	private Map<V, mxICell> vertexToCell = new HashMap<V, mxICell>();
     
@@ -18,7 +18,7 @@ public class MxGraphBuilder<V, E> {
 	
     private mxGraph target;
  
-	public MxGraphBuilder(Graph<V, E> source, CellStyle<V, E> cellStyle) {
+	public MxGraphBuilder(GraphView<V, E> source, CellStyle<V, E> cellStyle) {
 		this.source = source;
 		this.cellStyle = cellStyle;
 	}

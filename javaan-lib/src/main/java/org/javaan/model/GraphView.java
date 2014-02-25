@@ -10,9 +10,19 @@ import org.javaan.graph.GraphVisitor;
  */
 public interface GraphView<V, E> {
 	
+	// exposed API of Graph:
+	
 	Set<V> vertexSet();
 	
 	Set<E> edgeSet();
+	
+	V getEdgeSource(E edge);
+    
+	V getEdgeTarget(E edge);
+	
+	double getEdgeWeight(E edge);
+	
+	// extended API:
 	
 	Set<V> targetVerticesOf(V vertex);
 

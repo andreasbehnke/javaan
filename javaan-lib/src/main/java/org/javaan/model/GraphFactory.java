@@ -1,13 +1,17 @@
 package org.javaan.model;
 
+import java.util.Set;
+
 import org.javaan.graph.ExtendedDirectedGraph;
 import org.javaan.graph.Tree;
 import org.javaan.graph.UnsupportedEdgeFactory;
 import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeFactory;
 import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DirectedSubgraph;
+import org.jgrapht.graph.EdgeReversedGraph;
 
-public final class GraphFactory {
+final class GraphFactory {
 
 	private GraphFactory() {}
 
@@ -37,5 +41,19 @@ public final class GraphFactory {
 				new DefaultDirectedGraph<V, VertexEdge<V>>(
 						new VertexEdgeFactory<V>())
 		);
+	}
+	
+	public static <V, E> GraphView<V, E> createSubgraphView(ExtendedDirectedGraph<V, E> graph, Set<V> vertices, boolean reversed) {
+		if (vertices == null && reversed == false) {
+			return graph;
+		}
+		if (reversed) {
+			return new ExtendedDirectedGraph<V, E>(
+					new DirectedSubgraph<V, E>(new EdgeReversedGraph<V, E>(graph.getDelegate()), vertices, null)
+					);	
+		}
+		return new ExtendedDirectedGraph<V, E>(
+				new DirectedSubgraph<V, E>(graph.getDelegate(), vertices, null)
+				);
 	}
 }

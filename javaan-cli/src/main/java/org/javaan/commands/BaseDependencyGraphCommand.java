@@ -37,13 +37,12 @@ import org.javaan.jgraphx.CellStyle;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Dependency;
+import org.javaan.model.GraphView;
 import org.javaan.model.Type;
 import org.javaan.print.ConsoleDependencyFormatter;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.Subgraph;
 
 /**
  * Base command for all dependency commands
@@ -52,7 +51,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	
 	protected abstract void traverse(CallGraph callGraph, T type, GraphVisitor<T, Dependency> graphPrinter);
 	
-	protected abstract Graph<T,	Dependency> getDependencyGraph(CallGraph callGraph);
+	protected abstract GraphView<T,	Dependency> getDependencyGraph(CallGraph callGraph, Set<T> filter);
 
 	protected abstract Set<T> collectLeafObjects(CallGraph callGraph, T type);
 	
@@ -128,12 +127,11 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 			printLeafObjects(callGraph, output, input, typeFormatter);
 		} else if (display2dGraph())  {
 			Set<T> filter = new HashSet<>(input);
-			Graph<T, Dependency> graph = getDependencyGraph(callGraph);
-			final Subgraph<T, Dependency, Graph<T, Dependency>> subgraph = new Subgraph<>(graph, filter);
+			final GraphView<T, Dependency> graph = getDependencyGraph(callGraph, filter);
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					CellStyle<T, Dependency> cellStyle = getDependencyGraphCellStyle();
-					new Graph2dDisplay<T, Dependency>(getName(), subgraph, cellStyle).setVisible(true);
+					new Graph2dDisplay<T, Dependency>(getName(), graph, cellStyle).setVisible(true);
 				}
 			});
 			returnCode = ReturnCodes.threadSpawn;

@@ -38,9 +38,16 @@ import org.jgrapht.traverse.GraphIterator;
 public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> implements DirectedGraph<V, E>, GraphView<V, E> {
 
 	private static final long serialVersionUID = 1L;
+	
+	private final DirectedGraph<V, E> delegate;
 
-	public ExtendedDirectedGraph(DirectedGraph<V, E> g) {
-		super(g);
+	public ExtendedDirectedGraph(DirectedGraph<V, E> delegate) {
+		super(delegate);
+		this.delegate = delegate;
+	}
+	
+	public DirectedGraph<V, E> getDelegate() {
+		return delegate;
 	}
 	
 	private Set<V> getTargetSet(Set<E> edges) {

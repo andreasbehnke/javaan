@@ -27,7 +27,7 @@ import static org.junit.Assert.fail;
 import java.util.List;
 
 import org.javaan.model.Clazz;
-import org.javaan.model.GraphFactory;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.Test;
 
 public class TestTree {
@@ -40,9 +40,16 @@ public class TestTree {
 	private final static Clazz Y = new Clazz("y");
 	private final static Clazz Z = new Clazz("z");
 	
+	private static <V> Tree<V, VertexEdge<V>> createVertexEdgeTree() {
+		return new Tree<>(
+				new DefaultDirectedGraph<V, VertexEdge<V>>(
+						new VertexEdgeFactory<V>())
+		);
+	}
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddEdge() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = GraphFactory.createVertexEdgeTree();
+		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
 		graph.addEdge(A, X);
 		graph.addEdge(B, X);
 		fail("expecting exception");
@@ -50,14 +57,14 @@ public class TestTree {
 
 	@Test
 	public void testSourceVertexOf() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = GraphFactory.createVertexEdgeTree();
+		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
 		graph.addEdge(A, X);
 		assertEquals(A, graph.sourceVertexOf(X));
 	}
 	
 	@Test
 	public void testPredecessorPathOf() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = GraphFactory.createVertexEdgeTree();
+		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
 		graph.addEdge(B, A);
 		graph.addEdge(C, B);
 		graph.addEdge(D, C);
@@ -86,7 +93,7 @@ public class TestTree {
 	
 	@Test
 	public void testPredecessorPathOfCycle() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = GraphFactory.createVertexEdgeTree();
+		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
 		graph.addEdge(A, X);
 		graph.addEdge(B, A);
 		graph.addEdge(X, B);
