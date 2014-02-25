@@ -46,11 +46,6 @@ public class ShowUsingGraph extends BaseClassDependencyGraphCommand {
 	public String getDescription() {
 		return DESCRIPTION;
 	}
-	
-	@Override
-	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type type) {
-		return callGraph.getLeafUsingTypes(type);
-	}
 
 	@Override
 	protected CellStyle<Type, Dependency> getDependencyGraphCellStyle() {

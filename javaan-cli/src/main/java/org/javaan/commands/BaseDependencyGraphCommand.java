@@ -51,8 +51,6 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	
 	protected abstract GraphView<T,	Dependency> getDependencyGraph(CallGraph callGraph, Set<T> filter);
 
-	protected abstract Set<T> collectLeafObjects(CallGraph callGraph, T type);
-	
 	protected abstract ObjectFormatter<T> getTypeFormatter();
 	
 	protected abstract Collection<T> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria);
@@ -107,8 +105,9 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	}
 
 	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> formatter) {
+		GraphView<T, Dependency> graphView = getDependencyGraph(callGraph, null);
 		for (T type : types) {
-			PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, type)), formatter.format(type) , "\n\t", ", ");
+			PrintUtil.println(output, formatter, SortUtil.sort(graphView.collectLeaves(type, false)), formatter.format(type) , "\n\t", ", ");
 		}
 	}
 

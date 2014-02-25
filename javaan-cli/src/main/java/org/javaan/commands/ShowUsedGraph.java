@@ -48,11 +48,6 @@ public class ShowUsedGraph extends BaseClassDependencyGraphCommand {
 	}
 
 	@Override
-	protected Set<Type> collectLeafObjects(CallGraph callGraph, Type type) {
-		return callGraph.getLeafUsedTypes(type);
-	}
-
-	@Override
 	protected CellStyle<Type, Dependency> getDependencyGraphCellStyle() {
 		return new DependencyGraphCellStyle<>(
 				getTypeFormatter(), 

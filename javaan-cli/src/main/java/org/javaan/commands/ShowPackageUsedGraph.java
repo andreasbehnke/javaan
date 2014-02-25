@@ -28,11 +28,6 @@ public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
 	}
 
 	@Override
-	protected Set<Package> collectLeafObjects(CallGraph callGraph, Package type) {
-		return callGraph.getLeafUsedPackages(type);
-	}
-
-	@Override
 	protected CellStyle<Package, Dependency> getDependencyGraphCellStyle() {
 		return new DependencyGraphCellStyle<>(
 				getTypeFormatter(), 
