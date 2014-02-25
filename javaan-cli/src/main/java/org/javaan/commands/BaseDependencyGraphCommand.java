@@ -49,8 +49,6 @@ import org.javaan.print.PrintUtil;
  */
 public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>> extends BaseTypeLoadingCommand {
 	
-	protected abstract void traverse(CallGraph callGraph, T type, GraphVisitor<T, Dependency> graphPrinter);
-	
 	protected abstract GraphView<T,	Dependency> getDependencyGraph(CallGraph callGraph, Set<T> filter);
 
 	protected abstract Set<T> collectLeafObjects(CallGraph callGraph, T type);
@@ -99,9 +97,11 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 
 	private void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
 		GraphVisitor<T, Dependency> printer = new GraphPrinter<>(output, typeFormatter, dependencyFormatter);
+		Set<T> filter = new HashSet<>(types);
+		GraphView<T, Dependency> graphView = getDependencyGraph(callGraph, filter);
 		for (T type : types) {
 			output.println(String.format("%s:",typeFormatter.format(type)));
-			traverse(callGraph, type, printer);
+			graphView.traverseDepthFirst(type, printer, false);
 			PrintUtil.printSeparator(output);
 		}
 	}

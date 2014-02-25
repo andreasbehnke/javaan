@@ -22,7 +22,6 @@ package org.javaan.commands;
 
 import java.util.Set;
 
-import org.javaan.graph.GraphVisitor;
 import org.javaan.jgraphx.CellStyle;
 import org.javaan.jgraphx.DependencyGraphCellStyle;
 import org.javaan.model.CallGraph;
@@ -46,11 +45,6 @@ public class ShowUsedGraph extends BaseClassDependencyGraphCommand {
 	@Override
 	public String getDescription() {
 		return DESCRIPTION;
-	}
-
-	@Override
-	protected void traverse(CallGraph callGraph, Type type, GraphVisitor<Type, Dependency> graphPrinter) {
-		callGraph.traverseUsedTypes(type, graphPrinter);
 	}
 
 	@Override

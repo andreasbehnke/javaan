@@ -49,7 +49,7 @@ final class GraphFactory {
 		}
 		if (reversed) {
 			return new ExtendedDirectedGraph<V, E>(
-					new DirectedSubgraph<V, E>(new EdgeReversedGraph<V, E>(graph.getDelegate()), vertices, null)
+					new EdgeReversedGraph<V, E>(new DirectedSubgraph<V, E>(graph.getDelegate(), vertices, null))
 					);	
 		}
 		return new ExtendedDirectedGraph<V, E>(
