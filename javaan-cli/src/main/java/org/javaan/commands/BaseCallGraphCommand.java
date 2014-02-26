@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.cli.Options;
+import org.javaan.CommandContext;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.graph.VertexEdgeGraphVisitor;
@@ -56,22 +57,6 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return options;
 	}
 
-	private String filterCriteria() {
-		return commandLine.getOptionValue(StandardOptions.OPT_METHOD);
-	}
-	
-	private boolean resolveDependenciesInClassHierarchy() {
-		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
-	}
-	
-	private boolean resolveMethodImplementations() {
-		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
-	}
-
-	private boolean isPrintLeaves() {
-		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
-	}
-
 	private ObjectFormatter<Method> getFormatter() {
 		return new MethodFormatter();
 	}
@@ -98,14 +83,14 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 			}
 
 	@Override
-	protected void execute(PrintStream output, List<Type> types) {
-		String criteria = filterCriteria();
-		boolean printLeaves = isPrintLeaves();
+	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+		String criteria =  context.getMethodFilterCriteria();
+		boolean printLeaves = context.isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
-				resolveMethodImplementations(), 
-				resolveDependenciesInClassHierarchy()).build();
+				context.isResolveMethodImplementations(), 
+				context.isResolveDependenciesInClassHierarchy()).build();
 		Collection<Method> input = getInput(classContext, callGraph, criteria);
 		ObjectFormatter<Method> formatter = getFormatter();
 		if (printLeaves) {

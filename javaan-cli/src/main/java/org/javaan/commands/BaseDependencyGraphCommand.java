@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
+import org.javaan.CommandContext;
 import org.javaan.Graph2dDisplay;
 import org.javaan.ReturnCodes;
 import org.javaan.bytecode.CallGraphBuilder;
@@ -67,26 +68,6 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		return options;
 	}
 
-	private String filterCriteria() {
-		return commandLine.getOptionValue(StandardOptions.OPT_FILTER);
-	}
-	
-	private boolean resolveDependenciesInClassHierarchy() {
-		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
-	}
-	
-	private boolean resolveMethodImplementations() {
-		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
-	}
-
-	private boolean printLeaves() {
-		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
-	}
-	
-	private boolean display2dGraph() {
-		return commandLine.hasOption(StandardOptions.OPT_DISPLAY_2D_GRAPH);
-	}
-	
 	private ObjectFormatter<Dependency> getConsoleDependencyFormatter() {
 		return new ConsoleDependencyFormatter();
 	}
@@ -112,19 +93,19 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	}
 
 	@Override
-	protected void execute(PrintStream output, List<Type> types) {
-		String criteria = filterCriteria();
-		boolean printLeaves = printLeaves();
+	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+		String criteria = context.getFilterCriteria();
+		boolean printLeaves = context.isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
-				resolveMethodImplementations(), 
-				resolveDependenciesInClassHierarchy()).build();
+				context.isResolveMethodImplementations(), 
+				context.isResolveDependenciesInClassHierarchy()).build();
 		Collection<T> input = getInput(classContext, callGraph, criteria);
 		final ObjectFormatter<T> typeFormatter = getTypeFormatter();
 		if (printLeaves) {
 			printLeafObjects(callGraph, output, input, typeFormatter);
-		} else if (display2dGraph())  {
+		} else if (context.isDisplay2dGraph())  {
 			Set<T> filter = new HashSet<>(input);
 			final GraphView<T, Dependency> graph = getDependencyGraph(callGraph, filter);
 			java.awt.EventQueue.invokeLater(new Runnable() {
@@ -133,7 +114,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 					new Graph2dDisplay<T, Dependency>(getName(), graph, cellStyle).setVisible(true);
 				}
 			});
-			returnCode = ReturnCodes.threadSpawn;
+			context.setReturnCode(ReturnCodes.threadSpawn);
 		} else {
 			printGraph(callGraph, output, input, typeFormatter, getConsoleDependencyFormatter());
 		}

@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
+import org.javaan.CommandContext;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
@@ -66,58 +67,65 @@ public class ListClasses extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, List<Type> types) {
+	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
 		this.classContext = new ClassContextBuilder(types).build();
 		Collection<Clazz> classes = classContext.getClasses();
-		if (commandLine.hasOption(StandardOptions.OPT_FILTER)) {
-			String criteria = commandLine.getOptionValue(StandardOptions.OPT_FILTER);
+		if (context.hasFilterCriteria()) {
+			String criteria = context.getFilterCriteria();
 			classes = FilterUtil.filter(classes, new NameMatcher<Clazz>(criteria)); 
 		}
 		classes = SortUtil.sort(classes);
-		if (commandLine.hasOption(StandardOptions.OPT_SUPER)) {
+		switch (context.getAdditionalTypeInformation()) {
+		case SUPER_CLASSES:
 			printClassesAndSuperClasses(output, classes);
-		} else if (commandLine.hasOption(StandardOptions.OPT_SPECIALIZATIONS)) {
+			break;
+		case SPECIALIZATIONS:
 			printClassesAndSpecializations(output, classes);
-		} else if (commandLine.hasOption(StandardOptions.OPT_INTERFACES)) {
+			break;
+		case INTERFACES:
 			printClassesAndInterfaces(output, classes);
-		} else if (commandLine.hasOption(StandardOptions.OPT_METHODS)) {
+			break;
+		case METHODS:
 			printClassesAndMethods(output, classes);
-		} else if (commandLine.hasOption(StandardOptions.OPT_VIRTUAL_METHODS)) {
+			break;
+		case VIRTUAL_METHODS:
 			printClassesAndVirtualMethods(output, classes);
-		} else {
+			break;
+		default:
 			printClasses(output, classes);
+			break;
 		}
 	}
 	
-	public void printClasses(PrintStream output, Collection<Clazz> classes) {
+	private void printClasses(PrintStream output, Collection<Clazz> classes) {
 		PrintUtil.println(output, classes, "", "[C]", System.lineSeparator());
 	}
 
-	public void printClassesAndSuperClasses(PrintStream output, Collection<Clazz> classes) {
+	private void printClassesAndSuperClasses(PrintStream output, Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "", "[C]", " --> ");
 		}
 	}
 	
-	public void printClassesAndSpecializations(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndSpecializations(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(output, classContext.getSpecializationsOfClass(clazz), "[C]" + clazz + ": ", "[C]", ", ");
 		}
 	}
 	
-	public void printClassesAndInterfaces(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndInterfaces(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(output, classContext.getInterfacesOfClass(clazz), "[C]" + clazz + ": ", "[I]", ", ");
 		}
 	}
 	
-	public void printClassesAndMethods(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndMethods(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
 	
-	public void printClassesAndVirtualMethods(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndVirtualMethods(PrintStream output,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}

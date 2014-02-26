@@ -20,7 +20,6 @@ package org.javaan;
  * #L%
  */
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
 public interface Command {
@@ -33,5 +32,5 @@ public interface Command {
 	
 	Options buildCommandLineOptions(Options options);
 	
-	ReturnCodes execute(CommandLine commandLine, String[] files);
+	ReturnCodes execute(CommandContext commandContext);
 }

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.cli.Options;
+import org.javaan.CommandContext;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.ClassContext;
@@ -52,7 +53,7 @@ public class ListMissingTypes extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, List<Type> types) {
+	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
 		ClassContextBuilder classContextBuilder = new ClassContextBuilder(types);
 		ClassContext classContext = classContextBuilder.build();
 		Set<String> missingTypes = classContextBuilder.getMissingTypes();

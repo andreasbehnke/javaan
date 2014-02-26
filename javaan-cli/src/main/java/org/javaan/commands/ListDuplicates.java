@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+import org.javaan.CommandContext;
 import org.javaan.ReturnCodes;
 import org.javaan.model.DuplicatesFinder;
 import org.javaan.model.Type;
@@ -56,9 +56,9 @@ private final static String NAME = "duplicates";
 	}
 	
 	@Override
-	public ReturnCodes execute(CommandLine commandLine, String[] files) {
+	public ReturnCodes execute(CommandContext context) {
 		try {
-			printDuplicates(System.out, loadTypes(files));
+			printDuplicates(System.out, loadTypes(context.getLibraryFiles()));
 		} catch (IOException e) {
 			LOG.error("Could not load class files from libraries", e);
 			return ReturnCodes.errorCommand;

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.cli.Options;
+import org.javaan.CommandContext;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Package;
@@ -36,11 +37,11 @@ public class ListPackages extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, List<Type> types) {
+	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
 		this.classContext = new ClassContextBuilder(types).build();
 		Collection<Package> packages = classContext.getPackages();
-		if (commandLine.hasOption(StandardOptions.OPT_FILTER)) {
-			String criteria = commandLine.getOptionValue(StandardOptions.OPT_FILTER);
+		if (context.hasFilterCriteria()) {
+			String criteria = context.getFilterCriteria();
 			packages = FilterUtil.filter(packages, new NameMatcher<Package>(criteria)); 
 		}
 		packages = SortUtil.sort(packages);
