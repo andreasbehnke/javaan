@@ -4,6 +4,8 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 
+import org.javaan.commands.StandardOptions;
+
 public class Settings {
 	
 	private static final String GRAPH2D_FRAME_HEIGHT_KEY = "GRAPH2D_FRAME_HEIGHT";
@@ -30,5 +32,17 @@ public class Settings {
 		PREFERENCES.putInt(GRAPH2D_FRAME_HEIGHT_KEY, frame.getHeight());
 		PREFERENCES.putInt(GRAPH2D_FRAME_X_KEY, frame.getLocation().x);
 		PREFERENCES.putInt(GRAPH2D_FRAME_Y_KEY, frame.getLocation().y);
+	}
+	
+	public static boolean isResolveDependenciesInClassHierarchy() {
+		return PREFERENCES.getBoolean(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY, false);
+	}
+	
+	public static boolean isResolveMethodImplementations() {
+		return PREFERENCES.getBoolean(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS, false);
+	}
+
+	public static boolean isDisplay2dGraph() {
+		return PREFERENCES.getBoolean(StandardOptions.OPT_DISPLAY_2D_GRAPH, false);
 	}
 }

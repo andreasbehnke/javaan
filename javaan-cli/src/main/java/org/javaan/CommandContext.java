@@ -70,20 +70,32 @@ public class CommandContext {
 	public String getMethodFilterCriteria() {
 		return commandLine.getOptionValue(StandardOptions.OPT_METHOD);
 	}
-	
-	public boolean isResolveDependenciesInClassHierarchy() {
-		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY);
-	}
-	
-	public boolean isResolveMethodImplementations() {
-		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
-	}
 
 	public boolean isPrintLeaves() {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
 	
+	public boolean isResolveDependenciesInClassHierarchy() {
+		if (commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY)) {
+			return true;
+		} else {
+			return Settings.isResolveDependenciesInClassHierarchy();
+		}
+	}
+	
+	public boolean isResolveMethodImplementations() {
+		if (commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS)) {
+			return true;
+		} else {
+			return Settings.isResolveMethodImplementations();
+		}
+	}
+
 	public boolean isDisplay2dGraph() {
-		return commandLine.hasOption(StandardOptions.OPT_DISPLAY_2D_GRAPH);
+		if (commandLine.hasOption(StandardOptions.OPT_DISPLAY_2D_GRAPH)) {
+			return true;
+		} else {
+			return Settings.isDisplay2dGraph();
+		}
 	}
 }
