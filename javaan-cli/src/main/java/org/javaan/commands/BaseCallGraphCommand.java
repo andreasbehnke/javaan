@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
@@ -34,10 +33,10 @@ import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Method;
 import org.javaan.model.Type;
-import org.javaan.print.VertexEdgeGraphPrinter;
 import org.javaan.print.MethodFormatter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
+import org.javaan.print.VertexEdgeGraphPrinter;
 
 /**
  * Base command for all method call graph commands
@@ -57,7 +56,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return options;
 	}
 
-	private String filterCriteria(CommandLine commandLine) {
+	private String filterCriteria() {
 		return commandLine.getOptionValue(StandardOptions.OPT_METHOD);
 	}
 	
@@ -69,7 +68,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS);
 	}
 
-	private boolean isPrintLeaves(CommandLine commandLine) {
+	private boolean isPrintLeaves() {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
 
@@ -100,8 +99,8 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
 	@Override
 	protected void execute(PrintStream output, List<Type> types) {
-		String criteria = filterCriteria(commandLine);
-		boolean printLeaves = isPrintLeaves(commandLine);
+		String criteria = filterCriteria();
+		boolean printLeaves = isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
