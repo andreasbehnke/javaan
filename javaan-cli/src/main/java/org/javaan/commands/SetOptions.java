@@ -1,14 +1,24 @@
 package org.javaan.commands;
 
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.javaan.CommandContext;
 import org.javaan.ReturnCodes;
+import org.javaan.Settings;
 
 public class SetOptions extends BaseCommand {
 
 	private final static String NAME = "set";
 
-	private final static String DESCRIPTION = "Makes options persistent across consequtive calls. If no option is provided, lists all persisted options.";
+	private final static String DESCRIPTION = "Makes options persistent across consequtive calls. If no option is provided, lists all persisted options."
+			+ " The following options can be set, separated by whitespace: %s";
+	
+	private static final String HELP_COMMAND_LINE = "javaan set <optionlist>";
+
+	@Override
+	public String getHelpCommandLine() {
+		return HELP_COMMAND_LINE;
+	}
 
 	@Override
 	public String getName() {
@@ -17,18 +27,43 @@ public class SetOptions extends BaseCommand {
 
 	@Override
 	public String getDescription() {
-		return DESCRIPTION;
+		StringBuilder buffer = new StringBuilder();
+		for (Option option : StandardOptions.PERSISTENT_OPTIONS) {
+			buffer.append(option.getOpt())
+				.append(" (")
+				.append(option.getLongOpt())
+				.append(") ");
+		}
+		return String.format(DESCRIPTION, buffer);
 	}
 
 	@Override
 	public Options buildCommandLineOptions(Options options) {
-		// TODO Auto-generated method stub
-		return null;
+		return options;
+	}
+	
+	private boolean optionExsists(String option) {
+		for (Option optionObj : StandardOptions.PERSISTENT_OPTIONS) {
+			if (optionObj.getOpt().equals(option)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public ReturnCodes execute(CommandContext commandContext) {
-		// TODO Auto-generated method stub
+		String[] options = commandContext.getArguments();
+		for (String option : options) {
+			if (!optionExsists(option)) {
+				LOG.error("Unknown option: " + option);
+				return ReturnCodes.errorCommand;
+			}
+		}
+		Settings settings = commandContext.getSettings();
+		for (String option : options) {
+			settings.enableOption(option);
+		}
 		return ReturnCodes.ok;
 	}
 

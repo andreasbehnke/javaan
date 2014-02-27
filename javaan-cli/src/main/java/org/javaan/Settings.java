@@ -22,8 +22,10 @@ public class Settings {
 		preferences  = Preferences.userNodeForPackage(JavaanCli.class);
 	}
 	
-	// used for unit tests
-	Settings(String pathName) {
+	/**
+	 * used for unit tests
+	 */
+	public Settings(String pathName) {
 		preferences = Preferences.userRoot().node(pathName);
 	}
 	
@@ -41,6 +43,10 @@ public class Settings {
 		preferences.putInt(GRAPH2D_FRAME_HEIGHT_KEY, frame.getHeight());
 		preferences.putInt(GRAPH2D_FRAME_X_KEY, frame.getLocation().x);
 		preferences.putInt(GRAPH2D_FRAME_Y_KEY, frame.getLocation().y);
+	}
+	
+	public void enableOption(String optionName) {
+		preferences.putBoolean(optionName, true);
 	}
 	
 	public boolean isResolveDependenciesInClassHierarchy() {

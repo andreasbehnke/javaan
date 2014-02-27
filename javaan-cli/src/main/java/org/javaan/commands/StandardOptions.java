@@ -73,4 +73,9 @@ public interface StandardOptions {
 
 	static final Option DISPLAY_2D_GRAPH = new Option(OPT_DISPLAY_2D_GRAPH, "display-2d-graph", false, "Displays result in a 2D graph representation.");
 
+	static final Option[] PERSISTENT_OPTIONS = new Option[]{
+		RESOLVE_METHOD_IMPLEMENTATIONS,
+		RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY,
+		DISPLAY_2D_GRAPH		
+	};
 }

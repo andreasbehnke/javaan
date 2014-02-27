@@ -34,6 +34,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.text.WordUtils;
 import org.javaan.commands.ListClasses;
 import org.javaan.commands.ListPackages;
+import org.javaan.commands.SetOptions;
 import org.javaan.commands.ShowDepdendencyCyclesGraph;
 import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
@@ -55,7 +56,8 @@ public class JavaanCli {
 	
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(JavaanCli.class);
 	
-	private static final int MAX_WIDTH = 80;
+	private static final int MAX_WIDTH = 120;
+	private static final int SEPARATOR_WIDTH = MAX_WIDTH / 2;
 	
 	private static final String HELP_USAGE = "usage:";
 	private static final String HELP_COMMAND = "javaan <command> <files> <options>\njavaan --help\njavaan <command> --help";
@@ -98,6 +100,7 @@ public class JavaanCli {
 		commands.addCommand(new ShowPackageDepdendencyCyclesGraph());
 		commands.addCommand(new ShowPackageUsedGraph());
 		commands.addCommand(new ShowPackageUsingGraph());
+		commands.addCommand(new SetOptions());
 		ReturnCodes returnCode = new JavaanCli(args, commands).execute();
 		if (returnCode != ReturnCodes.threadSpawn) {
 			System.exit(returnCode.getValue());
@@ -220,15 +223,26 @@ public class JavaanCli {
 			for (Command command : commands.getCommands()) {
 				Options options = new Options();
 				options = command.buildCommandLineOptions(options);
-				System.out.println(String.format("\n* %s:\n", command.getName()));
+				System.out.println();
+				System.out.println(command.getName());
+				printSeparator();
 				printCommandUsage(command, options);
 			}
 		}
 	}
 	
+	private void printSeparator() {
+		StringBuilder buffer = new StringBuilder();
+		for(int i=0; i<SEPARATOR_WIDTH; i++) {
+			buffer.append('-');
+		}
+		buffer.append(System.lineSeparator());
+		System.out.println(buffer);
+	}
 	
 	private void printCommandUsage(Command command, Options options) {
-		new HelpFormatter()
-				.printHelp(command.getHelpCommandLine() + "\n", command.getDescription(), options, "");
+		HelpFormatter helpFormatter = new HelpFormatter();
+		helpFormatter.setWidth(MAX_WIDTH);
+		helpFormatter.printHelp(command.getHelpCommandLine() + "\n", command.getDescription(), options, "");
 	}
 }
