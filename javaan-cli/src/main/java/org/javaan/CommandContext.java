@@ -22,15 +22,22 @@ public class CommandContext {
 	
 	private final String[] files;
 	
+	private final Settings settings;
+	
 	private ReturnCodes returnCode = ReturnCodes.ok;
 
-	public CommandContext(CommandLine commandLine, String[] files) {
+	public CommandContext(CommandLine commandLine, String[] files, Settings settings) {
 		this.commandLine = commandLine;
 		this.files = files;
+		this.settings = settings;
 	}
 	
 	public String[] getLibraryFiles() {
 		return files;
+	}
+	
+	public Settings getSettings() {
+		return settings;
 	}
 
 	public ReturnCodes getReturnCode() {
@@ -79,7 +86,7 @@ public class CommandContext {
 		if (commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY)) {
 			return true;
 		} else {
-			return Settings.isResolveDependenciesInClassHierarchy();
+			return settings.isResolveDependenciesInClassHierarchy();
 		}
 	}
 	
@@ -87,7 +94,7 @@ public class CommandContext {
 		if (commandLine.hasOption(StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS)) {
 			return true;
 		} else {
-			return Settings.isResolveMethodImplementations();
+			return settings.isResolveMethodImplementations();
 		}
 	}
 
@@ -95,7 +102,7 @@ public class CommandContext {
 		if (commandLine.hasOption(StandardOptions.OPT_DISPLAY_2D_GRAPH)) {
 			return true;
 		} else {
-			return Settings.isDisplay2dGraph();
+			return settings.isDisplay2dGraph();
 		}
 	}
 }

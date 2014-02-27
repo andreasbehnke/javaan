@@ -153,7 +153,7 @@ public class JavaanCli {
 				return ReturnCodes.errorParse;
 			}
 			String[] files = Arrays.copyOfRange(params, 1, params.length);
-			return command.execute(new CommandContext(cl, files));
+			return command.execute(new CommandContext(cl, files, new Settings()));
 		} catch(ParseException e) {
 			System.out.println(String.format(EXCEPTION_COULD_NOT_PARSE, e.getMessage()));
 			if (withoutCommand) {

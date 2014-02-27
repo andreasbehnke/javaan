@@ -93,7 +93,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	}
 
 	@Override
-	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+	protected void execute(PrintStream output, final CommandContext context, List<Type> types) {
 		String criteria = context.getFilterCriteria();
 		boolean printLeaves = context.isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
@@ -111,7 +111,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					CellStyle<T, Dependency> cellStyle = getDependencyGraphCellStyle();
-					new Graph2dDisplay<T, Dependency>(getName(), graph, cellStyle).setVisible(true);
+					new Graph2dDisplay<T, Dependency>(getName(), graph, cellStyle, context.getSettings()).setVisible(true);
 				}
 			});
 			context.setReturnCode(ReturnCodes.threadSpawn);
