@@ -146,14 +146,14 @@ public class JavaanCli {
 				setLoggerLevel(Level.WARNING);
 			}
 			
-			String[] params = cl.getArgs();
-			if (params.length < 2) {
+			String[] arguments = cl.getArgs();
+			if (arguments.length < 2) {
 				System.out.println(EXCEPTION_MISSING_FILES);
 				printUsage(false);
 				return ReturnCodes.errorParse;
 			}
-			String[] files = Arrays.copyOfRange(params, 1, params.length);
-			return command.execute(new CommandContext(cl, files, new Settings()));
+			arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
+			return command.execute(new CommandContext(cl, arguments, new Settings()));
 		} catch(ParseException e) {
 			System.out.println(String.format(EXCEPTION_COULD_NOT_PARSE, e.getMessage()));
 			if (withoutCommand) {

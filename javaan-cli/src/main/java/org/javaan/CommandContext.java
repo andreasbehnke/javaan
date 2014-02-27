@@ -20,20 +20,20 @@ public class CommandContext {
 
 	private final CommandLine commandLine;
 	
-	private final String[] files;
+	private final String[] arguments;
 	
 	private final Settings settings;
 	
 	private ReturnCodes returnCode = ReturnCodes.ok;
 
-	public CommandContext(CommandLine commandLine, String[] files, Settings settings) {
+	public CommandContext(CommandLine commandLine, String[] arguments, Settings settings) {
 		this.commandLine = commandLine;
-		this.files = files;
+		this.arguments = arguments;
 		this.settings = settings;
 	}
 	
-	public String[] getLibraryFiles() {
-		return files;
+	public String[] getArguments() {
+		return arguments;
 	}
 	
 	public Settings getSettings() {
