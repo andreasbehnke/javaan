@@ -58,5 +58,12 @@ public class TestSetOptions {
 		assertTrue(context.isResolveDependenciesInClassHierarchy());
 		assertTrue(context.isResolveMethodImplementations());
 		assertTrue(context.isDisplay2dGraph());
+		
+		context = new CommandContext(commandLine, new String[]{StandardOptions.OPT_DISPLAY_2D_GRAPH, StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS}, settings);
+		assertEquals(ReturnCodes.ok, new ResetOptions().execute(context));
+		
+		assertTrue(context.isResolveDependenciesInClassHierarchy());
+		assertFalse(context.isResolveMethodImplementations());
+		assertFalse(context.isDisplay2dGraph());
 	}
 }

@@ -6,7 +6,7 @@ public class SetOptions extends BaseSetOptionsCommand {
 
 	private final static String NAME = "set";
 
-	private final static String DESCRIPTION = "Makes options persistent across consequtive calls. If no option is provided, lists all persisted options."
+	private final static String DESCRIPTION = "Makes options persistent across consecutive calls. If no option is provided, lists all persistent options."
 			+ " The following options can be set, separated by whitespace: %s";
 	
 	private static final String HELP_COMMAND_LINE = "javaan set <optionlist>";

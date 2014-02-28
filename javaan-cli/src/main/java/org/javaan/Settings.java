@@ -49,6 +49,10 @@ public class Settings {
 		preferences.putBoolean(optionName, true);
 	}
 	
+	public void disableOption(String optionName) {
+		preferences.putBoolean(optionName, false);
+	}
+	
 	public boolean isOptionEnabled(String optionName) {
 		return preferences.getBoolean(optionName, false);
 	}

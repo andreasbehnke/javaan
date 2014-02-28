@@ -34,6 +34,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.text.WordUtils;
 import org.javaan.commands.ListClasses;
 import org.javaan.commands.ListPackages;
+import org.javaan.commands.ResetOptions;
 import org.javaan.commands.SetOptions;
 import org.javaan.commands.ShowDepdendencyCyclesGraph;
 import org.javaan.commands.ListDuplicates;
@@ -100,6 +101,7 @@ public class JavaanCli {
 		commands.addCommand(new ShowPackageUsedGraph());
 		commands.addCommand(new ShowPackageUsingGraph());
 		commands.addCommand(new SetOptions());
+		commands.addCommand(new ResetOptions());
 		ReturnCodes returnCode = new JavaanCli(args, commands).execute();
 		if (returnCode != ReturnCodes.threadSpawn) {
 			System.exit(returnCode.getValue());
