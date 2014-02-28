@@ -18,15 +18,15 @@ final class GraphFactory {
 	public static <V> ExtendedDirectedGraph<V, Dependency> createDependencyGraph() {
 		return new ExtendedDirectedGraph<V, Dependency>(
 				new DefaultDirectedGraph<V, Dependency>(
-						new UnsupportedEdgeFactory<V, Dependency>())) {
-			
-			private static final long serialVersionUID = 1L;
-	
-			@Override
-			public double getEdgeWeight(Dependency e) {
-				return e.getCallees().size();
-			}
-		};
+						new UnsupportedEdgeFactory<V, Dependency>()){
+					
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public double getEdgeWeight(Dependency e) {
+						return e.getCallees().size();
+					}
+				});
 	}
 
 	public static <V> ExtendedDirectedGraph<V, VertexEdge<V>> createVertexEdgeDirectedGraph() {
