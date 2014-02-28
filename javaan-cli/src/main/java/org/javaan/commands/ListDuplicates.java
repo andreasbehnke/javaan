@@ -58,7 +58,11 @@ private final static String NAME = "duplicates";
 	@Override
 	public ReturnCodes execute(CommandContext context) {
 		try {
-			printDuplicates(System.out, loadTypes(context.getLibraryFiles()));
+			List<Type> types = loadTypes(context.getArguments());
+			if(types == null) {
+				return ReturnCodes.errorParse;
+			}
+			printDuplicates(System.out, types);
 		} catch (IOException e) {
 			LOG.error("Could not load class files from libraries", e);
 			return ReturnCodes.errorCommand;

@@ -34,6 +34,8 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.text.WordUtils;
 import org.javaan.commands.ListClasses;
 import org.javaan.commands.ListPackages;
+import org.javaan.commands.ResetOptions;
+import org.javaan.commands.SetOptions;
 import org.javaan.commands.ShowDepdendencyCyclesGraph;
 import org.javaan.commands.ListDuplicates;
 import org.javaan.commands.ListInterfaces;
@@ -55,10 +57,11 @@ public class JavaanCli {
 	
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(JavaanCli.class);
 	
-	private static final int MAX_WIDTH = 80;
+	private static final int MAX_WIDTH = 120;
+	private static final int SEPARATOR_WIDTH = MAX_WIDTH / 2;
 	
 	private static final String HELP_USAGE = "usage:";
-	private static final String HELP_COMMAND = "javaan <command> <files> <options>\njavaan --help\njavaan <command> --help";
+	private static final String HELP_COMMAND = "javaan <command> <arguments> <options>\njavaan --help\njavaan <command> --help";
 	private static final String HELP_HEADER = 
 			  "javaan is a tool for static code analysis. It is using byte code analysis to provide "
 			+ "informations about the loaded types. There are several sub commands for different tasks. "
@@ -69,7 +72,6 @@ public class JavaanCli {
 			  "Use javaan <command> --help to display detailed options of command.";
 	private static final String HELP_COMMAND_DETAILS = "command details:";
 
-	private static final String EXCEPTION_MISSING_FILES = "No file list provided";
 	private static final String EXCEPTION_UNKNOWN_COMMAND = "Unknown command: %s";
 	private static final String EXCEPTION_COULD_NOT_PARSE = "Could not parse command line argumeents: %s";
 	private static final String EXCEPTION_COMMAND = "Could not process command";
@@ -98,6 +100,8 @@ public class JavaanCli {
 		commands.addCommand(new ShowPackageDepdendencyCyclesGraph());
 		commands.addCommand(new ShowPackageUsedGraph());
 		commands.addCommand(new ShowPackageUsingGraph());
+		commands.addCommand(new SetOptions());
+		commands.addCommand(new ResetOptions());
 		ReturnCodes returnCode = new JavaanCli(args, commands).execute();
 		if (returnCode != ReturnCodes.threadSpawn) {
 			System.exit(returnCode.getValue());
@@ -146,14 +150,9 @@ public class JavaanCli {
 				setLoggerLevel(Level.WARNING);
 			}
 			
-			String[] params = cl.getArgs();
-			if (params.length < 2) {
-				System.out.println(EXCEPTION_MISSING_FILES);
-				printUsage(false);
-				return ReturnCodes.errorParse;
-			}
-			String[] files = Arrays.copyOfRange(params, 1, params.length);
-			return command.execute(new CommandContext(cl, files));
+			String[] arguments = cl.getArgs();
+			arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
+			return command.execute(new CommandContext(cl, arguments, new Settings()));
 		} catch(ParseException e) {
 			System.out.println(String.format(EXCEPTION_COULD_NOT_PARSE, e.getMessage()));
 			if (withoutCommand) {
@@ -220,15 +219,26 @@ public class JavaanCli {
 			for (Command command : commands.getCommands()) {
 				Options options = new Options();
 				options = command.buildCommandLineOptions(options);
-				System.out.println(String.format("\n* %s:\n", command.getName()));
+				System.out.println();
+				System.out.println(command.getName());
+				printSeparator();
 				printCommandUsage(command, options);
 			}
 		}
 	}
 	
+	private void printSeparator() {
+		StringBuilder buffer = new StringBuilder();
+		for(int i=0; i<SEPARATOR_WIDTH; i++) {
+			buffer.append('-');
+		}
+		buffer.append(System.lineSeparator());
+		System.out.println(buffer);
+	}
 	
 	private void printCommandUsage(Command command, Options options) {
-		new HelpFormatter()
-				.printHelp(command.getHelpCommandLine() + "\n", command.getDescription(), options, "");
+		HelpFormatter helpFormatter = new HelpFormatter();
+		helpFormatter.setWidth(MAX_WIDTH);
+		helpFormatter.printHelp(command.getHelpCommandLine() + "\n", command.getDescription(), options, "");
 	}
 }

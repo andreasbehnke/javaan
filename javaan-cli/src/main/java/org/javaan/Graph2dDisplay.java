@@ -17,7 +17,7 @@ public class Graph2dDisplay<V, E> extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public Graph2dDisplay(String title, GraphView<V, E> input, CellStyle<V, E> cellStyle) {
+	public Graph2dDisplay(String title, GraphView<V, E> input, CellStyle<V, E> cellStyle, final Settings settings) {
 		super(title);
 		mxGraph view = new MxGraphBuilder<V, E>(input, cellStyle).build();
 		
@@ -44,9 +44,9 @@ public class Graph2dDisplay<V, E> extends JFrame {
         addWindowListener(new WindowAdapter() {
         	@Override
         	public void windowClosing(WindowEvent e) {
-        		Settings.putGraph2dFrameLocationAndSize(frame);
+        		settings.putGraph2dFrameLocationAndSize(frame);
         	}
 		});
-        Settings.setGraph2dFrameLocationAndSize(frame);
+        settings.setGraph2dFrameLocationAndSize(frame);
 	}
 }

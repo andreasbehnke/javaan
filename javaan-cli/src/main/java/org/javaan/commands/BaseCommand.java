@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class BaseCommand implements Command {
 	
+	private static final String EXCEPTION_MISSING_FILES = "No file list provided";
+	
 	private final static String LOGGER_NAME = "Command";
 
 	protected final static Logger LOG = LoggerFactory.getLogger(LOGGER_NAME);
@@ -47,6 +49,10 @@ public abstract class BaseCommand implements Command {
 	}
 	
 	protected List<Type> loadTypes(String[] files) throws IOException {
+		if (files.length < 1) {
+			System.out.println(EXCEPTION_MISSING_FILES);
+			return null;
+		}
 		LOG.info("Processing jar files...");
 		JarFileLoader loader = new JarFileLoader();
 		List<Type> types = loader.loadJavaClasses(files);

@@ -60,17 +60,6 @@ public class TestJavaanCli {
 		assertEquals(ReturnCodes.errorParse, new JavaanCli(new String[]{"test", "--unknownOption"}, commands).execute());
 		verify(command).getHelpCommandLine();
 	}
-
-	@Test
-	public void testExecuteParseErrorMissingFiles() {
-		CommandMap commands = new CommandMap();
-		Command command = mock(CommandStub.class);
-		doCallRealMethod().when(command).buildCommandLineOptions(any(Options.class));
-		when(command.getName()).thenReturn("test");
-		when(command.getHelpCommandLine()).thenReturn("javaan test");
-		commands.addCommand(command);
-		assertEquals(ReturnCodes.errorParse, new JavaanCli(new String[]{"test", "-t"}, commands).execute());
-	}
 	
 	@Test
 	public void testExecuteCommandError() {
