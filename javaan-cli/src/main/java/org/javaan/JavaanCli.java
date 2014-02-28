@@ -60,7 +60,7 @@ public class JavaanCli {
 	private static final int SEPARATOR_WIDTH = MAX_WIDTH / 2;
 	
 	private static final String HELP_USAGE = "usage:";
-	private static final String HELP_COMMAND = "javaan <command> <files> <options>\njavaan --help\njavaan <command> --help";
+	private static final String HELP_COMMAND = "javaan <command> <arguments> <options>\njavaan --help\njavaan <command> --help";
 	private static final String HELP_HEADER = 
 			  "javaan is a tool for static code analysis. It is using byte code analysis to provide "
 			+ "informations about the loaded types. There are several sub commands for different tasks. "
@@ -71,7 +71,6 @@ public class JavaanCli {
 			  "Use javaan <command> --help to display detailed options of command.";
 	private static final String HELP_COMMAND_DETAILS = "command details:";
 
-	private static final String EXCEPTION_MISSING_FILES = "No file list provided";
 	private static final String EXCEPTION_UNKNOWN_COMMAND = "Unknown command: %s";
 	private static final String EXCEPTION_COULD_NOT_PARSE = "Could not parse command line argumeents: %s";
 	private static final String EXCEPTION_COMMAND = "Could not process command";
@@ -150,11 +149,6 @@ public class JavaanCli {
 			}
 			
 			String[] arguments = cl.getArgs();
-			if (arguments.length < 2) {
-				System.out.println(EXCEPTION_MISSING_FILES);
-				printUsage(false);
-				return ReturnCodes.errorParse;
-			}
 			arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
 			return command.execute(new CommandContext(cl, arguments, new Settings()));
 		} catch(ParseException e) {

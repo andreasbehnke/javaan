@@ -50,10 +50,8 @@ public class SetOptions extends BaseCommand {
 		}
 		return false;
 	}
-
-	@Override
-	public ReturnCodes execute(CommandContext commandContext) {
-		String[] options = commandContext.getArguments();
+	
+	private ReturnCodes processOptions(CommandContext commandContext, String[] options) {
 		for (String option : options) {
 			if (!optionExsists(option)) {
 				LOG.error("Unknown option: " + option);
@@ -65,6 +63,27 @@ public class SetOptions extends BaseCommand {
 			settings.enableOption(option);
 		}
 		return ReturnCodes.ok;
+	}
+	
+	private ReturnCodes listPersistentOptions(CommandContext commandContext) {
+		Settings settings = commandContext.getSettings();
+		System.out.println("The following options are set:");
+		for (Option optionObj : StandardOptions.PERSISTENT_OPTIONS) {
+			if (settings.isOptionEnabled(optionObj.getOpt())) {
+				System.out.println(optionObj.getOpt());
+			}
+		}
+		return ReturnCodes.ok;
+	}
+
+	@Override
+	public ReturnCodes execute(CommandContext commandContext) {
+		String[] options = commandContext.getArguments();
+		if (options.length == 0) {
+			return listPersistentOptions(commandContext);
+		} else {
+			return processOptions(commandContext, options);
+		}
 	}
 
 }

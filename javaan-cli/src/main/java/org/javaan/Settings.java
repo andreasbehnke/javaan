@@ -49,6 +49,10 @@ public class Settings {
 		preferences.putBoolean(optionName, true);
 	}
 	
+	public boolean isOptionEnabled(String optionName) {
+		return preferences.getBoolean(optionName, false);
+	}
+	
 	public boolean isResolveDependenciesInClassHierarchy() {
 		return preferences.getBoolean(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY, false);
 	}

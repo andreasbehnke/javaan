@@ -40,6 +40,9 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 	public ReturnCodes execute(CommandContext commandContext) {
 		try {
 			List<Type> types = loadTypes(commandContext.getArguments());
+			if (types == null) {
+				return ReturnCodes.errorParse;
+			}
 			DuplicatesFinder<Type> finder = new DuplicatesFinder<Type>(types);
 			if (finder.hasDuplicates()) {
 				LOG.warn("Loaded libraries contain duplicate type definitions!\n"
