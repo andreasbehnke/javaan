@@ -1,0 +1,135 @@
+---
+layout: default
+title: Javaan - Java Static Code Analyser
+---
+
+<p>Javaan is a command line tool for analysing java bytecode. It is not bound to the Java programming language 
+but supports parsing of byte code from any java virtual machine based programming language. Javaan helps
+fixing broken builds which produce archives with duplicate classes. It provides an overview about call graphs,
+class dependencies and class hierarchy. Javaan helps analysing weaknesses of software design by providing
+information about dependency cycles and library entry methods.</p>
+
+<p>Javaan uses the <a href="http://commons.apache.org/proper/commons-bcel">apache BCEL library</a> for parsing java byte
+code and the <a href="http://jgrapht.org/">graph library JGraphT</a> for building the dependency graph and class graph.</p>
+
+<h3><a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>
+  <ul>
+    <li>Make sure you have latest version of java installed</li>
+    <li>Download binary archive as <a href="releases/javaan-1.0-bin.tar.gz">tar.gz</a> or <a href="releases/javaan-1.0-bin.tar.gz">zip</a> file.</li>
+    <li>Extract archive contents</li>
+    <li>Add javaan.sh to your systems path variable.</li>
+    <li>Run <code>javaan</code> to see a list of all available commands</li>
+  </ul>
+</p>
+
+<h3><a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+<p>List all classes of package org.javaan.commands:</p>
+
+<pre><code>$ javaan classes target/javaan.jar -f org.javaan.commands 
+[C]org.javaan.commands.BaseCallGraphCommand 
+[C]org.javaan.commands.BaseCommand
+[C]org.javaan.commands.BaseDependencyGraphCommand 
+[C]org.javaan.commands.BaseGraphCommand
+[C]org.javaan.commands.BaseTypeLoadingCommand
+[C]org.javaan.commands.FilterUtil
+[...]
+</code></pre>
+
+<p>List all interfaces of package org.javaan.graph and their implementations:</p>
+
+<pre><code>$ javaan interfaces target/javaan.jar -f org.javaan.graph -impl
+[I]org.javaan.graph.NamedObjectVisitor: [C]org.javaan.print.GraphPrinter
+</code></pre>
+
+<p>Display callgraphs of all methods of class ListInterfaces:</p>
+
+<pre><code>$ javaan callees target/javaan.jar -method ListClasses | more
+[M]org.javaan.commands.ListClasses - public void &lt;init&gt;():
+[M]org.javaan.commands.ListClasses - public void &lt;init&gt;()
+ [M]org.javaan.commands.BaseCommand - public void &lt;init&gt;()
+
+--
+
+[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options):
+[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options)
+ [M]org.apache.commons.cli.Options - public org.apache.commons.cli.Options addOption(org.apache.commons.cli.Option opt)
+  [M]org.apache.commons.cli.Option - public boolean isRequired()
+  [M]org.apache.commons.cli.Option - public String getLongOpt()
+  [M]org.apache.commons.cli.Option - public boolean hasLongOpt()
+
+[...]
+</code></pre>
+
+<p>Display leaf usage classes of class ListInterfaces:</p>
+
+<pre><code>$ javaan using target/javaan.jar -f ListClasses --leaves
+[C]org.javaan.commands.ListClasses
+    [C]org.javaan.JavaanCli
+</code></pre>
+
+<p>Display all dependency cycles:</p>
+
+<pre><code>
+$ javaan cycles target/javaan-1.0.jar 
+
+--
+
+cycle 1:
+ [C]org.javaan.bytecode.CallGraphBuilder
+  [M]void org.javaan.bytecode.CallGraphBuilder$MethodVisitor.&lt;init&gt;(org.javaan.bytecode.CallGraphBuilder,org.javaan.model.Method,org.apache.bcel.generic.MethodGen)
+   [C]org.javaan.bytecode.CallGraphBuilder$MethodVisitor
+    [M]void org.javaan.bytecode.CallGraphBuilder.access$000(org.javaan.bytecode.CallGraphBuilder,org.javaan.model.Method,org.apache.bcel.generic.InvokeInstruction,org.apache.bcel.generic.ConstantPoolGen)
+
+--
+
+cycle 2:
+ [C]org.javaan.model.ClassContext
+  [M]void org.javaan.model.InterfaceMethodFinder.&lt;init&gt;(org.javaan.model.ClassContext,java.lang.String)
+   [C]org.javaan.model.InterfaceMethodFinder
+    [M]org.javaan.model.Method org.javaan.model.ClassContext.getMethod(org.javaan.model.Interface,java.lang.String)
+  [M]java.util.Set org.javaan.graph.TraversalDirectedGraph.predecessorsOf(java.lang.Object)
+   [C]org.javaan.graph.TraversalDirectedGraph
+    [M]void org.javaan.graph.BreadthFirstTraversalListener.&lt;init&gt;(org.javaan.graph.GraphVisitor)
+     [C]org.javaan.graph.BreadthFirstTraversalListener
+      [M]void org.javaan.model.InterfaceMethodFinder.visitVertex(java.lang.Object,int)
+    [M]boolean org.javaan.model.InterfaceMethodFinder.finished()
+</code></pre>
+
+<p>Display all types which are referenced by other types but not contained in the jar files being loaded:</p>
+
+<pre><code>
+ $ javaan missingTypes target/javaan.jar
+Dez 21, 2013 9:48:53 PM org.javaan.bytecode.ClassContextBuilder build
+WARNING: Missing types: 3 types could not be resoled
+Dez 21, 2013 9:48:58 PM org.javaan.bytecode.CallGraphBuilder build
+WARNING: Missing types: 21 types could not be resoled
+com.touchgraph.graphlayout.Edge
+com.touchgraph.graphlayout.GLPanel
+com.touchgraph.graphlayout.Node
+com.touchgraph.graphlayout.TGException
+com.touchgraph.graphlayout.TGLensSet
+com.touchgraph.graphlayout.TGPanel
+com.touchgraph.graphlayout.interaction.HVScroll
+com.touchgraph.graphlayout.interaction.HyperScroll
+com.touchgraph.graphlayout.interaction.LocalityScroll
+com.touchgraph.graphlayout.interaction.RotateScroll
+com.touchgraph.graphlayout.interaction.ZoomScroll
+</code></pre>
+
+<p>For a complete command reference help type:</p>
+
+<pre><code>$ javaan --help
+</code></pre>
+
+<h3>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h3>
+
+<ul>
+<li>Andreas Behnke</li>
+</ul><h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>Javaan is licensed under the Apache License 2.0, view the LICENSE file for details</p>
