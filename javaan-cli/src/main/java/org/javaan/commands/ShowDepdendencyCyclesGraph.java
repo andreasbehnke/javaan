@@ -40,7 +40,7 @@ public class ShowDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
 	private final static String NAME = "cycles";
 	
-	private final static String DESCRIPTION = "Show call graph for each dependency cycle in the loaded libraries. Cycles within class hierachies are omitted.";
+	private final static String DESCRIPTION = "Show call graph for each dependency cycle in the loaded libraries. Cycles within class hierachies are omitted, if option -rdh is not provided.";
 	
 	@Override
 	public String getName() {
