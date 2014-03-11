@@ -25,3 +25,11 @@
   background-color: #0090ff;
   text-decoration: none;
 }
+
+.inner {
+  max-width: 800px;
+}
+
+h4 {
+	color: #0080e0;
+}
