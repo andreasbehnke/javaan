@@ -27,9 +27,19 @@
 }
 
 .inner {
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 h4 {
-	color: #0080e0;
+	color: #0040a0;
+}
+
+pre {
+	padding: 0;
+}
+
+code {
+	padding: 0;
+	margin: 0;
+	background-color: #f9f9f9;
 }
