@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Javaan - Java Static Code Analyser
+title: Java Static Code Analyser
 ---
 
 # Javaan
