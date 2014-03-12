@@ -12,7 +12,68 @@ title:  "Documentation"
  * make sure that javaan.sh or javaan.bat is in your system path
  * run "javaan --help" to test your installation
 
-### Usage
+### Examples
+
+List all classes of package org.javaan.commands:
+
+	$ javaan classes target/javaan.jar -f org.javaan.commands 
+	[C]org.javaan.commands.BaseCallGraphCommand 
+	[C]org.javaan.commands.BaseCommand
+	[C]org.javaan.commands.BaseDependencyGraphCommand 
+	[C]org.javaan.commands.BaseGraphCommand
+	[C]org.javaan.commands.BaseTypeLoadingCommand
+	[C]org.javaan.commands.FilterUtil
+	[C]org.javaan.commands.ListClasses
+	[C]org.javaan.commands.ListDuplicates
+	[C]org.javaan.commands.ListInterfaces
+	[C]org.javaan.commands.MethodMatcher
+	[C]org.javaan.commands.NameMatcher
+	[C]org.javaan.commands.ShowCalleeGraph
+	[C]org.javaan.commands.ShowCallerGraph
+	[C]org.javaan.commands.ShowUsedGraph
+	[C]org.javaan.commands.ShowUsingGraph
+	[C]org.javaan.commands.SortUtil
+	[C]org.javaan.commands.SortUtil$1
+
+List all interfaces of package org.javaan.graph and their implementations:
+
+	$ javaan interfaces target/javaan.jar -f org.javaan.graph -impl
+	[I]org.javaan.graph.NamedObjectVisitor: [C]org.javaan.print.GraphPrinter
+
+Display callgraphs of all methods of class ListInterfaces:
+
+	$ javaan callees target/javaan.jar -method ListClasses | more
+	[M]org.javaan.commands.ListClasses - public void <init>():
+	[M]org.javaan.commands.ListClasses - public void <init>()
+	 [M]org.javaan.commands.BaseCommand - public void <init>()
+	
+	--
+	
+	[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options):
+	[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options)
+	 [M]org.apache.commons.cli.Options - public org.apache.commons.cli.Options addOption(org.apache.commons.cli.Option opt)
+	  [M]org.apache.commons.cli.Option - public boolean isRequired()
+	  [M]org.apache.commons.cli.Option - public String getLongOpt()
+	  [M]org.apache.commons.cli.Option - public boolean hasLongOpt()
+	  
+	[...]
+	
+Display leaf usage classes of class ListInterfaces:
+
+	$ javaan using target/javaan.jar -f ListClasses --leaves
+	[C]org.javaan.commands.ListClasses
+		[C]org.javaan.JavaanCli
+
+Display the class and interface dependency graph of package org.javaan.model
+in 2D graph view:
+
+	javaan used ~/src/javaan/javaan-lib/target/javaan-lib-2.0-SNAPSHOT.jar -f org.javaan.model -2d
+	
+The result looks like this:
+
+<img src="/images/2d-call-graph-example.png" title="example package dependency graph" />
+
+### Usage Reference
 
 javaan is a tool for static code analysis. It is using byte code analysis to provide informations about the loaded
 types. There are several sub commands for different tasks. The command name is followed by a list of jar, war or ear
@@ -173,56 +234,4 @@ persistent options. The following options can be resetted, separated by whitespa
  * rmi (resolve-method-implementations) 
  * rdh (resolve-dependencies-in-class-hierarchy) 
  * 2d (display-2d-graph) 
-
-### Examples
-
-List all classes of package org.javaan.commands:
-
-	$ javaan classes target/javaan.jar -f org.javaan.commands 
-	[C]org.javaan.commands.BaseCallGraphCommand 
-	[C]org.javaan.commands.BaseCommand
-	[C]org.javaan.commands.BaseDependencyGraphCommand 
-	[C]org.javaan.commands.BaseGraphCommand
-	[C]org.javaan.commands.BaseTypeLoadingCommand
-	[C]org.javaan.commands.FilterUtil
-	[C]org.javaan.commands.ListClasses
-	[C]org.javaan.commands.ListDuplicates
-	[C]org.javaan.commands.ListInterfaces
-	[C]org.javaan.commands.MethodMatcher
-	[C]org.javaan.commands.NameMatcher
-	[C]org.javaan.commands.ShowCalleeGraph
-	[C]org.javaan.commands.ShowCallerGraph
-	[C]org.javaan.commands.ShowUsedGraph
-	[C]org.javaan.commands.ShowUsingGraph
-	[C]org.javaan.commands.SortUtil
-	[C]org.javaan.commands.SortUtil$1
-
-List all interfaces of package org.javaan.graph and their implementations:
-
-	$ javaan interfaces target/javaan.jar -f org.javaan.graph -impl
-	[I]org.javaan.graph.NamedObjectVisitor: [C]org.javaan.print.GraphPrinter
-
-Display callgraphs of all methods of class ListInterfaces:
-
-	$ javaan callees target/javaan.jar -method ListClasses | more
-	[M]org.javaan.commands.ListClasses - public void <init>():
-	[M]org.javaan.commands.ListClasses - public void <init>()
-	 [M]org.javaan.commands.BaseCommand - public void <init>()
-	
-	--
-	
-	[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options):
-	[M]org.javaan.commands.ListClasses - public org.apache.commons.cli.Options buildCommandLineOptions(org.apache.commons.cli.Options options)
-	 [M]org.apache.commons.cli.Options - public org.apache.commons.cli.Options addOption(org.apache.commons.cli.Option opt)
-	  [M]org.apache.commons.cli.Option - public boolean isRequired()
-	  [M]org.apache.commons.cli.Option - public String getLongOpt()
-	  [M]org.apache.commons.cli.Option - public boolean hasLongOpt()
-	  
-	[...]
-	
-Display leaf usage classes of class ListInterfaces:
-
-	$ javaan using target/javaan.jar -f ListClasses --leaves
-	[C]org.javaan.commands.ListClasses
-		[C]org.javaan.JavaanCli
 
