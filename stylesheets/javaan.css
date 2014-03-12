@@ -30,16 +30,21 @@
   max-width: 1000px;
 }
 
-h4 {
+#main_content h4 {
 	color: #0040a0;
 }
 
-pre {
+#main_content pre {
 	padding: 0;
 }
 
-code {
+#main_content code {
 	padding: 0;
 	margin: 0;
 	background-color: #f9f9f9;
+}
+
+#main_content img.right {
+	margin: 4px 0px 4px 18px;
+	float: right;
 }
