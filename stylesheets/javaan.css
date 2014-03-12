@@ -22,6 +22,29 @@
   color: #F2F2F2;
 }
 #menu li a:hover {
-  background-color: #007edf;
+  background-color: #0090ff;
   text-decoration: none;
+}
+
+.inner {
+  max-width: 1000px;
+}
+
+#main_content h4 {
+	color: #0040a0;
+}
+
+#main_content pre {
+	padding: 0;
+}
+
+#main_content code {
+	padding: 0;
+	margin: 0;
+	background-color: #f9f9f9;
+}
+
+#main_content img.right {
+	margin: 4px 0px 4px 18px;
+	float: right;
 }
