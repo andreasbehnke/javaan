@@ -16,6 +16,8 @@ public interface GraphView<V, E> {
 	
 	Set<E> edgeSet();
 	
+	E getEdge(V source, V target);
+	
 	V getEdgeSource(E edge);
     
 	V getEdgeTarget(E edge);
