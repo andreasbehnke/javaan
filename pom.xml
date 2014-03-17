@@ -5,7 +5,7 @@
 	<groupId>org.javaan</groupId>
 	<artifactId>javaan</artifactId>
 	<packaging>pom</packaging>
-	<version>2.0</version>
+	<version>3.0-SNAPSHOT</version>
 	<inceptionYear>2013</inceptionYear>
 	<name>Java Static Code Analysis</name>
 	<organization>
