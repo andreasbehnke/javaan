@@ -46,6 +46,6 @@ public class ShowUsedGraph extends BaseClassDependencyGraphCommand {
 
 	@Override
 	protected GraphView<Type, Dependency> getDependencyGraph(CallGraph callGraph, Set<Type> filter) {
-		return callGraph.getUsageOfTypeGraph(filter, false);
+		return callGraph.getUsageOfTypeGraph().createSubgraph(filter, false);
 	}
 }

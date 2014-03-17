@@ -26,6 +26,6 @@ public class ShowPackageUsedGraph extends BasePackageDependencyGraphCommand {
 
 	@Override
 	protected GraphView<Package, Dependency> getDependencyGraph(CallGraph callGraph, Set<Package> filter) {
-		return callGraph.getUsageOfPackageGraph(filter, false);
+		return callGraph.getUsageOfPackageGraph().createSubgraph(filter, false);
 	}
 }

@@ -39,4 +39,8 @@ public interface GraphView<V, E> {
 	void traverseBreadthFirst(V startVertex, GraphVisitor<V, E> visitor, boolean reverse);
 
 	Set<V> collectLeaves(V startVertex, boolean reverse);
+	
+	// subgraph API:
+	
+	GraphView<V, E> createSubgraph(Set<V> vertexFilter, boolean reversed);
 }

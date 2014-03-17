@@ -27,6 +27,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.javaan.graph.ExtendedDirectedGraph;
+import org.javaan.graph.GraphFactory;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeGraphVisitor;
@@ -65,16 +66,16 @@ public class CallGraph {
 		this.resolveDependenciesInClassHierarchy = resolveDependenciesInClassHierarchy;
 	}
 
-	public GraphView<Method, VertexEdge<Method>> getCallerOfMethodGraph(Set<Method> methodFilter, boolean reversed) {
-		return GraphFactory.createSubgraphView(callerOfMethod, methodFilter, reversed);
+	public GraphView<Method, VertexEdge<Method>> getCallerOfMethodGraph() {
+		return callerOfMethod;
 	}
 	
-	public GraphView<Type, Dependency> getUsageOfTypeGraph(Set<Type> typeFilter, boolean reversed) {
-		return GraphFactory.createSubgraphView(usageOfClass, typeFilter, reversed);
+	public GraphView<Type, Dependency> getUsageOfTypeGraph() {
+		return usageOfClass;
 	}
 	
-	public GraphView<Package, Dependency> getUsageOfPackageGraph(Set<Package> packageFilter, boolean reversed) {
-		return GraphFactory.createSubgraphView(usageOfPackage, packageFilter, reversed);
+	public GraphView<Package, Dependency> getUsageOfPackageGraph() {
+		return usageOfPackage;
 	}
 
 	public int size() {

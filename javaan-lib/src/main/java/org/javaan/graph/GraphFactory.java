@@ -1,17 +1,14 @@
-package org.javaan.model;
+package org.javaan.graph;
 
 import java.util.Set;
 
-import org.javaan.graph.ExtendedDirectedGraph;
-import org.javaan.graph.Tree;
-import org.javaan.graph.UnsupportedEdgeFactory;
-import org.javaan.graph.VertexEdge;
-import org.javaan.graph.VertexEdgeFactory;
+import org.javaan.model.Dependency;
+import org.javaan.model.GraphView;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DirectedSubgraph;
 import org.jgrapht.graph.EdgeReversedGraph;
 
-final class GraphFactory {
+public final class GraphFactory {
 
 	private GraphFactory() {}
 

@@ -26,6 +26,7 @@ import java.util.Set;
 
 import org.javaan.graph.BidirectionalMap;
 import org.javaan.graph.ExtendedDirectedGraph;
+import org.javaan.graph.GraphFactory;
 import org.javaan.graph.Tree;
 import org.javaan.graph.VertexEdge;
 import org.javaan.model.Type.JavaType;

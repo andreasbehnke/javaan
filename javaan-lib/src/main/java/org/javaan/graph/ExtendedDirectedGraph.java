@@ -172,4 +172,8 @@ public class ExtendedDirectedGraph<V, E> extends AddVerticesAutomatically<V, E> 
 		}
 	}
 
+	@Override
+	public GraphView<V, E> createSubgraph(Set<V> vertexFilter, boolean reversed) {
+		return GraphFactory.createSubgraphView(this, vertexFilter, reversed);
+	}
 }
