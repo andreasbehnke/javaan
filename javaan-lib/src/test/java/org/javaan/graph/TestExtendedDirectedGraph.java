@@ -34,6 +34,7 @@ import java.util.Set;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.Test;
 
+@SuppressWarnings("unchecked")
 public class TestExtendedDirectedGraph {
 
 	private static final String A = "a";

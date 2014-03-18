@@ -43,6 +43,11 @@ public interface GraphVisitor<V, E> {
 	 * Level will be -1 for breadth first traversal.
 	 */
 	void visitVertex(V vertex, int level);
+	
+	/**
+	 * Called after all vertices of subgraph have been visited
+	 */
+	void vertexFinished(V vertex, int level);
 
 	/**
 	 * Visit the next edge at graph depth = level.

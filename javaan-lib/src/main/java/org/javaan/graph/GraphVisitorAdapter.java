@@ -34,6 +34,9 @@ public abstract class GraphVisitorAdapter<V, E> implements GraphVisitor<V, E> {
 
 	@Override
 	public void visitVertex(V vertex, int level) {}
+	
+	@Override
+	public void vertexFinished(V vertex, int level) {}
 
 	@Override
 	public void visitEdge(E edge, int level) {}

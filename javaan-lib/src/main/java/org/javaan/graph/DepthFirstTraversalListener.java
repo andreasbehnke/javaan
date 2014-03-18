@@ -59,6 +59,7 @@ class DepthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 		for (E edge : edges) {
 			visitor.visitEdge(edge, level);
 		}
+		visitor.vertexFinished(vertex, level);
 	}
 
 	@Override
