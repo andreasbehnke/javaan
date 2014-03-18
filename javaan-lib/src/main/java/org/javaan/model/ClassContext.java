@@ -45,7 +45,15 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final BidirectionalMap<Clazz, Method> methodsOfClass = new BidirectionalMap<Clazz, Method>();
 	
-	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>(); 
+	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>();
+	
+	public TreeView<Clazz, VertexEdge<Clazz>> getSuperClassGraph() {
+		return superClass;
+	}
+	
+	public GraphView<Interface, VertexEdge<Interface>> getSuperInterfaceGraph() {
+		return superInterface;
+	}
 
 	private void addType(Type type) {
 		if (type == null) {
