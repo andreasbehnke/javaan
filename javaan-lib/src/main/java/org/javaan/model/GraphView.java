@@ -18,6 +18,10 @@ public interface GraphView<V, E> {
 	
 	E getEdge(V source, V target);
 	
+	Set<E> incomingEdgesOf(V vertex);
+	
+	Set<E> outgoingEdgesOf(V vertex);
+	
 	V getEdgeSource(E edge);
     
 	V getEdgeTarget(E edge);
