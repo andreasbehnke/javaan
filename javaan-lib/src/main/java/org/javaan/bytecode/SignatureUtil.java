@@ -20,11 +20,13 @@ package org.javaan.bytecode;
  * #L%
  */
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.bcel.Constants;
+import org.apache.bcel.classfile.AnnotationEntry;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.ConstantPoolGen;
@@ -65,6 +67,14 @@ public class SignatureUtil {
 		return typeNames;
 	}
 	
+	public static List<String> createClassSignatures(AnnotationEntry[] annotations) {
+		List<String> classNames = new ArrayList<String>(annotations.length);
+		for (AnnotationEntry annotation : annotations) {
+			classNames.add(annotation.getAnnotationType());
+		}
+		return classNames;
+	}
+	
 	public static String createClassSignature(Class<?> cls) {
 		if (cls.isArray()) {
 			StringBuilder dimension = new StringBuilder("[]");
@@ -86,6 +96,14 @@ public class SignatureUtil {
         }
         return classNames;
     }
+	
+	public static List<String> createClassSignatures(Annotation[] annotations) {
+		List<String> classNames = new ArrayList<String>(annotations.length);
+		for (Annotation annotation : annotations) {
+			classNames.add(createClassSignature(annotation.annotationType()));
+		}
+		return classNames;
+	}
 
 	private static String createMethodSignature(String methodName, List<String> methodParameterTypes) {
 		StringBuilder builder = new StringBuilder();
