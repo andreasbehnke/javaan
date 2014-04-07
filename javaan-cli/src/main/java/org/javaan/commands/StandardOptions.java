@@ -63,7 +63,8 @@ public interface StandardOptions {
 	static final Option FILTER = new Option(OPT_FILTER, "filter", true, "Filter types by <arg>. All types which contain <arg> in name will match.");
 
 	static final Option METHOD = new Option(OPT_METHOD, true, "Filter methods by <arg>. The format of a matching method is '<canonical class name> - <methodname><signature>'. "
-			+ "All methods which contain <arg> in name will match.");
+			+ "All methods which contain <arg> in name will match. "
+			+ "If <arg> starts with \"a:<subarg>\", e.g. \"a:Schedule\", all methods with an annotation which contain <subarg> in name will match.");
 
 	static final Option LEAVES = new Option(OPT_LEAVES, "leaves", false, "Only display leaf elements of graph.");
 	
