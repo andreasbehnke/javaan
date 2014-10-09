@@ -25,14 +25,23 @@ import org.javaan.model.Method;
 
 public class MethodMatcher implements Matcher<Method> {
 	
+	private final static String PREFIX_ANNOTATION = "a:";
+	
 	private final String criteria;
 	
 	private boolean matchAll;
 	
+	private boolean matchAnnotation = false;
+	
 	public MethodMatcher(String criteria) {
 		this.matchAll = (criteria == null);
 		if (!matchAll) {
-			this.criteria = criteria.toLowerCase();
+			if (criteria.startsWith(PREFIX_ANNOTATION)) {
+				matchAnnotation = true;
+				this.criteria = criteria.substring(PREFIX_ANNOTATION.length()).toLowerCase();
+			} else {
+				this.criteria = criteria.toLowerCase();
+			}
 		} else {
 			this.criteria = null;
 		}
@@ -43,10 +52,28 @@ public class MethodMatcher implements Matcher<Method> {
 		if (matchAll) {
 			return true;
 		}
+		if (matchAnnotation) {
+			return acceptAnnotationClass(method);
+		} else {
+			return acceptMethodName(method);
+		}
+	}
+	
+	private boolean acceptMethodName(Method method) {
 		boolean match = method.getName().toLowerCase().contains(criteria);
 		if (!match) {
 			match = method.getType().getName().toLowerCase().contains(criteria);
 		}
 		return match;
+	}
+	
+	private boolean acceptAnnotationClass(Method method) {
+		for (String annotation : method.getAnnotationTypes()) {
+			boolean match = annotation.toLowerCase().contains(criteria);
+			if (match) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

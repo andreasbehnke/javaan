@@ -58,6 +58,8 @@ public class Method extends NamedObjectBase {
 	
 	private final List<String> paramterTypes;
 	
+	private final List<String> annotationTypes;
+	
 	private org.apache.bcel.classfile.Method javaMethod;
 	
 	/**
@@ -70,15 +72,16 @@ public class Method extends NamedObjectBase {
 		this.isAbstract = false;
 		this.returnType = null;
 		this.paramterTypes = null;
+		this.annotationTypes = null;
 		this.methodName = null;
 	}
 	
-	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes, org.apache.bcel.classfile.Method javaMethod) {
-		this(name, type, signature, methodName, isAbstract, returnType, parameterTypes);
+	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes, List<String> annotationTypes, org.apache.bcel.classfile.Method javaMethod) {
+		this(name, type, signature, methodName, isAbstract, returnType, parameterTypes, annotationTypes);
 		this.javaMethod = javaMethod;
 	}
 	
-	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes) {
+	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes, List<String> annotationTypes) {
 		super(name);
 		this.type = type;
 		this.signature = signature;
@@ -86,6 +89,7 @@ public class Method extends NamedObjectBase {
 		this.isAbstract = isAbstract;
 		this.returnType = returnType;
 		this.paramterTypes = parameterTypes;
+		this.annotationTypes = annotationTypes;
 	}
 	
 	public static Method create(Type type, org.apache.bcel.classfile.Method javaMethod) {
@@ -95,7 +99,8 @@ public class Method extends NamedObjectBase {
 		boolean isAbstract = javaMethod.isAbstract();
 		String returnType = SignatureUtil.createClassSignature(javaMethod.getReturnType());
 		List<String> paramterTypes = SignatureUtil.createClassSignatures(javaMethod.getArgumentTypes());
-		return new Method(name, type, signature, methodName, isAbstract, returnType, paramterTypes, javaMethod);
+		List<String> annotationTypes = SignatureUtil.createClassSignatures(javaMethod.getAnnotationEntries());
+		return new Method(name, type, signature, methodName, isAbstract, returnType, paramterTypes, annotationTypes, javaMethod);
 	}
 	
 	public static Method create(Type type, java.lang.reflect.Method method) {
@@ -105,7 +110,8 @@ public class Method extends NamedObjectBase {
 		boolean isAbstract = Modifier.isAbstract(method.getModifiers());
 		String returnType = SignatureUtil.createClassSignature(method.getReturnType());
 		List<String> paramterTypes = SignatureUtil.createClassSignatures(method.getParameterTypes());
-		return new Method(name, type, signature, methodName, isAbstract, returnType, paramterTypes);
+		List<String> annotationTypes = SignatureUtil.createClassSignatures(method.getAnnotations());
+		return new Method(name, type, signature, methodName, isAbstract, returnType, paramterTypes, annotationTypes);
 	}
 	
 	public static Method create(Type type, Constructor<?> constructor) {
@@ -114,7 +120,8 @@ public class Method extends NamedObjectBase {
 		boolean isAbstract = Modifier.isAbstract(constructor.getModifiers());
 		String returnType = "void";
 		List<String> paramterTypes = SignatureUtil.createClassSignatures(constructor.getParameterTypes());
-		return new Method(name, type, signature, SignatureUtil.CONSTRUCTOR_SIGNATURE, isAbstract, returnType, paramterTypes);
+		List<String> annotationTypes = SignatureUtil.createClassSignatures(constructor.getAnnotations());
+		return new Method(name, type, signature, SignatureUtil.CONSTRUCTOR_SIGNATURE, isAbstract, returnType, paramterTypes, annotationTypes);
 	}
 
 	private static String buildUniqueMethodName(Type type, String signature) {
@@ -143,6 +150,10 @@ public class Method extends NamedObjectBase {
 	
 	public List<String> getParamterTypes() {
 		return paramterTypes;
+	}
+	
+	public List<String> getAnnotationTypes() {
+		return annotationTypes;
 	}
 
 	public MethodGen createMethodGen(Clazz clazz, ConstantPoolGen constantPoolGen) {
