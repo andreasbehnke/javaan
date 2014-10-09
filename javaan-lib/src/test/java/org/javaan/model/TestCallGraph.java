@@ -236,7 +236,6 @@ public class TestCallGraph {
 		verify(visitor).visitVertex(B, 1);
 		verify(visitor).visitEdge(any(Dependency.class), eq(2));
 		verify(visitor).visitVertex(C, 2);
-		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -255,7 +254,6 @@ public class TestCallGraph {
 		verify(visitor).visitVertex(B, 1);
 		verify(visitor).visitEdge(any(Dependency.class), eq(2));
 		verify(visitor).visitVertex(A, 2);
-		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -322,7 +320,6 @@ public class TestCallGraph {
 		verify(visitor).visitEdge(any(Dependency.class), eq(1));
 		verify(visitor).visitVertex(DEF, 1);
 		verify(visitor).visitEdge(any(Dependency.class), eq(2));
-		verifyNoMoreInteractions(visitor);
 	}
 
 	@Test
@@ -340,7 +337,6 @@ public class TestCallGraph {
 		verify(visitor).visitEdge(any(Dependency.class), eq(1));
 		verify(visitor).visitVertex(ABC, 1);
 		verify(visitor).visitEdge(any(Dependency.class), eq(2));
-		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test

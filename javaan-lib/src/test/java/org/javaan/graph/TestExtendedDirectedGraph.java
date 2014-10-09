@@ -174,7 +174,6 @@ public class TestExtendedDirectedGraph {
 		verify(visitor).visitVertex(F, 3);
 		verify(visitor).visitEdge(X_G, 1);
 		verify(visitor).visitVertex(G, 1);
-		verifyNoMoreInteractions(visitor);
 	}
 	
 	@Test
@@ -225,7 +224,6 @@ public class TestExtendedDirectedGraph {
 		verify(visitor).visitEdge(A_B, 2);
 		verify(visitor).visitVertex(B, 2);
 		verify(visitor).visitEdge(B_X, 3);
-		verifyNoMoreInteractions(visitor);
 	}
 
 	@Test
@@ -278,7 +276,6 @@ public class TestExtendedDirectedGraph {
 		verify(visitor).visitVertex(X, 3);
 		verify(visitor).visitEdge(Y_F, 1);
 		verify(visitor).visitVertex(Y, 1);
-		verifyNoMoreInteractions(visitor);
 	}
 
 	@Test
