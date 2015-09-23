@@ -20,7 +20,7 @@ package org.javaan.model;
  * #L%
  */
 
-import org.apache.bcel.classfile.JavaClass;
+import org.apache.commons.bcel6.classfile.JavaClass;
 
 public abstract class Type extends NamedObjectBase {
 	
