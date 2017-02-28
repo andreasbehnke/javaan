@@ -25,7 +25,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.bcel.Constants;
+import org.apache.bcel.Const;
 import org.apache.bcel.classfile.AnnotationEntry;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ArrayType;
@@ -44,10 +44,10 @@ public class SignatureUtil {
 	public static String createClassSignature(Type type) {
 		byte typeCode = type.getType();
 		switch (typeCode) {
-		case Constants.T_OBJECT:
+		case Const.T_OBJECT:
 			ObjectType obj = (ObjectType)type;
 			return obj.getClassName();
-		case Constants.T_ARRAY:
+		case Const.T_ARRAY:
 			ArrayType arr = (ArrayType)type;
 			StringBuilder name = new StringBuilder(createClassSignature(arr.getBasicType()));
 			for(int i = 0; i < arr.getDimensions(); i++) {
@@ -55,7 +55,7 @@ public class SignatureUtil {
 			}
 			return name.toString();
 		default:
-			return Constants.TYPE_NAMES[typeCode];
+			return Const.getTypeName(typeCode);
 		}
 	}
 	
