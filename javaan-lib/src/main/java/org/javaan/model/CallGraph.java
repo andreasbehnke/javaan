@@ -33,9 +33,10 @@ import org.javaan.graph.VertexEdge;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.javaan.model.Type.JavaType;
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.alg.StrongConnectivityInspector;
+import org.jgrapht.alg.GabowStrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
+import org.jgrapht.alg.interfaces.StrongConnectivityAlgorithm;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -227,7 +228,7 @@ public class CallGraph {
 	}
 	
 	private static <V, E> void traverseDepdendencyCycles(GraphVisitor<V, E> cyclesVisitor, DirectedGraph<V, E> graph) {
-		StrongConnectivityInspector<V, E> inspector = new StrongConnectivityInspector<V, E>(graph);
+		StrongConnectivityAlgorithm<V, E> inspector = new GabowStrongConnectivityInspector<>(graph);
 		List<DirectedSubgraph<V, E>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
 		int index = 1;
 		ExtendedDirectedGraph<V, E> traversalGraph;

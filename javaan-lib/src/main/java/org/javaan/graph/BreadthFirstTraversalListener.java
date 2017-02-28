@@ -57,9 +57,9 @@ class BreadthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E>
 	public void vertexFinished(VertexTraversalEvent<V> e) {
 		visitor.vertexFinished(e.getVertex(), -1);
 	}
-	
+
 	@Override
-	public void edgeTraversed(EdgeTraversalEvent<V, E> e) {
+	public void edgeTraversed(EdgeTraversalEvent<E> e) {
 		E edge = e.getEdge();
 		visitor.visitEdge(edge, -1);
 		if (LOG.isDebugEnabled()) {
