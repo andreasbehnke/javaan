@@ -27,7 +27,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -131,7 +131,7 @@ public class JavaanCli {
 			options = command.buildCommandLineOptions(options);
 		}
 		try {
-			CommandLine cl = new GnuParser().parse(options, args);
+			CommandLine cl = new DefaultParser().parse(options, args);
 			boolean displayHelp = cl.hasOption("h");
 			if (displayHelp && !withoutCommand) {
 				printCommandUsage(command, options);
