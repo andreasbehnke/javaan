@@ -24,8 +24,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import org.apache.commons.bcel6.generic.ConstantPoolGen;
-import org.apache.commons.bcel6.generic.MethodGen;
+import org.apache.bcel.generic.ConstantPoolGen;
+import org.apache.bcel.generic.MethodGen;
 import org.javaan.bytecode.SignatureUtil;
 
 /**
@@ -60,7 +60,7 @@ public class Method extends NamedObjectBase {
 	
 	private final List<String> annotationTypes;
 	
-	private org.apache.commons.bcel6.classfile.Method javaMethod;
+	private org.apache.bcel.classfile.Method javaMethod;
 	
 	/**
 	 * Constructor used by unit tests
@@ -76,7 +76,7 @@ public class Method extends NamedObjectBase {
 		this.methodName = null;
 	}
 	
-	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes, List<String> annotationTypes, org.apache.commons.bcel6.classfile.Method javaMethod) {
+	private Method(String name, Type type, String signature, String methodName, boolean isAbstract, String returnType, List<String> parameterTypes, List<String> annotationTypes, org.apache.bcel.classfile.Method javaMethod) {
 		this(name, type, signature, methodName, isAbstract, returnType, parameterTypes, annotationTypes);
 		this.javaMethod = javaMethod;
 	}
@@ -92,7 +92,7 @@ public class Method extends NamedObjectBase {
 		this.annotationTypes = annotationTypes;
 	}
 	
-	public static Method create(Type type, org.apache.commons.bcel6.classfile.Method javaMethod) {
+	public static Method create(Type type, org.apache.bcel.classfile.Method javaMethod) {
 		String signature = SignatureUtil.createMethodSignature(javaMethod);
 		String name = buildUniqueMethodName(type, signature);
 		String methodName = javaMethod.getName();
