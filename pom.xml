@@ -18,8 +18,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -43,10 +43,9 @@
 			</dependency>
 			<!-- external -->
 			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-bcel6</artifactId>
-				<!-- version>5.1</version-->
-				<version>6.0-SNAPSHOT</version>
+				<groupId>org.apache.bcel</groupId>
+				<artifactId>bcel</artifactId>
+				<version>6.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-cli</groupId>
