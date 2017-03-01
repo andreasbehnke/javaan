@@ -5,6 +5,12 @@ title:  "Release Notes"
 
 ## Release Notes
 
+### Release 2.1
+
+#### Java 8
+
+Updated bcel library to support java 8 bytecode.
+
 ### Release 2.0
 
 #### 2D Display for Dependency Graphs
@@ -24,10 +30,10 @@ Made the resolval of implementations of abstract methods (interface and abstract
 optional. Resolval of implementations blow up dependency graph and make results hard
 to understand. Use option -rmi,--resolve-method-implementations to enable this feature again.
 
-#### Persistent Configuration 
+#### Persistent Configuration
 Several options can be made persistent to be used in consecutive command calls.
 The sub-command "set" make options persistent, the sub-command "reset" clears
-persistent options. 
+persistent options.
 
 ### Release 1.0
 
