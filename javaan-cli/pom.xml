@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>javaan-cli</artifactId>
 	<packaging>jar</packaging>
-	<inceptionYear>2013</inceptionYear>
+	<inceptionYear>2017</inceptionYear>
 	<name>Java Static Code Analysis</name>
 	<organization>
 		<name>Andreas Behnke</name>
@@ -12,7 +12,7 @@
         <parent>
                 <groupId>org.javaan</groupId>
                 <artifactId>javaan</artifactId>
-                <version>3.0-SNAPSHOT</version>
+                <version>2.1</version>
                 <relativePath>../pom.xml</relativePath>
         </parent>
 	<dependencies>

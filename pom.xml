@@ -5,8 +5,8 @@
 	<groupId>org.javaan</groupId>
 	<artifactId>javaan</artifactId>
 	<packaging>pom</packaging>
-	<version>3.0-SNAPSHOT</version>
-	<inceptionYear>2013</inceptionYear>
+	<version>2.1</version>
+	<inceptionYear>2017</inceptionYear>
 	<name>Java Static Code Analysis</name>
 	<organization>
 		<name>Andreas Behnke</name>
