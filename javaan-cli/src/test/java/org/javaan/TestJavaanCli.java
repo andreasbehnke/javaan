@@ -72,31 +72,7 @@ public class TestJavaanCli {
 		assertEquals(ReturnCodes.errorCommand, new JavaanCli(new String[]{"test", "file1"}, commands).execute());
 		verify(command).execute(any(CommandContext.class));
 	}
-	/*
-	@Test
-	public void testExecuteOneFile() {
-		CommandMap commands = new CommandMap();
-		Command command = mock(CommandStub.class);
-		when(command.getName()).thenReturn("test");
-		when(command.execute(any(CommandLine.class), any(String[].class))).thenReturn(ReturnCodes.ok);
-		doCallRealMethod().when(command).buildCommandLineOptions(any(Options.class));
-		commands.addCommand(command);
-		assertEquals(ReturnCodes.ok, new JavaanCli(new String[]{"test", "file1"}, commands).execute());
-		verify(command).execute(any(CommandLine.class), eq(new String[]{"file1"}));
-	}
-	
-	@Test
-	public void testExecuteTwoFiles() {
-		CommandMap commands = new CommandMap();
-		Command command = mock(CommandStub.class);
-		when(command.getName()).thenReturn("test");
-		when(command.execute(any(CommandLine.class), any(String[].class))).thenReturn(ReturnCodes.ok);
-		doCallRealMethod().when(command).buildCommandLineOptions(any(Options.class));
-		commands.addCommand(command);
-		assertEquals(ReturnCodes.ok, new JavaanCli(new String[]{"test", "file1", "file2"}, commands).execute());
-		verify(command).execute(any(CommandLine.class), eq(new String[]{"file1", "file2"}));
-	}
-*/
+
 	@Test
 	public void testExecuteCommandSpecificHelp() {
 		CommandMap commands = new CommandMap();
