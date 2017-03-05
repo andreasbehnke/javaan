@@ -33,6 +33,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import java.util.List;
 import java.util.Set;
 
+import jdk.nashorn.internal.codegen.CompilerConstants;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.VertexEdgeGraphVisitor;
 import org.junit.Ignore;
@@ -94,7 +95,11 @@ public class TestCallGraph {
 	}
 	
 	private CallGraph createCallGraph() {
-		return new CallGraph(createClassContext(), false, false);
+		return createCallGraph(createClassContext());
+	}
+
+	private CallGraph createCallGraph(ClassContext classContext) {
+		return new CallGraph(classContext, false, false);
 	}
 
 	@Test
@@ -381,18 +386,15 @@ public class TestCallGraph {
 		assertTrue(cycle.contains(DEF));
 	}
 	
-	@Ignore("Implemented in feature branch")
 	@Test
 	public void testGetTopologicalSortedPackages() {
-		ClassContext classContext = new ClassContext();
-		classContext.addClass(A);
-		classContext.addClass(B);
-		classContext.addClass(C);
-		classContext.addClass(D);
+		ClassContext classContext = createClassContext();
 		classContext.addClass(E);
+		classContext.addMethod(E_METHODG);
 		classContext.addClass(F);
-		
-		CallGraph callGraph = createCallGraph();
+		classContext.addMethod(F_METHODH);
+
+		CallGraph callGraph = createCallGraph(classContext);
 		callGraph.addCall(A_METHODB, B_METHODD);
 		callGraph.addCall(A_METHODB, B_METHODD1);
 		callGraph.addCall(A_METHODB, D_METHODF);

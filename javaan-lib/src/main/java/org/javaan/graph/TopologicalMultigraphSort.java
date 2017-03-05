@@ -47,7 +47,7 @@ public class TopologicalMultigraphSort<V, E> {
 	 */
 	private void initializeDatastructures() {
 		LinkedList<V> vertexList = new LinkedList<>();
-		inDegreeMap = new HashMap<V, TopologicalMultigraphSort.ModifiableInteger>();
+		inDegreeMap = new HashMap<>();
 		// collect all start vertices and build the in-degree map
 		for (V v : graph.vertexSet()) {
 			int inDegree = graph.inDegreeOf(v);

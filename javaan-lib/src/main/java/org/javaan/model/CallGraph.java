@@ -26,17 +26,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.javaan.graph.ExtendedDirectedGraph;
-import org.javaan.graph.GraphFactory;
-import org.javaan.graph.GraphVisitor;
-import org.javaan.graph.VertexEdge;
-import org.javaan.graph.VertexEdgeGraphVisitor;
+import org.javaan.graph.*;
 import org.javaan.model.Type.JavaType;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.GabowStrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.alg.interfaces.StrongConnectivityAlgorithm;
+import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedSubgraph;
 
 /**
@@ -314,6 +311,8 @@ public class CallGraph {
 	 * is applied.
 	 */
 	public List<Package> getTopologicalSortedPackages() {
-		throw new NotImplementedException("implemented in feature branch!");
+		DirectedGraph<Package, Dependency> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<Package, Dependency>());
+		target = new MinimumEdgesCycleCut<>(usageOfPackage, target).cutCycles();
+		return new TopologicalMultigraphSort<>(target).sort();
 	}
 }
