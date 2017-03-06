@@ -81,6 +81,10 @@ public class CommandContext {
 	public boolean isPrintLeaves() {
 		return commandLine.hasOption(StandardOptions.OPT_LEAVES);
 	}
+
+	public boolean isTopologicalSort() {
+		return commandLine.hasOption(StandardOptions.OPT_TOPOLOGICAL_SORT);
+	}
 	
 	public boolean isResolveDependenciesInClassHierarchy() {
 		if (commandLine.hasOption(StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY)) {
