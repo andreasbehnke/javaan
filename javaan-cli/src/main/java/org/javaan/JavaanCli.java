@@ -85,7 +85,7 @@ public class JavaanCli {
 		this.args = args;
 	}
 
-	public static void main(String[] args) {
+	static CommandMap getCommands() {
 		CommandMap commands = new CommandMap();
 		commands.addCommand(new ListPackages());
 		commands.addCommand(new ListClasses());
@@ -102,7 +102,11 @@ public class JavaanCli {
 		commands.addCommand(new ShowPackageUsingGraph());
 		commands.addCommand(new SetOptions());
 		commands.addCommand(new ResetOptions());
-		ReturnCodes returnCode = new JavaanCli(args, commands).execute();
+		return commands;
+	}
+
+	public static void main(String[] args) {
+		ReturnCodes returnCode = new JavaanCli(args, getCommands()).execute();
 		if (returnCode != ReturnCodes.threadSpawn) {
 			System.exit(returnCode.getValue());
 		}
