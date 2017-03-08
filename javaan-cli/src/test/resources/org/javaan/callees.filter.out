@@ -1,0 +1,3040 @@
+[M]org.apache.commons.cli.Options org.javaan.Command.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.Command.buildCommandLineOptions(org.apache.commons.cli.Options)
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.Command.execute(org.javaan.CommandContext):
+[M]org.javaan.ReturnCodes org.javaan.Command.execute(org.javaan.CommandContext)
+
+--
+
+[M]java.lang.String org.javaan.Command.getDescription():
+[M]java.lang.String org.javaan.Command.getDescription()
+
+--
+
+[M]java.lang.String org.javaan.Command.getHelpCommandLine():
+[M]java.lang.String org.javaan.Command.getHelpCommandLine()
+
+--
+
+[M]java.lang.String org.javaan.Command.getName():
+[M]java.lang.String org.javaan.Command.getName()
+
+--
+
+[M]void org.javaan.CommandContext.<init>(org.apache.commons.cli.CommandLine,java.lang.String[],org.javaan.Settings):
+[M]void org.javaan.CommandContext.<init>(org.apache.commons.cli.CommandLine,java.lang.String[],org.javaan.Settings)
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.javaan.CommandContext$AdditionalTypeInformation org.javaan.CommandContext.getAdditionalTypeInformation():
+[M]org.javaan.CommandContext$AdditionalTypeInformation org.javaan.CommandContext.getAdditionalTypeInformation()
+ [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+
+--
+
+[M]java.lang.String[] org.javaan.CommandContext.getArguments():
+[M]java.lang.String[] org.javaan.CommandContext.getArguments()
+
+--
+
+[M]java.lang.String org.javaan.CommandContext.getFilterCriteria():
+[M]java.lang.String org.javaan.CommandContext.getFilterCriteria()
+ [M]java.lang.String org.apache.commons.cli.CommandLine.getOptionValue(java.lang.String)
+
+--
+
+[M]java.lang.String org.javaan.CommandContext.getMethodFilterCriteria():
+[M]java.lang.String org.javaan.CommandContext.getMethodFilterCriteria()
+ [M]java.lang.String org.apache.commons.cli.CommandLine.getOptionValue(java.lang.String)
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.CommandContext.getReturnCode():
+[M]org.javaan.ReturnCodes org.javaan.CommandContext.getReturnCode()
+
+--
+
+[M]org.javaan.Settings org.javaan.CommandContext.getSettings():
+[M]org.javaan.Settings org.javaan.CommandContext.getSettings()
+
+--
+
+[M]boolean org.javaan.CommandContext.hasFilterCriteria():
+[M]boolean org.javaan.CommandContext.hasFilterCriteria()
+ [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+
+--
+
+[M]boolean org.javaan.CommandContext.isDisplay2dGraph():
+[M]boolean org.javaan.CommandContext.isDisplay2dGraph()
+ [M]boolean org.javaan.Settings.isDisplay2dGraph()
+  [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+ [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+
+--
+
+[M]boolean org.javaan.CommandContext.isPrintLeaves():
+[M]boolean org.javaan.CommandContext.isPrintLeaves()
+ [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+
+--
+
+[M]boolean org.javaan.CommandContext.isResolveDependenciesInClassHierarchy():
+[M]boolean org.javaan.CommandContext.isResolveDependenciesInClassHierarchy()
+ [M]boolean org.javaan.Settings.isResolveDependenciesInClassHierarchy()
+  [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+ [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+
+--
+
+[M]boolean org.javaan.CommandContext.isResolveMethodImplementations():
+[M]boolean org.javaan.CommandContext.isResolveMethodImplementations()
+ [M]boolean org.javaan.Settings.isResolveMethodImplementations()
+  [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+ [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+
+--
+
+[M]void org.javaan.CommandContext.setReturnCode(org.javaan.ReturnCodes):
+[M]void org.javaan.CommandContext.setReturnCode(org.javaan.ReturnCodes)
+
+--
+
+[M]void org.javaan.CommandContext$AdditionalTypeInformation.<clinit>():
+[M]void org.javaan.CommandContext$AdditionalTypeInformation.<clinit>()
+ [M]void org.javaan.CommandContext$AdditionalTypeInformation.<init>(java.lang.String,int)
+
+--
+
+[M]void org.javaan.CommandContext$AdditionalTypeInformation.<init>(java.lang.String,int):
+[M]void org.javaan.CommandContext$AdditionalTypeInformation.<init>(java.lang.String,int)
+
+--
+
+[M]org.javaan.CommandContext$AdditionalTypeInformation org.javaan.CommandContext$AdditionalTypeInformation.valueOf(java.lang.String):
+[M]org.javaan.CommandContext$AdditionalTypeInformation org.javaan.CommandContext$AdditionalTypeInformation.valueOf(java.lang.String)
+ [M]java.lang.Enum java.lang.Enum.valueOf(java.lang.Class,java.lang.String)
+
+--
+
+[M]org.javaan.CommandContext$AdditionalTypeInformation[] org.javaan.CommandContext$AdditionalTypeInformation.values():
+[M]org.javaan.CommandContext$AdditionalTypeInformation[] org.javaan.CommandContext$AdditionalTypeInformation.values()
+ [M]java.lang.Object java.lang.Object.clone()
+
+--
+
+[M]void org.javaan.CommandMap.<init>():
+[M]void org.javaan.CommandMap.<init>()
+ [M]void java.util.ArrayList.<init>()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]void org.javaan.CommandMap.addCommand(org.javaan.Command):
+[M]void org.javaan.CommandMap.addCommand(org.javaan.Command)
+ [M]boolean java.util.List.add(java.lang.Object)
+
+--
+
+[M]org.javaan.Command org.javaan.CommandMap.getCommand(java.lang.String):
+[M]org.javaan.Command org.javaan.CommandMap.getCommand(java.lang.String)
+ [M]boolean java.lang.String.equalsIgnoreCase(java.lang.String)
+ [M]java.lang.String org.javaan.Command.getName()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.List.iterator()
+
+--
+
+[M]java.util.List org.javaan.CommandMap.getCommands():
+[M]java.util.List org.javaan.CommandMap.getCommands()
+
+--
+
+[M]void org.javaan.Graph2dDisplay.<init>(java.lang.String,org.javaan.model.GraphView,org.javaan.jgraphx.CellStyle,org.javaan.Settings):
+[M]void org.javaan.Graph2dDisplay.<init>(java.lang.String,org.javaan.model.GraphView,org.javaan.jgraphx.CellStyle,org.javaan.Settings)
+ [M]void org.javaan.Settings.setGraph2dFrameLocationAndSize(javax.swing.JFrame)
+  [M]void java.awt.Window.setLocation(int,int)
+  [M]void java.awt.Window.setSize(int,int)
+  [M]int java.util.prefs.Preferences.getInt(java.lang.String,int)
+ [M]void java.awt.Window.addWindowListener(java.awt.event.WindowListener)
+ [M]void org.javaan.Graph2dDisplay$2.<init>(org.javaan.Graph2dDisplay,org.javaan.Settings,javax.swing.JFrame)
+  [M]void java.awt.event.WindowAdapter.<init>()
+ [M]void javax.swing.JFrame.setDefaultCloseOperation(int)
+ [M]void com.mxgraph.layout.hierarchical.mxHierarchicalLayout.execute(java.lang.Object)
+ [M]java.lang.Object com.mxgraph.view.mxGraph.getDefaultParent()
+ [M]void com.mxgraph.layout.hierarchical.mxHierarchicalLayout.setInterRankCellSpacing(double)
+ [M]void com.mxgraph.layout.hierarchical.mxHierarchicalLayout.<init>(com.mxgraph.view.mxGraph)
+ [M]java.awt.Component java.awt.Container.add(java.awt.Component)
+ [M]java.awt.Container javax.swing.JFrame.getContentPane()
+ [M]void org.javaan.Graph2dDisplay$1.<init>(org.javaan.Graph2dDisplay,com.mxgraph.view.mxGraph)
+  [M]void com.mxgraph.swing.mxGraphComponent.<init>(com.mxgraph.view.mxGraph)
+ [M]com.mxgraph.view.mxGraph org.javaan.jgraphx.MxGraphBuilder.build()
+  [M]void com.mxgraph.model.mxIGraphModel.endUpdate()
+  [M]void org.javaan.jgraphx.MxGraphBuilder.addEdges()
+   [M]java.lang.Object com.mxgraph.view.mxGraph.updateCellSize(java.lang.Object)
+   [M]java.lang.Object com.mxgraph.view.mxGraph.insertEdge(java.lang.Object,java.lang.String,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.String)
+   [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object)
+   [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object)
+   [M]java.lang.Object java.util.Map.get(java.lang.Object)
+   [M]java.lang.Object org.javaan.model.GraphView.getEdgeTarget(java.lang.Object)
+   [M]java.lang.Object org.javaan.model.GraphView.getEdgeSource(java.lang.Object)
+   [M]java.lang.Object java.util.Iterator.next()
+   [M]boolean java.util.Iterator.hasNext()
+   [M]java.util.Iterator java.util.Set.iterator()
+   [M]java.util.Set org.javaan.model.GraphView.edgeSet()
+  [M]void org.javaan.jgraphx.MxGraphBuilder.addVertices()
+   [M]java.lang.Object java.util.Map.put(java.lang.Object,java.lang.Object)
+   [M]java.lang.Object com.mxgraph.view.mxGraph.insertVertex(java.lang.Object,java.lang.String,java.lang.Object,double,double,double,double,java.lang.String)
+   [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object)
+   [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object)
+   [M]java.util.Set org.javaan.model.GraphView.vertexSet()
+  [M]void com.mxgraph.model.mxIGraphModel.beginUpdate()
+  [M]com.mxgraph.model.mxIGraphModel com.mxgraph.view.mxGraph.getModel()
+  [M]void com.mxgraph.view.mxGraph.<init>()
+ [M]void org.javaan.jgraphx.MxGraphBuilder.<init>(org.javaan.model.GraphView,org.javaan.jgraphx.CellStyle)
+  [M]void java.util.HashMap.<init>()
+  [M]void java.lang.Object.<init>()
+ [M]void javax.swing.JFrame.<init>(java.lang.String)
+
+--
+
+[M]void org.javaan.Graph2dDisplay$1.<init>(org.javaan.Graph2dDisplay,com.mxgraph.view.mxGraph):
+[M]void org.javaan.Graph2dDisplay$1.<init>(org.javaan.Graph2dDisplay,com.mxgraph.view.mxGraph)
+ [M]void com.mxgraph.swing.mxGraphComponent.<init>(com.mxgraph.view.mxGraph)
+
+--
+
+[M]void org.javaan.Graph2dDisplay$1.createHandlers():
+[M]void org.javaan.Graph2dDisplay$1.createHandlers()
+ [M]void com.mxgraph.swing.handler.mxGraphHandler.setLivePreview(boolean)
+ [M]com.mxgraph.swing.handler.mxGraphHandler com.mxgraph.swing.mxGraphComponent.createGraphHandler()
+
+--
+
+[M]void org.javaan.Graph2dDisplay$2.<init>(org.javaan.Graph2dDisplay,org.javaan.Settings,javax.swing.JFrame):
+[M]void org.javaan.Graph2dDisplay$2.<init>(org.javaan.Graph2dDisplay,org.javaan.Settings,javax.swing.JFrame)
+ [M]void java.awt.event.WindowAdapter.<init>()
+
+--
+
+[M]void org.javaan.Graph2dDisplay$2.windowClosing(java.awt.event.WindowEvent):
+[M]void org.javaan.Graph2dDisplay$2.windowClosing(java.awt.event.WindowEvent)
+ [M]void org.javaan.Settings.putGraph2dFrameLocationAndSize(javax.swing.JFrame)
+  [M]java.awt.Point java.awt.Component.getLocation()
+  [M]int java.awt.Component.getHeight()
+  [M]void java.util.prefs.Preferences.putInt(java.lang.String,int)
+  [M]int java.awt.Component.getWidth()
+
+--
+
+[M]void org.javaan.JavaanCli.<clinit>():
+[M]void org.javaan.JavaanCli.<clinit>()
+ [M]org.slf4j.Logger org.slf4j.LoggerFactory.getLogger(java.lang.Class)
+
+--
+
+[M]void org.javaan.JavaanCli.<init>(java.lang.String[],org.javaan.CommandMap):
+[M]void org.javaan.JavaanCli.<init>(java.lang.String[],org.javaan.CommandMap)
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.lang.String org.javaan.JavaanCli.createIndent():
+[M]java.lang.String org.javaan.JavaanCli.createIndent()
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(char)
+ [M]void java.lang.StringBuilder.<init>(int)
+ [M]int org.javaan.JavaanCli.maxCommandNameLength()
+  [M]int java.lang.String.length()
+  [M]java.lang.String org.javaan.Command.getName()
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.List.iterator()
+  [M]java.util.List org.javaan.CommandMap.getCommands()
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.JavaanCli.execute():
+[M]org.javaan.ReturnCodes org.javaan.JavaanCli.execute()
+ [M]void org.slf4j.Logger.error(java.lang.String,java.lang.Throwable)
+ [M]java.lang.String java.lang.Throwable.getMessage()
+ [M]org.javaan.ReturnCodes org.javaan.Command.execute(org.javaan.CommandContext)
+ [M]void org.javaan.CommandContext.<init>(org.apache.commons.cli.CommandLine,java.lang.String[],org.javaan.Settings)
+  [M]void java.lang.Object.<init>()
+ [M]void org.javaan.Settings.<init>()
+  [M]java.util.prefs.Preferences java.util.prefs.Preferences.userNodeForPackage(java.lang.Class)
+ [M]java.lang.Object[] java.util.Arrays.copyOfRange(java.lang.Object[],int,int)
+ [M]java.lang.String[] org.apache.commons.cli.CommandLine.getArgs()
+ [M]void org.javaan.JavaanCli.setLoggerLevel(java.util.logging.Level)
+  [M]void java.util.logging.Logger.setLevel(java.util.logging.Level)
+  [M]void java.util.logging.Handler.setLevel(java.util.logging.Level)
+  [M]java.util.logging.Handler[] java.util.logging.Logger.getHandlers()
+  [M]java.util.logging.Logger java.util.logging.LogManager.getLogger(java.lang.String)
+  [M]java.util.logging.LogManager java.util.logging.LogManager.getLogManager()
+ [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+ [M]void org.javaan.JavaanCli.printCommandUsage(org.javaan.Command,org.apache.commons.cli.Options)
+  [M]void org.apache.commons.cli.HelpFormatter.printHelp(java.lang.String,java.lang.String,org.apache.commons.cli.Options,java.lang.String)
+  [M]java.lang.String org.javaan.Command.getDescription()
+  [M]java.lang.String java.lang.StringBuilder.toString()
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+  [M]java.lang.String org.javaan.Command.getHelpCommandLine()
+  [M]void java.lang.StringBuilder.<init>()
+  [M]void org.apache.commons.cli.HelpFormatter.setWidth(int)
+  [M]void org.apache.commons.cli.HelpFormatter.<init>()
+ [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]org.apache.commons.cli.CommandLine org.apache.commons.cli.DefaultParser.parse(org.apache.commons.cli.Options,java.lang.String[])
+ [M]void org.apache.commons.cli.DefaultParser.<init>()
+ [M]org.apache.commons.cli.Options org.javaan.Command.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(java.lang.String,java.lang.String,boolean,java.lang.String)
+ [M]void org.apache.commons.cli.Options.<init>()
+ [M]org.javaan.Command org.javaan.CommandMap.getCommand(java.lang.String)
+  [M]boolean java.lang.String.equalsIgnoreCase(java.lang.String)
+  [M]java.lang.String org.javaan.Command.getName()
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.List.iterator()
+ [M]void org.javaan.JavaanCli.printUsage(boolean)
+  [M]void org.javaan.JavaanCli.printSeparator()
+   [M]void java.io.PrintStream.println(java.lang.Object)
+   [M]java.lang.String java.lang.System.lineSeparator()
+   [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(char)
+  [M]void java.io.PrintStream.println()
+  [M]java.lang.String org.apache.commons.lang3.text.WordUtils.wrap(java.lang.String,int,java.lang.String,boolean)
+  [M]int java.lang.String.length()
+  [M]void java.io.PrintStream.print(java.lang.String)
+  [M]java.lang.String org.javaan.JavaanCli.formatCommandName(java.lang.String,java.lang.String)
+   [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.CharSequence,int,int)
+   [M]void java.lang.StringBuilder.<init>(int)
+  [M]java.util.List org.javaan.CommandMap.getCommands()
+  [M]java.lang.String org.javaan.JavaanCli.createIndent()
+   [M]int org.javaan.JavaanCli.maxCommandNameLength()
+  [M]void org.javaan.JavaanCli.printParagraph(java.lang.String)
+   [M]java.lang.String org.apache.commons.lang3.text.WordUtils.wrap(java.lang.String,int)
+
+--
+
+[M]java.lang.String org.javaan.JavaanCli.formatCommandName(java.lang.String,java.lang.String):
+[M]java.lang.String org.javaan.JavaanCli.formatCommandName(java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.CharSequence,int,int)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(char)
+ [M]void java.lang.StringBuilder.<init>(int)
+ [M]int java.lang.String.length()
+
+--
+
+[M]void org.javaan.JavaanCli.main(java.lang.String[]):
+[M]void org.javaan.JavaanCli.main(java.lang.String[])
+ [M]void java.lang.System.exit(int)
+ [M]int org.javaan.ReturnCodes.getValue()
+ [M]org.javaan.ReturnCodes org.javaan.JavaanCli.execute()
+  [M]void org.slf4j.Logger.error(java.lang.String,java.lang.Throwable)
+  [M]java.lang.String java.lang.Throwable.getMessage()
+  [M]org.javaan.ReturnCodes org.javaan.Command.execute(org.javaan.CommandContext)
+  [M]void org.javaan.CommandContext.<init>(org.apache.commons.cli.CommandLine,java.lang.String[],org.javaan.Settings)
+   [M]void java.lang.Object.<init>()
+  [M]void org.javaan.Settings.<init>()
+   [M]java.util.prefs.Preferences java.util.prefs.Preferences.userNodeForPackage(java.lang.Class)
+  [M]java.lang.Object[] java.util.Arrays.copyOfRange(java.lang.Object[],int,int)
+  [M]java.lang.String[] org.apache.commons.cli.CommandLine.getArgs()
+  [M]void org.javaan.JavaanCli.setLoggerLevel(java.util.logging.Level)
+   [M]void java.util.logging.Logger.setLevel(java.util.logging.Level)
+   [M]void java.util.logging.Handler.setLevel(java.util.logging.Level)
+   [M]java.util.logging.Handler[] java.util.logging.Logger.getHandlers()
+   [M]java.util.logging.Logger java.util.logging.LogManager.getLogger(java.lang.String)
+   [M]java.util.logging.LogManager java.util.logging.LogManager.getLogManager()
+  [M]void java.io.PrintStream.println(java.lang.String)
+  [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+  [M]void org.javaan.JavaanCli.printCommandUsage(org.javaan.Command,org.apache.commons.cli.Options)
+   [M]void org.apache.commons.cli.HelpFormatter.printHelp(java.lang.String,java.lang.String,org.apache.commons.cli.Options,java.lang.String)
+   [M]java.lang.String org.javaan.Command.getDescription()
+   [M]java.lang.String java.lang.StringBuilder.toString()
+   [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+   [M]java.lang.String org.javaan.Command.getHelpCommandLine()
+   [M]void java.lang.StringBuilder.<init>()
+   [M]void org.apache.commons.cli.HelpFormatter.setWidth(int)
+   [M]void org.apache.commons.cli.HelpFormatter.<init>()
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+  [M]org.apache.commons.cli.CommandLine org.apache.commons.cli.DefaultParser.parse(org.apache.commons.cli.Options,java.lang.String[])
+  [M]void org.apache.commons.cli.DefaultParser.<init>()
+  [M]org.apache.commons.cli.Options org.javaan.Command.buildCommandLineOptions(org.apache.commons.cli.Options)
+  [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(java.lang.String,java.lang.String,boolean,java.lang.String)
+  [M]void org.apache.commons.cli.Options.<init>()
+  [M]org.javaan.Command org.javaan.CommandMap.getCommand(java.lang.String)
+   [M]boolean java.lang.String.equalsIgnoreCase(java.lang.String)
+   [M]java.lang.String org.javaan.Command.getName()
+   [M]java.lang.Object java.util.Iterator.next()
+   [M]boolean java.util.Iterator.hasNext()
+   [M]java.util.Iterator java.util.List.iterator()
+  [M]void org.javaan.JavaanCli.printUsage(boolean)
+   [M]void org.javaan.JavaanCli.printSeparator()
+    [M]void java.io.PrintStream.println(java.lang.Object)
+    [M]java.lang.String java.lang.System.lineSeparator()
+    [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(char)
+   [M]void java.io.PrintStream.println()
+   [M]java.lang.String org.apache.commons.lang3.text.WordUtils.wrap(java.lang.String,int,java.lang.String,boolean)
+   [M]int java.lang.String.length()
+   [M]void java.io.PrintStream.print(java.lang.String)
+   [M]java.lang.String org.javaan.JavaanCli.formatCommandName(java.lang.String,java.lang.String)
+    [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.CharSequence,int,int)
+    [M]void java.lang.StringBuilder.<init>(int)
+   [M]java.util.List org.javaan.CommandMap.getCommands()
+   [M]java.lang.String org.javaan.JavaanCli.createIndent()
+    [M]int org.javaan.JavaanCli.maxCommandNameLength()
+   [M]void org.javaan.JavaanCli.printParagraph(java.lang.String)
+    [M]java.lang.String org.apache.commons.lang3.text.WordUtils.wrap(java.lang.String,int)
+ [M]void org.javaan.JavaanCli.<init>(java.lang.String[],org.javaan.CommandMap)
+ [M]void org.javaan.commands.ResetOptions.<init>()
+  [M]void org.javaan.commands.BaseSetOptionsCommand.<init>()
+   [M]void org.javaan.commands.BaseCommand.<init>()
+ [M]void org.javaan.commands.SetOptions.<init>()
+ [M]void org.javaan.commands.ShowPackageUsingGraph.<init>()
+  [M]void org.javaan.commands.BasePackageDependencyGraphCommand.<init>()
+   [M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+    [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+ [M]void org.javaan.commands.ShowPackageUsedGraph.<init>()
+ [M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.<init>()
+ [M]void org.javaan.commands.ShowUsingGraph.<init>()
+  [M]void org.javaan.commands.BaseClassDependencyGraphCommand.<init>()
+ [M]void org.javaan.commands.ShowUsedGraph.<init>()
+ [M]void org.javaan.commands.ShowCalleeGraph.<init>()
+  [M]void org.javaan.commands.BaseCallGraphCommand.<init>()
+ [M]void org.javaan.commands.ShowCallerGraph.<init>()
+ [M]void org.javaan.commands.ShowDepdendencyCyclesGraph.<init>()
+ [M]void org.javaan.commands.ListMissingTypes.<init>()
+ [M]void org.javaan.commands.ListDuplicates.<init>()
+ [M]void org.javaan.commands.ListInterfaces.<init>()
+ [M]void org.javaan.commands.ListClasses.<init>()
+ [M]void org.javaan.CommandMap.addCommand(org.javaan.Command)
+  [M]boolean java.util.List.add(java.lang.Object)
+ [M]void org.javaan.commands.ListPackages.<init>()
+ [M]void org.javaan.CommandMap.<init>()
+  [M]void java.util.ArrayList.<init>()
+
+--
+
+[M]int org.javaan.JavaanCli.maxCommandNameLength():
+[M]int org.javaan.JavaanCli.maxCommandNameLength()
+ [M]int java.lang.String.length()
+ [M]java.lang.String org.javaan.Command.getName()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.List.iterator()
+ [M]java.util.List org.javaan.CommandMap.getCommands()
+
+--
+
+[M]void org.javaan.JavaanCli.printCommandUsage(org.javaan.Command,org.apache.commons.cli.Options):
+[M]void org.javaan.JavaanCli.printCommandUsage(org.javaan.Command,org.apache.commons.cli.Options)
+ [M]void org.apache.commons.cli.HelpFormatter.printHelp(java.lang.String,java.lang.String,org.apache.commons.cli.Options,java.lang.String)
+ [M]java.lang.String org.javaan.Command.getDescription()
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]java.lang.String org.javaan.Command.getHelpCommandLine()
+ [M]void java.lang.StringBuilder.<init>()
+ [M]void org.apache.commons.cli.HelpFormatter.setWidth(int)
+ [M]void org.apache.commons.cli.HelpFormatter.<init>()
+
+--
+
+[M]void org.javaan.JavaanCli.printParagraph(java.lang.String):
+[M]void org.javaan.JavaanCli.printParagraph(java.lang.String)
+ [M]void java.io.PrintStream.println()
+ [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String org.apache.commons.lang3.text.WordUtils.wrap(java.lang.String,int)
+
+--
+
+[M]void org.javaan.JavaanCli.printSeparator():
+[M]void org.javaan.JavaanCli.printSeparator()
+ [M]void java.io.PrintStream.println(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]java.lang.String java.lang.System.lineSeparator()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(char)
+ [M]void java.lang.StringBuilder.<init>()
+
+--
+
+[M]void org.javaan.JavaanCli.printUsage(boolean):
+[M]void org.javaan.JavaanCli.printUsage(boolean)
+ [M]void org.javaan.JavaanCli.printCommandUsage(org.javaan.Command,org.apache.commons.cli.Options)
+  [M]void org.apache.commons.cli.HelpFormatter.printHelp(java.lang.String,java.lang.String,org.apache.commons.cli.Options,java.lang.String)
+  [M]java.lang.String org.javaan.Command.getDescription()
+  [M]java.lang.String java.lang.StringBuilder.toString()
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+  [M]java.lang.String org.javaan.Command.getHelpCommandLine()
+  [M]void java.lang.StringBuilder.<init>()
+  [M]void org.apache.commons.cli.HelpFormatter.setWidth(int)
+  [M]void org.apache.commons.cli.HelpFormatter.<init>()
+ [M]void org.javaan.JavaanCli.printSeparator()
+  [M]void java.io.PrintStream.println(java.lang.Object)
+  [M]java.lang.String java.lang.System.lineSeparator()
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(char)
+ [M]org.apache.commons.cli.Options org.javaan.Command.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]void org.apache.commons.cli.Options.<init>()
+ [M]void java.io.PrintStream.println()
+ [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String org.apache.commons.lang3.text.WordUtils.wrap(java.lang.String,int,java.lang.String,boolean)
+ [M]int java.lang.String.length()
+ [M]void java.io.PrintStream.print(java.lang.String)
+ [M]java.lang.String org.javaan.JavaanCli.formatCommandName(java.lang.String,java.lang.String)
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.CharSequence,int,int)
+  [M]void java.lang.StringBuilder.<init>(int)
+ [M]java.lang.String org.javaan.Command.getName()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.List.iterator()
+ [M]java.util.List org.javaan.CommandMap.getCommands()
+ [M]java.lang.String org.javaan.JavaanCli.createIndent()
+  [M]int org.javaan.JavaanCli.maxCommandNameLength()
+ [M]void org.javaan.JavaanCli.printParagraph(java.lang.String)
+  [M]java.lang.String org.apache.commons.lang3.text.WordUtils.wrap(java.lang.String,int)
+
+--
+
+[M]void org.javaan.JavaanCli.setLoggerLevel(java.util.logging.Level):
+[M]void org.javaan.JavaanCli.setLoggerLevel(java.util.logging.Level)
+ [M]void java.util.logging.Logger.setLevel(java.util.logging.Level)
+ [M]void java.util.logging.Handler.setLevel(java.util.logging.Level)
+ [M]java.util.logging.Handler[] java.util.logging.Logger.getHandlers()
+ [M]java.util.logging.Logger java.util.logging.LogManager.getLogger(java.lang.String)
+ [M]java.util.logging.LogManager java.util.logging.LogManager.getLogManager()
+
+--
+
+[M]void org.javaan.ReturnCodes.<clinit>():
+[M]void org.javaan.ReturnCodes.<clinit>()
+ [M]void org.javaan.ReturnCodes.<init>(java.lang.String,int,int)
+
+--
+
+[M]void org.javaan.ReturnCodes.<init>(java.lang.String,int,int):
+[M]void org.javaan.ReturnCodes.<init>(java.lang.String,int,int)
+
+--
+
+[M]int org.javaan.ReturnCodes.getValue():
+[M]int org.javaan.ReturnCodes.getValue()
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.ReturnCodes.valueOf(java.lang.String):
+[M]org.javaan.ReturnCodes org.javaan.ReturnCodes.valueOf(java.lang.String)
+ [M]java.lang.Enum java.lang.Enum.valueOf(java.lang.Class,java.lang.String)
+
+--
+
+[M]org.javaan.ReturnCodes[] org.javaan.ReturnCodes.values():
+[M]org.javaan.ReturnCodes[] org.javaan.ReturnCodes.values()
+ [M]java.lang.Object java.lang.Object.clone()
+
+--
+
+[M]void org.javaan.Settings.<init>():
+[M]void org.javaan.Settings.<init>()
+ [M]java.util.prefs.Preferences java.util.prefs.Preferences.userNodeForPackage(java.lang.Class)
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]void org.javaan.Settings.<init>(java.lang.String):
+[M]void org.javaan.Settings.<init>(java.lang.String)
+ [M]java.util.prefs.Preferences java.util.prefs.Preferences.node(java.lang.String)
+ [M]java.util.prefs.Preferences java.util.prefs.Preferences.userRoot()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]void org.javaan.Settings.disableOption(java.lang.String):
+[M]void org.javaan.Settings.disableOption(java.lang.String)
+ [M]void java.util.prefs.Preferences.putBoolean(java.lang.String,boolean)
+
+--
+
+[M]void org.javaan.Settings.enableOption(java.lang.String):
+[M]void org.javaan.Settings.enableOption(java.lang.String)
+ [M]void java.util.prefs.Preferences.putBoolean(java.lang.String,boolean)
+
+--
+
+[M]boolean org.javaan.Settings.isDisplay2dGraph():
+[M]boolean org.javaan.Settings.isDisplay2dGraph()
+ [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+
+--
+
+[M]boolean org.javaan.Settings.isOptionEnabled(java.lang.String):
+[M]boolean org.javaan.Settings.isOptionEnabled(java.lang.String)
+ [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+
+--
+
+[M]boolean org.javaan.Settings.isResolveDependenciesInClassHierarchy():
+[M]boolean org.javaan.Settings.isResolveDependenciesInClassHierarchy()
+ [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+
+--
+
+[M]boolean org.javaan.Settings.isResolveMethodImplementations():
+[M]boolean org.javaan.Settings.isResolveMethodImplementations()
+ [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+
+--
+
+[M]void org.javaan.Settings.putGraph2dFrameLocationAndSize(javax.swing.JFrame):
+[M]void org.javaan.Settings.putGraph2dFrameLocationAndSize(javax.swing.JFrame)
+ [M]java.awt.Point java.awt.Component.getLocation()
+ [M]int java.awt.Component.getHeight()
+ [M]void java.util.prefs.Preferences.putInt(java.lang.String,int)
+ [M]int java.awt.Component.getWidth()
+
+--
+
+[M]void org.javaan.Settings.setGraph2dFrameLocationAndSize(javax.swing.JFrame):
+[M]void org.javaan.Settings.setGraph2dFrameLocationAndSize(javax.swing.JFrame)
+ [M]void java.awt.Window.setLocation(int,int)
+ [M]void java.awt.Window.setSize(int,int)
+ [M]int java.util.prefs.Preferences.getInt(java.lang.String,int)
+
+--
+
+[M]void org.javaan.bytecode.CallGraphBuilder.<init>(org.javaan.model.ClassContext,boolean,boolean):
+[M]void org.javaan.bytecode.CallGraphBuilder.<init>(org.javaan.model.ClassContext,boolean,boolean)
+
+--
+
+[M]void org.javaan.bytecode.CallGraphBuilder.access$000(org.javaan.bytecode.CallGraphBuilder,org.javaan.model.Method,org.apache.bcel.generic.InvokeInstruction,org.apache.bcel.generic.ConstantPoolGen):
+
+--
+
+[M]void org.javaan.bytecode.CallGraphBuilder.addMethodCall(org.javaan.model.Method,org.apache.bcel.generic.InvokeInstruction,org.apache.bcel.generic.ConstantPoolGen):
+
+--
+
+[M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build():
+[M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
+
+--
+
+[M]org.javaan.model.Method org.javaan.bytecode.CallGraphBuilder.getMethod(org.apache.bcel.generic.InvokeInstruction,org.apache.bcel.generic.ConstantPoolGen):
+
+--
+
+[M]java.util.Set org.javaan.bytecode.CallGraphBuilder.getMissingTypes():
+[M]java.util.Set org.javaan.bytecode.CallGraphBuilder.getMissingTypes()
+
+--
+
+[M]void org.javaan.bytecode.CallGraphBuilder.processClasses():
+
+--
+
+[M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List):
+[M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+
+--
+
+[M]void org.javaan.bytecode.ClassContextBuilder.addClass(org.javaan.model.Clazz,org.apache.bcel.classfile.JavaClass):
+
+--
+
+[M]void org.javaan.bytecode.ClassContextBuilder.addInterface(org.javaan.model.Interface,org.apache.bcel.classfile.JavaClass):
+
+--
+
+[M]void org.javaan.bytecode.ClassContextBuilder.addMethods(org.javaan.model.Type,org.apache.bcel.classfile.JavaClass):
+
+--
+
+[M]void org.javaan.bytecode.ClassContextBuilder.addType(org.javaan.model.Type):
+
+--
+
+[M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build():
+[M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+
+--
+
+[M]java.util.Set org.javaan.bytecode.ClassContextBuilder.getMissingTypes():
+[M]java.util.Set org.javaan.bytecode.ClassContextBuilder.getMissingTypes()
+
+--
+
+[M]void org.javaan.bytecode.JarFileLoader.<init>():
+[M]void org.javaan.bytecode.JarFileLoader.<init>()
+
+--
+
+[M]java.util.List org.javaan.bytecode.JarFileLoader.loadJavaClasses(java.lang.String[]):
+[M]java.util.List org.javaan.bytecode.JarFileLoader.loadJavaClasses(java.lang.String[])
+
+--
+
+[M]void org.javaan.bytecode.JarFileLoader.processEntry(java.lang.String,java.lang.String,java.util.jar.JarFile,java.util.List,java.util.jar.JarEntry):
+
+--
+
+[M]void org.javaan.bytecode.JarFileLoader.processJar(java.lang.String,java.io.InputStream,java.util.List):
+
+--
+
+[M]void org.javaan.bytecode.JarFileLoader.processJar(java.lang.String,java.lang.String,java.util.jar.JarFile,java.util.List):
+
+--
+
+[M]void org.javaan.commands.BaseCallGraphCommand.<init>():
+[M]void org.javaan.commands.BaseCallGraphCommand.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.BaseCallGraphCommand.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.commands.BaseCallGraphCommand.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(org.apache.commons.cli.Option)
+
+--
+
+[M]java.util.Set org.javaan.commands.BaseCallGraphCommand.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method):
+[M]java.util.Set org.javaan.commands.BaseCallGraphCommand.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method)
+
+--
+
+[M]void org.javaan.commands.BaseCallGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.BaseCallGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
+  [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+  [M]void org.javaan.commands.BaseCallGraphCommand.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+  [M]void java.io.PrintStream.println(java.lang.String)
+  [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+  [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+  [M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter)
+ [M]void org.javaan.commands.BaseCallGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
+  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+  [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+   [M]void java.util.Collections.sort(java.util.List)
+   [M]boolean java.util.List.addAll(java.util.Collection)
+   [M]void java.util.ArrayList.<init>()
+  [M]java.util.Set org.javaan.commands.BaseCallGraphCommand.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method)
+ [M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseCallGraphCommand.getFormatter()
+  [M]void org.javaan.print.MethodFormatter.<init>()
+ [M]java.util.Collection org.javaan.commands.BaseCallGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String)
+  [M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+   [M]boolean java.util.List.add(java.lang.Object)
+   [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+  [M]void org.javaan.commands.MethodMatcher.<init>(java.lang.String)
+   [M]java.lang.String java.lang.String.toLowerCase()
+   [M]java.lang.String java.lang.String.substring(int)
+   [M]int java.lang.String.length()
+   [M]boolean java.lang.String.startsWith(java.lang.String)
+   [M]void java.lang.Object.<init>()
+  [M]java.util.Set org.javaan.model.ClassContext.getMethods()
+ [M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
+ [M]void org.javaan.bytecode.CallGraphBuilder.<init>(org.javaan.model.ClassContext,boolean,boolean)
+ [M]boolean org.javaan.CommandContext.isResolveDependenciesInClassHierarchy()
+  [M]boolean org.javaan.Settings.isResolveDependenciesInClassHierarchy()
+   [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]boolean org.javaan.CommandContext.isResolveMethodImplementations()
+  [M]boolean org.javaan.Settings.isResolveMethodImplementations()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+ [M]boolean org.javaan.CommandContext.isPrintLeaves()
+ [M]java.lang.String org.javaan.CommandContext.getMethodFilterCriteria()
+  [M]java.lang.String org.apache.commons.cli.CommandLine.getOptionValue(java.lang.String)
+
+--
+
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseCallGraphCommand.getFormatter():
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseCallGraphCommand.getFormatter()
+ [M]void org.javaan.print.MethodFormatter.<init>()
+
+--
+
+[M]java.util.Collection org.javaan.commands.BaseCallGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String):
+[M]java.util.Collection org.javaan.commands.BaseCallGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String)
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+  [M]boolean java.util.List.add(java.lang.Object)
+  [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void org.javaan.commands.MethodMatcher.<init>(java.lang.String)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]java.lang.String java.lang.String.substring(int)
+  [M]int java.lang.String.length()
+  [M]boolean java.lang.String.startsWith(java.lang.String)
+  [M]void java.lang.Object.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getMethods()
+
+--
+
+[M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter):
+[M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
+ [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+ [M]void org.javaan.commands.BaseCallGraphCommand.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+ [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+ [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter)
+
+--
+
+[M]void org.javaan.commands.BaseCallGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter):
+[M]void org.javaan.commands.BaseCallGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.commands.BaseCallGraphCommand.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.BaseCallGraphCommand.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor):
+[M]void org.javaan.commands.BaseCallGraphCommand.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+
+--
+
+[M]void org.javaan.commands.BaseClassDependencyGraphCommand.<init>():
+[M]void org.javaan.commands.BaseClassDependencyGraphCommand.<init>()
+ [M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+   [M]void org.javaan.commands.BaseCommand.<init>()
+    [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.javaan.jgraphx.CellStyle org.javaan.commands.BaseClassDependencyGraphCommand.getDependencyGraphCellStyle():
+[M]org.javaan.jgraphx.CellStyle org.javaan.commands.BaseClassDependencyGraphCommand.getDependencyGraphCellStyle()
+ [M]void org.javaan.jgraphx.DependencyGraphCellStyle.<init>(org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+  [M]void java.lang.Object.<init>()
+ [M]void org.javaan.print.MethodListDependencyFormatter.<init>(int)
+ [M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseClassDependencyGraphCommand.getTypeFormatter()
+  [M]void org.javaan.print.TypeFormatter.<init>()
+
+--
+
+[M]java.util.Collection org.javaan.commands.BaseClassDependencyGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String):
+[M]java.util.Collection org.javaan.commands.BaseClassDependencyGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String)
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+  [M]boolean java.util.List.add(java.lang.Object)
+  [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void org.javaan.commands.NameMatcher.<init>(java.lang.String)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]void java.lang.Object.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getInterfaces()
+ [M]java.util.Set org.javaan.model.ClassContext.getClasses()
+
+--
+
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseClassDependencyGraphCommand.getTypeFormatter():
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseClassDependencyGraphCommand.getTypeFormatter()
+ [M]void org.javaan.print.TypeFormatter.<init>()
+
+--
+
+[M]void org.javaan.commands.BaseCommand.<clinit>():
+[M]void org.javaan.commands.BaseCommand.<clinit>()
+ [M]org.slf4j.Logger org.slf4j.LoggerFactory.getLogger(java.lang.String)
+
+--
+
+[M]void org.javaan.commands.BaseCommand.<init>():
+[M]void org.javaan.commands.BaseCommand.<init>()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.lang.String org.javaan.commands.BaseCommand.getHelpCommandLine():
+[M]java.lang.String org.javaan.commands.BaseCommand.getHelpCommandLine()
+ [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+
+--
+
+[M]java.util.List org.javaan.commands.BaseCommand.loadTypes(java.lang.String[]):
+[M]java.util.List org.javaan.commands.BaseCommand.loadTypes(java.lang.String[])
+ [M]void org.slf4j.Logger.info(java.lang.String,java.lang.Object)
+ [M]java.lang.Integer java.lang.Integer.valueOf(int)
+ [M]int java.util.List.size()
+ [M]java.util.List org.javaan.bytecode.JarFileLoader.loadJavaClasses(java.lang.String[])
+ [M]void org.javaan.bytecode.JarFileLoader.<init>()
+ [M]void org.slf4j.Logger.info(java.lang.String)
+ [M]void java.io.PrintStream.println(java.lang.String)
+
+--
+
+[M]void org.javaan.commands.BaseDependencyGraphCommand.<init>():
+[M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.BaseDependencyGraphCommand.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.commands.BaseDependencyGraphCommand.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOptionGroup(org.apache.commons.cli.OptionGroup)
+ [M]org.apache.commons.cli.OptionGroup org.apache.commons.cli.OptionGroup.addOption(org.apache.commons.cli.Option)
+ [M]void org.apache.commons.cli.OptionGroup.<init>()
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(org.apache.commons.cli.Option)
+
+--
+
+[M]void org.javaan.commands.BaseDependencyGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.BaseDependencyGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+  [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+  [M]void org.javaan.model.GraphView.traverseDepthFirst(java.lang.Object,org.javaan.graph.GraphVisitor,boolean)
+  [M]void java.io.PrintStream.println(java.lang.String)
+  [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+  [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+  [M]org.javaan.model.GraphView org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+  [M]void java.util.HashSet.<init>(java.util.Collection)
+  [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+ [M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseDependencyGraphCommand.getConsoleDependencyFormatter()
+  [M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
+ [M]void org.javaan.CommandContext.setReturnCode(org.javaan.ReturnCodes)
+ [M]void java.awt.EventQueue.invokeLater(java.lang.Runnable)
+ [M]void org.javaan.commands.BaseDependencyGraphCommand$1.<init>(org.javaan.commands.BaseDependencyGraphCommand,org.javaan.model.GraphView,org.javaan.CommandContext)
+  [M]void java.lang.Object.<init>()
+ [M]boolean org.javaan.CommandContext.isDisplay2dGraph()
+  [M]boolean org.javaan.Settings.isDisplay2dGraph()
+   [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]void org.javaan.commands.BaseDependencyGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
+  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+  [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+   [M]void java.util.Collections.sort(java.util.List)
+   [M]boolean java.util.List.addAll(java.util.Collection)
+   [M]void java.util.ArrayList.<init>()
+  [M]java.util.Set org.javaan.model.GraphView.collectLeaves(java.lang.Object,boolean)
+ [M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseDependencyGraphCommand.getTypeFormatter()
+ [M]java.util.Collection org.javaan.commands.BaseDependencyGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String)
+ [M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
+ [M]void org.javaan.bytecode.CallGraphBuilder.<init>(org.javaan.model.ClassContext,boolean,boolean)
+ [M]boolean org.javaan.CommandContext.isResolveDependenciesInClassHierarchy()
+  [M]boolean org.javaan.Settings.isResolveDependenciesInClassHierarchy()
+ [M]boolean org.javaan.CommandContext.isResolveMethodImplementations()
+  [M]boolean org.javaan.Settings.isResolveMethodImplementations()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+ [M]boolean org.javaan.CommandContext.isPrintLeaves()
+ [M]java.lang.String org.javaan.CommandContext.getFilterCriteria()
+  [M]java.lang.String org.apache.commons.cli.CommandLine.getOptionValue(java.lang.String)
+
+--
+
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseDependencyGraphCommand.getConsoleDependencyFormatter():
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseDependencyGraphCommand.getConsoleDependencyFormatter()
+ [M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set):
+[M]org.javaan.model.GraphView org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+
+--
+
+[M]org.javaan.jgraphx.CellStyle org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraphCellStyle():
+[M]org.javaan.jgraphx.CellStyle org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraphCellStyle()
+
+--
+
+[M]java.util.Collection org.javaan.commands.BaseDependencyGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String):
+[M]java.util.Collection org.javaan.commands.BaseDependencyGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String)
+
+--
+
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseDependencyGraphCommand.getTypeFormatter():
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseDependencyGraphCommand.getTypeFormatter()
+
+--
+
+[M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
+[M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+ [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+ [M]void org.javaan.model.GraphView.traverseDepthFirst(java.lang.Object,org.javaan.graph.GraphVisitor,boolean)
+ [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+ [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+ [M]org.javaan.model.GraphView org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+ [M]void java.util.HashSet.<init>(java.util.Collection)
+ [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+
+--
+
+[M]void org.javaan.commands.BaseDependencyGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter):
+[M]void org.javaan.commands.BaseDependencyGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.GraphView.collectLeaves(java.lang.Object,boolean)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+ [M]org.javaan.model.GraphView org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+
+--
+
+[M]void org.javaan.commands.BaseDependencyGraphCommand$1.<init>(org.javaan.commands.BaseDependencyGraphCommand,org.javaan.model.GraphView,org.javaan.CommandContext):
+[M]void org.javaan.commands.BaseDependencyGraphCommand$1.<init>(org.javaan.commands.BaseDependencyGraphCommand,org.javaan.model.GraphView,org.javaan.CommandContext)
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]void org.javaan.commands.BaseDependencyGraphCommand$1.run():
+[M]void org.javaan.commands.BaseDependencyGraphCommand$1.run()
+ [M]void java.awt.Window.setVisible(boolean)
+ [M]void org.javaan.Graph2dDisplay.<init>(java.lang.String,org.javaan.model.GraphView,org.javaan.jgraphx.CellStyle,org.javaan.Settings)
+  [M]void org.javaan.Settings.setGraph2dFrameLocationAndSize(javax.swing.JFrame)
+   [M]void java.awt.Window.setLocation(int,int)
+   [M]void java.awt.Window.setSize(int,int)
+   [M]int java.util.prefs.Preferences.getInt(java.lang.String,int)
+  [M]void java.awt.Window.addWindowListener(java.awt.event.WindowListener)
+  [M]void org.javaan.Graph2dDisplay$2.<init>(org.javaan.Graph2dDisplay,org.javaan.Settings,javax.swing.JFrame)
+   [M]void java.awt.event.WindowAdapter.<init>()
+  [M]void javax.swing.JFrame.setDefaultCloseOperation(int)
+  [M]void com.mxgraph.layout.hierarchical.mxHierarchicalLayout.execute(java.lang.Object)
+  [M]java.lang.Object com.mxgraph.view.mxGraph.getDefaultParent()
+  [M]void com.mxgraph.layout.hierarchical.mxHierarchicalLayout.setInterRankCellSpacing(double)
+  [M]void com.mxgraph.layout.hierarchical.mxHierarchicalLayout.<init>(com.mxgraph.view.mxGraph)
+  [M]java.awt.Component java.awt.Container.add(java.awt.Component)
+  [M]java.awt.Container javax.swing.JFrame.getContentPane()
+  [M]void org.javaan.Graph2dDisplay$1.<init>(org.javaan.Graph2dDisplay,com.mxgraph.view.mxGraph)
+   [M]void com.mxgraph.swing.mxGraphComponent.<init>(com.mxgraph.view.mxGraph)
+  [M]com.mxgraph.view.mxGraph org.javaan.jgraphx.MxGraphBuilder.build()
+   [M]void com.mxgraph.model.mxIGraphModel.endUpdate()
+   [M]void org.javaan.jgraphx.MxGraphBuilder.addEdges()
+    [M]java.lang.Object com.mxgraph.view.mxGraph.updateCellSize(java.lang.Object)
+    [M]java.lang.Object com.mxgraph.view.mxGraph.insertEdge(java.lang.Object,java.lang.String,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.String)
+    [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object)
+    [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object)
+    [M]java.lang.Object java.util.Map.get(java.lang.Object)
+    [M]java.lang.Object org.javaan.model.GraphView.getEdgeTarget(java.lang.Object)
+    [M]java.lang.Object org.javaan.model.GraphView.getEdgeSource(java.lang.Object)
+    [M]java.lang.Object java.util.Iterator.next()
+    [M]boolean java.util.Iterator.hasNext()
+    [M]java.util.Iterator java.util.Set.iterator()
+    [M]java.util.Set org.javaan.model.GraphView.edgeSet()
+   [M]void org.javaan.jgraphx.MxGraphBuilder.addVertices()
+    [M]java.lang.Object java.util.Map.put(java.lang.Object,java.lang.Object)
+    [M]java.lang.Object com.mxgraph.view.mxGraph.insertVertex(java.lang.Object,java.lang.String,java.lang.Object,double,double,double,double,java.lang.String)
+    [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object)
+    [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object)
+    [M]java.util.Set org.javaan.model.GraphView.vertexSet()
+   [M]void com.mxgraph.model.mxIGraphModel.beginUpdate()
+   [M]com.mxgraph.model.mxIGraphModel com.mxgraph.view.mxGraph.getModel()
+   [M]void com.mxgraph.view.mxGraph.<init>()
+  [M]void org.javaan.jgraphx.MxGraphBuilder.<init>(org.javaan.model.GraphView,org.javaan.jgraphx.CellStyle)
+   [M]void java.util.HashMap.<init>()
+   [M]void java.lang.Object.<init>()
+  [M]void javax.swing.JFrame.<init>(java.lang.String)
+ [M]org.javaan.Settings org.javaan.CommandContext.getSettings()
+ [M]org.javaan.jgraphx.CellStyle org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraphCellStyle()
+
+--
+
+[M]void org.javaan.commands.BasePackageDependencyGraphCommand.<init>():
+[M]void org.javaan.commands.BasePackageDependencyGraphCommand.<init>()
+ [M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+   [M]void org.javaan.commands.BaseCommand.<init>()
+    [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.javaan.jgraphx.CellStyle org.javaan.commands.BasePackageDependencyGraphCommand.getDependencyGraphCellStyle():
+[M]org.javaan.jgraphx.CellStyle org.javaan.commands.BasePackageDependencyGraphCommand.getDependencyGraphCellStyle()
+ [M]void org.javaan.jgraphx.DependencyGraphCellStyle.<init>(org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+  [M]void java.lang.Object.<init>()
+ [M]void org.javaan.print.NumberOfMethodsDependencyFormatter.<init>()
+ [M]org.javaan.print.ObjectFormatter org.javaan.commands.BasePackageDependencyGraphCommand.getTypeFormatter()
+  [M]void org.javaan.print.PackageFormatter.<init>()
+
+--
+
+[M]java.util.Collection org.javaan.commands.BasePackageDependencyGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String):
+[M]java.util.Collection org.javaan.commands.BasePackageDependencyGraphCommand.getInput(org.javaan.model.ClassContext,org.javaan.model.CallGraph,java.lang.String)
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+  [M]boolean java.util.List.add(java.lang.Object)
+  [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void org.javaan.commands.NameMatcher.<init>(java.lang.String)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]void java.lang.Object.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getPackages()
+
+--
+
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BasePackageDependencyGraphCommand.getTypeFormatter():
+[M]org.javaan.print.ObjectFormatter org.javaan.commands.BasePackageDependencyGraphCommand.getTypeFormatter()
+ [M]void org.javaan.print.PackageFormatter.<init>()
+
+--
+
+[M]void org.javaan.commands.BaseSetOptionsCommand.<init>():
+[M]void org.javaan.commands.BaseSetOptionsCommand.<init>()
+ [M]void org.javaan.commands.BaseCommand.<init>()
+  [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.BaseSetOptionsCommand.buildCommandLineOptions(org.apache.commons.cli.Options):
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.execute(org.javaan.CommandContext):
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.execute(org.javaan.CommandContext)
+ [M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.processOptions(org.javaan.CommandContext,java.lang.String[])
+  [M]void org.javaan.commands.BaseSetOptionsCommand.processOption(org.javaan.Settings,java.lang.String)
+  [M]org.javaan.Settings org.javaan.CommandContext.getSettings()
+  [M]void org.slf4j.Logger.error(java.lang.String)
+  [M]java.lang.String java.lang.StringBuilder.toString()
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+  [M]void java.lang.StringBuilder.<init>()
+  [M]boolean org.javaan.commands.BaseSetOptionsCommand.optionExsists(java.lang.String)
+   [M]boolean java.lang.String.equals(java.lang.Object)
+   [M]java.lang.String org.apache.commons.cli.Option.getOpt()
+ [M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.listPersistentOptions(org.javaan.CommandContext)
+  [M]boolean org.javaan.Settings.isOptionEnabled(java.lang.String)
+   [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+  [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String[] org.javaan.CommandContext.getArguments()
+
+--
+
+[M]java.lang.String org.javaan.commands.BaseSetOptionsCommand.getDescription():
+[M]java.lang.String org.javaan.commands.BaseSetOptionsCommand.getDescription()
+ [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+ [M]java.lang.String org.javaan.commands.BaseSetOptionsCommand.getDescriptionFormat()
+ [M]java.lang.String org.apache.commons.cli.Option.getLongOpt()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]java.lang.String org.apache.commons.cli.Option.getOpt()
+ [M]void java.lang.StringBuilder.<init>()
+
+--
+
+[M]java.lang.String org.javaan.commands.BaseSetOptionsCommand.getDescriptionFormat():
+[M]java.lang.String org.javaan.commands.BaseSetOptionsCommand.getDescriptionFormat()
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.listPersistentOptions(org.javaan.CommandContext):
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.listPersistentOptions(org.javaan.CommandContext)
+ [M]boolean org.javaan.Settings.isOptionEnabled(java.lang.String)
+  [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+ [M]java.lang.String org.apache.commons.cli.Option.getOpt()
+ [M]void java.io.PrintStream.println(java.lang.String)
+ [M]org.javaan.Settings org.javaan.CommandContext.getSettings()
+
+--
+
+[M]boolean org.javaan.commands.BaseSetOptionsCommand.optionExsists(java.lang.String):
+[M]boolean org.javaan.commands.BaseSetOptionsCommand.optionExsists(java.lang.String)
+ [M]boolean java.lang.String.equals(java.lang.Object)
+ [M]java.lang.String org.apache.commons.cli.Option.getOpt()
+
+--
+
+[M]void org.javaan.commands.BaseSetOptionsCommand.processOption(org.javaan.Settings,java.lang.String):
+[M]void org.javaan.commands.BaseSetOptionsCommand.processOption(org.javaan.Settings,java.lang.String)
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.processOptions(org.javaan.CommandContext,java.lang.String[]):
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseSetOptionsCommand.processOptions(org.javaan.CommandContext,java.lang.String[])
+ [M]void org.javaan.commands.BaseSetOptionsCommand.processOption(org.javaan.Settings,java.lang.String)
+ [M]org.javaan.Settings org.javaan.CommandContext.getSettings()
+ [M]void org.slf4j.Logger.error(java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]boolean org.javaan.commands.BaseSetOptionsCommand.optionExsists(java.lang.String)
+  [M]boolean java.lang.String.equals(java.lang.Object)
+  [M]java.lang.String org.apache.commons.cli.Option.getOpt()
+
+--
+
+[M]void org.javaan.commands.BaseTypeLoadingCommand.<init>():
+[M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+ [M]void org.javaan.commands.BaseCommand.<init>()
+  [M]void java.lang.Object.<init>()
+
+--
+
+[M]void org.javaan.commands.BaseTypeLoadingCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.BaseTypeLoadingCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseTypeLoadingCommand.execute(org.javaan.CommandContext):
+[M]org.javaan.ReturnCodes org.javaan.commands.BaseTypeLoadingCommand.execute(org.javaan.CommandContext)
+ [M]org.javaan.ReturnCodes org.javaan.CommandContext.getReturnCode()
+ [M]void org.slf4j.Logger.error(java.lang.String,java.lang.Throwable)
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void java.util.ArrayList.<init>(java.util.Collection)
+ [M]java.util.Set org.javaan.model.DuplicatesFinder.createUniqueSet()
+ [M]void org.slf4j.Logger.warn(java.lang.String)
+ [M]boolean org.javaan.model.DuplicatesFinder.hasDuplicates()
+ [M]void org.javaan.model.DuplicatesFinder.<init>(java.util.List)
+ [M]java.util.List org.javaan.commands.BaseCommand.loadTypes(java.lang.String[])
+  [M]void org.slf4j.Logger.info(java.lang.String,java.lang.Object)
+  [M]java.lang.Integer java.lang.Integer.valueOf(int)
+  [M]int java.util.List.size()
+  [M]java.util.List org.javaan.bytecode.JarFileLoader.loadJavaClasses(java.lang.String[])
+  [M]void org.javaan.bytecode.JarFileLoader.<init>()
+  [M]void org.slf4j.Logger.info(java.lang.String)
+  [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String[] org.javaan.CommandContext.getArguments()
+
+--
+
+[M]void org.javaan.commands.FilterUtil.<init>():
+[M]void org.javaan.commands.FilterUtil.<init>()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher):
+[M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+ [M]boolean java.util.List.add(java.lang.Object)
+ [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void java.util.ArrayList.<init>()
+
+--
+
+[M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object):
+[M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+
+--
+
+[M]void org.javaan.commands.ListClasses.<init>():
+[M]void org.javaan.commands.ListClasses.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.ListClasses.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.commands.ListClasses.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(org.apache.commons.cli.Option)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOptionGroup(org.apache.commons.cli.OptionGroup)
+ [M]org.apache.commons.cli.OptionGroup org.apache.commons.cli.OptionGroup.addOption(org.apache.commons.cli.Option)
+ [M]void org.apache.commons.cli.OptionGroup.<init>()
+
+--
+
+[M]void org.javaan.commands.ListClasses.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.ListClasses.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void org.javaan.commands.ListClasses.printClasses(java.io.PrintStream,java.util.Collection)
+  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+  [M]java.lang.String java.lang.System.lineSeparator()
+ [M]void org.javaan.commands.ListClasses.printClassesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
+  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+  [M]java.lang.String java.lang.StringBuilder.toString()
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+  [M]void java.lang.StringBuilder.<init>()
+  [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+   [M]void java.util.Collections.sort(java.util.List)
+   [M]boolean java.util.List.addAll(java.util.Collection)
+   [M]void java.util.ArrayList.<init>()
+  [M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Clazz)
+  [M]void org.javaan.print.MethodFormatter.<init>()
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void org.javaan.commands.ListClasses.printClassesAndMethods(java.io.PrintStream,java.util.Collection)
+  [M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Clazz)
+ [M]void org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection)
+  [M]java.util.Set org.javaan.model.ClassContext.getInterfacesOfClass(org.javaan.model.Clazz)
+ [M]void org.javaan.commands.ListClasses.printClassesAndSpecializations(java.io.PrintStream,java.util.Collection)
+  [M]java.util.Set org.javaan.model.ClassContext.getSpecializationsOfClass(org.javaan.model.Clazz)
+ [M]void org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection)
+  [M]java.util.List org.javaan.model.ClassContext.getSuperClassHierachy(org.javaan.model.Clazz)
+ [M]int java.lang.Enum.ordinal()
+ [M]org.javaan.CommandContext$AdditionalTypeInformation org.javaan.CommandContext.getAdditionalTypeInformation()
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+  [M]boolean java.util.List.add(java.lang.Object)
+  [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+ [M]void org.javaan.commands.NameMatcher.<init>(java.lang.String)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]void java.lang.Object.<init>()
+ [M]java.lang.String org.javaan.CommandContext.getFilterCriteria()
+  [M]java.lang.String org.apache.commons.cli.CommandLine.getOptionValue(java.lang.String)
+ [M]boolean org.javaan.CommandContext.hasFilterCriteria()
+ [M]java.util.Set org.javaan.model.ClassContext.getClasses()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+
+--
+
+[M]java.lang.String org.javaan.commands.ListClasses.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ListClasses.getName():
+
+--
+
+[M]void org.javaan.commands.ListClasses.printClasses(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListClasses.printClasses(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.System.lineSeparator()
+
+--
+
+[M]void org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getInterfacesOfClass(org.javaan.model.Clazz)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListClasses.printClassesAndMethods(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListClasses.printClassesAndMethods(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Clazz)
+ [M]void org.javaan.print.MethodFormatter.<init>()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListClasses.printClassesAndSpecializations(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListClasses.printClassesAndSpecializations(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getSpecializationsOfClass(org.javaan.model.Clazz)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.util.List org.javaan.model.ClassContext.getSuperClassHierachy(org.javaan.model.Clazz)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListClasses.printClassesAndVirtualMethods(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListClasses.printClassesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Clazz)
+ [M]void org.javaan.print.MethodFormatter.<init>()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListClasses$1.<clinit>():
+[M]void org.javaan.commands.ListClasses$1.<clinit>()
+ [M]int java.lang.Enum.ordinal()
+ [M]org.javaan.CommandContext$AdditionalTypeInformation[] org.javaan.CommandContext$AdditionalTypeInformation.values()
+  [M]java.lang.Object java.lang.Object.clone()
+
+--
+
+[M]void org.javaan.commands.ListDuplicates.<init>():
+[M]void org.javaan.commands.ListDuplicates.<init>()
+ [M]void org.javaan.commands.BaseCommand.<init>()
+  [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.ListDuplicates.buildCommandLineOptions(org.apache.commons.cli.Options):
+
+--
+
+[M]org.javaan.ReturnCodes org.javaan.commands.ListDuplicates.execute(org.javaan.CommandContext):
+[M]org.javaan.ReturnCodes org.javaan.commands.ListDuplicates.execute(org.javaan.CommandContext)
+ [M]void org.slf4j.Logger.error(java.lang.String,java.lang.Throwable)
+ [M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List)
+  [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.List.iterator()
+  [M]void org.javaan.print.TypeInformationFormatter.<init>()
+  [M]void org.javaan.commands.SortUtil.sort(java.util.List)
+   [M]void java.util.Collections.sort(java.util.List,java.util.Comparator)
+   [M]void org.javaan.commands.SortUtil$1.<init>()
+    [M]void java.lang.Object.<init>()
+  [M]java.util.List org.javaan.model.DuplicatesFinder.find()
+  [M]void org.javaan.model.DuplicatesFinder.<init>(java.util.List)
+ [M]java.util.List org.javaan.commands.BaseCommand.loadTypes(java.lang.String[])
+  [M]void org.slf4j.Logger.info(java.lang.String,java.lang.Object)
+  [M]java.lang.Integer java.lang.Integer.valueOf(int)
+  [M]int java.util.List.size()
+  [M]java.util.List org.javaan.bytecode.JarFileLoader.loadJavaClasses(java.lang.String[])
+  [M]void org.javaan.bytecode.JarFileLoader.<init>()
+  [M]void org.slf4j.Logger.info(java.lang.String)
+  [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.String[] org.javaan.CommandContext.getArguments()
+
+--
+
+[M]java.lang.String org.javaan.commands.ListDuplicates.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ListDuplicates.getName():
+
+--
+
+[M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List):
+[M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List)
+ [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.List.iterator()
+ [M]void org.javaan.print.TypeInformationFormatter.<init>()
+ [M]void org.javaan.commands.SortUtil.sort(java.util.List)
+  [M]void java.util.Collections.sort(java.util.List,java.util.Comparator)
+  [M]void org.javaan.commands.SortUtil$1.<init>()
+   [M]void java.lang.Object.<init>()
+ [M]java.util.List org.javaan.model.DuplicatesFinder.find()
+ [M]void org.javaan.model.DuplicatesFinder.<init>(java.util.List)
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.<init>():
+[M]void org.javaan.commands.ListInterfaces.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.ListInterfaces.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.commands.ListInterfaces.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(org.apache.commons.cli.Option)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOptionGroup(org.apache.commons.cli.OptionGroup)
+ [M]org.apache.commons.cli.OptionGroup org.apache.commons.cli.OptionGroup.addOption(org.apache.commons.cli.Option)
+ [M]void org.apache.commons.cli.OptionGroup.<init>()
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void org.javaan.commands.ListInterfaces.printInterfaces(java.io.PrintStream,java.util.Collection)
+  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+  [M]java.lang.String java.lang.System.lineSeparator()
+ [M]void org.javaan.commands.ListInterfaces.printInterfacesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
+  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+  [M]java.lang.String java.lang.StringBuilder.toString()
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+  [M]void java.lang.StringBuilder.<init>()
+  [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+   [M]void java.util.Collections.sort(java.util.List)
+   [M]boolean java.util.List.addAll(java.util.Collection)
+   [M]void java.util.ArrayList.<init>()
+  [M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Interface)
+  [M]void org.javaan.print.MethodFormatter.<init>()
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void org.javaan.commands.ListInterfaces.printInterfacesAndMethods(java.io.PrintStream,java.util.Collection)
+  [M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Interface)
+ [M]void org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
+  [M]java.util.Set org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface)
+ [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
+  [M]java.util.Set org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface)
+ [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSuperInterfaces(java.io.PrintStream,java.util.Collection)
+  [M]java.util.Set org.javaan.model.ClassContext.getSuperInterfaces(org.javaan.model.Interface)
+ [M]int java.lang.Enum.ordinal()
+ [M]org.javaan.CommandContext$AdditionalTypeInformation org.javaan.CommandContext.getAdditionalTypeInformation()
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+  [M]boolean java.util.List.add(java.lang.Object)
+  [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+ [M]void org.javaan.commands.NameMatcher.<init>(java.lang.String)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]void java.lang.Object.<init>()
+ [M]java.lang.String org.javaan.CommandContext.getFilterCriteria()
+  [M]java.lang.String org.apache.commons.cli.CommandLine.getOptionValue(java.lang.String)
+ [M]boolean org.javaan.CommandContext.hasFilterCriteria()
+ [M]java.util.Set org.javaan.model.ClassContext.getInterfaces()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+
+--
+
+[M]java.lang.String org.javaan.commands.ListInterfaces.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ListInterfaces.getName():
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.printInterfaces(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListInterfaces.printInterfaces(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.System.lineSeparator()
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndMethods(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndMethods(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Interface)
+ [M]void org.javaan.print.MethodFormatter.<init>()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndSuperInterfaces(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndSuperInterfaces(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getSuperInterfaces(org.javaan.model.Interface)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndVirtualMethods(java.io.PrintStream,java.util.Collection):
+[M]void org.javaan.commands.ListInterfaces.printInterfacesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Interface)
+ [M]void org.javaan.print.MethodFormatter.<init>()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Collection.iterator()
+
+--
+
+[M]void org.javaan.commands.ListInterfaces$1.<clinit>():
+[M]void org.javaan.commands.ListInterfaces$1.<clinit>()
+ [M]int java.lang.Enum.ordinal()
+ [M]org.javaan.CommandContext$AdditionalTypeInformation[] org.javaan.CommandContext$AdditionalTypeInformation.values()
+  [M]java.lang.Object java.lang.Object.clone()
+
+--
+
+[M]void org.javaan.commands.ListMissingTypes.<init>():
+[M]void org.javaan.commands.ListMissingTypes.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.ListMissingTypes.buildCommandLineOptions(org.apache.commons.cli.Options):
+
+--
+
+[M]void org.javaan.commands.ListMissingTypes.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.ListMissingTypes.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void java.io.PrintStream.println(java.lang.String)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.List.iterator()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]boolean java.util.Set.addAll(java.util.Collection)
+ [M]java.util.Set org.javaan.bytecode.CallGraphBuilder.getMissingTypes()
+ [M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
+ [M]void org.javaan.bytecode.CallGraphBuilder.<init>(org.javaan.model.ClassContext,boolean,boolean)
+ [M]java.util.Set org.javaan.bytecode.ClassContextBuilder.getMissingTypes()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+
+--
+
+[M]java.lang.String org.javaan.commands.ListMissingTypes.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ListMissingTypes.getName():
+
+--
+
+[M]void org.javaan.commands.ListPackages.<init>():
+[M]void org.javaan.commands.ListPackages.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.ListPackages.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.commands.ListPackages.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(org.apache.commons.cli.Option)
+
+--
+
+[M]void org.javaan.commands.ListPackages.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.ListPackages.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+ [M]java.lang.String java.lang.System.lineSeparator()
+ [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+  [M]void java.util.Collections.sort(java.util.List)
+  [M]boolean java.util.List.addAll(java.util.Collection)
+  [M]void java.util.ArrayList.<init>()
+ [M]java.util.List org.javaan.commands.FilterUtil.filter(java.util.Collection,org.javaan.commands.FilterUtil$Matcher)
+  [M]boolean java.util.List.add(java.lang.Object)
+  [M]boolean org.javaan.commands.FilterUtil$Matcher.accept(java.lang.Object)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Collection.iterator()
+ [M]void org.javaan.commands.NameMatcher.<init>(java.lang.String)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]void java.lang.Object.<init>()
+ [M]java.lang.String org.javaan.CommandContext.getFilterCriteria()
+  [M]java.lang.String org.apache.commons.cli.CommandLine.getOptionValue(java.lang.String)
+ [M]boolean org.javaan.CommandContext.hasFilterCriteria()
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]java.util.Set org.javaan.model.ClassContext.getPackages()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+
+--
+
+[M]java.lang.String org.javaan.commands.ListPackages.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ListPackages.getName():
+
+--
+
+[M]void org.javaan.commands.MethodMatcher.<init>(java.lang.String):
+[M]void org.javaan.commands.MethodMatcher.<init>(java.lang.String)
+ [M]java.lang.String java.lang.String.toLowerCase()
+ [M]java.lang.String java.lang.String.substring(int)
+ [M]int java.lang.String.length()
+ [M]boolean java.lang.String.startsWith(java.lang.String)
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]boolean org.javaan.commands.MethodMatcher.accept(java.lang.Object):
+[M]boolean org.javaan.commands.MethodMatcher.accept(java.lang.Object)
+ [M]boolean org.javaan.commands.MethodMatcher.accept(org.javaan.model.Method)
+  [M]boolean org.javaan.commands.MethodMatcher.acceptMethodName(org.javaan.model.Method)
+   [M]org.javaan.model.Type org.javaan.model.Method.getType()
+   [M]boolean java.lang.String.contains(java.lang.CharSequence)
+   [M]java.lang.String java.lang.String.toLowerCase()
+   [M]java.lang.String org.javaan.model.NamedObjectBase.getName()
+  [M]boolean org.javaan.commands.MethodMatcher.acceptAnnotationClass(org.javaan.model.Method)
+   [M]java.lang.Object java.util.Iterator.next()
+   [M]boolean java.util.Iterator.hasNext()
+   [M]java.util.Iterator java.util.List.iterator()
+   [M]java.util.List org.javaan.model.Method.getAnnotationTypes()
+
+--
+
+[M]boolean org.javaan.commands.MethodMatcher.accept(org.javaan.model.Method):
+[M]boolean org.javaan.commands.MethodMatcher.accept(org.javaan.model.Method)
+ [M]boolean org.javaan.commands.MethodMatcher.acceptMethodName(org.javaan.model.Method)
+  [M]org.javaan.model.Type org.javaan.model.Method.getType()
+  [M]boolean java.lang.String.contains(java.lang.CharSequence)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]java.lang.String org.javaan.model.NamedObjectBase.getName()
+ [M]boolean org.javaan.commands.MethodMatcher.acceptAnnotationClass(org.javaan.model.Method)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.List.iterator()
+  [M]java.util.List org.javaan.model.Method.getAnnotationTypes()
+
+--
+
+[M]boolean org.javaan.commands.MethodMatcher.acceptAnnotationClass(org.javaan.model.Method):
+[M]boolean org.javaan.commands.MethodMatcher.acceptAnnotationClass(org.javaan.model.Method)
+ [M]boolean java.lang.String.contains(java.lang.CharSequence)
+ [M]java.lang.String java.lang.String.toLowerCase()
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.List.iterator()
+ [M]java.util.List org.javaan.model.Method.getAnnotationTypes()
+
+--
+
+[M]boolean org.javaan.commands.MethodMatcher.acceptMethodName(org.javaan.model.Method):
+[M]boolean org.javaan.commands.MethodMatcher.acceptMethodName(org.javaan.model.Method)
+ [M]org.javaan.model.Type org.javaan.model.Method.getType()
+ [M]boolean java.lang.String.contains(java.lang.CharSequence)
+ [M]java.lang.String java.lang.String.toLowerCase()
+ [M]java.lang.String org.javaan.model.NamedObjectBase.getName()
+
+--
+
+[M]void org.javaan.commands.NameMatcher.<init>(java.lang.String):
+[M]void org.javaan.commands.NameMatcher.<init>(java.lang.String)
+ [M]java.lang.String java.lang.String.toLowerCase()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]boolean org.javaan.commands.NameMatcher.accept(java.lang.Object):
+[M]boolean org.javaan.commands.NameMatcher.accept(java.lang.Object)
+ [M]boolean org.javaan.commands.NameMatcher.accept(org.javaan.model.NamedObject)
+  [M]boolean java.lang.String.contains(java.lang.CharSequence)
+  [M]java.lang.String java.lang.String.toLowerCase()
+  [M]java.lang.String org.javaan.model.NamedObject.getName()
+
+--
+
+[M]boolean org.javaan.commands.NameMatcher.accept(org.javaan.model.NamedObject):
+[M]boolean org.javaan.commands.NameMatcher.accept(org.javaan.model.NamedObject)
+ [M]boolean java.lang.String.contains(java.lang.CharSequence)
+ [M]java.lang.String java.lang.String.toLowerCase()
+ [M]java.lang.String org.javaan.model.NamedObject.getName()
+
+--
+
+[M]void org.javaan.commands.ResetOptions.<init>():
+[M]void org.javaan.commands.ResetOptions.<init>()
+ [M]void org.javaan.commands.BaseSetOptionsCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.lang.String org.javaan.commands.ResetOptions.getDescriptionFormat():
+
+--
+
+[M]java.lang.String org.javaan.commands.ResetOptions.getHelpCommandLine():
+
+--
+
+[M]java.lang.String org.javaan.commands.ResetOptions.getName():
+
+--
+
+[M]void org.javaan.commands.ResetOptions.processOption(org.javaan.Settings,java.lang.String):
+[M]void org.javaan.commands.ResetOptions.processOption(org.javaan.Settings,java.lang.String)
+ [M]void org.javaan.Settings.disableOption(java.lang.String)
+  [M]void java.util.prefs.Preferences.putBoolean(java.lang.String,boolean)
+
+--
+
+[M]void org.javaan.commands.SetOptions.<init>():
+[M]void org.javaan.commands.SetOptions.<init>()
+ [M]void org.javaan.commands.BaseSetOptionsCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.lang.String org.javaan.commands.SetOptions.getDescriptionFormat():
+
+--
+
+[M]java.lang.String org.javaan.commands.SetOptions.getHelpCommandLine():
+
+--
+
+[M]java.lang.String org.javaan.commands.SetOptions.getName():
+
+--
+
+[M]void org.javaan.commands.SetOptions.processOption(org.javaan.Settings,java.lang.String):
+[M]void org.javaan.commands.SetOptions.processOption(org.javaan.Settings,java.lang.String)
+ [M]void org.javaan.Settings.enableOption(java.lang.String)
+  [M]void java.util.prefs.Preferences.putBoolean(java.lang.String,boolean)
+
+--
+
+[M]void org.javaan.commands.ShowCalleeGraph.<init>():
+[M]void org.javaan.commands.ShowCalleeGraph.<init>()
+ [M]void org.javaan.commands.BaseCallGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+   [M]void org.javaan.commands.BaseCommand.<init>()
+    [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.util.Set org.javaan.commands.ShowCalleeGraph.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method):
+[M]java.util.Set org.javaan.commands.ShowCalleeGraph.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method)
+ [M]java.util.Set org.javaan.model.CallGraph.getLeafCallees(org.javaan.model.Method)
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowCalleeGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowCalleeGraph.getName():
+
+--
+
+[M]void org.javaan.commands.ShowCalleeGraph.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor):
+[M]void org.javaan.commands.ShowCalleeGraph.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+ [M]void org.javaan.model.CallGraph.traverseCallees(org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+
+--
+
+[M]void org.javaan.commands.ShowCallerGraph.<init>():
+[M]void org.javaan.commands.ShowCallerGraph.<init>()
+ [M]void org.javaan.commands.BaseCallGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+   [M]void org.javaan.commands.BaseCommand.<init>()
+    [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.util.Set org.javaan.commands.ShowCallerGraph.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method):
+[M]java.util.Set org.javaan.commands.ShowCallerGraph.collectLeafObjects(org.javaan.model.CallGraph,org.javaan.model.Method)
+ [M]java.util.Set org.javaan.model.CallGraph.getLeafCallers(org.javaan.model.Method)
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowCallerGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowCallerGraph.getName():
+
+--
+
+[M]void org.javaan.commands.ShowCallerGraph.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor):
+[M]void org.javaan.commands.ShowCallerGraph.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+ [M]void org.javaan.model.CallGraph.traverseCallers(org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+
+--
+
+[M]void org.javaan.commands.ShowDepdendencyCyclesGraph.<init>():
+[M]void org.javaan.commands.ShowDepdendencyCyclesGraph.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.ShowDepdendencyCyclesGraph.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.commands.ShowDepdendencyCyclesGraph.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(org.apache.commons.cli.Option)
+
+--
+
+[M]void org.javaan.commands.ShowDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.ShowDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void org.javaan.model.CallGraph.traverseDependencyCycles(org.javaan.graph.GraphVisitor)
+ [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String)
+ [M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
+ [M]void org.javaan.print.TypeFormatter.<init>()
+ [M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
+ [M]void org.javaan.bytecode.CallGraphBuilder.<init>(org.javaan.model.ClassContext,boolean,boolean)
+ [M]boolean org.javaan.CommandContext.isResolveDependenciesInClassHierarchy()
+  [M]boolean org.javaan.Settings.isResolveDependenciesInClassHierarchy()
+   [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]boolean org.javaan.CommandContext.isResolveMethodImplementations()
+  [M]boolean org.javaan.Settings.isResolveMethodImplementations()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowDepdendencyCyclesGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowDepdendencyCyclesGraph.getName():
+
+--
+
+[M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.<init>():
+[M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.<init>()
+ [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+  [M]void org.javaan.commands.BaseCommand.<init>()
+   [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.apache.commons.cli.Options org.javaan.commands.ShowPackageDepdendencyCyclesGraph.buildCommandLineOptions(org.apache.commons.cli.Options):
+[M]org.apache.commons.cli.Options org.javaan.commands.ShowPackageDepdendencyCyclesGraph.buildCommandLineOptions(org.apache.commons.cli.Options)
+ [M]org.apache.commons.cli.Options org.apache.commons.cli.Options.addOption(org.apache.commons.cli.Option)
+
+--
+
+[M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
+[M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+ [M]void org.javaan.model.CallGraph.traversePackageDependencyCycles(org.javaan.graph.GraphVisitor)
+ [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String)
+ [M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
+ [M]void org.javaan.print.PackageFormatter.<init>()
+ [M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
+ [M]void org.javaan.bytecode.CallGraphBuilder.<init>(org.javaan.model.ClassContext,boolean,boolean)
+ [M]boolean org.javaan.CommandContext.isResolveDependenciesInClassHierarchy()
+  [M]boolean org.javaan.Settings.isResolveDependenciesInClassHierarchy()
+   [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
+  [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
+ [M]boolean org.javaan.CommandContext.isResolveMethodImplementations()
+  [M]boolean org.javaan.Settings.isResolveMethodImplementations()
+ [M]org.javaan.model.ClassContext org.javaan.bytecode.ClassContextBuilder.build()
+ [M]void org.javaan.bytecode.ClassContextBuilder.<init>(java.util.List)
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowPackageDepdendencyCyclesGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowPackageDepdendencyCyclesGraph.getName():
+
+--
+
+[M]void org.javaan.commands.ShowPackageUsedGraph.<init>():
+[M]void org.javaan.commands.ShowPackageUsedGraph.<init>()
+ [M]void org.javaan.commands.BasePackageDependencyGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+   [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+    [M]void org.javaan.commands.BaseCommand.<init>()
+     [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.commands.ShowPackageUsedGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set):
+[M]org.javaan.model.GraphView org.javaan.commands.ShowPackageUsedGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+ [M]org.javaan.model.GraphView org.javaan.model.GraphView.createSubgraph(java.util.Set,boolean)
+ [M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfPackageGraph()
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowPackageUsedGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowPackageUsedGraph.getName():
+
+--
+
+[M]void org.javaan.commands.ShowPackageUsingGraph.<init>():
+[M]void org.javaan.commands.ShowPackageUsingGraph.<init>()
+ [M]void org.javaan.commands.BasePackageDependencyGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+   [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+    [M]void org.javaan.commands.BaseCommand.<init>()
+     [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.commands.ShowPackageUsingGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set):
+[M]org.javaan.model.GraphView org.javaan.commands.ShowPackageUsingGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+ [M]org.javaan.model.GraphView org.javaan.model.GraphView.createSubgraph(java.util.Set,boolean)
+ [M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfPackageGraph()
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowPackageUsingGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowPackageUsingGraph.getName():
+
+--
+
+[M]void org.javaan.commands.ShowUsedGraph.<init>():
+[M]void org.javaan.commands.ShowUsedGraph.<init>()
+ [M]void org.javaan.commands.BaseClassDependencyGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+   [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+    [M]void org.javaan.commands.BaseCommand.<init>()
+     [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.commands.ShowUsedGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set):
+[M]org.javaan.model.GraphView org.javaan.commands.ShowUsedGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+ [M]org.javaan.model.GraphView org.javaan.model.GraphView.createSubgraph(java.util.Set,boolean)
+ [M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfTypeGraph()
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowUsedGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowUsedGraph.getName():
+
+--
+
+[M]void org.javaan.commands.ShowUsingGraph.<init>():
+[M]void org.javaan.commands.ShowUsingGraph.<init>()
+ [M]void org.javaan.commands.BaseClassDependencyGraphCommand.<init>()
+  [M]void org.javaan.commands.BaseDependencyGraphCommand.<init>()
+   [M]void org.javaan.commands.BaseTypeLoadingCommand.<init>()
+    [M]void org.javaan.commands.BaseCommand.<init>()
+     [M]void java.lang.Object.<init>()
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.commands.ShowUsingGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set):
+[M]org.javaan.model.GraphView org.javaan.commands.ShowUsingGraph.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
+ [M]org.javaan.model.GraphView org.javaan.model.GraphView.createSubgraph(java.util.Set,boolean)
+ [M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfTypeGraph()
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowUsingGraph.getDescription():
+
+--
+
+[M]java.lang.String org.javaan.commands.ShowUsingGraph.getName():
+
+--
+
+[M]void org.javaan.commands.SortUtil.<init>():
+[M]void org.javaan.commands.SortUtil.<init>()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection):
+[M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
+ [M]void java.util.Collections.sort(java.util.List)
+ [M]boolean java.util.List.addAll(java.util.Collection)
+ [M]void java.util.ArrayList.<init>()
+
+--
+
+[M]void org.javaan.commands.SortUtil.sort(java.util.List):
+[M]void org.javaan.commands.SortUtil.sort(java.util.List)
+ [M]void java.util.Collections.sort(java.util.List,java.util.Comparator)
+ [M]void org.javaan.commands.SortUtil$1.<init>()
+  [M]void java.lang.Object.<init>()
+
+--
+
+[M]void org.javaan.commands.SortUtil$1.<init>():
+[M]void org.javaan.commands.SortUtil$1.<init>()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]int org.javaan.commands.SortUtil$1.compare(java.lang.Object,java.lang.Object):
+[M]int org.javaan.commands.SortUtil$1.compare(java.lang.Object,java.lang.Object)
+ [M]int org.javaan.commands.SortUtil$1.compare(java.util.List,java.util.List)
+  [M]int java.lang.Comparable.compareTo(java.lang.Object)
+  [M]java.lang.Object java.util.List.get(int)
+  [M]int java.util.List.size()
+
+--
+
+[M]int org.javaan.commands.SortUtil$1.compare(java.util.List,java.util.List):
+[M]int org.javaan.commands.SortUtil$1.compare(java.util.List,java.util.List)
+ [M]int java.lang.Comparable.compareTo(java.lang.Object)
+ [M]java.lang.Object java.util.List.get(int)
+ [M]int java.util.List.size()
+
+--
+
+[M]void org.javaan.commands.StandardOptions.<clinit>():
+
+--
+
+[M]boolean org.javaan.graph.GraphVisitor.finished():
+
+--
+
+[M]void org.javaan.graph.GraphVisitor.vertexFinished(java.lang.Object,int):
+
+--
+
+[M]void org.javaan.graph.GraphVisitor.visitEdge(java.lang.Object,int):
+
+--
+
+[M]void org.javaan.graph.GraphVisitor.visitGraph(org.jgrapht.Graph,int):
+
+--
+
+[M]void org.javaan.graph.GraphVisitor.visitVertex(java.lang.Object,int):
+
+--
+
+[M]void org.javaan.graph.GraphVisitorAdapter.<init>():
+
+--
+
+[M]boolean org.javaan.graph.GraphVisitorAdapter.finished():
+
+--
+
+[M]void org.javaan.graph.GraphVisitorAdapter.vertexFinished(java.lang.Object,int):
+
+--
+
+[M]void org.javaan.graph.GraphVisitorAdapter.visitEdge(java.lang.Object,int):
+
+--
+
+[M]void org.javaan.graph.GraphVisitorAdapter.visitGraph(org.jgrapht.Graph,int):
+
+--
+
+[M]void org.javaan.graph.GraphVisitorAdapter.visitVertex(java.lang.Object,int):
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object)
+
+--
+
+[M]void org.javaan.jgraphx.DependencyGraphCellStyle.<init>(org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
+[M]void org.javaan.jgraphx.DependencyGraphCellStyle.<init>(org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeLabel(org.javaan.model.GraphView,org.javaan.model.Dependency)
+  [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeLabel(org.javaan.model.GraphView,org.javaan.model.Dependency):
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeLabel(org.javaan.model.GraphView,org.javaan.model.Dependency)
+ [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeStyle(org.javaan.model.GraphView,org.javaan.model.Dependency)
+  [M]java.lang.String java.lang.StringBuilder.toString()
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(long)
+  [M]long java.lang.Math.round(double)
+  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+  [M]void java.lang.StringBuilder.<init>()
+  [M]double java.lang.Math.log1p(double)
+  [M]double org.javaan.model.GraphView.getEdgeWeight(java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeStyle(org.javaan.model.GraphView,org.javaan.model.Dependency):
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getEdgeStyle(org.javaan.model.GraphView,org.javaan.model.Dependency)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(long)
+ [M]long java.lang.Math.round(double)
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+ [M]double java.lang.Math.log1p(double)
+ [M]double org.javaan.model.GraphView.getEdgeWeight(java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+
+--
+
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object):
+[M]java.lang.String org.javaan.jgraphx.DependencyGraphCellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.String java.lang.StringBuilder.toString()
+ [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
+ [M]void java.lang.StringBuilder.<init>()
+
+--
+
+[M]void org.javaan.jgraphx.MxGraphBuilder.<init>(org.javaan.model.GraphView,org.javaan.jgraphx.CellStyle):
+[M]void org.javaan.jgraphx.MxGraphBuilder.<init>(org.javaan.model.GraphView,org.javaan.jgraphx.CellStyle)
+ [M]void java.util.HashMap.<init>()
+ [M]void java.lang.Object.<init>()
+
+--
+
+[M]void org.javaan.jgraphx.MxGraphBuilder.addEdges():
+[M]void org.javaan.jgraphx.MxGraphBuilder.addEdges()
+ [M]java.lang.Object com.mxgraph.view.mxGraph.updateCellSize(java.lang.Object)
+ [M]java.lang.Object com.mxgraph.view.mxGraph.insertEdge(java.lang.Object,java.lang.String,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.String)
+ [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.Object java.util.Map.get(java.lang.Object)
+ [M]java.lang.Object org.javaan.model.GraphView.getEdgeTarget(java.lang.Object)
+ [M]java.lang.Object org.javaan.model.GraphView.getEdgeSource(java.lang.Object)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Set.iterator()
+ [M]java.util.Set org.javaan.model.GraphView.edgeSet()
+
+--
+
+[M]void org.javaan.jgraphx.MxGraphBuilder.addVertices():
+[M]void org.javaan.jgraphx.MxGraphBuilder.addVertices()
+ [M]java.lang.Object java.util.Map.put(java.lang.Object,java.lang.Object)
+ [M]java.lang.Object com.mxgraph.view.mxGraph.updateCellSize(java.lang.Object)
+ [M]java.lang.Object com.mxgraph.view.mxGraph.insertVertex(java.lang.Object,java.lang.String,java.lang.Object,double,double,double,double,java.lang.String)
+ [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object)
+ [M]java.lang.Object java.util.Iterator.next()
+ [M]boolean java.util.Iterator.hasNext()
+ [M]java.util.Iterator java.util.Set.iterator()
+ [M]java.util.Set org.javaan.model.GraphView.vertexSet()
+
+--
+
+[M]com.mxgraph.view.mxGraph org.javaan.jgraphx.MxGraphBuilder.build():
+[M]com.mxgraph.view.mxGraph org.javaan.jgraphx.MxGraphBuilder.build()
+ [M]void com.mxgraph.model.mxIGraphModel.endUpdate()
+ [M]void org.javaan.jgraphx.MxGraphBuilder.addEdges()
+  [M]java.lang.Object com.mxgraph.view.mxGraph.updateCellSize(java.lang.Object)
+  [M]java.lang.Object com.mxgraph.view.mxGraph.insertEdge(java.lang.Object,java.lang.String,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.String)
+  [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeStyle(org.javaan.model.GraphView,java.lang.Object)
+  [M]java.lang.String org.javaan.jgraphx.CellStyle.getEdgeLabel(org.javaan.model.GraphView,java.lang.Object)
+  [M]java.lang.Object java.util.Map.get(java.lang.Object)
+  [M]java.lang.Object org.javaan.model.GraphView.getEdgeTarget(java.lang.Object)
+  [M]java.lang.Object org.javaan.model.GraphView.getEdgeSource(java.lang.Object)
+  [M]java.lang.Object java.util.Iterator.next()
+  [M]boolean java.util.Iterator.hasNext()
+  [M]java.util.Iterator java.util.Set.iterator()
+  [M]java.util.Set org.javaan.model.GraphView.edgeSet()
+ [M]void org.javaan.jgraphx.MxGraphBuilder.addVertices()
+  [M]java.lang.Object java.util.Map.put(java.lang.Object,java.lang.Object)
+  [M]java.lang.Object com.mxgraph.view.mxGraph.insertVertex(java.lang.Object,java.lang.String,java.lang.Object,double,double,double,double,java.lang.String)
+  [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexStyle(org.javaan.model.GraphView,java.lang.Object)
+  [M]java.lang.String org.javaan.jgraphx.CellStyle.getVertexLabel(org.javaan.model.GraphView,java.lang.Object)
+  [M]java.util.Set org.javaan.model.GraphView.vertexSet()
+ [M]void com.mxgraph.model.mxIGraphModel.beginUpdate()
+ [M]com.mxgraph.model.mxIGraphModel com.mxgraph.view.mxGraph.getModel()
+ [M]void com.mxgraph.view.mxGraph.<init>()
+
+--
+
+[M]void org.javaan.model.CallGraph.<init>(org.javaan.model.ClassContext,boolean,boolean):
+
+--
+
+[M]void org.javaan.model.CallGraph.addCall(org.javaan.model.Method,org.javaan.model.Method):
+
+--
+
+[M]void org.javaan.model.CallGraph.addCallInternal(org.javaan.model.Method,org.javaan.model.Method):
+
+--
+
+[M]void org.javaan.model.CallGraph.addUsageOfPackage(org.javaan.model.Method,org.javaan.model.Method):
+
+--
+
+[M]void org.javaan.model.CallGraph.addUsageOfType(org.javaan.model.Method,org.javaan.model.Method):
+
+--
+
+[M]org.jgrapht.alg.cycle.DirectedSimpleCycles org.javaan.model.CallGraph.createCycleDetector(org.jgrapht.DirectedGraph):
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getCallees(org.javaan.model.Method):
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.model.CallGraph.getCallerOfMethodGraph():
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getCallers(org.javaan.model.Method):
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getDependenciesOf(org.javaan.model.Type):
+
+--
+
+[M]java.util.List org.javaan.model.CallGraph.getDependencyCycles():
+
+--
+
+[M]java.util.List org.javaan.model.CallGraph.getDependencyCycles(org.jgrapht.DirectedGraph):
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getLeafCallees(org.javaan.model.Method):
+[M]java.util.Set org.javaan.model.CallGraph.getLeafCallees(org.javaan.model.Method)
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getLeafCallers(org.javaan.model.Method):
+[M]java.util.Set org.javaan.model.CallGraph.getLeafCallers(org.javaan.model.Method)
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getLeafUsedPackages(org.javaan.model.Package):
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getLeafUsedTypes(org.javaan.model.Type):
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getLeafUsingPackages(org.javaan.model.Package):
+
+--
+
+[M]java.util.Set org.javaan.model.CallGraph.getLeafUsingTypes(org.javaan.model.Type):
+
+--
+
+[M]java.util.List org.javaan.model.CallGraph.getPackageDependencyCycles():
+
+--
+
+[M]java.util.List org.javaan.model.CallGraph.getTopologicalSortedPackages():
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfPackageGraph():
+[M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfPackageGraph()
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfTypeGraph():
+[M]org.javaan.model.GraphView org.javaan.model.CallGraph.getUsageOfTypeGraph()
+
+--
+
+[M]int org.javaan.model.CallGraph.size():
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseCallees(org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor):
+[M]void org.javaan.model.CallGraph.traverseCallees(org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseCallers(org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor):
+[M]void org.javaan.model.CallGraph.traverseCallers(org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseDepdendencyCycles(org.javaan.graph.GraphVisitor,org.jgrapht.DirectedGraph):
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseDependencyCycles(org.javaan.graph.GraphVisitor):
+[M]void org.javaan.model.CallGraph.traverseDependencyCycles(org.javaan.graph.GraphVisitor)
+
+--
+
+[M]void org.javaan.model.CallGraph.traversePackageDependencyCycles(org.javaan.graph.GraphVisitor):
+[M]void org.javaan.model.CallGraph.traversePackageDependencyCycles(org.javaan.graph.GraphVisitor)
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseUsedPackages(org.javaan.model.Package,org.javaan.graph.GraphVisitor):
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseUsedTypes(org.javaan.model.Type,org.javaan.graph.GraphVisitor):
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseUsingPackages(org.javaan.model.Package,org.javaan.graph.GraphVisitor):
+
+--
+
+[M]void org.javaan.model.CallGraph.traverseUsingTypes(org.javaan.model.Type,org.javaan.graph.GraphVisitor):
+
+--
+
+[M]void org.javaan.model.ClassContext.<init>():
+
+--
+
+[M]void org.javaan.model.ClassContext.addClass(org.javaan.model.Clazz):
+
+--
+
+[M]void org.javaan.model.ClassContext.addInterface(org.javaan.model.Interface):
+
+--
+
+[M]void org.javaan.model.ClassContext.addInterfaceOfClass(org.javaan.model.Clazz,org.javaan.model.Interface):
+
+--
+
+[M]void org.javaan.model.ClassContext.addMethod(org.javaan.model.Method):
+
+--
+
+[M]void org.javaan.model.ClassContext.addSuperClass(org.javaan.model.Clazz,org.javaan.model.Clazz):
+
+--
+
+[M]void org.javaan.model.ClassContext.addSuperInterface(org.javaan.model.Interface,org.javaan.model.Interface):
+
+--
+
+[M]void org.javaan.model.ClassContext.addType(org.javaan.model.Type):
+
+--
+
+[M]boolean org.javaan.model.ClassContext.containsClass(org.javaan.model.Clazz):
+
+--
+
+[M]boolean org.javaan.model.ClassContext.containsInterface(org.javaan.model.Interface):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.ClassContext.findMethod(java.util.Set,java.lang.String):
+
+--
+
+[M]org.javaan.model.NamedObject org.javaan.model.ClassContext.get(java.lang.String):
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getClasses():
+[M]java.util.Set org.javaan.model.ClassContext.getClasses()
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getClassesOfPackage(org.javaan.model.Package):
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getDirectIntefacesOfClass(org.javaan.model.Clazz):
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getDirectSpecializationsOfClass(org.javaan.model.Clazz):
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface):
+[M]java.util.Set org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface)
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getInterfaces():
+[M]java.util.Set org.javaan.model.ClassContext.getInterfaces()
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getInterfacesOfClass(org.javaan.model.Clazz):
+[M]java.util.Set org.javaan.model.ClassContext.getInterfacesOfClass(org.javaan.model.Clazz)
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getInterfacesOfPackage(org.javaan.model.Package):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.ClassContext.getMethod(org.javaan.model.Clazz,java.lang.String):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.ClassContext.getMethod(org.javaan.model.Interface,java.lang.String):
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getMethods():
+[M]java.util.Set org.javaan.model.ClassContext.getMethods()
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Clazz):
+[M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Clazz)
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Interface):
+[M]java.util.Set org.javaan.model.ClassContext.getMethods(org.javaan.model.Interface)
+
+--
+
+[M]org.javaan.model.Package org.javaan.model.ClassContext.getPackageOfType(org.javaan.model.Type):
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getPackages():
+[M]java.util.Set org.javaan.model.ClassContext.getPackages()
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface):
+[M]java.util.Set org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface)
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getSpecializationsOfClass(org.javaan.model.Clazz):
+[M]java.util.Set org.javaan.model.ClassContext.getSpecializationsOfClass(org.javaan.model.Clazz)
+
+--
+
+[M]org.javaan.model.Clazz org.javaan.model.ClassContext.getSuperClass(org.javaan.model.Clazz):
+
+--
+
+[M]org.javaan.model.TreeView org.javaan.model.ClassContext.getSuperClassGraph():
+
+--
+
+[M]java.util.List org.javaan.model.ClassContext.getSuperClassHierachy(org.javaan.model.Clazz):
+[M]java.util.List org.javaan.model.ClassContext.getSuperClassHierachy(org.javaan.model.Clazz)
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.model.ClassContext.getSuperInterfaceGraph():
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getSuperInterfaces(org.javaan.model.Interface):
+[M]java.util.Set org.javaan.model.ClassContext.getSuperInterfaces(org.javaan.model.Interface)
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getTypesOfPackage(org.javaan.model.Package):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.ClassContext.getVirtualMethod(org.javaan.model.Clazz,java.lang.String):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.ClassContext.getVirtualMethod(org.javaan.model.Interface,java.lang.String):
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Clazz):
+[M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Clazz)
+
+--
+
+[M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Interface):
+[M]java.util.Set org.javaan.model.ClassContext.getVirtualMethods(org.javaan.model.Interface)
+
+--
+
+[M]void org.javaan.model.DuplicatesFinder.<init>(java.util.List):
+[M]void org.javaan.model.DuplicatesFinder.<init>(java.util.List)
+
+--
+
+[M]java.util.Set org.javaan.model.DuplicatesFinder.createUniqueSet():
+[M]java.util.Set org.javaan.model.DuplicatesFinder.createUniqueSet()
+
+--
+
+[M]java.util.List org.javaan.model.DuplicatesFinder.find():
+[M]java.util.List org.javaan.model.DuplicatesFinder.find()
+
+--
+
+[M]boolean org.javaan.model.DuplicatesFinder.hasDuplicates():
+[M]boolean org.javaan.model.DuplicatesFinder.hasDuplicates()
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.collectLeaves(java.lang.Object,boolean):
+[M]java.util.Set org.javaan.model.GraphView.collectLeaves(java.lang.Object,boolean)
+
+--
+
+[M]org.javaan.model.GraphView org.javaan.model.GraphView.createSubgraph(java.util.Set,boolean):
+[M]org.javaan.model.GraphView org.javaan.model.GraphView.createSubgraph(java.util.Set,boolean)
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.edgeSet():
+[M]java.util.Set org.javaan.model.GraphView.edgeSet()
+
+--
+
+[M]java.lang.Object org.javaan.model.GraphView.getEdge(java.lang.Object,java.lang.Object):
+
+--
+
+[M]java.lang.Object org.javaan.model.GraphView.getEdgeSource(java.lang.Object):
+[M]java.lang.Object org.javaan.model.GraphView.getEdgeSource(java.lang.Object)
+
+--
+
+[M]java.lang.Object org.javaan.model.GraphView.getEdgeTarget(java.lang.Object):
+[M]java.lang.Object org.javaan.model.GraphView.getEdgeTarget(java.lang.Object)
+
+--
+
+[M]double org.javaan.model.GraphView.getEdgeWeight(java.lang.Object):
+[M]double org.javaan.model.GraphView.getEdgeWeight(java.lang.Object)
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.incomingEdgesOf(java.lang.Object):
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.outgoingEdgesOf(java.lang.Object):
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.predecessorsOf(java.lang.Object):
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.sourceVerticesOf(java.lang.Object):
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.successorsOf(java.lang.Object):
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.targetVerticesOf(java.lang.Object):
+
+--
+
+[M]void org.javaan.model.GraphView.traverseBreadthFirst(java.lang.Object,org.javaan.graph.GraphVisitor,boolean):
+
+--
+
+[M]void org.javaan.model.GraphView.traverseDepthFirst(java.lang.Object,org.javaan.graph.GraphVisitor,boolean):
+[M]void org.javaan.model.GraphView.traverseDepthFirst(java.lang.Object,org.javaan.graph.GraphVisitor,boolean)
+
+--
+
+[M]java.util.Set org.javaan.model.GraphView.vertexSet():
+[M]java.util.Set org.javaan.model.GraphView.vertexSet()
+
+--
+
+[M]void org.javaan.model.Method.<init>(org.javaan.model.Type,java.lang.String):
+
+--
+
+[M]java.lang.String org.javaan.model.Method.buildUniqueMethodName(org.javaan.model.Type,java.lang.String):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.Method.create(org.javaan.model.Type,java.lang.reflect.Constructor):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.Method.create(org.javaan.model.Type,java.lang.reflect.Method):
+
+--
+
+[M]org.javaan.model.Method org.javaan.model.Method.create(org.javaan.model.Type,org.apache.bcel.classfile.Method):
+
+--
+
+[M]org.apache.bcel.generic.MethodGen org.javaan.model.Method.createMethodGen(org.javaan.model.Clazz,org.apache.bcel.generic.ConstantPoolGen):
+
+--
+
+[M]java.util.List org.javaan.model.Method.getAnnotationTypes():
+[M]java.util.List org.javaan.model.Method.getAnnotationTypes()
+
+--
+
+[M]java.lang.String org.javaan.model.Method.getMethodName():
+
+--
+
+[M]java.util.List org.javaan.model.Method.getParamterTypes():
+
+--
+
+[M]java.lang.String org.javaan.model.Method.getReturnType():
+
+--
+
+[M]java.lang.String org.javaan.model.Method.getSignature():
+
+--
+
+[M]org.javaan.model.Type org.javaan.model.Method.getType():
+[M]org.javaan.model.Type org.javaan.model.Method.getType()
+
+--
+
+[M]boolean org.javaan.model.Method.isAbstract():
+
+--
+
+[M]java.lang.String org.javaan.model.NamedObject.getName():
+[M]java.lang.String org.javaan.model.NamedObject.getName()
+
+--
+
+[M]int org.javaan.model.NamedObjectBase.compareTo(java.lang.Object):
+
+--
+
+[M]int org.javaan.model.NamedObjectBase.compareTo(org.javaan.model.NamedObject):
+
+--
+
+[M]boolean org.javaan.model.NamedObjectBase.equals(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.model.NamedObjectBase.getName():
+[M]java.lang.String org.javaan.model.NamedObjectBase.getName()
+
+--
+
+[M]int org.javaan.model.NamedObjectBase.hashCode():
+
+--
+
+[M]java.lang.String org.javaan.model.NamedObjectBase.toString():
+
+--
+
+[M]org.javaan.model.NamedObject org.javaan.model.NamedObjectRepository.get(java.lang.String):
+
+--
+
+[M]org.javaan.model.Type org.javaan.model.Type.create(org.apache.bcel.classfile.JavaClass,java.lang.String):
+
+--
+
+[M]java.lang.String org.javaan.model.Type.getFilePath():
+
+--
+
+[M]org.apache.bcel.classfile.JavaClass org.javaan.model.Type.getJavaClass():
+
+--
+
+[M]org.javaan.model.Type$JavaType org.javaan.model.Type.getJavaType():
+
+--
+
+[M]java.lang.String org.javaan.model.Type.getShortName():
+
+--
+
+[M]java.lang.String org.javaan.model.Type.getShortName(java.lang.String):
+
+--
+
+[M]org.javaan.model.Clazz org.javaan.model.Type.toClazz():
+
+--
+
+[M]org.javaan.model.Interface org.javaan.model.Type.toInterface():
+
+--
+
+[M]void org.javaan.print.ConsoleDependencyFormatter.<init>():
+[M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
+
+--
+
+[M]java.lang.String org.javaan.print.ConsoleDependencyFormatter.format(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.print.ConsoleDependencyFormatter.format(org.javaan.model.Dependency):
+
+--
+
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+
+--
+
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String):
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String)
+
+--
+
+[M]void org.javaan.print.GraphPrinter.visitEdge(java.lang.Object,int):
+
+--
+
+[M]void org.javaan.print.GraphPrinter.visitGraph(org.jgrapht.Graph,int):
+
+--
+
+[M]void org.javaan.print.GraphPrinter.visitVertex(java.lang.Object,int):
+
+--
+
+[M]void org.javaan.print.MethodFormatter.<init>():
+[M]void org.javaan.print.MethodFormatter.<init>()
+
+--
+
+[M]java.lang.String org.javaan.print.MethodFormatter.format(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.print.MethodFormatter.format(org.javaan.model.Method):
+
+--
+
+[M]void org.javaan.print.MethodListDependencyFormatter.<init>(int):
+[M]void org.javaan.print.MethodListDependencyFormatter.<init>(int)
+
+--
+
+[M]java.lang.String org.javaan.print.MethodListDependencyFormatter.format(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.print.MethodListDependencyFormatter.format(org.javaan.model.Dependency):
+
+--
+
+[M]void org.javaan.print.NumberOfMethodsDependencyFormatter.<init>():
+[M]void org.javaan.print.NumberOfMethodsDependencyFormatter.<init>()
+
+--
+
+[M]java.lang.String org.javaan.print.NumberOfMethodsDependencyFormatter.format(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.print.NumberOfMethodsDependencyFormatter.format(org.javaan.model.Dependency):
+
+--
+
+[M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object):
+[M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
+
+--
+
+[M]void org.javaan.print.PackageFormatter.<init>():
+[M]void org.javaan.print.PackageFormatter.<init>()
+
+--
+
+[M]java.lang.String org.javaan.print.PackageFormatter.format(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.print.PackageFormatter.format(org.javaan.model.Package):
+
+--
+
+[M]void org.javaan.print.PrintUtil.<init>():
+
+--
+
+[M]java.lang.String org.javaan.print.PrintUtil.createArgumentList(java.util.List):
+
+--
+
+[M]void org.javaan.print.PrintUtil.indent(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.lang.Object,int):
+
+--
+
+[M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream):
+[M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
+[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
+[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+
+--
+
+[M]void org.javaan.print.TypeFormatter.<init>():
+[M]void org.javaan.print.TypeFormatter.<init>()
+
+--
+
+[M]void org.javaan.print.TypeFormatter.<init>(org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
+
+--
+
+[M]java.lang.String org.javaan.print.TypeFormatter.format(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.print.TypeFormatter.format(org.javaan.model.Type):
+
+--
+
+[M]void org.javaan.print.TypeInformationFormatter.<init>():
+[M]void org.javaan.print.TypeInformationFormatter.<init>()
+
+--
+
+[M]java.lang.String org.javaan.print.TypeInformationFormatter.format(java.lang.Object):
+
+--
+
+[M]java.lang.String org.javaan.print.TypeInformationFormatter.format(org.javaan.model.Type):
+
+--
+
+[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter):
+[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter)
+
+--
+
+[M]void org.javaan.print.VertexEdgeGraphPrinter.visitVertex(java.lang.Object,int):
+
+--
+

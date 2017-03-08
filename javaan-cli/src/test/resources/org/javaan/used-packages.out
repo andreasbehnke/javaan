@@ -1,0 +1,268 @@
+[P][Lorg.javaan:
+
+--
+
+[P]com.mxgraph.layout:
+
+--
+
+[P]com.mxgraph.layout.hierarchical:
+ [P]com.mxgraph.layout.hierarchical
+
+--
+
+[P]com.mxgraph.model:
+ [P]com.mxgraph.model
+
+--
+
+[P]com.mxgraph.swing:
+ [P]com.mxgraph.swing
+
+--
+
+[P]com.mxgraph.swing.handler:
+ [P]com.mxgraph.swing.handler
+
+--
+
+[P]com.mxgraph.swing.util:
+
+--
+
+[P]com.mxgraph.util:
+
+--
+
+[P]com.mxgraph.view:
+ [P]com.mxgraph.view
+
+--
+
+[P]java.awt:
+ [P]java.awt
+
+--
+
+[P]java.awt.dnd:
+
+--
+
+[P]java.awt.event:
+ [P]java.awt.event
+
+--
+
+[P]java.awt.image:
+
+--
+
+[P]java.awt.print:
+
+--
+
+[P]java.io:
+ [P]java.io
+
+--
+
+[P]java.lang:
+ [P]java.lang
+
+--
+
+[P]java.util:
+ [P]java.util
+
+--
+
+[P]java.util.logging:
+ [P]java.util.logging
+
+--
+
+[P]java.util.prefs:
+ [P]java.util.prefs
+
+--
+
+[P]javax.accessibility:
+
+--
+
+[P]javax.swing:
+ [P]javax.swing
+
+--
+
+[P]org.apache.commons.cli:
+ [P]org.apache.commons.cli
+
+--
+
+[P]org.apache.commons.lang3.text:
+ [P]org.apache.commons.lang3.text
+
+--
+
+[P]org.javaan:
+ [P]org.javaan
+  - 1 -> 
+   [P]com.mxgraph.view
+  - 3 -> 
+   [P]com.mxgraph.layout.hierarchical
+  - 2 -> 
+   [P]org.javaan.jgraphx
+    - 1 -> 
+     [P]org.javaan.print
+    - 2 -> 
+     [P]com.mxgraph.model
+    - 7 -> 
+     [P]java.lang
+    - 6 -> 
+     [P]java.util
+    - 5 -> 
+     [P]org.javaan.model
+    - 5 -> 
+  - 3 -> 
+   [P]javax.swing
+  - 1 -> 
+   [P]com.mxgraph.swing.handler
+  - 2 -> 
+   [P]com.mxgraph.swing
+  - 1 -> 
+   [P]java.awt.event
+  - 7 -> 
+   [P]java.awt
+  - 7 -> 
+   [P]java.util.prefs
+  - 15 -> 
+   [P]org.javaan.commands
+    - 6 -> 
+     [P]org.slf4j
+    - 6 -> 
+     [P]org.apache.commons.cli
+    - 8 -> 
+     [P]org.javaan.bytecode
+    - 1 -> 
+     [P]java.io
+    - 16 -> 
+    - 14 -> 
+    - 2 -> 
+    - 33 -> 
+    - 14 -> 
+    - 17 -> 
+    - 1 -> 
+  - 5 -> 
+   [P]java.util.logging
+  - 2 -> 
+   [P]org.apache.commons.lang3.text
+  - 4 -> 
+  - 2 -> 
+  - 15 -> 
+  - 6 -> 
+  - 10 -> 
+
+--
+
+[P]org.javaan.bytecode:
+ [P]org.javaan.bytecode
+
+--
+
+[P]org.javaan.commands:
+ [P]org.javaan.commands
+  - 6 -> 
+   [P]org.slf4j
+  - 6 -> 
+   [P]org.apache.commons.cli
+  - 2 -> 
+   [P]java.awt
+  - 8 -> 
+   [P]org.javaan.bytecode
+  - 17 -> 
+   [P]org.javaan
+    - 1 -> 
+     [P]com.mxgraph.view
+    - 3 -> 
+     [P]com.mxgraph.layout.hierarchical
+    - 2 -> 
+     [P]org.javaan.jgraphx
+      - 1 -> 
+       [P]org.javaan.print
+      - 2 -> 
+       [P]com.mxgraph.model
+      - 7 -> 
+       [P]java.lang
+      - 6 -> 
+       [P]java.util
+      - 5 -> 
+       [P]org.javaan.model
+      - 5 -> 
+    - 3 -> 
+     [P]javax.swing
+    - 1 -> 
+     [P]com.mxgraph.swing.handler
+    - 2 -> 
+     [P]com.mxgraph.swing
+    - 1 -> 
+     [P]java.awt.event
+    - 7 -> 
+     [P]java.util.prefs
+    - 5 -> 
+     [P]java.util.logging
+    - 2 -> 
+     [P]org.apache.commons.lang3.text
+    - 4 -> 
+     [P]java.io
+    - 2 -> 
+    - 15 -> 
+    - 7 -> 
+    - 15 -> 
+    - 6 -> 
+    - 10 -> 
+  - 1 -> 
+  - 16 -> 
+  - 14 -> 
+  - 33 -> 
+  - 14 -> 
+  - 1 -> 
+
+--
+
+[P]org.javaan.graph:
+
+--
+
+[P]org.javaan.jgraphx:
+ [P]org.javaan.jgraphx
+  - 1 -> 
+   [P]org.javaan.print
+  - 2 -> 
+   [P]com.mxgraph.model
+  - 7 -> 
+   [P]java.lang
+  - 5 -> 
+   [P]com.mxgraph.view
+  - 6 -> 
+   [P]java.util
+  - 5 -> 
+   [P]org.javaan.model
+
+--
+
+[P]org.javaan.model:
+ [P]org.javaan.model
+
+--
+
+[P]org.javaan.print:
+ [P]org.javaan.print
+
+--
+
+[P]org.slf4j:
+ [P]org.slf4j
+
+--
+
