@@ -2165,17 +2165,11 @@
 
 --
 
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
- [M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.commands.BaseDependencyGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.Writer,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
 
 --
 
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String):
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String)
- [M]void org.javaan.commands.ShowDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.Writer,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String):
 
 --
 
@@ -2278,51 +2272,35 @@
 
 --
 
-[M]void org.javaan.print.PrintUtil.indent(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.lang.Object,int):
+[M]void org.javaan.print.PrintUtil.format(java.io.Writer,java.lang.String,java.lang.Object[]):
 
 --
 
-[M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream):
-[M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
- [M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List)
-  [M]org.javaan.ReturnCodes org.javaan.commands.ListDuplicates.execute(org.javaan.CommandContext)
- [M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.commands.BaseCallGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.commands.BaseDependencyGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+[M]void org.javaan.print.PrintUtil.indent(java.io.Writer,org.javaan.print.ObjectFormatter,java.lang.Object,int):
 
 --
 
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
- [M]void org.javaan.commands.ListPackages.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.ListClasses.printClasses(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.commands.ListClasses.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.commands.ListClasses.printClassesAndSpecializations(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.commands.ListInterfaces.printInterfaces(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSuperInterfaces(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
+[M]void org.javaan.print.PrintUtil.print(java.io.Writer,java.lang.String):
 
 --
 
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
- [M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List)
-  [M]org.javaan.ReturnCodes org.javaan.commands.ListDuplicates.execute(org.javaan.CommandContext)
- [M]void org.javaan.commands.ListClasses.printClassesAndMethods(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.commands.ListClasses.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.ListClasses.printClassesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.commands.ListInterfaces.printInterfacesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.ListInterfaces.printInterfacesAndMethods(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.commands.BaseCallGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.commands.BaseCallGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.commands.BaseDependencyGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.commands.BaseDependencyGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+[M]void org.javaan.print.PrintUtil.printSeparator(java.io.Writer):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer,java.lang.String):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
 
 --
 
@@ -2361,10 +2339,7 @@
 
 --
 
-[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter):
-[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter)
- [M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.commands.BaseCallGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.Writer,org.javaan.print.ObjectFormatter):
 
 --
 

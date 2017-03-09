@@ -38,14 +38,17 @@ public class TestRegressionJavaanCli {
 
     private static final String TEST_LIBRARY = "src/test/resources/org/javaan/javaan-cli-2.1.jar";
 
+    private static final String REGRESSION_FILE_PATH = "target/";
+
     @Parameterized.Parameters(name = "{0}")
     public static final RegressionData[] regresseionTestData() {
-       return new RegressionData[]{
-               new RegressionData("help.out", "--help"),
-               new RegressionData("classes.out", "classes", TEST_LIBRARY),
-               new RegressionData("used-packages.out", "used-packages", TEST_LIBRARY),
-               new RegressionData("callers.out", "callers", TEST_LIBRARY)
-       };
+        return new RegressionData[]{
+                new RegressionData("help.out", "--help"),
+                new RegressionData("classes.out", "classes", TEST_LIBRARY),
+                new RegressionData("used-packages.out", "used-packages", TEST_LIBRARY),
+                new RegressionData("callers.out", "callers", TEST_LIBRARY),
+                new RegressionData("callers.filter.out", "callers", "-method", "org.javaan", TEST_LIBRARY)
+        };
     }
 
     @Parameterized.Parameter()
@@ -67,7 +70,7 @@ public class TestRegressionJavaanCli {
         new JavaanCli(commandLineArguments, JavaanCli.getCommands(), writer).execute();
         String outputAsString = writer.toString();
         String[] output = StringUtils.split(outputAsString, System.lineSeparator());
-        FileUtils.writeStringToFile(new File(regressionData.regressionFileName), outputAsString, "UTF8");
+        FileUtils.writeStringToFile(new File(REGRESSION_FILE_PATH + regressionData.regressionFileName), outputAsString, "UTF8");
         assertArrayEquals(expectedOutput, output);
     }
 }
