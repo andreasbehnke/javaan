@@ -29,11 +29,16 @@ public class TestRegressionJavaanCli {
             this.commandLineArguments = commandLineArguments;
             this.regressionFileName = regressionFileName;
         }
+
+        @Override
+        public String toString() {
+            return "javaan " + StringUtils.join(commandLineArguments, " ");
+        }
     }
 
     private static final String TEST_LIBRARY = "src/test/resources/org/javaan/javaan-cli-2.1.jar";
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{0}")
     public static final RegressionData[] regresseionTestData() {
        return new RegressionData[]{
                new RegressionData("help.out", "--help"),
