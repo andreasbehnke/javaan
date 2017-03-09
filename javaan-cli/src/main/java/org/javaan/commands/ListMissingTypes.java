@@ -20,7 +20,7 @@ package org.javaan.commands;
  * #L%
  */
 
-import java.io.PrintStream;
+import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +30,7 @@ import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Type;
+import org.javaan.print.PrintUtil;
 
 public class ListMissingTypes extends BaseTypeLoadingCommand {
 
@@ -53,7 +54,8 @@ public class ListMissingTypes extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+	protected void execute(CommandContext context, List<Type> types) {
+		Writer writer = context.getWriter();
 		ClassContextBuilder classContextBuilder = new ClassContextBuilder(types);
 		ClassContext classContext = classContextBuilder.build();
 		Set<String> missingTypes = classContextBuilder.getMissingTypes();
@@ -62,7 +64,7 @@ public class ListMissingTypes extends BaseTypeLoadingCommand {
 		missingTypes.addAll(callGraphBuilder.getMissingTypes());
 		List<String> sortedMissingTypes = SortUtil.sort(missingTypes);
 		for (String missingType : sortedMissingTypes) {
-			output.println(missingType);
+			PrintUtil.println(writer, missingType);
 		}
 	}
 

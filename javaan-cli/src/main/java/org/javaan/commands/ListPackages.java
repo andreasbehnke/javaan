@@ -1,6 +1,7 @@
 package org.javaan.commands;
 
 import java.io.PrintStream;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class ListPackages extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+	protected void execute(CommandContext context, List<Type> types) {
 		this.classContext = new ClassContextBuilder(types).build();
 		boolean isTopologicalSort = context.isTopologicalSort();
 		Collection<Package> packages = null;
@@ -59,7 +60,7 @@ public class ListPackages extends BaseTypeLoadingCommand {
 		if (!isTopologicalSort) {
 			packages = SortUtil.sort(packages);
 		}
-		PrintUtil.println(output, packages, "", "[P]", System.lineSeparator());
+		PrintUtil.println(context.getWriter(), packages, "", "[P]", System.lineSeparator());
 	}
 
 }

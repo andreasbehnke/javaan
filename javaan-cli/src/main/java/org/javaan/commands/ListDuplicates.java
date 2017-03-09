@@ -21,7 +21,7 @@ package org.javaan.commands;
  */
 
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.Writer;
 import java.util.List;
 
 import org.apache.commons.cli.Options;
@@ -62,7 +62,7 @@ private final static String NAME = "duplicates";
 			if(types == null) {
 				return ReturnCodes.errorParse;
 			}
-			printDuplicates(System.out, types);
+			printDuplicates(context.getWriter(), types);
 		} catch (IOException e) {
 			LOG.error("Could not load class files from libraries", e);
 			return ReturnCodes.errorCommand;
@@ -70,7 +70,7 @@ private final static String NAME = "duplicates";
 		return ReturnCodes.ok;
 	}
 
-	private void printDuplicates(PrintStream output, List<Type> types) {
+	private void printDuplicates(Writer output, List<Type> types) {
 		List<List<Type>> duplicates = new DuplicatesFinder<Type>(types).find();
 		SortUtil.sort(duplicates);
 		ObjectFormatter<Type> formatter = new TypeInformationFormatter();

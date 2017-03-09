@@ -21,6 +21,7 @@ package org.javaan.print;
  */
 
 import java.io.PrintStream;
+import java.io.Writer;
 
 import org.javaan.graph.GraphVisitorAdapter;
 import org.javaan.graph.VertexEdge;
@@ -30,15 +31,15 @@ public class VertexEdgeGraphPrinter<V>  extends GraphVisitorAdapter<V, VertexEdg
 
 	private final ObjectFormatter<V> formatter;
 	
-	private final PrintStream output;
+	private final Writer writer;
 	
-	public VertexEdgeGraphPrinter(PrintStream output, ObjectFormatter<V> formatter) {
-		this.output = output;
+	public VertexEdgeGraphPrinter(Writer writer, ObjectFormatter<V> formatter) {
+		this.writer = writer;
 		this.formatter = formatter;
 	}
 
 	@Override
 	public void visitVertex(V node, int level) {
-		PrintUtil.indent(output, formatter, node, level);
+		PrintUtil.indent(writer, formatter, node, level);
 	}
 }

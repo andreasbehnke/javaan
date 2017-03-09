@@ -3,6 +3,8 @@ package org.javaan;
 import org.apache.commons.cli.CommandLine;
 import org.javaan.commands.StandardOptions;
 
+import java.io.Writer;
+
 /**
  * Provides all information needed to run a specific command.
  */
@@ -18,6 +20,8 @@ public class CommandContext {
 		NONE
 	}
 
+	private final Writer writer;
+
 	private final CommandLine commandLine;
 	
 	private final String[] arguments;
@@ -26,12 +30,17 @@ public class CommandContext {
 	
 	private ReturnCodes returnCode = ReturnCodes.ok;
 
-	public CommandContext(CommandLine commandLine, String[] arguments, Settings settings) {
+	public CommandContext(Writer writer, CommandLine commandLine, String[] arguments, Settings settings) {
+		this.writer = writer;
 		this.commandLine = commandLine;
 		this.arguments = arguments;
 		this.settings = settings;
 	}
-	
+
+	public Writer getWriter() {
+		return writer;
+	}
+
 	public String[] getArguments() {
 		return arguments;
 	}

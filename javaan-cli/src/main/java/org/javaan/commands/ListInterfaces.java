@@ -20,7 +20,7 @@ package org.javaan.commands;
  * #L%
  */
 
-import java.io.PrintStream;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 
@@ -67,7 +67,8 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+	protected void execute(CommandContext context, List<Type> types) {
+		Writer writer = context.getWriter();
 		this.classContext = new ClassContextBuilder(types).build();
 		Collection<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
 		if (context.hasFilterCriteria()) {
@@ -76,57 +77,57 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 		}
 		switch (context.getAdditionalTypeInformation()) {
 		case SUPER_CLASSES:
-			printInterfacesAndSuperInterfaces(output, interfaces);
+			printInterfacesAndSuperInterfaces(writer, interfaces);
 			break;
 		case SPECIALIZATIONS:
-			printInterfacesAndSpecializations(output, interfaces);
+			printInterfacesAndSpecializations(writer, interfaces);
 			break;
 		case IMPLEMENTATIONS:
-			printInterfacesAndImplementations(output, interfaces);
+			printInterfacesAndImplementations(writer, interfaces);
 			break;
 		case METHODS:
-			printInterfacesAndMethods(output, interfaces);
+			printInterfacesAndMethods(writer, interfaces);
 			break;
 		case VIRTUAL_METHODS:
-			printInterfacesAndVirtualMethods(output, interfaces);
+			printInterfacesAndVirtualMethods(writer, interfaces);
 			break;
 		default:
-			printInterfaces(output, interfaces);
+			printInterfaces(writer, interfaces);
 			break;
 		}
 	}
 	
-	private void printInterfaces(PrintStream output, Collection<Interface> interfaces) {
-		PrintUtil.println(output, interfaces, "", "[I]", System.lineSeparator());
+	private void printInterfaces(Writer writer, Collection<Interface> interfaces) {
+		PrintUtil.println(writer, interfaces, "", "[I]", System.lineSeparator());
 	}
 
-	private void printInterfacesAndSuperInterfaces(PrintStream output, Collection<Interface> interfaces) {
+	private void printInterfacesAndSuperInterfaces(Writer writer, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {	
-			PrintUtil.println(output, SortUtil.sort(classContext.getSuperInterfaces(interfaceName)), "[I]" + interfaceName + ": ", "[I]", ", ");
+			PrintUtil.println(writer, SortUtil.sort(classContext.getSuperInterfaces(interfaceName)), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
 	
-	private void printInterfacesAndSpecializations(PrintStream output, Collection<Interface> interfaces) {
+	private void printInterfacesAndSpecializations(Writer writer, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {	
-			PrintUtil.println(output, SortUtil.sort(classContext.getSpecializationOfInterface(interfaceName)), "[I]" + interfaceName + ": ", "[I]", ", ");
+			PrintUtil.println(writer, SortUtil.sort(classContext.getSpecializationOfInterface(interfaceName)), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
 
-	private void printInterfacesAndImplementations(PrintStream output, Collection<Interface> interfaces) {
+	private void printInterfacesAndImplementations(Writer writer, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
-			PrintUtil.println(output, SortUtil.sort(classContext.getImplementations(interfaceName)), "[I]" + interfaceName + ": ", "[C]", ", ");
+			PrintUtil.println(writer, SortUtil.sort(classContext.getImplementations(interfaceName)), "[I]" + interfaceName + ": ", "[C]", ", ");
 		}
 	}
 	
-	private void printInterfacesAndMethods(PrintStream output, Collection<Interface> interfaces) {
+	private void printInterfacesAndMethods(Writer writer, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
+			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
 		}
 	}
 	
-	private void printInterfacesAndVirtualMethods(PrintStream output, Collection<Interface> interfaces) {
+	private void printInterfacesAndVirtualMethods(Writer writer, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
+			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
 		}
 	}
 }

@@ -20,7 +20,7 @@ package org.javaan.commands;
  * #L%
  */
 
-import java.io.PrintStream;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 
@@ -67,7 +67,8 @@ public class ListClasses extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+	protected void execute(CommandContext context, List<Type> types) {
+		Writer writer = context.getWriter();
 		this.classContext = new ClassContextBuilder(types).build();
 		Collection<Clazz> classes = classContext.getClasses();
 		if (context.hasFilterCriteria()) {
@@ -77,57 +78,57 @@ public class ListClasses extends BaseTypeLoadingCommand {
 		classes = SortUtil.sort(classes);
 		switch (context.getAdditionalTypeInformation()) {
 		case SUPER_CLASSES:
-			printClassesAndSuperClasses(output, classes);
+			printClassesAndSuperClasses(writer, classes);
 			break;
 		case SPECIALIZATIONS:
-			printClassesAndSpecializations(output, classes);
+			printClassesAndSpecializations(writer, classes);
 			break;
 		case INTERFACES:
-			printClassesAndInterfaces(output, classes);
+			printClassesAndInterfaces(writer, classes);
 			break;
 		case METHODS:
-			printClassesAndMethods(output, classes);
+			printClassesAndMethods(writer, classes);
 			break;
 		case VIRTUAL_METHODS:
-			printClassesAndVirtualMethods(output, classes);
+			printClassesAndVirtualMethods(writer, classes);
 			break;
 		default:
-			printClasses(output, classes);
+			printClasses(writer, classes);
 			break;
 		}
 	}
 	
-	private void printClasses(PrintStream output, Collection<Clazz> classes) {
-		PrintUtil.println(output, classes, "", "[C]", System.lineSeparator());
+	private void printClasses(Writer writer, Collection<Clazz> classes) {
+		PrintUtil.println(writer, classes, "", "[C]", System.lineSeparator());
 	}
 
-	private void printClassesAndSuperClasses(PrintStream output, Collection<Clazz> classes) {
+	private void printClassesAndSuperClasses(Writer writer, Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, classContext.getSuperClassHierachy(clazz), "", "[C]", " --> ");
+			PrintUtil.println(writer, classContext.getSuperClassHierachy(clazz), "", "[C]", " --> ");
 		}
 	}
 	
-	private void printClassesAndSpecializations(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndSpecializations(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, classContext.getSpecializationsOfClass(clazz), "[C]" + clazz + ": ", "[C]", ", ");
+			PrintUtil.println(writer, classContext.getSpecializationsOfClass(clazz), "[C]" + clazz + ": ", "[C]", ", ");
 		}
 	}
 	
-	private void printClassesAndInterfaces(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndInterfaces(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, classContext.getInterfacesOfClass(clazz), "[C]" + clazz + ": ", "[I]", ", ");
+			PrintUtil.println(writer, classContext.getInterfacesOfClass(clazz), "[C]" + clazz + ": ", "[I]", ", ");
 		}
 	}
 	
-	private void printClassesAndMethods(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndMethods(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
+			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
 	
-	private void printClassesAndVirtualMethods(PrintStream output,  Collection<Clazz> classes) {
+	private void printClassesAndVirtualMethods(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(output, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
+			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
 }

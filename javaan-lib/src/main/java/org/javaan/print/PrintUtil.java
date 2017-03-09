@@ -20,50 +20,102 @@ package org.javaan.print;
  * #L%
  */
 
-import java.io.PrintStream;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 
 public class PrintUtil {
 
-	static final String BLOCK_SEPARATOR = "\n--\n";
+	static final String LINE_SEPARATOR = System.lineSeparator();
+
+	static final String BLOCK_SEPARATOR = LINE_SEPARATOR + "--" + LINE_SEPARATOR;
 
 	static final String LEVEL_SPACER = " ";
 
-	public static <E> void println(PrintStream output, Collection<E> elements, String prefix, String linePrefix, String separator) {
-		println(output, null, elements, prefix, linePrefix, separator);
+	public static <E> void println(Writer writer, Collection<E> elements, String prefix, String linePrefix, String separator) {
+		println(writer, null, elements, prefix, linePrefix, separator);
 	}
 	
-	public static <F> void println(PrintStream output, ObjectFormatter<F> formatter, Collection<F> elements, String prefix, String linePrefix, String separator) {
-		output.print(prefix);
-		boolean first = true;
-		for (F e : elements) {
-			if(first) {
-				first = false;
-			} else {
-				output.print(separator);
-			}
-			output.print(linePrefix);
-			if (formatter == null) {
-				output.print(e.toString());
-			} else {
-				output.print(formatter.format(e));
-			}
-		}
-		output.println();
+	public static <F> void println(Writer writer, ObjectFormatter<F> formatter, Collection<F> elements, String prefix, String linePrefix, String separator) {
+		try {
+            writer.write(prefix);
+            boolean first = true;
+            for (F e : elements) {
+                if (first) {
+                    first = false;
+                } else {
+                    writer.write(separator);
+                }
+                writer.write(linePrefix);
+                if (formatter == null) {
+                    writer.write(e.toString());
+                } else {
+                    writer.write(formatter.format(e));
+                }
+            }
+            writer.write(LINE_SEPARATOR);
+            writer.flush();
+        } catch (IOException ioe) {
+		    throw new RuntimeException(ioe);
+        }
 	}
+
+	public static void println(Writer writer) {
+	    try {
+	        writer.write(LINE_SEPARATOR);
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+    }
+
+    public static void println(Writer writer, String line) {
+        try {
+            writer.append(line).write(LINE_SEPARATOR);
+            writer.flush();
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+    }
+
+    public static void print(Writer writer, String line) {
+        try {
+            writer.append(line).flush();
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+    }
 	
-	public static <F> void indent(PrintStream output, ObjectFormatter<F> formatter, F element, int indentWidth) {
+	public static <F> void indent(Writer writer, ObjectFormatter<F> formatter, F element, int indentWidth) {
 		StringBuilder buffer = new StringBuilder();
 		for (int i=0; i < indentWidth; i++) {
 			buffer.append(LEVEL_SPACER);
 		}
-		output.append(buffer).append(formatter.format(element)).println();
-	}
+        try {
+            writer.append(buffer).append(formatter.format(element)).write(LINE_SEPARATOR);
+            writer.flush();
+        } catch (IOException ioe) {
+		    throw new RuntimeException(ioe);
+        }
+    }
 	
-	public static void printSeparator(PrintStream output) {
-		output.println(PrintUtil.BLOCK_SEPARATOR);
-	}
+	public static void printSeparator(Writer writer) {
+        try {
+            writer.write(PrintUtil.BLOCK_SEPARATOR);
+            writer.flush();
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+    }
+
+    public static void format(Writer writer, String format, Object... args) {
+        try {
+            writer.append(String.format(format, args)).write(LINE_SEPARATOR);
+            writer.flush();
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+    }
 	
 	public static String createArgumentList(List<String> args) {
 		if (args == null) {

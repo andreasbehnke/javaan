@@ -61,7 +61,7 @@ public class ShowPackageDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 	}
 
 	@Override
-	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
+	protected void execute(CommandContext context, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
@@ -69,7 +69,7 @@ public class ShowPackageDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 				context.isResolveDependenciesInClassHierarchy()).build();
 		ObjectFormatter<Package> packageFormatter = new PackageFormatter();
 		ObjectFormatter<Dependency> dependencyFormatter = new ConsoleDependencyFormatter();
-		GraphPrinter<Package, Dependency> printer = new GraphPrinter<Package, Dependency>(output, packageFormatter, dependencyFormatter, "cycle %s:");
+		GraphPrinter<Package, Dependency> printer = new GraphPrinter<Package, Dependency>(context.getWriter(), packageFormatter, dependencyFormatter, "cycle %s:");
 		callGraph.traversePackageDependencyCycles(printer);
 	}
 }

@@ -1,11 +1,19 @@
 package org.javaan;
 
+import static org.junit.Assert.*;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(Parameterized.class)
@@ -28,25 +36,31 @@ public class TestRegressionJavaanCli {
     @Parameterized.Parameters
     public static final RegressionData[] regresseionTestData() {
        return new RegressionData[]{
-          new RegressionData("classes.out", "classes", TEST_LIBRARY)
+               new RegressionData("help.out", "--help"),
+               new RegressionData("classes.out", "classes", TEST_LIBRARY)
        };
     }
 
-    private final List<String> expectedOutput;
-
-    private final String[] commandLineArguments;
-
-    public TestRegressionJavaanCli(RegressionData regressionData) {
-        try {
-            this.expectedOutput = IOUtils.readLines(TestRegressionJavaanCli.class.getResourceAsStream(regressionData.regressionFileName), "UTF8");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-        this.commandLineArguments = regressionData.commandLineArguments;
-    }
+    @Parameterized.Parameter()
+    public RegressionData regressionData;
 
     @Test
-    public void testCli() {
-        new JavaanCli(commandLineArguments, JavaanCli.getCommands()).execute(); //TODO: inject writer and compare output after refactoring
+    public void testCli() throws IOException {
+        String[] expectedOutput;
+        String[] commandLineArguments;
+        try {
+            String output = IOUtils.toString(TestRegressionJavaanCli.class.getResourceAsStream(regressionData.regressionFileName), "UTF8");
+            expectedOutput = StringUtils.split(output, System.lineSeparator());
+            commandLineArguments = regressionData.commandLineArguments;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        StringWriter writer = new StringWriter();
+        new JavaanCli(commandLineArguments, JavaanCli.getCommands(), writer).execute();
+        String outputAsString = writer.toString();
+        String[] output = StringUtils.split(outputAsString, System.lineSeparator());
+        //FileUtils.writeStringToFile(new File(regressionData.regressionFileName), outputAsString, "UTF8");
+        assertArrayEquals(expectedOutput, output);
     }
 }

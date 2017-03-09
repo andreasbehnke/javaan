@@ -1,0 +1,205 @@
+usage:
+
+javaan <command> <arguments> <options>
+javaan --help
+javaan <command> --help
+
+javaan is a tool for static code analysis. It is using byte code analysis to provide informations about the loaded
+types. There are several sub commands for different tasks. The command name is followed by a list of jar, war or ear
+files, which should be processed, and options.
+
+supported commands:
+
+ packages:       List all packages of the libraries
+ classes:        List all classes of the libraries
+ interfaces:     List all interfaces of the libraries
+ duplicates:     List all duplicate classes and interfaces of the libraries being loaded. Classes are marked as
+                 duplications if they share canonical name, they may vary in bytecode and file location.
+ missing-types:  List types which are referenced by loaded types but could not be resolved.
+ cycles:         Show call graph for each dependency cycle in the loaded libraries. Cycles within class hierachies are
+                 omitted, if option -rdh is not provided.
+ callers:        Display the graph of methods which call another method. This is the bottom up view of the call graph.
+ callees:        Display the graph of methods being called by another method. This is the top down view of the call
+                 graph.
+ used:           Display the graph of classes being used by another class. This is the top down view of the class
+                 dependency graph.
+ using:          Display the graph of classes using another class. This is the bottom up view of the class dependency
+                 graph.
+ package-cycles: Show call graph for each package dependency cycle in the loaded libraries.
+ used-packages:  Display the graph of packages being used by another package. This is the top down view of the package
+                 dependency graph.
+ using-packages: Display the graph of packages using another package. This is the bottom up view of the package
+                 dependency graph.
+ set:            Makes options persistent across consecutive calls. If no option is provided, lists all persistent
+                 options. The following options can be set, separated by whitespace: rmi
+                 (resolve-method-implementations) rdh (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph) 
+ reset:          Resets options which have been made persistent with set command. If no option is provided, lists all
+                 persistent options. The following options can be resetted, separated by whitespace: rmi
+                 (resolve-method-implementations) rdh (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph) 
+Use javaan <command> --help to display detailed options of command.
+
+
+command details:
+
+
+packages
+------------------------------------------------------------
+
+usage: javaan packages <files> <options>
+List all packages of the libraries
+ -f,--filter <arg>                                Filter types by <arg>. All types which contain <arg> in name will
+                                                  match.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+ -topo,--topological-sort                         Sort dependency graph in topological order. Starts with types having
+                                                  no dependencies.
+
+classes
+------------------------------------------------------------
+
+usage: javaan classes <files> <options>
+List all classes of the libraries
+ -f,--filter <arg>         Filter types by <arg>. All types which contain <arg> in name will match.
+ -i,--interfaces           For each class, list all implemented interfaces
+ -m,--methods              For each type, list methods
+ -s,--super                For each type, list the hierachy of super types
+ -spec,--specializations   For each type, list specialization types
+ -vm,--virtual-methods     For each type, list all methods and all inherited (virtual) methods
+
+interfaces
+------------------------------------------------------------
+
+usage: javaan interfaces <files> <options>
+List all interfaces of the libraries
+ -f,--filter <arg>         Filter types by <arg>. All types which contain <arg> in name will match.
+ -impl,--implementations   For each interfaces, list all implementing classes.
+ -m,--methods              For each type, list methods
+ -s,--super                For each type, list the hierachy of super types
+ -spec,--specializations   For each type, list specialization types
+ -vm,--virtual-methods     For each type, list all methods and all inherited (virtual) methods
+
+duplicates
+------------------------------------------------------------
+
+usage: javaan duplicates <files> <options>
+List all duplicate classes and interfaces of the libraries being loaded. Classes are marked as duplications if they
+share canonical name, they may vary in bytecode and file location.
+
+
+missing-types
+------------------------------------------------------------
+
+usage: javaan missing-types <files> <options>
+List types which are referenced by loaded types but could not be resolved.
+
+
+cycles
+------------------------------------------------------------
+
+usage: javaan cycles <files> <options>
+Show call graph for each dependency cycle in the loaded libraries. Cycles within class hierachies are omitted, if option
+-rdh is not provided.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+callers
+------------------------------------------------------------
+
+usage: javaan callers <files> <options>
+Display the graph of methods which call another method. This is the bottom up view of the call graph.
+ -l,--leaves                                      Only display leaf elements of graph.
+ -method <arg>                                    Filter methods by <arg>. The format of a matching method is
+                                                  '<canonical class name> - <methodname><signature>'. All methods which
+                                                  contain <arg> in name will match. If <arg> starts with "a:<subarg>",
+                                                  e.g. "a:Schedule", all methods with an annotation which contain
+                                                  <subarg> in name will match.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+callees
+------------------------------------------------------------
+
+usage: javaan callees <files> <options>
+Display the graph of methods being called by another method. This is the top down view of the call graph.
+ -l,--leaves                                      Only display leaf elements of graph.
+ -method <arg>                                    Filter methods by <arg>. The format of a matching method is
+                                                  '<canonical class name> - <methodname><signature>'. All methods which
+                                                  contain <arg> in name will match. If <arg> starts with "a:<subarg>",
+                                                  e.g. "a:Schedule", all methods with an annotation which contain
+                                                  <subarg> in name will match.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+used
+------------------------------------------------------------
+
+usage: javaan used <files> <options>
+Display the graph of classes being used by another class. This is the top down view of the class dependency graph.
+ -2d,--display-2d-graph                           Displays result in a 2D graph representation.
+ -f,--filter <arg>                                Filter types by <arg>. All types which contain <arg> in name will
+                                                  match.
+ -l,--leaves                                      Only display leaf elements of graph.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+using
+------------------------------------------------------------
+
+usage: javaan using <files> <options>
+Display the graph of classes using another class. This is the bottom up view of the class dependency graph.
+ -2d,--display-2d-graph                           Displays result in a 2D graph representation.
+ -f,--filter <arg>                                Filter types by <arg>. All types which contain <arg> in name will
+                                                  match.
+ -l,--leaves                                      Only display leaf elements of graph.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+package-cycles
+------------------------------------------------------------
+
+usage: javaan package-cycles <files> <options>
+Show call graph for each package dependency cycle in the loaded libraries.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+used-packages
+------------------------------------------------------------
+
+usage: javaan used-packages <files> <options>
+Display the graph of packages being used by another package. This is the top down view of the package dependency graph.
+ -2d,--display-2d-graph                           Displays result in a 2D graph representation.
+ -f,--filter <arg>                                Filter types by <arg>. All types which contain <arg> in name will
+                                                  match.
+ -l,--leaves                                      Only display leaf elements of graph.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+using-packages
+------------------------------------------------------------
+
+usage: javaan using-packages <files> <options>
+Display the graph of packages using another package. This is the bottom up view of the package dependency graph.
+ -2d,--display-2d-graph                           Displays result in a 2D graph representation.
+ -f,--filter <arg>                                Filter types by <arg>. All types which contain <arg> in name will
+                                                  match.
+ -l,--leaves                                      Only display leaf elements of graph.
+ -rdh,--resolve-dependencies-in-class-hierarchy   Enables resolve of dependencies within class hiearchy.
+ -rmi,--resolve-method-implementations            Enables resolve of method implementations for abstract methods.
+
+set
+------------------------------------------------------------
+
+usage: javaan set <optionlist>
+Makes options persistent across consecutive calls. If no option is provided, lists all persistent options. The following
+options can be set, separated by whitespace: rmi (resolve-method-implementations) rdh
+(resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph)
+
+
+reset
+------------------------------------------------------------
+
+usage: javaan reset <optionlist>
+Resets options which have been made persistent with set command. If no option is provided, lists all persistent options.
+The following options can be resetted, separated by whitespace: rmi (resolve-method-implementations) rdh
+(resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph)
+

@@ -21,6 +21,7 @@ package org.javaan.commands;
  */
 
 import java.io.PrintStream;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -74,27 +75,28 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	
 	protected abstract CellStyle<T, Dependency> getDependencyGraphCellStyle();
 
-	private void printGraph(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
-		GraphVisitor<T, Dependency> printer = new GraphPrinter<>(output, typeFormatter, dependencyFormatter);
+	private void printGraph(CallGraph callGraph, Writer writer, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
+		GraphVisitor<T, Dependency> printer = new GraphPrinter<>(writer, typeFormatter, dependencyFormatter);
 		Set<T> filter = new HashSet<>(types);
 		GraphView<T, Dependency> graphView = getDependencyGraph(callGraph, filter);
 		for (T type : types) {
-			output.println(String.format("%s:",typeFormatter.format(type)));
+			PrintUtil.format(writer,"%s:",typeFormatter.format(type));
 			graphView.traverseDepthFirst(type, printer, false);
-			PrintUtil.printSeparator(output);
+			PrintUtil.printSeparator(writer);
 		}
 	}
 
-	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<T> types, ObjectFormatter<T> formatter) {
+	private void printLeafObjects(CallGraph callGraph, Writer writer, Collection<T> types, ObjectFormatter<T> formatter) {
 		GraphView<T, Dependency> graphView = getDependencyGraph(callGraph, null);
 		for (T type : types) {
-			PrintUtil.println(output, formatter, SortUtil.sort(graphView.collectLeaves(type, false)), formatter.format(type) , "\n\t", ", ");
+			PrintUtil.println(writer, formatter, SortUtil.sort(graphView.collectLeaves(type, false)), formatter.format(type) , "\n\t", ", ");
 		}
 	}
 
 	@Override
-	protected void execute(PrintStream output, final CommandContext context, List<Type> types) {
-		String criteria = context.getFilterCriteria();
+	protected void execute(final CommandContext context, List<Type> types) {
+        Writer writer = context.getWriter();
+        String criteria = context.getFilterCriteria();
 		boolean printLeaves = context.isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(
@@ -104,7 +106,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		Collection<T> input = getInput(classContext, callGraph, criteria);
 		final ObjectFormatter<T> typeFormatter = getTypeFormatter();
 		if (printLeaves) {
-			printLeafObjects(callGraph, output, input, typeFormatter);
+			printLeafObjects(callGraph, writer, input, typeFormatter);
 		} else if (context.isDisplay2dGraph())  {
 			Set<T> filter = new HashSet<>(input);
 			final GraphView<T, Dependency> graph = getDependencyGraph(callGraph, filter);
@@ -116,7 +118,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 			});
 			context.setReturnCode(ReturnCodes.threadSpawn);
 		} else {
-			printGraph(callGraph, output, input, typeFormatter, getConsoleDependencyFormatter());
+			printGraph(callGraph, writer, input, typeFormatter, getConsoleDependencyFormatter());
 		}
 	}	
 }

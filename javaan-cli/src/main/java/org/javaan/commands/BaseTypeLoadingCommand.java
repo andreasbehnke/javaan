@@ -21,7 +21,9 @@ package org.javaan.commands;
  */
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,7 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 						+ "Use command \"javaan listDuplicates\" to find out duplicate types.");
 				types = new ArrayList<Type>(finder.createUniqueSet());
 			}
-			execute(System.out, commandContext, types);
+			execute(commandContext, types);
 		} catch (IOException e) {
 			LOG.error("Could not load class files from libraries", e);
 			return ReturnCodes.errorCommand;
@@ -57,5 +59,5 @@ public abstract class BaseTypeLoadingCommand extends BaseCommand {
 		return commandContext.getReturnCode();
 	}
 	
-	protected abstract void execute(PrintStream output, CommandContext commandContext, List<Type> types);
+	protected abstract void execute(CommandContext commandContext, List<Type> types);
 }

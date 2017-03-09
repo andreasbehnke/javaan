@@ -21,6 +21,7 @@ package org.javaan.commands;
  */
 
 import java.io.PrintStream;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -65,26 +66,27 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return SortUtil.sort(FilterUtil.filter(classContext.getMethods(), new MethodMatcher(filterCriteria)));
 	}
 
-	private void printGraph(CallGraph callGraph, PrintStream output, Collection<Method> methods,
+	private void printGraph(CallGraph callGraph, Writer writer, Collection<Method> methods,
 			ObjectFormatter<Method> formatter) {
-				VertexEdgeGraphVisitor<Method> printer = new VertexEdgeGraphPrinter<Method>(output, formatter);
+				VertexEdgeGraphVisitor<Method> printer = new VertexEdgeGraphPrinter<Method>(writer, formatter);
 				for (Method method : methods) {
-					output.println(String.format("%s:",formatter.format(method)));
+					PrintUtil.format(writer, "%s:",formatter.format(method));
 					traverse(callGraph, method, printer);
-					PrintUtil.printSeparator(output);
+					PrintUtil.printSeparator(writer);
 				}
 			}
 
-	private void printLeafObjects(CallGraph callGraph, PrintStream output, Collection<Method> methods,
+	private void printLeafObjects(CallGraph callGraph, Writer writer, Collection<Method> methods,
 			ObjectFormatter<Method> formatter) {
 				for (Method method : methods) {
-					PrintUtil.println(output, formatter, SortUtil.sort(collectLeafObjects(callGraph, method)), formatter.format(method) , "\n\t", ", ");
+					PrintUtil.println(writer, formatter, SortUtil.sort(collectLeafObjects(callGraph, method)), formatter.format(method) , "\n\t", ", ");
 				}
 			}
 
 	@Override
-	protected void execute(PrintStream output, CommandContext context, List<Type> types) {
-		String criteria =  context.getMethodFilterCriteria();
+	protected void execute(CommandContext context, List<Type> types) {
+		Writer writer = context.getWriter();
+	    String criteria =  context.getMethodFilterCriteria();
 		boolean printLeaves = context.isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder(types).build();
 		CallGraph callGraph = new CallGraphBuilder(
@@ -94,9 +96,9 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		Collection<Method> input = getInput(classContext, callGraph, criteria);
 		ObjectFormatter<Method> formatter = getFormatter();
 		if (printLeaves) {
-			printLeafObjects(callGraph, output, input, formatter);
+			printLeafObjects(callGraph, writer, input, formatter);
 		} else {
-			printGraph(callGraph, output, input, formatter);
+			printGraph(callGraph, writer, input, formatter);
 		}
 	}
 }

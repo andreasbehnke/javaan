@@ -3,6 +3,7 @@ package org.javaan.commands;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.io.StringWriter;
 import java.util.UUID;
 
 import org.apache.commons.cli.CommandLine;
@@ -18,7 +19,7 @@ public class TestSetOptions {
 		Settings settings = new Settings("/" + UUID.randomUUID());
 		CommandLine commandLine = mock(CommandLine.class);
 		when(commandLine.hasOption(anyString())).thenReturn(false);
-		CommandContext context = new CommandContext(commandLine, new String[]{}, settings);
+		CommandContext context = new CommandContext(new StringWriter(), commandLine, new String[]{}, settings);
 		
 		assertFalse(context.isResolveDependenciesInClassHierarchy());
 		assertFalse(context.isResolveMethodImplementations());
@@ -26,7 +27,7 @@ public class TestSetOptions {
 		
 		commandLine = mock(CommandLine.class);
 		when(commandLine.hasOption(anyString())).thenReturn(true);
-		context = new CommandContext(commandLine, new String[]{}, settings);
+		context = new CommandContext(new StringWriter(), commandLine, new String[]{}, settings);
 		
 		assertTrue(context.isResolveDependenciesInClassHierarchy());
 		assertTrue(context.isResolveMethodImplementations());
@@ -38,28 +39,28 @@ public class TestSetOptions {
 		Settings settings = new Settings("/" + UUID.randomUUID());
 		CommandLine commandLine = mock(CommandLine.class);
 		when(commandLine.hasOption(anyString())).thenReturn(false);
-		CommandContext context = new CommandContext(commandLine, new String[]{StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY}, settings);
+		CommandContext context = new CommandContext(new StringWriter(), commandLine, new String[]{StandardOptions.OPT_RESOLVE_DEPENDENCIES_IN_CLASS_HIERARCHY}, settings);
 		assertEquals(ReturnCodes.ok, new SetOptions().execute(context));
 		
 		assertTrue(context.isResolveDependenciesInClassHierarchy());
 		assertFalse(context.isResolveMethodImplementations());
 		assertFalse(context.isDisplay2dGraph());
 		
-		context = new CommandContext(commandLine, new String[]{StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS}, settings);
+		context = new CommandContext(new StringWriter(), commandLine, new String[]{StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS}, settings);
 		assertEquals(ReturnCodes.ok, new SetOptions().execute(context));
 		
 		assertTrue(context.isResolveDependenciesInClassHierarchy());
 		assertTrue(context.isResolveMethodImplementations());
 		assertFalse(context.isDisplay2dGraph());
 		
-		context = new CommandContext(commandLine, new String[]{StandardOptions.OPT_DISPLAY_2D_GRAPH}, settings);
+		context = new CommandContext(new StringWriter(), commandLine, new String[]{StandardOptions.OPT_DISPLAY_2D_GRAPH}, settings);
 		assertEquals(ReturnCodes.ok, new SetOptions().execute(context));
 		
 		assertTrue(context.isResolveDependenciesInClassHierarchy());
 		assertTrue(context.isResolveMethodImplementations());
 		assertTrue(context.isDisplay2dGraph());
 		
-		context = new CommandContext(commandLine, new String[]{StandardOptions.OPT_DISPLAY_2D_GRAPH, StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS}, settings);
+		context = new CommandContext(new StringWriter(), commandLine, new String[]{StandardOptions.OPT_DISPLAY_2D_GRAPH, StandardOptions.OPT_RESOLVE_METHOD_IMPLEMENTATIONS}, settings);
 		assertEquals(ReturnCodes.ok, new ResetOptions().execute(context));
 		
 		assertTrue(context.isResolveDependenciesInClassHierarchy());

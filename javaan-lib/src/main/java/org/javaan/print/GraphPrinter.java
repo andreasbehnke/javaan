@@ -21,6 +21,7 @@ package org.javaan.print;
  */
 
 import java.io.PrintStream;
+import java.io.Writer;
 
 import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.GraphVisitorAdapter;
@@ -34,16 +35,16 @@ public class GraphPrinter<V, E> extends GraphVisitorAdapter<V, E> implements Gra
 	
 	private final ObjectFormatter<E> edgeFormatter;
 	
-	private final PrintStream output;
+	private final Writer writer;
 	
 	private final String graphSeparatorFormat;
 	
-	public GraphPrinter(PrintStream output, ObjectFormatter<V> vertexFormatter, ObjectFormatter<E> edgeFormatter) {
-		this(output, vertexFormatter, edgeFormatter, DEFAULT_GRAPH_SEPARATOR_FORMAT);
+	public GraphPrinter(Writer writer, ObjectFormatter<V> vertexFormatter, ObjectFormatter<E> edgeFormatter) {
+		this(writer, vertexFormatter, edgeFormatter, DEFAULT_GRAPH_SEPARATOR_FORMAT);
 	}
 	
-	public GraphPrinter(PrintStream output, ObjectFormatter<V> vertexFormatter, ObjectFormatter<E> edgeFormatter, String graphSeparatorFormat) {
-		this.output = output;
+	public GraphPrinter(Writer writer, ObjectFormatter<V> vertexFormatter, ObjectFormatter<E> edgeFormatter, String graphSeparatorFormat) {
+		this.writer = writer;
 		this.vertexFormatter = vertexFormatter;
 		this.edgeFormatter = edgeFormatter;
 		this.graphSeparatorFormat = graphSeparatorFormat;
@@ -51,17 +52,18 @@ public class GraphPrinter<V, E> extends GraphVisitorAdapter<V, E> implements Gra
 	
 	@Override
 	public void visitGraph(Graph<V, E> graph, int index) {
-		PrintUtil.printSeparator(output);
-		output.format(graphSeparatorFormat, index).println();
+		PrintUtil.printSeparator(writer);
+		PrintUtil.format(writer, graphSeparatorFormat, index);
+		PrintUtil.println(writer);
 	}
 
 	@Override
 	public void visitVertex(V vertex, int level) {
-		PrintUtil.indent(output, vertexFormatter, vertex, level * 2 + 1);
+		PrintUtil.indent(writer, vertexFormatter, vertex, level * 2 + 1);
 	}
 
 	@Override
 	public void visitEdge(E edge, int level) {
-		PrintUtil.indent(output, edgeFormatter, edge, level * 2);
+		PrintUtil.indent(writer, edgeFormatter, edge, level * 2);
 	}
 }

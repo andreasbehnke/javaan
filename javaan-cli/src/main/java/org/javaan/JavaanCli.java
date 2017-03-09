@@ -20,6 +20,7 @@ package org.javaan;
  * #L%
  */
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -47,6 +48,7 @@ import org.javaan.commands.ShowPackageUsedGraph;
 import org.javaan.commands.ShowPackageUsingGraph;
 import org.javaan.commands.ShowUsedGraph;
 import org.javaan.commands.ShowUsingGraph;
+import org.javaan.print.PrintUtil;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -79,10 +81,13 @@ public class JavaanCli {
 	private final CommandMap commands;
 	
 	private final String[] args;
+
+	private final Writer writer;
 	
-	public JavaanCli(String[] args, CommandMap commands) {
+	public JavaanCli(String[] args, CommandMap commands, Writer writer) {
 		this.commands = commands;
 		this.args = args;
+		this.writer = writer;
 	}
 
 	static CommandMap getCommands() {
@@ -105,10 +110,13 @@ public class JavaanCli {
 		return commands;
 	}
 
-	public static void main(String[] args) {
-		ReturnCodes returnCode = new JavaanCli(args, getCommands()).execute();
-		if (returnCode != ReturnCodes.threadSpawn) {
-			System.exit(returnCode.getValue());
+	public static void main(String[] args) throws IOException {
+		try (Writer writer = new OutputStreamWriter(System.out, "UTF8")) {
+			ReturnCodes returnCode = new JavaanCli(args, getCommands(), writer).execute();
+			if (returnCode != ReturnCodes.threadSpawn)
+			{
+				System.exit(returnCode.getValue());
+			}
 		}
 	}
 	
@@ -144,7 +152,7 @@ public class JavaanCli {
 				printUsage(true);
 				return ReturnCodes.ok;
 			} else if (!displayHelp && withoutCommand) {
-				System.out.println(String.format(EXCEPTION_UNKNOWN_COMMAND, args[0]));
+				PrintUtil.format(writer,EXCEPTION_UNKNOWN_COMMAND, args[0]);
 				printUsage(false);
 				return ReturnCodes.errorParse;
 			}
@@ -156,9 +164,9 @@ public class JavaanCli {
 			
 			String[] arguments = cl.getArgs();
 			arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
-			return command.execute(new CommandContext(cl, arguments, new Settings()));
+			return command.execute(new CommandContext(writer, cl, arguments, new Settings()));
 		} catch(ParseException e) {
-			System.out.println(String.format(EXCEPTION_COULD_NOT_PARSE, e.getMessage()));
+			PrintUtil.format(writer,EXCEPTION_COULD_NOT_PARSE, e.getMessage());
 			if (withoutCommand) {
 				printUsage(false);
 			} else {
@@ -198,8 +206,8 @@ public class JavaanCli {
 	}
 	
 	private void printParagraph(String content) {
-		System.out.println(WordUtils.wrap(content, MAX_WIDTH));
-		System.out.println();
+        PrintUtil.println(writer, WordUtils.wrap(content, MAX_WIDTH));
+        PrintUtil.println(writer);
 	}
 	
 	public void printUsage(boolean printFullHelp) {
@@ -209,22 +217,22 @@ public class JavaanCli {
 		printParagraph(HELP_COMMANDS);
 		String indent = createIndent();
 		for (Command command : commands.getCommands()) {
-			System.out.print(formatCommandName(command.getName(), indent));
-			System.out.println(
-					WordUtils.wrap(command.getDescription(), 
+            PrintUtil.print(writer, formatCommandName(command.getName(), indent));
+            PrintUtil.println(writer,
+                    WordUtils.wrap(command.getDescription(),
 							MAX_WIDTH - indent.length(), 
-							System.lineSeparator() + indent, 
+							System.lineSeparator() + indent,
 							true));
 		}
 		printParagraph(HELP_FOOTER);
 		if (printFullHelp) {
-			System.out.println();
+			PrintUtil.println(writer);
 			printParagraph(HELP_COMMAND_DETAILS);
 			for (Command command : commands.getCommands()) {
 				Options options = new Options();
 				options = command.buildCommandLineOptions(options);
-				System.out.println();
-				System.out.println(command.getName());
+                PrintUtil.println(writer);
+                PrintUtil.println(writer, command.getName());
 				printSeparator();
 				printCommandUsage(command, options);
 			}
@@ -237,12 +245,20 @@ public class JavaanCli {
 			buffer.append('-');
 		}
 		buffer.append(System.lineSeparator());
-		System.out.println(buffer);
+        PrintUtil.println(writer, buffer.toString());
 	}
 	
 	private void printCommandUsage(Command command, Options options) {
 		HelpFormatter helpFormatter = new HelpFormatter();
-		helpFormatter.setWidth(MAX_WIDTH);
-		helpFormatter.printHelp(command.getHelpCommandLine() + "\n", command.getDescription(), options, "");
+		//helpFormatter.printHelp(command.getHelpCommandLine() + "\n", , options, "");
+		helpFormatter.printHelp(
+				new PrintWriter(writer),
+				MAX_WIDTH,
+				command.getHelpCommandLine() + "\n",
+				command.getDescription(),
+				options,
+                HelpFormatter.DEFAULT_LEFT_PAD,
+				HelpFormatter.DEFAULT_DESC_PAD,
+				"");
 	}
 }
