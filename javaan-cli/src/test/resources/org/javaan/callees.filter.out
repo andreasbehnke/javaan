@@ -710,7 +710,6 @@
 [M]void org.javaan.commands.BaseCallGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
 [M]void org.javaan.commands.BaseCallGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
  [M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
   [M]void org.javaan.commands.BaseCallGraphCommand.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
   [M]void java.io.PrintStream.println(java.lang.String)
   [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
@@ -718,9 +717,7 @@
   [M]java.lang.Object java.util.Iterator.next()
   [M]boolean java.util.Iterator.hasNext()
   [M]java.util.Iterator java.util.Collection.iterator()
-  [M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter)
  [M]void org.javaan.commands.BaseCallGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
   [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
    [M]void java.util.Collections.sort(java.util.List)
    [M]boolean java.util.List.addAll(java.util.Collection)
@@ -785,7 +782,6 @@
 
 [M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter):
 [M]void org.javaan.commands.BaseCallGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
- [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
  [M]void org.javaan.commands.BaseCallGraphCommand.traverse(org.javaan.model.CallGraph,org.javaan.model.Method,org.javaan.graph.VertexEdgeGraphVisitor)
  [M]void java.io.PrintStream.println(java.lang.String)
  [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
@@ -793,13 +789,11 @@
  [M]java.lang.Object java.util.Iterator.next()
  [M]boolean java.util.Iterator.hasNext()
  [M]java.util.Iterator java.util.Collection.iterator()
- [M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter)
 
 --
 
 [M]void org.javaan.commands.BaseCallGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter):
 [M]void org.javaan.commands.BaseCallGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
  [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
   [M]void java.util.Collections.sort(java.util.List)
@@ -912,7 +906,6 @@
 [M]void org.javaan.commands.BaseDependencyGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
 [M]void org.javaan.commands.BaseDependencyGraphCommand.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
  [M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
   [M]void org.javaan.model.GraphView.traverseDepthFirst(java.lang.Object,org.javaan.graph.GraphVisitor,boolean)
   [M]void java.io.PrintStream.println(java.lang.String)
   [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
@@ -922,7 +915,6 @@
   [M]java.util.Iterator java.util.Collection.iterator()
   [M]org.javaan.model.GraphView org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
   [M]void java.util.HashSet.<init>(java.util.Collection)
-  [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
  [M]org.javaan.print.ObjectFormatter org.javaan.commands.BaseDependencyGraphCommand.getConsoleDependencyFormatter()
   [M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
  [M]void org.javaan.CommandContext.setReturnCode(org.javaan.ReturnCodes)
@@ -934,7 +926,6 @@
    [M]boolean java.util.prefs.Preferences.getBoolean(java.lang.String,boolean)
   [M]boolean org.apache.commons.cli.CommandLine.hasOption(java.lang.String)
  [M]void org.javaan.commands.BaseDependencyGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
-  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
   [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
    [M]void java.util.Collections.sort(java.util.List)
    [M]boolean java.util.List.addAll(java.util.Collection)
@@ -984,7 +975,6 @@
 
 [M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
 [M]void org.javaan.commands.BaseDependencyGraphCommand.printGraph(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
- [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
  [M]void org.javaan.model.GraphView.traverseDepthFirst(java.lang.Object,org.javaan.graph.GraphVisitor,boolean)
  [M]void java.io.PrintStream.println(java.lang.String)
  [M]java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
@@ -994,13 +984,11 @@
  [M]java.util.Iterator java.util.Collection.iterator()
  [M]org.javaan.model.GraphView org.javaan.commands.BaseDependencyGraphCommand.getDependencyGraph(org.javaan.model.CallGraph,java.util.Set)
  [M]void java.util.HashSet.<init>(java.util.Collection)
- [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
 
 --
 
 [M]void org.javaan.commands.BaseDependencyGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter):
 [M]void org.javaan.commands.BaseDependencyGraphCommand.printLeafObjects(org.javaan.model.CallGraph,java.io.PrintStream,java.util.Collection,org.javaan.print.ObjectFormatter)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String org.javaan.print.ObjectFormatter.format(java.lang.Object)
  [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
   [M]void java.util.Collections.sort(java.util.List)
@@ -1275,10 +1263,8 @@
 [M]void org.javaan.commands.ListClasses.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
 [M]void org.javaan.commands.ListClasses.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
  [M]void org.javaan.commands.ListClasses.printClasses(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
   [M]java.lang.String java.lang.System.lineSeparator()
  [M]void org.javaan.commands.ListClasses.printClassesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
   [M]java.lang.String java.lang.StringBuilder.toString()
   [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
   [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1328,14 +1314,12 @@
 
 [M]void org.javaan.commands.ListClasses.printClasses(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListClasses.printClasses(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.System.lineSeparator()
 
 --
 
 [M]void org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1349,7 +1333,6 @@
 
 [M]void org.javaan.commands.ListClasses.printClassesAndMethods(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListClasses.printClassesAndMethods(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1368,7 +1351,6 @@
 
 [M]void org.javaan.commands.ListClasses.printClassesAndSpecializations(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListClasses.printClassesAndSpecializations(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1382,7 +1364,6 @@
 
 [M]void org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.util.List org.javaan.model.ClassContext.getSuperClassHierachy(org.javaan.model.Clazz)
  [M]java.lang.Object java.util.Iterator.next()
  [M]boolean java.util.Iterator.hasNext()
@@ -1392,7 +1373,6 @@
 
 [M]void org.javaan.commands.ListClasses.printClassesAndVirtualMethods(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListClasses.printClassesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1432,8 +1412,6 @@
 [M]org.javaan.ReturnCodes org.javaan.commands.ListDuplicates.execute(org.javaan.CommandContext)
  [M]void org.slf4j.Logger.error(java.lang.String,java.lang.Throwable)
  [M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List)
-  [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
-  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
   [M]java.lang.Object java.util.Iterator.next()
   [M]boolean java.util.Iterator.hasNext()
   [M]java.util.Iterator java.util.List.iterator()
@@ -1466,8 +1444,6 @@
 
 [M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List):
 [M]void org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List)
- [M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.Object java.util.Iterator.next()
  [M]boolean java.util.Iterator.hasNext()
  [M]java.util.Iterator java.util.List.iterator()
@@ -1501,10 +1477,8 @@
 [M]void org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
 [M]void org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
  [M]void org.javaan.commands.ListInterfaces.printInterfaces(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
   [M]java.lang.String java.lang.System.lineSeparator()
  [M]void org.javaan.commands.ListInterfaces.printInterfacesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
-  [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
   [M]java.lang.String java.lang.StringBuilder.toString()
   [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
   [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1554,14 +1528,12 @@
 
 [M]void org.javaan.commands.ListInterfaces.printInterfaces(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListInterfaces.printInterfaces(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.System.lineSeparator()
 
 --
 
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1579,7 +1551,6 @@
 
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndMethods(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndMethods(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1598,7 +1569,6 @@
 
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1616,7 +1586,6 @@
 
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSuperInterfaces(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndSuperInterfaces(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1634,7 +1603,6 @@
 
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndVirtualMethods(java.io.PrintStream,java.util.Collection):
 [M]void org.javaan.commands.ListInterfaces.printInterfacesAndVirtualMethods(java.io.PrintStream,java.util.Collection)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.StringBuilder.toString()
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.Object)
  [M]java.lang.AbstractStringBuilder java.lang.StringBuilder.append(java.lang.String)
@@ -1715,7 +1683,6 @@
 
 [M]void org.javaan.commands.ListPackages.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
 [M]void org.javaan.commands.ListPackages.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
- [M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
  [M]java.lang.String java.lang.System.lineSeparator()
  [M]java.util.List org.javaan.commands.SortUtil.sort(java.util.Collection)
   [M]void java.util.Collections.sort(java.util.List)
@@ -1962,7 +1929,6 @@
 [M]void org.javaan.commands.ShowDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
 [M]void org.javaan.commands.ShowDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
  [M]void org.javaan.model.CallGraph.traverseDependencyCycles(org.javaan.graph.GraphVisitor)
- [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String)
  [M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
  [M]void org.javaan.print.TypeFormatter.<init>()
  [M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
@@ -2003,7 +1969,6 @@
 [M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List):
 [M]void org.javaan.commands.ShowPackageDepdendencyCyclesGraph.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
  [M]void org.javaan.model.CallGraph.traversePackageDependencyCycles(org.javaan.graph.GraphVisitor)
- [M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String)
  [M]void org.javaan.print.ConsoleDependencyFormatter.<init>()
  [M]void org.javaan.print.PackageFormatter.<init>()
  [M]org.javaan.model.CallGraph org.javaan.bytecode.CallGraphBuilder.build()
@@ -2893,13 +2858,11 @@
 
 --
 
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter)
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.Writer,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter):
 
 --
 
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String):
-[M]void org.javaan.print.GraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String)
+[M]void org.javaan.print.GraphPrinter.<init>(java.io.Writer,org.javaan.print.ObjectFormatter,org.javaan.print.ObjectFormatter,java.lang.String):
 
 --
 
@@ -2980,22 +2943,35 @@
 
 --
 
-[M]void org.javaan.print.PrintUtil.indent(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.lang.Object,int):
+[M]void org.javaan.print.PrintUtil.format(java.io.Writer,java.lang.String,java.lang.Object[]):
 
 --
 
-[M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream):
-[M]void org.javaan.print.PrintUtil.printSeparator(java.io.PrintStream)
+[M]void org.javaan.print.PrintUtil.indent(java.io.Writer,org.javaan.print.ObjectFormatter,java.lang.Object,int):
 
 --
 
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+[M]void org.javaan.print.PrintUtil.print(java.io.Writer,java.lang.String):
 
 --
 
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
-[M]void org.javaan.print.PrintUtil.println(java.io.PrintStream,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String)
+[M]void org.javaan.print.PrintUtil.printSeparator(java.io.Writer):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer,java.lang.String):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
+
+--
+
+[M]void org.javaan.print.PrintUtil.println(java.io.Writer,org.javaan.print.ObjectFormatter,java.util.Collection,java.lang.String,java.lang.String,java.lang.String):
 
 --
 
@@ -3029,8 +3005,7 @@
 
 --
 
-[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter):
-[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.PrintStream,org.javaan.print.ObjectFormatter)
+[M]void org.javaan.print.VertexEdgeGraphPrinter.<init>(java.io.Writer,org.javaan.print.ObjectFormatter):
 
 --
 
