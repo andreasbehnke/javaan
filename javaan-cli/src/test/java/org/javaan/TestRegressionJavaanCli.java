@@ -37,7 +37,8 @@ public class TestRegressionJavaanCli {
     public static final RegressionData[] regresseionTestData() {
        return new RegressionData[]{
                new RegressionData("help.out", "--help"),
-               new RegressionData("classes.out", "classes", TEST_LIBRARY)
+               new RegressionData("classes.out", "classes", TEST_LIBRARY),
+               new RegressionData("used-packages.out", "used-packages", TEST_LIBRARY)
        };
     }
 
@@ -60,7 +61,7 @@ public class TestRegressionJavaanCli {
         new JavaanCli(commandLineArguments, JavaanCli.getCommands(), writer).execute();
         String outputAsString = writer.toString();
         String[] output = StringUtils.split(outputAsString, System.lineSeparator());
-        //FileUtils.writeStringToFile(new File(regressionData.regressionFileName), outputAsString, "UTF8");
+        FileUtils.writeStringToFile(new File(regressionData.regressionFileName), outputAsString, "UTF8");
         assertArrayEquals(expectedOutput, output);
     }
 }

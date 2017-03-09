@@ -101,7 +101,7 @@ public class PrintUtil {
 	
 	public static void printSeparator(Writer writer) {
         try {
-            writer.write(PrintUtil.BLOCK_SEPARATOR);
+            writer.append(PrintUtil.BLOCK_SEPARATOR).write(LINE_SEPARATOR);
             writer.flush();
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
