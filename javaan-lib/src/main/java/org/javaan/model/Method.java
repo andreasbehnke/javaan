@@ -108,7 +108,7 @@ public class Method extends NamedObjectBase {
 		String name = buildUniqueMethodName(type, signature);
 		String methodName = method.getName();
 		boolean isAbstract = Modifier.isAbstract(method.getModifiers());
-		String returnType = SignatureUtil.createClassSignature(method.getReturnType());
+		String returnType = SignatureUtil.createClassSignature(method.getGenericReturnType());
 		List<String> paramterTypes = SignatureUtil.createClassSignatures(method.getParameterTypes());
 		List<String> annotationTypes = SignatureUtil.createClassSignatures(method.getAnnotations());
 		return new Method(name, type, signature, methodName, isAbstract, returnType, paramterTypes, annotationTypes);

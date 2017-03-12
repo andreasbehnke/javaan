@@ -74,19 +74,9 @@ public class SignatureUtil {
 		}
 		return classNames;
 	}
-	
-	public static String createClassSignature(Class<?> cls) {
-		if (cls.isArray()) {
-			StringBuilder dimension = new StringBuilder("[]");
-			Class<?> comp = cls.getComponentType();
-			while(comp.isArray()) {
-				dimension.append("[]");
-				comp = comp.getComponentType();
-			}
-			return comp.getName() + dimension.toString();
-    	} else {
-    		return cls.getName();
-    	}
+
+	public static String createClassSignature(java.lang.reflect.Type type) {
+		return type.getTypeName();
 	}
 	
 	public static List<String> createClassSignatures(Class<?>[] classes) {
