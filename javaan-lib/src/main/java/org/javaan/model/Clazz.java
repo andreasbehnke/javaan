@@ -31,6 +31,10 @@ public class Clazz extends Type {
 	protected Clazz(JavaClass javaClass, String filePath) {
 		super(javaClass, filePath);
 	}
+
+	protected Clazz(Class clazz) {
+		super(clazz);
+	}
 	
 	@Override
 	public JavaType getJavaType() {

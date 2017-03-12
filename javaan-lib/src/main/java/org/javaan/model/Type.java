@@ -29,21 +29,37 @@ public abstract class Type extends NamedObjectBase {
 		INTERFACE
 	}
 
+	private final Class clazz;
+
 	private final JavaClass javaClass;
 	
 	private final String filePath;
+
+	private final boolean isReflection;
 	
 	protected Type(String name) {
 		super(name);
+		this.clazz = null;
 		this.javaClass = null;
 		this.filePath = null;
+        this.isReflection = false;
 	}
 
 	protected Type(JavaClass javaClass, String filePath) {
 		super(javaClass.getClassName());
+        this.clazz = null;
 		this.javaClass = javaClass;
 		this.filePath = filePath;
+        this.isReflection = false;
 	}
+
+	protected Type(Class clazz) {
+	    super(clazz.getName());
+	    this.clazz = clazz;
+        this.javaClass = null;
+        this.filePath = null;
+        this.isReflection = true;
+    }
 	
 	public static Type create(JavaClass javaClass, String filePath) {
 		if (javaClass.isInterface()) {
@@ -52,6 +68,17 @@ public abstract class Type extends NamedObjectBase {
 			return new Clazz(javaClass, filePath);
 		}
 		throw new IllegalArgumentException("Unknown type: " + javaClass.toString());
+	}
+
+	public static Type create(String className) throws ClassNotFoundException {
+        Type type = null;
+        Class<?> clazz = Class.forName(className);
+        if (clazz.isInterface()) {
+            type = new Interface(clazz);
+        } else {
+            type = new Clazz(clazz);
+        }
+        return type;
 	}
 	
 	public JavaClass getJavaClass() {

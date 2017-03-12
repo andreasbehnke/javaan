@@ -31,6 +31,10 @@ public class Interface extends Type {
 	protected Interface(JavaClass javaClass, String filePath) {
 		super(javaClass, filePath);
 	}
+
+	protected Interface(Class clazz) {
+		super(clazz);
+	}
 	
 	@Override
 	public JavaType getJavaType() {
