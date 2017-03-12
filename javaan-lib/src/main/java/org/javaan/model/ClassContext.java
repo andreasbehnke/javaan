@@ -123,8 +123,12 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		if (superInterfaceName == null) {
 			throw new IllegalArgumentException("Parameter superInterfaceName must not be null");
 		}
-		addType(interfaceName);
-		addType(superInterfaceName);
+		if (!types.contains(interfaceName.getName())) {
+			throw new IllegalArgumentException("Unknown interface " + interfaceName);
+		}
+		if (!types.contains(superInterfaceName.getName())) {
+			throw new IllegalArgumentException("Unknown interface " + superInterfaceName);
+		}
 		superInterface.addEdge(interfaceName, superInterfaceName);
 	}
 	

@@ -137,6 +137,7 @@ class ReflectionClassContextBuilder {
 		for (String superInterfaceName : superInterfaces) {
 			Interface superInterface = (Interface)getType(superInterfaceName);
 			if (superInterface != null) {
+				context.addInterface(superInterface);
 				context.addSuperInterface(interfaze, superInterface);
 			}
 		}

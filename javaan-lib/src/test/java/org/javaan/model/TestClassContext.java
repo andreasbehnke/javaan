@@ -209,6 +209,11 @@ public class TestClassContext {
 	public void testAddSuperInterfaces() {
 		ClassContext context = new ClassContext();
 		context.addInterface(INTERFACEA);
+		context.addInterface(INTERFACEB);
+		context.addInterface(INTERFACEC);
+		context.addInterface(INTERFACED);
+		context.addInterface(INTERFACEX);
+		context.addInterface(INTERFACEY);
 		context.addSuperInterface(INTERFACEB, INTERFACEA);
 		context.addSuperInterface(INTERFACEB, INTERFACEC);
 		context.addSuperInterface(INTERFACEC, INTERFACED);
@@ -243,6 +248,8 @@ public class TestClassContext {
 	public void testSpecializationOfInterface() {
 		ClassContext context = new ClassContext();
 		context.addInterface(INTERFACEA);
+        context.addInterface(INTERFACEB);
+        context.addInterface(INTERFACEC);
 		context.addSuperInterface(INTERFACEB, INTERFACEA);
 		context.addSuperInterface(INTERFACEC, INTERFACEB);
 		
@@ -276,6 +283,11 @@ public class TestClassContext {
 	@Test
 	public void testGetInterfacesOfClass() {
 		ClassContext context = new ClassContext();
+		context.addInterface(INTERFACEA);
+		context.addInterface(INTERFACEB);
+		context.addInterface(INTERFACEC);
+		context.addInterface(INTERFACEX);
+		context.addInterface(INTERFACEY);
 		context.addSuperInterface(INTERFACEA, INTERFACEB);
 		context.addSuperInterface(INTERFACEB, INTERFACEC);
 		context.addSuperInterface(INTERFACEX, INTERFACEY);
@@ -323,9 +335,11 @@ public class TestClassContext {
 		 */
 		ClassContext context = new ClassContext();
 		context.addInterface(INTERFACEA);
+        context.addInterface(INTERFACEB);
+        context.addInterface(INTERFACEC);
+        context.addInterface(INTERFACEX);
 		context.addSuperInterface(INTERFACEA, INTERFACEB);
 		context.addSuperInterface(INTERFACEB, INTERFACEX);
-		context.addInterface(INTERFACEC);
 		context.addClass(CLASSA);
 		context.addClass(CLASSB);
         context.addClass(CLASSC);
@@ -435,6 +449,7 @@ public class TestClassContext {
         context.addClass(CLASSB);
 		context.addSuperClass(CLASSB, CLASSA);
 		context.addInterface(INTERFACEA);
+        context.addInterface(INTERFACEB);
 		context.addSuperInterface(INTERFACEB, INTERFACEA);
 		
 		context.addMethod(CLASSA_METHODA);
