@@ -22,22 +22,36 @@ package org.javaan.model;
 
 import org.apache.bcel.classfile.JavaClass;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Interface extends Type {
 
-	public Interface(String name) {
+    private final List<String> superInterfaceNames;
+
+    public Interface(String name) {
 		super(name);
+        superInterfaceNames = null;
 	}
 	
 	protected Interface(JavaClass javaClass, String filePath) {
 		super(javaClass, filePath);
+        superInterfaceNames = Arrays.asList(javaClass.getInterfaceNames());
 	}
 
 	protected Interface(Class clazz) {
 		super(clazz);
+		superInterfaceNames = new ArrayList<>();
+        Arrays.stream(clazz.getInterfaces()).forEach( i -> superInterfaceNames.add(i.getName()) );
 	}
 	
 	@Override
 	public JavaType getJavaType() {
 		return JavaType.INTERFACE;
 	}
+
+    public List<String> getSuperInterfaceNames() {
+        return superInterfaceNames;
+    }
 }

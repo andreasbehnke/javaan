@@ -22,22 +22,45 @@ package org.javaan.model;
 
 import org.apache.bcel.classfile.JavaClass;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Clazz extends Type {
 
-	public Clazz(String name) {
+    private final List<String> interfaceNames;
+
+    private final String superTypeName;
+
+    public Clazz(String name) {
 		super(name);
+        this.superTypeName = null;
+		this.interfaceNames = null;
 	}
 	
 	protected Clazz(JavaClass javaClass, String filePath) {
 		super(javaClass, filePath);
+        this.superTypeName = javaClass.getSuperclassName();
+		this.interfaceNames = Arrays.asList(javaClass.getInterfaceNames());
 	}
 
 	protected Clazz(Class clazz) {
 		super(clazz);
-	}
+        this.superTypeName = clazz.getSuperclass().getName();
+		this.interfaceNames = new ArrayList<>();
+        Arrays.stream(clazz.getInterfaces()).forEach( i -> interfaceNames.add(i.getName()) );
+    }
 	
 	@Override
 	public JavaType getJavaType() {
 		return JavaType.CLASS;
 	}
+
+    public List<String> getInterfaceNames() {
+        return interfaceNames;
+    }
+
+    public String getSuperTypeName() {
+        return superTypeName;
+    }
 }

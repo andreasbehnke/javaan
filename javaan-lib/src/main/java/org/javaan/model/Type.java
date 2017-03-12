@@ -32,8 +32,8 @@ public abstract class Type extends NamedObjectBase {
 	private final Class clazz;
 
 	private final JavaClass javaClass;
-	
-	private final String filePath;
+
+    private final String filePath;
 
 	private final boolean isReflection;
 	
@@ -89,7 +89,11 @@ public abstract class Type extends NamedObjectBase {
 		return filePath;
 	}
 
-	public static String getShortName(String signature) {
+    public boolean isReflection() {
+        return isReflection;
+    }
+
+    public static String getShortName(String signature) {
 		int index = signature.lastIndexOf('.');
 		if (index > 0) {
 			return signature.substring(index + 1);
