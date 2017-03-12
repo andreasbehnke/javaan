@@ -96,6 +96,9 @@ public class TestClassContext {
 	public void testAddSuperClass() {
 		ClassContext context = new ClassContext();
 		context.addClass(CLASSA);
+		context.addClass(CLASSB);
+		context.addClass(CLASSX);
+		context.addClass(CLASSY);
 		context.addSuperClass(CLASSB, CLASSA);
 		context.addSuperClass(CLASSX, CLASSY);
 		
@@ -115,6 +118,8 @@ public class TestClassContext {
 	public void testGetSuperClasses() {
 		ClassContext context = new ClassContext();
 		context.addClass(CLASSA);
+        context.addClass(CLASSB);
+        context.addClass(CLASSC);
 		context.addSuperClass(CLASSB, CLASSA);
 		context.addSuperClass(CLASSC, CLASSB);
 		
@@ -130,6 +135,9 @@ public class TestClassContext {
 	public void testGetDirectSpecializationOfClass() {
 		ClassContext context = new ClassContext();
 		context.addClass(CLASSA);
+        context.addClass(CLASSB);
+        context.addClass(CLASSC);
+        context.addClass(CLASSD);
 		context.addSuperClass(CLASSB, CLASSA);
 		context.addSuperClass(CLASSC, CLASSB);
 		context.addSuperClass(CLASSD, CLASSA);
@@ -149,6 +157,8 @@ public class TestClassContext {
 	public void testGetSpecializationOfClass() {
 		ClassContext context = new ClassContext();
 		context.addClass(CLASSA);
+        context.addClass(CLASSB);
+        context.addClass(CLASSC);
 		context.addSuperClass(CLASSB, CLASSA);
 		context.addSuperClass(CLASSC, CLASSB);
 
@@ -269,7 +279,11 @@ public class TestClassContext {
 		context.addSuperInterface(INTERFACEA, INTERFACEB);
 		context.addSuperInterface(INTERFACEB, INTERFACEC);
 		context.addSuperInterface(INTERFACEX, INTERFACEY);
-		
+
+		context.addClass(CLASSA);
+        context.addClass(CLASSB);
+        context.addClass(CLASSC);
+        context.addClass(CLASSD);
 		context.addSuperClass(CLASSA, CLASSB);
 		context.addSuperClass(CLASSB, CLASSC);
 		context.addSuperClass(CLASSC, CLASSD);
@@ -314,6 +328,8 @@ public class TestClassContext {
 		context.addInterface(INTERFACEC);
 		context.addClass(CLASSA);
 		context.addClass(CLASSB);
+        context.addClass(CLASSC);
+        context.addClass(CLASSD);
 		context.addSuperClass(CLASSC, CLASSB);
 		context.addSuperClass(CLASSD, CLASSC);
 		context.addInterfaceOfClass(CLASSA, INTERFACEA);
@@ -416,6 +432,7 @@ public class TestClassContext {
 		ClassContext context = new ClassContext();
 		
 		context.addClass(CLASSA);
+        context.addClass(CLASSB);
 		context.addSuperClass(CLASSB, CLASSA);
 		context.addInterface(INTERFACEA);
 		context.addSuperInterface(INTERFACEB, INTERFACEA);

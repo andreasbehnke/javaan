@@ -2420,6 +2420,14 @@
 [M]org.javaan.graph.ExtendedDirectedGraph.getSourceSet(java.util.Set)
  [M]org.javaan.graph.ExtendedDirectedGraph.sourceVerticesOf(java.lang.Object)
   [M]org.javaan.model.CallGraph.getCallers(org.javaan.model.Method)
+  [M]org.javaan.graph.ExtendedDirectedGraph.predecessorsOf(java.lang.Object)
+   [M]org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface)
+    [M]org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
+     [M]org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+   [M]org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface)
+    [M]org.javaan.model.ImplementationResolver.findImplementations(org.javaan.model.Interface,org.javaan.model.Method)
+     [M]org.javaan.model.ImplementationResolver.resolve(org.javaan.model.Method)
+    [M]org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
   [M]org.javaan.graph.Tree.predecessorPathOf(java.lang.Object)
    [M]org.javaan.model.ClassContext.getSuperClassHierachy(org.javaan.model.Clazz)
     [M]org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection)
@@ -2439,14 +2447,6 @@
     [M]org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection)
   [M]org.javaan.graph.Tree.sourceVertexOf(java.lang.Object)
    [M]org.javaan.model.ClassContext.getSuperClass(org.javaan.model.Clazz)
-  [M]org.javaan.graph.ExtendedDirectedGraph.predecessorsOf(java.lang.Object)
-   [M]org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface)
-    [M]org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
-     [M]org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
-   [M]org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface)
-    [M]org.javaan.model.ImplementationResolver.findImplementations(org.javaan.model.Interface,org.javaan.model.Method)
-     [M]org.javaan.model.ImplementationResolver.resolve(org.javaan.model.Method)
-    [M]org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
 
 --
 
@@ -2499,6 +2499,14 @@
 [M]org.javaan.graph.ExtendedDirectedGraph.sourceVerticesOf(java.lang.Object):
 [M]org.javaan.graph.ExtendedDirectedGraph.sourceVerticesOf(java.lang.Object)
  [M]org.javaan.model.CallGraph.getCallers(org.javaan.model.Method)
+ [M]org.javaan.graph.ExtendedDirectedGraph.predecessorsOf(java.lang.Object)
+  [M]org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface)
+   [M]org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
+    [M]org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
+  [M]org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface)
+   [M]org.javaan.model.ImplementationResolver.findImplementations(org.javaan.model.Interface,org.javaan.model.Method)
+    [M]org.javaan.model.ImplementationResolver.resolve(org.javaan.model.Method)
+   [M]org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
  [M]org.javaan.graph.Tree.predecessorPathOf(java.lang.Object)
   [M]org.javaan.model.ClassContext.getSuperClassHierachy(org.javaan.model.Clazz)
    [M]org.javaan.commands.ListClasses.printClassesAndSuperClasses(java.io.PrintStream,java.util.Collection)
@@ -2518,14 +2526,6 @@
    [M]org.javaan.commands.ListClasses.printClassesAndInterfaces(java.io.PrintStream,java.util.Collection)
  [M]org.javaan.graph.Tree.sourceVertexOf(java.lang.Object)
   [M]org.javaan.model.ClassContext.getSuperClass(org.javaan.model.Clazz)
- [M]org.javaan.graph.ExtendedDirectedGraph.predecessorsOf(java.lang.Object)
-  [M]org.javaan.model.ClassContext.getSpecializationOfInterface(org.javaan.model.Interface)
-   [M]org.javaan.commands.ListInterfaces.printInterfacesAndSpecializations(java.io.PrintStream,java.util.Collection)
-    [M]org.javaan.commands.ListInterfaces.execute(java.io.PrintStream,org.javaan.CommandContext,java.util.List)
-  [M]org.javaan.model.ClassContext.getImplementations(org.javaan.model.Interface)
-   [M]org.javaan.model.ImplementationResolver.findImplementations(org.javaan.model.Interface,org.javaan.model.Method)
-    [M]org.javaan.model.ImplementationResolver.resolve(org.javaan.model.Method)
-   [M]org.javaan.commands.ListInterfaces.printInterfacesAndImplementations(java.io.PrintStream,java.util.Collection)
 
 --
 
@@ -4571,6 +4571,8 @@
  [M]org.javaan.model.DuplicatesFinder.find()
   [M]org.javaan.commands.ListDuplicates.printDuplicates(java.io.PrintStream,java.util.List)
    [M]org.javaan.commands.ListDuplicates.execute(org.javaan.CommandContext)
+ [M]org.javaan.model.NamedObjectBase.compareTo(org.javaan.model.NamedObject)
+  [M]org.javaan.model.NamedObjectBase.compareTo(java.lang.Object)
  [M]org.javaan.model.Dependency.createName(org.javaan.model.NamedObject,org.javaan.model.NamedObject)
   [M]org.javaan.model.Dependency.<init>(org.javaan.model.NamedObject,org.javaan.model.NamedObject,org.javaan.model.Method)
    [M]org.javaan.model.Dependency.addDependency(org.jgrapht.DirectedGraph,org.javaan.model.NamedObject,org.javaan.model.NamedObject,org.javaan.model.Method)
@@ -4578,8 +4580,6 @@
      [M]org.javaan.model.CallGraph.addCallInternal(org.javaan.model.Method,org.javaan.model.Method)
       [M]org.javaan.model.CallGraph.addCall(org.javaan.model.Method,org.javaan.model.Method)
     [M]org.javaan.model.CallGraph.addUsageOfType(org.javaan.model.Method,org.javaan.model.Method)
- [M]org.javaan.model.NamedObjectBase.compareTo(org.javaan.model.NamedObject)
-  [M]org.javaan.model.NamedObjectBase.compareTo(java.lang.Object)
 
 --
 

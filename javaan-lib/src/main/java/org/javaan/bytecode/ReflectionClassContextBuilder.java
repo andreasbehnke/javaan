@@ -115,9 +115,9 @@ class ReflectionClassContextBuilder {
 			context.addClass(clazz);
 		} else {
 			Clazz superClass = (Clazz)getType(superClassName);
-			if (superClass == null) {
-				context.addClass(clazz);
-			} else {
+			context.addClass(clazz);
+			if (superClass != null) {
+				context.addClass(superClass);
 				context.addSuperClass(clazz, superClass);
 			}
 		}

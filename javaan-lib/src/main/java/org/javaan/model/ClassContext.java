@@ -78,10 +78,12 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		if (superClassName == null) {
 			throw new IllegalArgumentException("Parameter superClassName must not be null");
 		}
-		addType(className);
-		interfaceOfClass.addParent(className);
-		addType(superClassName);
-		interfaceOfClass.addParent(superClassName);
+		if (!types.contains(className.getName())) {
+			throw new IllegalArgumentException("Unknown class " + className);
+		}
+		if (!types.contains(superClassName.getName())) {
+			throw new IllegalArgumentException("Unknown class " + superClassName);
+		}
 		superClass.addEdge(superClassName, className);
 	}
 	
