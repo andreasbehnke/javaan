@@ -21,6 +21,7 @@ package org.javaan.bytecode;
  */
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -146,8 +147,10 @@ public class CallGraphBuilder {
 	
 	public CallGraph build() {
 		LOG.info("Creating method call graph ...");
+		Date start = new Date();
 		processClasses();
-		LOG.info("Created call graph containg {} methods", callGraph.size());
+		long duration = new Date().getTime() - start.getTime();
+		LOG.info("Creation of call graph containg {} methods took {} ms", callGraph.size(), duration);
 		int numberOfMissingTypes = reflectionClassContextBuilder.getMissingTypes().size();
 		if (numberOfMissingTypes > 0) {
 			LOG.warn("Missing types: {} types could not be resoled", numberOfMissingTypes);

@@ -24,10 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -36,8 +33,12 @@ import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.javaan.model.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JarFileLoader {
+
+	protected final static Logger LOG = LoggerFactory.getLogger(JarFileLoader.class);
 	
 	private void processJar(String path, InputStream input, List<Type> classes) throws IOException {
 		File file = File.createTempFile(new Random().nextLong() + "", ".jar");
@@ -89,6 +90,8 @@ public class JarFileLoader {
 
 	public List<Type> loadJavaClasses(String[] fileNames)
 			throws IOException {
+		LOG.info("Processing jar files...");
+        Date start = new Date();
 		List<Type> classes = new ArrayList<Type>();
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
@@ -98,7 +101,8 @@ public class JarFileLoader {
 			JarFile jar = new JarFile(file);
 			processJar(jar.getName(), fileName, jar, classes);
 		}
-
-		return classes;
+		long duration =  new Date().getTime() - start.getTime();
+        LOG.info("Loading of {} class files took {} ms", classes.size(), duration);
+        return classes;
 	}
 }

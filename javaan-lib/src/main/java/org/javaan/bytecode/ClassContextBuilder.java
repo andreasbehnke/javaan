@@ -21,6 +21,7 @@ package org.javaan.bytecode;
  */
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -87,11 +88,13 @@ public class ClassContextBuilder {
 	
 	public ClassContext build() {
 		LOG.info("Creating class context ...");
+		Date start = new Date();
 		for (Type type : types.getNamedObjects()) {
 			addType(type);
 		}
-		LOG.info("Created class context with {} classes and {} interfaces", 
-				new Object[]{context.getClasses().size(), context.getInterfaces().size()});
+        long duration = new Date().getTime() - start.getTime();
+        LOG.info("Creation of class context with {} classes and {} interfaces took {} ms",
+				context.getClasses().size(), context.getInterfaces().size(), duration);
 		int numberOfMissingTypes = reflectionClassContextBuilder.getMissingTypes().size();
 		if (numberOfMissingTypes > 0) {
 			LOG.warn("Missing types: {} types could not be resoled", numberOfMissingTypes);
