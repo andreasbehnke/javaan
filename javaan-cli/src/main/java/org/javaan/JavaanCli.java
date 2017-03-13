@@ -157,7 +157,7 @@ public class JavaanCli {
 				return ReturnCodes.errorParse;
 			}
 			if (cl.hasOption("v")) {
-				setLoggerLevel(Level.FINEST);
+				setLoggerLevel(Level.INFO);
 			} else {
 				setLoggerLevel(Level.WARNING);
 			}
