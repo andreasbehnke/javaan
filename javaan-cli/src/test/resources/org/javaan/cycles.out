@@ -1,0 +1,1347 @@
+
+--
+
+cycle 1:
+
+ [C]org.apache.commons.lang3.concurrent.EventCountCircuitBreaker
+  - 1 -> 
+   [C]org.apache.commons.lang3.concurrent.EventCountCircuitBreaker$StateStrategyOpen
+    - 2 -> 
+  - 1 -> 
+   [C]org.apache.commons.lang3.concurrent.EventCountCircuitBreaker$StateStrategyClosed
+    - 2 -> 
+
+--
+
+cycle 2:
+
+ [C]org.apache.bcel.classfile.Constant$1
+  - 1 -> 
+   [C]org.apache.bcel.classfile.Constant
+    - 1 -> 
+
+--
+
+cycle 3:
+
+ [C]org.apache.bcel.classfile.Utility
+  - 3 -> 
+   [C]org.apache.bcel.classfile.ConstantPool
+    - 2 -> 
+     [C]org.apache.bcel.classfile.ConstantCP
+      - 1 -> 
+    - 2 -> 
+     [C]org.apache.bcel.classfile.ConstantNameAndType
+      - 1 -> 
+    - 1 -> 
+     [C]org.apache.bcel.classfile.ConstantString
+      - 1 -> 
+       [C]org.apache.bcel.classfile.ConstantUtf8
+        - 1 -> 
+         [C]org.apache.bcel.classfile.ConstantUtf8$1
+          - 1 -> 
+        - 1 -> 
+      - 1 -> 
+    - 1 -> 
+     [C]org.apache.bcel.classfile.ConstantClass
+      - 1 -> 
+      - 1 -> 
+    - 1 -> 
+    - 1 -> 
+  - 1 -> 
+   [C]org.apache.bcel.classfile.LocalVariable
+    - 1 -> 
+    - 1 -> 
+    - 1 -> 
+  - 1 -> 
+   [C]org.apache.bcel.classfile.LocalVariableTable
+    - 6 -> 
+  - 2 -> 
+   [C]org.apache.bcel.classfile.Utility$JavaWriter
+    - 2 -> 
+  - 2 -> 
+   [C]org.apache.bcel.classfile.Utility$JavaReader
+    - 1 -> 
+
+--
+
+cycle 4:
+
+ [C]org.apache.bcel.classfile.Annotations
+  - 2 -> 
+   [C]org.apache.bcel.classfile.AnnotationEntry
+    - 1 -> 
+     [C]org.apache.bcel.classfile.ElementValue
+      - 1 -> 
+    - 3 -> 
+     [C]org.apache.bcel.classfile.ElementValuePair
+      - 2 -> 
+    - 1 -> 
+
+--
+
+cycle 5:
+
+ [C]org.apache.bcel.classfile.ParameterAnnotationEntry
+  - 1 -> 
+   [C]org.apache.bcel.classfile.ParameterAnnotations
+    - 2 -> 
+
+--
+
+cycle 6:
+
+ [C]org.apache.bcel.classfile.JavaClass$1
+  - 1 -> 
+   [C]org.apache.bcel.classfile.JavaClass
+    - 1 -> 
+
+--
+
+cycle 7:
+
+ [C]org.apache.bcel.util.ConstantHTML
+  - 2 -> 
+   [C]org.apache.bcel.util.Class2HTML
+    - 1 -> 
+     [C]org.apache.bcel.util.CodeHTML
+      - 1 -> 
+      - 3 -> 
+    - 1 -> 
+     [C]org.apache.bcel.util.MethodHTML
+      - 2 -> 
+       [C]org.apache.bcel.util.AttributeHTML
+        - 1 -> 
+        - 1 -> 
+      - 2 -> 
+      - 1 -> 
+    - 1 -> 
+    - 3 -> 
+
+--
+
+cycle 8:
+
+ [C]org.apache.commons.lang3.text.StrBuilder$StrBuilderWriter
+  - 5 -> 
+   [C]org.apache.commons.lang3.text.StrBuilder
+    - 1 -> 
+     [C]org.apache.commons.lang3.text.StrBuilder$StrBuilderReader
+      - 3 -> 
+    - 1 -> 
+     [C]org.apache.commons.lang3.text.StrBuilder$StrBuilderTokenizer
+      - 2 -> 
+    - 1 -> 
+     [C]org.apache.commons.lang3.text.StrMatcher
+      - 1 -> 
+       [C]org.apache.commons.lang3.StringUtils
+        - 1 -> 
+         [C]org.apache.commons.lang3.CharUtils
+          - 1 -> 
+        - 1 -> 
+         [C]org.apache.commons.lang3.ObjectUtils
+          - 4 -> 
+           [C]org.apache.commons.lang3.Validate
+            - 2 -> 
+             [C]org.apache.commons.lang3.ArrayUtils
+              - 3 -> 
+               [C]org.apache.commons.lang3.builder.ToStringBuilder
+                - 23 -> 
+                 [C]org.apache.commons.lang3.builder.ToStringStyle
+                  - 1 -> 
+                   [C]org.apache.commons.lang3.ClassUtils
+                    - 1 -> 
+                     [C]org.apache.commons.lang3.SystemUtils
+                      - 2 -> 
+                       [C]org.apache.commons.lang3.JavaVersion
+                        - 1 -> 
+                         [C]org.apache.commons.lang3.math.NumberUtils
+                          - 3 -> 
+                          - 1 -> 
+                      - 1 -> 
+                    - 2 -> 
+                    - 4 -> 
+                  - 1 -> 
+                - 1 -> 
+              - 1 -> 
+               [C]org.apache.commons.lang3.BooleanUtils
+                - 1 -> 
+              - 3 -> 
+               [C]org.apache.commons.lang3.mutable.MutableInt
+                - 1 -> 
+              - 3 -> 
+               [C]org.apache.commons.lang3.builder.EqualsBuilder
+                - 1 -> 
+                 [C]org.apache.commons.lang3.builder.ReflectionToStringBuilder
+                  - 2 -> 
+                - 3 -> 
+                 [C]org.apache.commons.lang3.tuple.Pair
+                  - 3 -> 
+                   [C]org.apache.commons.lang3.builder.CompareToBuilder
+                    - 1 -> 
+                    - 1 -> 
+                  - 1 -> 
+                - 1 -> 
+              - 3 -> 
+               [C]org.apache.commons.lang3.builder.HashCodeBuilder
+                - 1 -> 
+                - 1 -> 
+                - 1 -> 
+              - 1 -> 
+              - 4 -> 
+              - 1 -> 
+            - 1 -> 
+          - 3 -> 
+          - 1 -> 
+          - 2 -> 
+        - 4 -> 
+    - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 9:
+
+ [C]org.apache.commons.cli.Option$Builder
+  - 1 -> 
+   [C]org.apache.commons.cli.Option
+    - 10 -> 
+
+--
+
+cycle 10:
+
+ [C]org.jgrapht.graph.specifics.FastLookupDirectedSpecifics
+  - 3 -> 
+   [C]org.jgrapht.graph.AbstractBaseGraph
+    - 1 -> 
+     [C]org.jgrapht.graph.specifics.FastLookupUndirectedSpecifics
+      - 3 -> 
+    - 1 -> 
+
+--
+
+cycle 11:
+
+ [C]com.mxgraph.model.mxGraphModel
+  - 1 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxCollapseChange
+    - 1 -> 
+  - 1 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxValueChange
+    - 1 -> 
+  - 1 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxGeometryChange
+    - 1 -> 
+  - 1 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxVisibleChange
+    - 1 -> 
+  - 1 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxTerminalChange
+    - 1 -> 
+  - 2 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxChildChange
+    - 2 -> 
+  - 1 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxRootChange
+    - 1 -> 
+  - 1 -> 
+   [C]com.mxgraph.model.mxGraphModel$mxStyleChange
+    - 1 -> 
+
+--
+
+cycle 12:
+
+ [C]com.mxgraph.io.mxObjectCodec
+  - 1 -> 
+   [C]com.mxgraph.io.mxCodecRegistry
+    - 1 -> 
+     [C]com.mxgraph.io.mxGenericChangeCodec
+      - 1 -> 
+       [C]com.mxgraph.io.mxCodec
+        - 3 -> 
+        - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.io.mxChildChangeCodec
+      - 6 -> 
+    - 1 -> 
+     [C]com.mxgraph.io.mxRootChangeCodec
+      - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.io.mxStylesheetCodec
+      - 1 -> 
+       [C]com.mxgraph.util.mxUtils
+        - 9 -> 
+         [C]com.mxgraph.util.mxRectangle
+          - 1 -> 
+        - 1 -> 
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.io.mxCellCodec
+      - 1 -> 
+      - 3 -> 
+    - 1 -> 
+     [C]com.mxgraph.io.mxModelCodec
+      - 2 -> 
+    - 3 -> 
+  - 1 -> 
+  - 7 -> 
+
+--
+
+cycle 13:
+
+ [C]org.apache.bcel.util.ClassPath$Dir
+  - 1 -> 
+   [C]org.apache.bcel.util.ClassPath$Dir$1
+    - 1 -> 
+
+--
+
+cycle 14:
+
+ [C]org.apache.bcel.util.ClassPath$Zip$1
+  - 1 -> 
+   [C]org.apache.bcel.util.ClassPath$Zip
+    - 1 -> 
+
+--
+
+cycle 15:
+
+ [C]org.apache.bcel.generic.InstructionList
+  - 6 -> 
+   [C]org.apache.bcel.generic.CodeExceptionGen
+    - 1 -> 
+     [C]org.apache.bcel.generic.ConstantPoolGen
+      - 2 -> 
+       [C]org.apache.bcel.generic.MethodGen
+        - 1 -> 
+         [C]org.apache.bcel.generic.MethodGen$2
+          - 1 -> 
+           [C]org.apache.bcel.generic.LocalVariableGen
+            - 2 -> 
+        - 1 -> 
+         [C]org.apache.bcel.generic.MethodGen$1
+          - 1 -> 
+        - 3 -> 
+         [C]org.apache.bcel.generic.AnnotationEntryGen
+          - 1 -> 
+           [C]org.apache.bcel.generic.ElementValueGen
+            - 1 -> 
+            - 1 -> 
+          - 4 -> 
+           [C]org.apache.bcel.generic.ElementValuePairGen
+            - 3 -> 
+            - 4 -> 
+          - 3 -> 
+        - 7 -> 
+        - 3 -> 
+        - 3 -> 
+        - 7 -> 
+  - 2 -> 
+   [C]org.apache.bcel.generic.CPInstruction
+    - 1 -> 
+  - 1 -> 
+   [C]org.apache.bcel.generic.InstructionList$1
+    - 1 -> 
+  - 2 -> 
+  - 4 -> 
+
+--
+
+cycle 16:
+
+ [C]org.apache.bcel.verifier.structurals.Subroutines$SubroutineImpl
+  - 2 -> 
+   [C]org.apache.bcel.verifier.structurals.Subroutines
+    - 8 -> 
+
+--
+
+cycle 17:
+
+ [C]org.apache.bcel.verifier.statics.Pass3aVerifier
+  - 1 -> 
+   [C]org.apache.bcel.verifier.statics.Pass3aVerifier$InstOperandConstraintVisitor
+    - 1 -> 
+     [C]org.apache.bcel.verifier.VerifierFactory
+      - 1 -> 
+       [C]org.apache.bcel.verifier.Verifier
+        - 2 -> 
+         [C]org.apache.bcel.verifier.statics.Pass1Verifier
+          - 1 -> 
+        - 1 -> 
+         [C]org.apache.bcel.verifier.statics.Pass2Verifier
+          - 1 -> 
+           [C]org.apache.bcel.verifier.statics.Pass2Verifier$CPESSC_Visitor
+            - 6 -> 
+            - 2 -> 
+            - 1 -> 
+          - 1 -> 
+           [C]org.apache.bcel.verifier.statics.Pass2Verifier$FAMRAV_Visitor
+            - 5 -> 
+          - 1 -> 
+          - 2 -> 
+        - 2 -> 
+         [C]org.apache.bcel.verifier.structurals.Pass3bVerifier
+          - 3 -> 
+           [C]org.apache.bcel.verifier.structurals.ControlFlowGraph
+            - 1 -> 
+             [C]org.apache.bcel.verifier.structurals.ControlFlowGraph$InstructionContextImpl
+              - 1 -> 
+               [C]org.apache.bcel.verifier.structurals.InstConstraintVisitor
+                - 1 -> 
+                - 1 -> 
+              - 3 -> 
+          - 2 -> 
+          - 3 -> 
+        - 1 -> 
+        - 2 -> 
+    - 3 -> 
+    - 2 -> 
+  - 2 -> 
+
+--
+
+cycle 18:
+
+ [C]com.mxgraph.shape.mxDoubleEllipseShape
+  - 1 -> 
+   [C]com.mxgraph.canvas.mxGraphics2DCanvas
+    - 1 -> 
+     [C]com.mxgraph.shape.mxHtmlTextShape
+      - 1 -> 
+       [C]com.mxgraph.view.mxGraphView
+        - 2 -> 
+         [C]com.mxgraph.view.mxGraphView$mxCurrentRootChange
+          - 2 -> 
+           [C]com.mxgraph.view.mxGraph
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$4
+              - 1 -> 
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$8
+              - 1 -> 
+            - 1 -> 
+             [C]com.mxgraph.canvas.mxImageCanvas
+              - 4 -> 
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$6
+              - 1 -> 
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$7
+              - 1 -> 
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$3
+              - 2 -> 
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$2
+              - 2 -> 
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$1
+              - 1 -> 
+            - 1 -> 
+             [C]com.mxgraph.view.mxGraph$5
+              - 1 -> 
+            - 2 -> 
+             [C]com.mxgraph.view.mxMultiplicity
+              - 1 -> 
+            - 13 -> 
+             [C]com.mxgraph.view.mxGraphSelectionModel
+              - 2 -> 
+               [C]com.mxgraph.view.mxGraphSelectionModel$mxSelectionChange
+                - 2 -> 
+              - 1 -> 
+            - 20 -> 
+            - 1 -> 
+          - 2 -> 
+        - 12 -> 
+      - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxDefaultTextShape
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxSwimlaneShape
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxRectangleShape
+      - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxLineShape
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxLabelShape
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxImageShape
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxDoubleRectangleShape
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxCurveShape
+      - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxCylinderShape
+      - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.shape.mxConnectorShape
+      - 1 -> 
+       [C]com.mxgraph.shape.mxMarkerRegistry
+        - 1 -> 
+         [C]com.mxgraph.shape.mxMarkerRegistry$4
+          - 2 -> 
+        - 1 -> 
+         [C]com.mxgraph.shape.mxMarkerRegistry$3
+          - 2 -> 
+        - 1 -> 
+         [C]com.mxgraph.shape.mxMarkerRegistry$2
+          - 1 -> 
+        - 1 -> 
+         [C]com.mxgraph.shape.mxMarkerRegistry$1
+          - 2 -> 
+      - 3 -> 
+    - 1 -> 
+
+--
+
+cycle 19:
+
+ [C]com.mxgraph.swing.handler.mxEdgeHandler
+  - 1 -> 
+   [C]com.mxgraph.swing.handler.mxEdgeHandler$2
+    - 1 -> 
+     [C]com.mxgraph.swing.mxGraphComponent
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$7
+        - 1 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$12
+        - 1 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.handler.mxGraphTransferHandler
+        - 7 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$6
+        - 2 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$14
+        - 1 -> 
+      - 2 -> 
+       [C]com.mxgraph.swing.handler.mxGraphHandler
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxGraphHandler$3
+          - 1 -> 
+           [C]com.mxgraph.swing.handler.mxGraphHandler$3$1
+            - 1 -> 
+          - 1 -> 
+          - 1 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxGraphHandler$4
+          - 2 -> 
+          - 1 -> 
+          - 1 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.view.mxInteractiveCanvas
+          - 2 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxGraphHandler$2
+          - 1 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxGraphHandler$1
+          - 1 -> 
+        - 5 -> 
+         [C]com.mxgraph.swing.handler.mxCellMarker
+          - 3 -> 
+        - 5 -> 
+         [C]com.mxgraph.swing.handler.mxMovePreview
+          - 1 -> 
+           [C]com.mxgraph.swing.handler.mxSelectionCellsHandler
+            - 1 -> 
+             [C]com.mxgraph.swing.handler.mxSelectionCellsHandler$4
+              - 1 -> 
+            - 1 -> 
+             [C]com.mxgraph.swing.handler.mxSelectionCellsHandler$3
+              - 2 -> 
+            - 1 -> 
+             [C]com.mxgraph.swing.handler.mxSelectionCellsHandler$2
+              - 1 -> 
+            - 1 -> 
+             [C]com.mxgraph.swing.handler.mxSelectionCellsHandler$1
+              - 2 -> 
+            - 12 -> 
+             [C]com.mxgraph.swing.handler.mxCellHandler
+              - 5 -> 
+            - 5 -> 
+          - 4 -> 
+           [C]com.mxgraph.swing.view.mxCellStatePreview
+            - 4 -> 
+          - 1 -> 
+           [C]com.mxgraph.swing.handler.mxMovePreview$2
+            - 1 -> 
+          - 1 -> 
+           [C]com.mxgraph.swing.handler.mxMovePreview$1
+            - 1 -> 
+          - 5 -> 
+        - 22 -> 
+        - 3 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$8
+        - 5 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$4
+        - 1 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$2
+        - 1 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$1
+        - 1 -> 
+         [C]com.mxgraph.swing.mxGraphComponent$mxGraphControl
+          - 1 -> 
+          - 13 -> 
+        - 1 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.view.mxCellEditor
+        - 1 -> 
+         [C]com.mxgraph.swing.view.mxCellEditor$2
+          - 1 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.view.mxCellEditor$1
+          - 1 -> 
+        - 6 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.handler.mxElbowEdgeHandler
+        - 1 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.handler.mxVertexHandler
+        - 5 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$10
+        - 2 -> 
+      - 4 -> 
+       [C]com.mxgraph.swing.handler.mxConnectionHandler
+        - 7 -> 
+         [C]com.mxgraph.swing.handler.mxConnectPreview
+          - 1 -> 
+           [C]com.mxgraph.swing.handler.mxConnectPreview$1
+            - 1 -> 
+          - 1 -> 
+          - 6 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxConnectionHandler$4
+          - 4 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxConnectionHandler$3
+          - 2 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxConnectionHandler$2
+          - 1 -> 
+        - 1 -> 
+         [C]com.mxgraph.swing.handler.mxConnectionHandler$1
+          - 1 -> 
+        - 5 -> 
+        - 9 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$11
+        - 2 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$13
+        - 1 -> 
+      - 1 -> 
+       [C]com.mxgraph.swing.mxGraphComponent$9
+        - 1 -> 
+      - 3 -> 
+       [C]com.mxgraph.swing.handler.mxPanningHandler
+        - 3 -> 
+      - 1 -> 
+      - 1 -> 
+      - 4 -> 
+      - 3 -> 
+      - 3 -> 
+    - 1 -> 
+    - 2 -> 
+    - 1 -> 
+  - 1 -> 
+   [C]com.mxgraph.swing.handler.mxEdgeHandler$1
+    - 1 -> 
+    - 2 -> 
+  - 7 -> 
+  - 4 -> 
+
+--
+
+cycle 20:
+
+ [C]org.apache.commons.io.IOUtils
+  - 1 -> 
+   [C]org.apache.commons.io.LineIterator
+    - 1 -> 
+
+--
+
+cycle 21:
+
+ [C]org.apache.commons.io.IOCase
+  - 1 -> 
+   [C]org.apache.commons.io.FilenameUtils
+    - 4 -> 
+
+--
+
+cycle 22:
+
+ [C]org.apache.commons.io.filefilter.AgeFileFilter
+  - 1 -> 
+   [C]org.apache.commons.io.FileUtils
+    - 3 -> 
+     [C]org.apache.commons.io.filefilter.FileFilterUtils
+      - 6 -> 
+
+--
+
+cycle 23:
+
+ [C]org.apache.bcel.generic.IF_ACMPEQ
+  - 1 -> 
+   [C]org.apache.bcel.generic.IF_ACMPNE
+    - 1 -> 
+
+--
+
+cycle 24:
+
+ [C]org.slf4j.event.EventRecodingLogger
+  - 1 -> 
+   [C]org.slf4j.helpers.SubstituteLogger
+    - 1 -> 
+
+--
+
+cycle 25:
+
+ [C]org.javaan.graph.ExtendedDirectedGraph
+  - 1 -> 
+   [C]org.javaan.graph.GraphFactory
+    - 2 -> 
+
+--
+
+cycle 26:
+
+ [C]org.javaan.model.InterfaceMethodFinder
+  - 1 -> 
+   [C]org.javaan.model.ClassContext
+    - 2 -> 
+
+--
+
+cycle 27:
+
+ [C]org.jgrapht.experimental.GraphSquare$1
+  - 3 -> 
+   [C]org.jgrapht.experimental.GraphSquare
+    - 1 -> 
+
+--
+
+cycle 28:
+
+ [C]com.mxgraph.view.mxSwimlaneManager$1
+  - 3 -> 
+   [C]com.mxgraph.view.mxSwimlaneManager
+    - 1 -> 
+     [C]com.mxgraph.view.mxSwimlaneManager$2
+      - 3 -> 
+    - 1 -> 
+
+--
+
+cycle 29:
+
+ [C]org.apache.bcel.generic.IFNE
+  - 1 -> 
+   [C]org.apache.bcel.generic.IFEQ
+    - 1 -> 
+
+--
+
+cycle 30:
+
+ [C]org.apache.commons.cli.AlreadySelectedException
+  - 1 -> 
+   [C]org.apache.commons.cli.OptionGroup
+    - 1 -> 
+
+--
+
+cycle 31:
+
+ [C]org.apache.commons.lang3.time.FastDateParser$TimeZoneStrategy
+  - 2 -> 
+   [C]org.apache.commons.lang3.time.FastDateParser
+    - 1 -> 
+     [C]org.apache.commons.lang3.time.FastDateParser$2
+      - 1 -> 
+    - 2 -> 
+     [C]org.apache.commons.lang3.time.FastDateParser$StrategyParser
+      - 2 -> 
+    - 1 -> 
+     [C]org.apache.commons.lang3.time.FastDateParser$CaseInsensitiveTextStrategy
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 32:
+
+ [C]org.apache.commons.lang3.reflect.TypeUtils
+  - 4 -> 
+   [C]org.apache.commons.lang3.reflect.TypeUtils$WildcardTypeBuilder
+    - 1 -> 
+     [C]org.apache.commons.lang3.reflect.TypeUtils$WildcardTypeImpl
+      - 2 -> 
+  - 1 -> 
+   [C]org.apache.commons.lang3.reflect.TypeUtils$ParameterizedTypeImpl
+    - 2 -> 
+  - 1 -> 
+   [C]org.apache.commons.lang3.reflect.TypeUtils$GenericArrayTypeImpl
+    - 2 -> 
+
+--
+
+cycle 33:
+
+ [C]org.jgrapht.experimental.dag.DirectedAcyclicGraph
+  - 1 -> 
+   [C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$TopoIterator
+    - 4 -> 
+
+--
+
+cycle 34:
+
+ [C]org.jgrapht.graph.Subgraph
+  - 1 -> 
+   [C]org.jgrapht.graph.Subgraph$BaseGraphListener
+    - 4 -> 
+
+--
+
+cycle 35:
+
+ [C]org.apache.bcel.generic.FieldGen
+  - 1 -> 
+   [C]org.apache.bcel.generic.FieldGen$1
+    - 1 -> 
+
+--
+
+cycle 36:
+
+ [C]org.apache.commons.lang3.AnnotationUtils$1
+  - 1 -> 
+   [C]org.apache.commons.lang3.AnnotationUtils
+    - 1 -> 
+
+--
+
+cycle 37:
+
+ [C]com.mxgraph.view.mxLayoutManager$1
+  - 2 -> 
+   [C]com.mxgraph.view.mxLayoutManager
+    - 1 -> 
+     [C]com.mxgraph.view.mxLayoutManager$2
+      - 2 -> 
+    - 1 -> 
+
+--
+
+cycle 38:
+
+ [C]org.apache.commons.lang3.concurrent.BasicThreadFactory$Builder
+  - 1 -> 
+   [C]org.apache.commons.lang3.concurrent.BasicThreadFactory
+    - 5 -> 
+
+--
+
+cycle 39:
+
+ [C]com.mxgraph.reader.mxSaxOutputHandler$25
+  - 1 -> 
+   [C]com.mxgraph.reader.mxSaxOutputHandler
+    - 1 -> 
+     [C]com.mxgraph.reader.mxSaxOutputHandler$30
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.reader.mxSaxOutputHandler$24
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 40:
+
+ [C]org.javaan.bytecode.CallGraphBuilder$MethodVisitor
+  - 1 -> 
+   [C]org.javaan.bytecode.CallGraphBuilder
+    - 2 -> 
+
+--
+
+cycle 41:
+
+ [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner
+  - 1 -> 
+   [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$UnweightedSpannerAlgorithm
+    - 1 -> 
+  - 1 -> 
+   [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$SpannerAlgorithmBase
+    - 2 -> 
+  - 1 -> 
+   [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$WeightedSpannerAlgorithm
+    - 1 -> 
+
+--
+
+cycle 42:
+
+ [C]com.mxgraph.analysis.mxGraphGenerator
+  - 6 -> 
+   [C]com.mxgraph.analysis.mxGraphStructure
+    - 1 -> 
+     [C]com.mxgraph.analysis.mxTraversal
+      - 10 -> 
+       [C]com.mxgraph.analysis.mxAnalysisGraph
+        - 1 -> 
+      - 3 -> 
+      - 1 -> 
+    - 14 -> 
+    - 2 -> 
+  - 7 -> 
+
+--
+
+cycle 43:
+
+ [C]com.mxgraph.swing.util.mxGraphActions$RemoveFromParentAction
+  - 1 -> 
+   [C]com.mxgraph.swing.util.mxGraphActions
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$LayerAction
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$DrillAction
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$FoldAction
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$SelectAction
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$UpdateGroupBoundsAction
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$UngroupAction
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$GroupAction
+      - 1 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.util.mxGraphActions$DeleteAction
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 44:
+
+ [C]org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths
+  - 1 -> 
+   [C]org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths$FloydWarshallSingleSourcePaths
+    - 4 -> 
+
+--
+
+cycle 45:
+
+ [C]org.apache.commons.lang3.concurrent.ConcurrentException
+  - 1 -> 
+   [C]org.apache.commons.lang3.concurrent.ConcurrentUtils
+    - 2 -> 
+     [C]org.apache.commons.lang3.concurrent.ConcurrentRuntimeException
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 46:
+
+ [C]org.apache.commons.lang3.concurrent.BackgroundInitializer$InitializationTask
+  - 1 -> 
+   [C]org.apache.commons.lang3.concurrent.BackgroundInitializer
+    - 1 -> 
+
+--
+
+cycle 47:
+
+ [C]com.mxgraph.swing.handler.mxInsertHandler$1
+  - 1 -> 
+   [C]com.mxgraph.swing.handler.mxInsertHandler
+    - 1 -> 
+
+--
+
+cycle 48:
+
+ [C]com.mxgraph.layout.hierarchical.mxHierarchicalLayout
+  - 1 -> 
+   [C]com.mxgraph.layout.hierarchical.stage.mxMedianHybridCrossingReduction
+    - 1 -> 
+  - 1 -> 
+   [C]com.mxgraph.layout.hierarchical.stage.mxMinimumCycleRemover
+    - 2 -> 
+     [C]com.mxgraph.layout.hierarchical.model.mxGraphHierarchyModel
+      - 2 -> 
+    - 1 -> 
+  - 4 -> 
+   [C]com.mxgraph.layout.hierarchical.stage.mxCoordinateAssignment
+    - 2 -> 
+    - 2 -> 
+  - 3 -> 
+
+--
+
+cycle 49:
+
+ [C]com.mxgraph.swing.mxGraphOutline$3
+  - 2 -> 
+   [C]com.mxgraph.swing.mxGraphOutline
+    - 1 -> 
+     [C]com.mxgraph.swing.mxGraphOutline$2
+      - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.mxGraphOutline$1
+      - 2 -> 
+    - 1 -> 
+     [C]com.mxgraph.swing.mxGraphOutline$MouseTracker
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 50:
+
+ [C]org.apache.commons.lang3.time.FastDatePrinter
+  - 1 -> 
+   [C]org.apache.commons.lang3.time.FastDatePrinter$PaddedNumberField
+    - 1 -> 
+  - 1 -> 
+   [C]org.apache.commons.lang3.time.FastDatePrinter$TwoDigitNumberField
+    - 2 -> 
+  - 1 -> 
+   [C]org.apache.commons.lang3.time.FastDatePrinter$UnpaddedNumberField
+    - 2 -> 
+  - 1 -> 
+   [C]org.apache.commons.lang3.time.FastDatePrinter$TimeZoneNameRule
+    - 1 -> 
+  - 1 -> 
+   [C]org.apache.commons.lang3.time.FastDatePrinter$Iso8601_Rule
+    - 1 -> 
+
+--
+
+cycle 51:
+
+ [C]org.apache.commons.lang3.time.FastDateFormat$1
+  - 1 -> 
+   [C]org.apache.commons.lang3.time.FastDateFormat
+    - 1 -> 
+
+--
+
+cycle 52:
+
+ [C]org.jgrapht.alg.matching.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation$MatchExtender
+  - 3 -> 
+   [C]org.jgrapht.alg.matching.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation
+    - 2 -> 
+
+--
+
+cycle 53:
+
+ [C]org.jgrapht.alg.cycle.HierholzerEulerianCycle
+  - 1 -> 
+   [C]org.jgrapht.GraphTests
+    - 2 -> 
+
+--
+
+cycle 54:
+
+ [C]org.apache.bcel.util.BCELFactory
+  - 2 -> 
+   [C]org.apache.bcel.util.BCELifier
+    - 2 -> 
+
+--
+
+cycle 55:
+
+ [C]org.apache.commons.lang3.event.EventListenerSupport
+  - 1 -> 
+   [C]org.apache.commons.lang3.event.EventListenerSupport$ProxyInvocationHandler
+    - 1 -> 
+
+--
+
+cycle 56:
+
+ [C]org.jgrapht.alg.matching.PathGrowingWeightedMatching$DynamicProgrammingPathSolver
+  - 1 -> 
+   [C]org.jgrapht.alg.matching.PathGrowingWeightedMatching
+    - 2 -> 
+
+--
+
+cycle 57:
+
+ [C]org.apache.bcel.verifier.VerifierAppFrame$2
+  - 1 -> 
+   [C]org.apache.bcel.verifier.VerifierAppFrame
+    - 1 -> 
+     [C]org.apache.bcel.verifier.VerifierAppFrame$6
+      - 1 -> 
+    - 1 -> 
+     [C]org.apache.bcel.verifier.VerifierAppFrame$5
+      - 1 -> 
+    - 1 -> 
+     [C]org.apache.bcel.verifier.VerifierAppFrame$4
+      - 1 -> 
+    - 1 -> 
+     [C]org.apache.bcel.verifier.VerifierAppFrame$3
+      - 1 -> 
+    - 1 -> 
+     [C]org.apache.bcel.verifier.VerifierAppFrame$1
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 58:
+
+ [C]org.apache.bcel.generic.IFGE
+  - 1 -> 
+   [C]org.apache.bcel.generic.IFLT
+    - 1 -> 
+
+--
+
+cycle 59:
+
+ [C]org.apache.bcel.generic.IFGT
+  - 1 -> 
+   [C]org.apache.bcel.generic.IFLE
+    - 1 -> 
+
+--
+
+cycle 60:
+
+ [C]org.apache.bcel.generic.IF_ICMPEQ
+  - 1 -> 
+   [C]org.apache.bcel.generic.IF_ICMPNE
+    - 1 -> 
+
+--
+
+cycle 61:
+
+ [C]org.apache.bcel.generic.IF_ICMPGE
+  - 1 -> 
+   [C]org.apache.bcel.generic.IF_ICMPLT
+    - 1 -> 
+
+--
+
+cycle 62:
+
+ [C]org.apache.bcel.generic.IF_ICMPLE
+  - 1 -> 
+   [C]org.apache.bcel.generic.IF_ICMPGT
+    - 1 -> 
+
+--
+
+cycle 63:
+
+ [C]org.apache.bcel.generic.IFNONNULL
+  - 1 -> 
+   [C]org.apache.bcel.generic.IFNULL
+    - 1 -> 
+
+--
+
+cycle 64:
+
+ [C]org.apache.bcel.generic.ClassGen
+  - 1 -> 
+   [C]org.apache.bcel.generic.ClassGen$1
+    - 1 -> 
+
+--
+
+cycle 65:
+
+ [C]com.mxgraph.reader.mxDomOutputParser$25
+  - 1 -> 
+   [C]com.mxgraph.reader.mxDomOutputParser
+    - 1 -> 
+     [C]com.mxgraph.reader.mxDomOutputParser$30
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 66:
+
+ [C]org.jgrapht.alg.GreedyMultiplicativeSpanner$UnweightedSpannerAlgorithm
+  - 1 -> 
+   [C]org.jgrapht.alg.GreedyMultiplicativeSpanner
+    - 1 -> 
+     [C]org.jgrapht.alg.GreedyMultiplicativeSpanner$SpannerAlgorithmBase
+      - 3 -> 
+    - 1 -> 
+     [C]org.jgrapht.alg.GreedyMultiplicativeSpanner$WeightedSpannerAlgorithm
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 67:
+
+ [C]org.apache.commons.lang3.CharRange$CharacterIterator
+  - 3 -> 
+   [C]org.apache.commons.lang3.CharRange
+    - 1 -> 
+
+--
+
+cycle 68:
+
+ [C]org.jgrapht.alg.TarjanLowestCommonAncestor$Worker
+  - 1 -> 
+   [C]org.jgrapht.alg.TarjanLowestCommonAncestor
+    - 2 -> 
+
+--
+
+cycle 69:
+
+ [C]org.apache.bcel.verifier.VerifyDialog$IvjEventHandler
+  - 8 -> 
+   [C]org.apache.bcel.verifier.VerifyDialog
+    - 1 -> 
+     [C]org.apache.bcel.verifier.VerifyDialog$1
+      - 2 -> 
+    - 1 -> 
+
+--
+
+cycle 70:
+
+ [C]com.mxgraph.swing.util.mxAnimation
+  - 1 -> 
+   [C]com.mxgraph.swing.util.mxAnimation$1
+    - 1 -> 
+
+--
+
+cycle 71:
+
+ [C]org.apache.commons.io.input.ReversedLinesFileReader
+  - 3 -> 
+   [C]org.apache.commons.io.input.ReversedLinesFileReader$FilePart
+    - 6 -> 
+
+--
+
+cycle 72:
+
+ [C]org.slf4j.MDC$MDCCloseable
+  - 1 -> 
+   [C]org.slf4j.MDC
+    - 1 -> 
+
+--
+
+cycle 73:
+
+ [C]com.mxgraph.swing.handler.mxRubberband$1
+  - 1 -> 
+   [C]com.mxgraph.swing.handler.mxRubberband
+    - 1 -> 
+     [C]com.mxgraph.swing.handler.mxRubberband$2
+      - 1 -> 
+    - 1 -> 
+
+--
+
+cycle 74:
+
+ [C]org.apache.commons.lang3.concurrent.TimedSemaphore$1
+  - 1 -> 
+   [C]org.apache.commons.lang3.concurrent.TimedSemaphore
+    - 1 -> 
+
+--
+
+cycle 75:
+
+ [C]org.jgrapht.alg.KShortestPaths
+  - 1 -> 
+   [C]org.jgrapht.alg.KShortestPaths$PathWrapper
+    - 2 -> 
+
+--
+
+cycle 76:
+
+ [C]com.mxgraph.swing.handler.mxRotationHandler
+  - 1 -> 
+   [C]com.mxgraph.swing.handler.mxRotationHandler$1
+    - 1 -> 
+
+--
+
+cycle 77:
+
+ [C]org.jgrapht.alg.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation$MatchExtender
+  - 3 -> 
+   [C]org.jgrapht.alg.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation
+    - 2 -> 
+
+--
+
+cycle 78:
+
+ [C]org.javaan.commands.BaseDependencyGraphCommand$1
+  - 1 -> 
+   [C]org.javaan.commands.BaseDependencyGraphCommand
+    - 1 -> 
+
+--
+
+cycle 79:
+
+ [C]com.mxgraph.swing.util.mxMorphing$1
+  - 1 -> 
+   [C]com.mxgraph.swing.util.mxMorphing
+    - 1 -> 
