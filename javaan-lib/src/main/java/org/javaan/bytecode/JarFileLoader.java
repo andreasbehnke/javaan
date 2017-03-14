@@ -100,11 +100,11 @@ public class JarFileLoader {
         }
 	}
 
-	public List<Type> loadJavaClasses(String[] fileNames)
+	public List<Type> loadJavaClasses(String... fileNames)
 			throws IOException {
 		LOG.info("Processing jar files...");
         Date start = new Date();
-		Collection<Type> types = new ConcurrentLinkedDeque<>();
+		Collection<Type> types = (parallel) ? new ConcurrentLinkedDeque<>() : new ArrayList<>();
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
 			if (!file.exists()) {
