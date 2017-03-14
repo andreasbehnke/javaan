@@ -53,7 +53,7 @@ public abstract class BaseCommand implements Command {
 			System.out.println(EXCEPTION_MISSING_FILES);
 			return null;
 		}
-		JarFileLoader loader = new JarFileLoader();
+		JarFileLoader loader = new JarFileLoader(true);
 		List<Type> types = loader.loadJavaClasses(files);
 		return types;
 	}

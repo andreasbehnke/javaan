@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -39,8 +40,14 @@ import org.slf4j.LoggerFactory;
 public class JarFileLoader {
 
 	protected final static Logger LOG = LoggerFactory.getLogger(JarFileLoader.class);
+
+	private final boolean parallel;
+
+	public JarFileLoader(boolean parallel) {
+	    this.parallel = parallel;
+    }
 	
-	private void processJar(String path, InputStream input, List<Type> classes) throws IOException {
+	private void processJar(String path, InputStream input, Collection<Type> classes) throws IOException {
 		File file = File.createTempFile(new Random().nextLong() + "", ".jar");
 		OutputStream output = FileUtils.openOutputStream(file);
 		try {
@@ -55,54 +62,59 @@ public class JarFileLoader {
 		}
 	}
 	
-	private void processEntry(String path, String fileName, JarFile jar, List<Type> classes, JarEntry entry) throws IOException {
-		if (!entry.isDirectory()) {
-			String name = entry.getName();
-			boolean isClass = name.endsWith(".class");
-			boolean isLibrary = name.endsWith(".jar") || name.endsWith(".war") || name.endsWith(".ear");
-			if (isClass) {
-				ClassParser parser = new ClassParser(fileName, entry.getName());
-				JavaClass javaClass = parser.parse();
-				String filePath = path + File.pathSeparator + javaClass.getFileName();
-				Type type = Type.create(javaClass, filePath);
-				classes.add(type);
-			} else if (isLibrary) {
-				InputStream input = jar.getInputStream(entry);
-				try {
-					processJar(path + File.pathSeparator + entry.getName(), input, classes);
-				} finally {
-					input.close();
-				}
-			}
-		}
+	private void processEntry(String path, String fileName, JarFile jar, Collection<Type> classes, JarEntry entry) {
+	    try {
+            if (!entry.isDirectory()) {
+                String name = entry.getName();
+                boolean isClass = name.endsWith(".class");
+                boolean isLibrary = name.endsWith(".jar") || name.endsWith(".war") || name.endsWith(".ear");
+                if (isClass) {
+                    ClassParser parser = new ClassParser(fileName, entry.getName());
+                    JavaClass javaClass = parser.parse();
+                    String filePath = path + File.pathSeparator + javaClass.getFileName();
+                    Type type = Type.create(javaClass, filePath);
+                    classes.add(type);
+                } else if (isLibrary) {
+                    InputStream input = jar.getInputStream(entry);
+                    try {
+                        processJar(path + File.pathSeparator + entry.getName(), input, classes);
+                    } finally {
+                        input.close();
+                    }
+                }
+            }
+        } catch (IOException ioe) {
+	        throw new RuntimeException(ioe);
+        }
 	}
 	
-	private void processJar(String path, String fileName, JarFile jar, List<Type> classes) throws IOException {
-		try {
-			Enumeration<JarEntry> entries = jar.entries();
-			while (entries.hasMoreElements()) {
-				processEntry(path, fileName, jar, classes, entries.nextElement());
-			}
-		} finally {
-			jar.close();
-		}
+	private void processJar(String path, String fileName, JarFile jar, Collection<Type> classes) throws IOException {
+	    try {
+	        if (parallel) {
+                jar.stream().parallel().forEach( jarEntry -> processEntry(path, fileName, jar, classes, jarEntry));
+            } else {
+                jar.stream().forEach( jarEntry -> processEntry(path, fileName, jar, classes, jarEntry));
+            }
+        } finally {
+            jar.close();
+        }
 	}
 
 	public List<Type> loadJavaClasses(String[] fileNames)
 			throws IOException {
 		LOG.info("Processing jar files...");
         Date start = new Date();
-		List<Type> classes = new ArrayList<Type>();
+		Collection<Type> types = new ConcurrentLinkedDeque<>();
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
 			if (!file.exists()) {
 				throw new IOException(String.format("JAR file %s does not exist", fileName));
 			}
 			JarFile jar = new JarFile(file);
-			processJar(jar.getName(), fileName, jar, classes);
+			processJar(jar.getName(), fileName, jar, types);
 		}
 		long duration =  new Date().getTime() - start.getTime();
-        LOG.info("Loading of {} class files took {} ms", classes.size(), duration);
-        return classes;
+        LOG.info("Loading of {} class files took {} ms", types.size(), duration);
+        return new ArrayList<>(types);
 	}
 }

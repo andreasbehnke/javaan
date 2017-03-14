@@ -25,9 +25,12 @@ public class TestRegressionJavaanCli {
 
         public String regressionFileName;
 
-        public RegressionData(String regressionFileName, String... commandLineArguments) {
+        public boolean sortResult;
+
+        public RegressionData(String regressionFileName, boolean sortResult, String... commandLineArguments) {
             this.commandLineArguments = commandLineArguments;
             this.regressionFileName = regressionFileName;
+            this.sortResult = sortResult;
         }
 
         @Override
@@ -43,16 +46,16 @@ public class TestRegressionJavaanCli {
     @Parameterized.Parameters(name = "{0}")
     public static final RegressionData[] regresseionTestData() {
         return new RegressionData[]{
-                new RegressionData("help.out", "--help"),
-                new RegressionData("classes.out", "classes", TEST_LIBRARY),
-                new RegressionData("classes.i.out", "classes", "-i", TEST_LIBRARY),
-                new RegressionData("classes.s.out", "classes", "-s", TEST_LIBRARY),
-                new RegressionData("interfaces.spec.out", "interfaces", "-spec", TEST_LIBRARY),
-                new RegressionData("interfaces.vm.out", "interfaces", "-vm", TEST_LIBRARY),
-                new RegressionData("used-packages.out", "used-packages", TEST_LIBRARY),
-                new RegressionData("callers.out", "callers", TEST_LIBRARY),
-                new RegressionData("callers.filter.out", "callers", "-method", "org.javaan", TEST_LIBRARY),
-                new RegressionData("callees.filter.out", "callees", "-method", "org.javaan", TEST_LIBRARY)
+                new RegressionData("help.out", false,"--help"),
+                new RegressionData("classes.out", false,"classes", TEST_LIBRARY),
+                new RegressionData("classes.i.out", false, "classes", "-i", TEST_LIBRARY),
+                new RegressionData("classes.s.out", false, "classes", "-s", TEST_LIBRARY),
+                new RegressionData("interfaces.spec.out", false, "interfaces", "-spec", TEST_LIBRARY),
+                new RegressionData("interfaces.vm.out", false, "interfaces", "-vm", TEST_LIBRARY),
+                new RegressionData("used-packages.out", false, "used-packages", TEST_LIBRARY),
+                new RegressionData("callers.out", true, "callers", TEST_LIBRARY),
+                new RegressionData("callers.filter.out", true, "callers", "-method", "org.javaan", TEST_LIBRARY),
+                new RegressionData("callees.filter.out", true, "callees", "-method", "org.javaan", TEST_LIBRARY)
         };
     }
 
@@ -75,6 +78,10 @@ public class TestRegressionJavaanCli {
         new JavaanCli(commandLineArguments, JavaanCli.getCommands(), writer).execute();
         String outputAsString = writer.toString();
         String[] output = StringUtils.split(outputAsString, System.lineSeparator());
+        if (regressionData.sortResult) {
+            Arrays.sort(output);
+            outputAsString = StringUtils.join(output, System.lineSeparator());
+        }
         FileUtils.writeStringToFile(new File(REGRESSION_FILE_PATH + regressionData.regressionFileName), outputAsString, "UTF8");
         assertArrayEquals(expectedOutput, output);
     }

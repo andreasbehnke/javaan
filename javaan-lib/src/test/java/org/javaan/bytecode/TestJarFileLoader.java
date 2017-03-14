@@ -32,7 +32,7 @@ public class TestJarFileLoader implements TestConstants {
 	
 	@Test
 	public void testLoadJarFiles() throws IOException {
-		List<Type> types = new JarFileLoader().loadJavaClasses(new String[]{TEST_JAR_FILE});
+		List<Type> types = new JarFileLoader(true).loadJavaClasses(new String[]{TEST_JAR_FILE});
 		assertEquals(NUMBER_OF_CLASSES_AND_INTERFACES, types.size());
 	}
 }
