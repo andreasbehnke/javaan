@@ -34,7 +34,12 @@ public class Interface extends Type {
 		super(name);
         superInterfaceNames = null;
 	}
-	
+
+	public Interface(String name, List<String> superInterfaceNames) {
+		super(name);
+		this.superInterfaceNames = superInterfaceNames;
+	}
+
 	protected Interface(JavaClass javaClass, String filePath) {
 		super(javaClass, filePath);
         superInterfaceNames = Arrays.asList(javaClass.getInterfaceNames());

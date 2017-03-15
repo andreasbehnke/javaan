@@ -37,8 +37,14 @@ public class Clazz extends Type {
         this.superTypeName = null;
 		this.interfaceNames = null;
 	}
-	
-	protected Clazz(JavaClass javaClass, String filePath) {
+
+    public Clazz(String name, String superTypeName, List<String> interfaceNames) {
+        super(name);
+        this.interfaceNames = interfaceNames;
+        this.superTypeName = superTypeName;
+    }
+
+    protected Clazz(JavaClass javaClass, String filePath) {
 		super(javaClass, filePath);
         this.superTypeName = javaClass.getSuperclassName();
 		this.interfaceNames = Arrays.asList(javaClass.getInterfaceNames());
@@ -46,11 +52,15 @@ public class Clazz extends Type {
 
 	protected Clazz(Class clazz) {
 		super(clazz);
-        this.superTypeName = clazz.getSuperclass().getName();
-		this.interfaceNames = new ArrayList<>();
+		if (clazz.getSuperclass() != null) {
+            this.superTypeName = clazz.getSuperclass().getName();
+        } else {
+		    this.superTypeName = null;
+        }
+        this.interfaceNames = new ArrayList<>();
         Arrays.stream(clazz.getInterfaces()).forEach( i -> interfaceNames.add(i.getName()) );
     }
-	
+
 	@Override
 	public JavaType getJavaType() {
 		return JavaType.CLASS;
