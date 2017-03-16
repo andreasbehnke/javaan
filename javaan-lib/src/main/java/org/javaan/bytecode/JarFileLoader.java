@@ -43,12 +43,6 @@ public class JarFileLoader {
 
 	protected final static Logger LOG = LoggerFactory.getLogger(JarFileLoader.class);
 
-	private final boolean parallel;
-
-	public JarFileLoader(boolean parallel) {
-	    this.parallel = parallel;
-    }
-
 	private Type processEntry(String path, String fileName, JarFile jar, JarEntry entry) {
 	    try {
             if (!entry.isDirectory()) {
@@ -69,13 +63,8 @@ public class JarFileLoader {
 	
 	private List<Type> processJar(String path, String fileName, JarFile jar) throws IOException {
 	    try {
-            Stream<JarEntry> s = null;
-            if (parallel) {
-                s = jar.stream().parallel();
-            } else {
-                s = jar.stream();
-            }
-            return  s.map(jarEntry -> processEntry(path, fileName, jar, jarEntry))
+            return  jar.stream().parallel()
+                    .map(jarEntry -> processEntry(path, fileName, jar, jarEntry))
                     .filter(type -> type != null)
                     .collect(Collectors.toList());
         } finally {

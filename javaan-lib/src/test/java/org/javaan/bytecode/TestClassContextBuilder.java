@@ -38,7 +38,7 @@ import org.junit.Test;
 public class TestClassContextBuilder implements TestConstants {
 
 	private List<Type> loadClasses() throws IOException {
-		return new JarFileLoader(true).loadJavaClasses(new String[]{TEST_JAR_FILE});
+		return new JarFileLoader().loadJavaClasses(new String[]{TEST_JAR_FILE});
 	}
 	
 	@Test

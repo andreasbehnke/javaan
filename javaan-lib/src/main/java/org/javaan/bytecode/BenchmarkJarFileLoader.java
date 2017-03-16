@@ -28,20 +28,6 @@ public class BenchmarkJarFileLoader {
     }
 
     public static void runBenchmark(String fileName, Writer output) {
-        try {
-            long start = System.nanoTime();
-            JarFileLoader jarFileLoader = new JarFileLoader(false);
-            long count = jarFileLoader.loadJavaClasses(fileName).size();
-            long durationNoneParallel = System.nanoTime() - start;
-            start = System.nanoTime();
-            jarFileLoader = new JarFileLoader(true);
-            jarFileLoader.loadJavaClasses(fileName).size();
-            long durationParallel = System.nanoTime() - start;
-            if (count > 0) { // ignore jar files containing no classes i.e. source or javadoc jars
-                PrintUtil.format(output, "%s,%s,%s,%s", fileName, count, durationNoneParallel, durationParallel);
-            }
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
+
     }
 }

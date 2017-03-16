@@ -36,6 +36,7 @@ supported commands:
  reset:          Resets options which have been made persistent with set command. If no option is provided, lists all
                  persistent options. The following options can be resetted, separated by whitespace: rmi
                  (resolve-method-implementations) rdh (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph) 
+ benchmark:      run benchmark and print result values as CSV list
 Use javaan <command> --help to display detailed options of command.
 
 
@@ -202,4 +203,11 @@ usage: javaan reset <optionlist>
 Resets options which have been made persistent with set command. If no option is provided, lists all persistent options.
 The following options can be resetted, separated by whitespace: rmi (resolve-method-implementations) rdh
 (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph)
+
+
+benchmark
+------------------------------------------------------------
+
+usage: javaan benchmark <repository path>
+run benchmark and print result values as CSV list
 

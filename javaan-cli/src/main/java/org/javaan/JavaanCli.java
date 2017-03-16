@@ -33,21 +33,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.text.WordUtils;
-import org.javaan.commands.ListClasses;
-import org.javaan.commands.ListPackages;
-import org.javaan.commands.ResetOptions;
-import org.javaan.commands.SetOptions;
-import org.javaan.commands.ShowDepdendencyCyclesGraph;
-import org.javaan.commands.ListDuplicates;
-import org.javaan.commands.ListInterfaces;
-import org.javaan.commands.ListMissingTypes;
-import org.javaan.commands.ShowCalleeGraph;
-import org.javaan.commands.ShowCallerGraph;
-import org.javaan.commands.ShowPackageDepdendencyCyclesGraph;
-import org.javaan.commands.ShowPackageUsedGraph;
-import org.javaan.commands.ShowPackageUsingGraph;
-import org.javaan.commands.ShowUsedGraph;
-import org.javaan.commands.ShowUsingGraph;
+import org.javaan.commands.*;
 import org.javaan.print.PrintUtil;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +93,7 @@ public class JavaanCli {
 		commands.addCommand(new ShowPackageUsingGraph());
 		commands.addCommand(new SetOptions());
 		commands.addCommand(new ResetOptions());
+		commands.addCommand(new Benchmark());
 		return commands;
 	}
 
