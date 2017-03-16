@@ -70,15 +70,20 @@ public class ReflectionTypeLoader {
         Set<String> typeLookup = createTypeLookup(loadedTypes);
         List<Type> typesToResolve = new ArrayList<>(loadedTypes);
         do {
+            // collect dependencies which needs to be resolved
             Set<String> newTypeNames = typesToResolve.stream()
                     .map(type -> resolveDependencies(type, typeLookup))
                     .flatMap(List::stream)
                     .collect(Collectors.toSet());
+            // resolve types by reflection
             typesToResolve = newTypeNames.parallelStream()
                     .map(typeName -> loadType(typeName))
                     .filter(type -> type != null)
                     .collect(Collectors.toList());
+            // add types to result list
             loadedTypes.addAll(typesToResolve);
+            // add newly loaded objects to lookup set, these list will
+            // also contain names of missing types
             typeLookup.addAll(newTypeNames);
         } while ((typesToResolve.size() > 0));
         return loadedTypes;
