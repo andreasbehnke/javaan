@@ -73,7 +73,7 @@ public class Benchmark  extends BaseCommand {
             LOG.info("Processing benchmarks");
             PrintUtil.println(output, "filename, component, count, time");
             FileUtils.listFiles(new File(baseDirectory), new String[]{"jar"}, true)
-                    .forEach(file -> runBenchmark(file.getAbsolutePath(), output));
+                    .forEach(file -> runBenchmark(file.getAbsolutePath(), file.getAbsolutePath().replace(baseDirectory,""), output));
         } catch (IOException ioe) {
             return ReturnCodes.errorCommand;
         }
@@ -90,14 +90,14 @@ public class Benchmark  extends BaseCommand {
         }
     }
 
-    private void runBenchmark(String fileName, Writer output) {
+    private void runBenchmark(String fileName, String name, Writer output) {
         try {
             LOG.info("Running benchmark for " + fileName);
             long start = System.nanoTime();
             List<Type> types =  new JarFileLoader().loadJavaClasses(fileName);
             printCsvRow(
                     output,
-                    fileName,
+                    name,
                     "JarFileLoader",
                     types.size(),
                     System.nanoTime() - start
@@ -107,7 +107,7 @@ public class Benchmark  extends BaseCommand {
             ClassContext context = new ClassContextBuilder(types).build();
             printCsvRow(
                     output,
-                    fileName,
+                    name,
                     "ClassContextBuilder",
                     types.size(),
                     System.nanoTime() - start
@@ -117,7 +117,7 @@ public class Benchmark  extends BaseCommand {
             CallGraph callGraph = new CallGraphBuilder(context, true, true).build();
             printCsvRow(
                     output,
-                    fileName,
+                    name,
                     "CallGraphBuilder",
                     callGraph.size(),
                     System.nanoTime() - start
