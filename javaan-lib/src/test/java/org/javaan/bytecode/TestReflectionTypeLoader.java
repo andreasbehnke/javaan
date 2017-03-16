@@ -7,6 +7,8 @@ import org.javaan.model.Interface;
 import org.javaan.model.Type;
 import org.junit.Test;
 
+import java.nio.file.Path;
+import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,8 +33,16 @@ public class TestReflectionTypeLoader implements TestConstants {
 
     public static final Clazz CLASS_WITH_INTERFACES = new Clazz("org.ClassWithInterfaces", null, Arrays.asList("java.lang.Comparable", "java.io.Serializable"));
 
+    public static final Interface INTERFACE_JAVA_NIO_FILE_PATH = new Interface("java.nio.file.Path");
+
+    public static final Interface INTERFACE_JAVA_LANG_ITERABLE = new Interface("java.lang.Iterable");
+
+    public static final Interface INTERFACE_JAVA_NIO_FILE_WATCHABLE = new Interface("java.nio.file.Watchable");
+
+    public static final Interface INTERFACE_WITH_SUPER_INTERFACES = new Interface("org.InterfaceWithSuperInterfaces", Arrays.asList(INTERFACE_JAVA_NIO_FILE_PATH.getName() , INTERFACE_JAVA_IO_SERIALIZABLE.getName()));
+
     @Test
-    public void testNoSuperClassNorInterfaceToLoad() {
+    public void testLoadClassWithoutSuperClassAndInterface() {
         List<Type> types = new ArrayList<>();
         types.add(CLASS_A);
         ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
@@ -44,7 +54,7 @@ public class TestReflectionTypeLoader implements TestConstants {
     }
 
     @Test
-    public void testLoadSuperClass() {
+    public void testLoadClassWithSuperClass() {
         List<Type> types = new ArrayList<>();
         types.add(CLASS_WITH_SUPER_TYPE);
         ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
@@ -84,7 +94,7 @@ public class TestReflectionTypeLoader implements TestConstants {
     }
 
     @Test
-    public void testLoadInterfaces() {
+    public void testLoadInterfacesOfClass() {
         List<Type> types = new ArrayList<>();
         types.add(CLASS_WITH_INTERFACES);
         ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
@@ -107,5 +117,53 @@ public class TestReflectionTypeLoader implements TestConstants {
         assertEquals(2, reflectionTypeLoader.getMissingTypes().size());
         assertTrue(reflectionTypeLoader.getMissingTypes().contains("foo"));
         assertTrue(reflectionTypeLoader.getMissingTypes().contains("bar"));
+    }
+
+    @Test
+    public void testLoadInterfaceWithoutSuperInterface() {
+        List<Type> types = new ArrayList<>();
+        types.add(INTERFACE_C);
+        ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
+        types = reflectionTypeLoader.loadMissingTypes(types);
+        assertEquals(1, types.size());
+        assertTrue(types.contains(INTERFACE_C));
+        assertEquals(0, reflectionTypeLoader.getMissingTypes().size());
+    }
+
+    @Test
+    public void testLoadInterfaceWithSuperInterfaces() {
+        List<Type> types = new ArrayList<>();
+        types.add(INTERFACE_WITH_SUPER_INTERFACES);
+        ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
+        types = reflectionTypeLoader.loadMissingTypes(types);
+        assertEquals(6, types.size());
+        assertTrue(types.contains(INTERFACE_WITH_SUPER_INTERFACES));
+        assertTrue(types.contains(INTERFACE_JAVA_LANG_COMPARABLE));
+        assertTrue(types.contains(INTERFACE_JAVA_NIO_FILE_PATH));
+        assertTrue(types.contains(INTERFACE_JAVA_NIO_FILE_WATCHABLE));
+        assertTrue(types.contains(INTERFACE_JAVA_LANG_ITERABLE));
+        assertTrue(types.contains(INTERFACE_JAVA_IO_SERIALIZABLE));
+        assertEquals(0, reflectionTypeLoader.getMissingTypes().size());
+    }
+
+    @Test
+    public void testLoadInterfaceAndClass() {
+        List<Type> types = new ArrayList<>();
+        types.add(INTERFACE_WITH_SUPER_INTERFACES);
+        types.add(CLASS_WITH_INTERFACES);
+        ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
+        types = reflectionTypeLoader.loadMissingTypes(types);
+        assertEquals(8, types.size());
+        assertTrue(types.contains(INTERFACE_WITH_SUPER_INTERFACES));
+        assertTrue(types.contains(INTERFACE_JAVA_LANG_COMPARABLE));
+        assertTrue(types.contains(INTERFACE_JAVA_NIO_FILE_PATH));
+        assertTrue(types.contains(INTERFACE_JAVA_NIO_FILE_WATCHABLE));
+        assertTrue(types.contains(INTERFACE_JAVA_LANG_ITERABLE));
+        assertTrue(types.contains(INTERFACE_JAVA_IO_SERIALIZABLE));
+
+        assertTrue(types.contains(CLASS_WITH_INTERFACES));
+        assertTrue(types.contains(CLASS_JAVA_LANG_OBJECT));
+
+        assertEquals(0, reflectionTypeLoader.getMissingTypes().size());
     }
 }
