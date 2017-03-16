@@ -80,6 +80,7 @@ public class ReflectionTypeLoader {
                     .collect(Collectors.toList());
             loadedTypes.addAll(typesToResolve);
             typeLookup.addAll(newTypeNames);
+            typeLookup.addAll(missingTypes); // never try to load missing types again
         } while ((typesToResolve.size() > 0));
         return loadedTypes;
     }
