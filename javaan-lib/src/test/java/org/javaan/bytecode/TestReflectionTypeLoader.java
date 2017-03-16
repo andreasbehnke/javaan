@@ -15,6 +15,8 @@ public class TestReflectionTypeLoader implements TestConstants {
 
     public static final Clazz CLASS_WITH_UNKNOWN_SUPER_CLASS = new Clazz("org.ClassWithUnknownSuperClass", "nobody.knows.this", null);
 
+    public static final Clazz CLASS_WITH_UNKNOWN_INTERFACES = new Clazz("org.ClassWithUnknownInterfaces", null, Arrays.asList("bar", "foo"));
+
     public static final Clazz CLASS_JAVA_LANG_OBJECT = new Clazz("java.lang.Object");
 
     public static final Clazz CLASS_JAVA_LANG_NUMBER = new Clazz("java.lang.Number");
@@ -95,7 +97,15 @@ public class TestReflectionTypeLoader implements TestConstants {
         assertEquals(0, reflectionTypeLoader.getMissingTypes().size());
     }
 
+    @Test
     public void testLoadUnknownInterfaces() {
-
+        List<Type> types = new ArrayList<>();
+        types.add(CLASS_WITH_UNKNOWN_INTERFACES);
+        ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
+        types = reflectionTypeLoader.loadMissingTypes(types);
+        assertEquals(2, types.size());
+        assertEquals(2, reflectionTypeLoader.getMissingTypes().size());
+        assertTrue(reflectionTypeLoader.getMissingTypes().contains("foo"));
+        assertTrue(reflectionTypeLoader.getMissingTypes().contains("bar"));
     }
 }
