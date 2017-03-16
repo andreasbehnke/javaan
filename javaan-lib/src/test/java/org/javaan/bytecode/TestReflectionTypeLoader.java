@@ -8,6 +8,7 @@ import org.javaan.model.Type;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TestReflectionTypeLoader implements TestConstants {
@@ -26,14 +27,17 @@ public class TestReflectionTypeLoader implements TestConstants {
 
     public static final Clazz CLASS_WITH_SUPER_TYPE = new Clazz("org.classwithsupertype", CLASS_JAVA_LANG_INTEGER.getName(), null);
 
+    public static final Clazz CLASS_WITH_INTERFACES = new Clazz("org.ClassWithInterfaces", null, Arrays.asList("java.lang.Comparable", "java.io.Serializable"));
+
     @Test
-    public void testNoTypesToLoad() {
+    public void testNoSuperClassNorInterfaceToLoad() {
         List<Type> types = new ArrayList<>();
         types.add(CLASS_A);
         ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
         types = reflectionTypeLoader.loadMissingTypes(types);
-        assertEquals(1, types.size());
-        assertEquals(CLASS_A, types.get(0));
+        assertEquals(2, types.size());
+        assertTrue(types.contains(CLASS_A));
+        assertTrue(types.contains(CLASS_JAVA_LANG_OBJECT));
         assertEquals(0, reflectionTypeLoader.getMissingTypes().size());
     }
 
@@ -54,6 +58,18 @@ public class TestReflectionTypeLoader implements TestConstants {
     }
 
     @Test
+    public void testLoadSuperClassObject() {
+        List<Type> types = new ArrayList<>();
+        types.add(CLASS_A);
+        ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
+        types = reflectionTypeLoader.loadMissingTypes(types);
+        assertEquals(2, types.size());
+        assertTrue(types.contains(CLASS_A));
+        assertTrue(types.contains(CLASS_JAVA_LANG_OBJECT));
+        assertEquals(0, reflectionTypeLoader.getMissingTypes().size());
+    }
+
+    @Test
     public void testLoadUnknownSuperClass() {
         List<Type> types = new ArrayList<>();
         types.add(CLASS_WITH_UNKNOWN_SUPER_CLASS);
@@ -63,5 +79,23 @@ public class TestReflectionTypeLoader implements TestConstants {
         assertTrue(types.contains(CLASS_WITH_UNKNOWN_SUPER_CLASS));
         assertEquals(1, reflectionTypeLoader.getMissingTypes().size());
         assertTrue(reflectionTypeLoader.getMissingTypes().contains("nobody.knows.this"));
+    }
+
+    @Test
+    public void testLoadInterfaces() {
+        List<Type> types = new ArrayList<>();
+        types.add(CLASS_WITH_INTERFACES);
+        ReflectionTypeLoader reflectionTypeLoader = new ReflectionTypeLoader();
+        types = reflectionTypeLoader.loadMissingTypes(types);
+        assertEquals(4, types.size());
+        assertTrue(types.contains(CLASS_WITH_INTERFACES));
+        assertTrue(types.contains(CLASS_JAVA_LANG_OBJECT));
+        assertTrue(types.contains(INTERFACE_JAVA_LANG_COMPARABLE));
+        assertTrue(types.contains(INTERFACE_JAVA_IO_SERIALIZABLE));
+        assertEquals(0, reflectionTypeLoader.getMissingTypes().size());
+    }
+
+    public void testLoadUnknownInterfaces() {
+
     }
 }

@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
  */
 public class ReflectionTypeLoader {
 
+    private static final String JAVA_LANG_OBJECT = "java.lang.Object";
+
     private Set<String> missingTypes = Collections.synchronizedSet(new HashSet<>());
 
     public Set<String> getMissingTypes() {
@@ -28,23 +30,31 @@ public class ReflectionTypeLoader {
         }
     }
 
+    private void addTypesNeedLoading(List<String> newTypes, Set<String> typeLookup, String typeName) {
+        if (typeName != null && !typeLookup.contains(typeName)) {
+            newTypes.add(typeName);
+        }
+    }
+
+    private void addTypesNeedLoading(List<String> newTypes, Set<String> typeLookup, List<String> typeNames) {
+        if (typeNames == null) return;
+        for (String typeName: typeNames) {
+            addTypesNeedLoading(newTypes, typeLookup, typeName);
+        }
+    }
+
     private List<String> resolveDependencies(Type type, Set<String> typeLookup) {
         List<String> newTypes = new ArrayList<>();
         switch (type.getJavaType()) {
             case CLASS:
                 Clazz clazz = type.toClazz();
-                if (clazz.getSuperTypeName() != null) {
-                    newTypes.add(clazz.getSuperTypeName());
-                }
-                if (clazz.getInterfaceNames() != null) {
-                    newTypes.addAll(clazz.getInterfaceNames());
-                }
+                String superClassName = (clazz.getSuperTypeName() == null) ? JAVA_LANG_OBJECT : clazz.getSuperTypeName();
+                addTypesNeedLoading(newTypes, typeLookup, superClassName);
+                addTypesNeedLoading(newTypes, typeLookup, clazz.getInterfaceNames());
                 break;
             case INTERFACE:
                 Interface interfaze = type.toInterface();
-                if(interfaze.getSuperInterfaceNames() != null) {
-                    newTypes.addAll(interfaze.getSuperInterfaceNames());
-                }
+                addTypesNeedLoading(newTypes, typeLookup, interfaze.getSuperInterfaceNames());
                 break;
         }
         return newTypes;
@@ -69,7 +79,7 @@ public class ReflectionTypeLoader {
                     .filter(type -> type != null)
                     .collect(Collectors.toList());
             loadedTypes.addAll(typesToResolve);
-            typeLookup.addAll(createTypeLookup(typesToResolve));
+            typeLookup.addAll(newTypeNames);
         } while ((typesToResolve.size() > 0));
         return loadedTypes;
     }
