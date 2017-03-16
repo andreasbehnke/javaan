@@ -85,6 +85,7 @@ public class ReflectionTypeLoader {
             // add newly loaded objects to lookup set, these list will
             // also contain names of missing types
             typeLookup.addAll(newTypeNames);
+            typeLookup.addAll(missingTypes); // never try to load missing types again
         } while ((typesToResolve.size() > 0));
         return loadedTypes;
     }
