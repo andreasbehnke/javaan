@@ -43,7 +43,7 @@ public class TestClassContextBuilder implements TestConstants {
 	
 	@Test
 	public void testBuild() throws IOException {
-		ClassContext context = new ClassContextBuilder(loadClasses()).build();
+		ClassContext context = new ClassContextBuilder().build(loadClasses());
 		
 		Set<Clazz> classes = context.getClasses();
 		assertNotNull(classes);

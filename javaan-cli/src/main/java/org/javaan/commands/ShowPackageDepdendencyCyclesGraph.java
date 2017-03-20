@@ -62,7 +62,7 @@ public class ShowPackageDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 
 	@Override
 	protected void execute(CommandContext context, List<Type> types) {
-		ClassContext classContext = new ClassContextBuilder(types).build();
+		ClassContext classContext = new ClassContextBuilder().build(types);
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
 				context.isResolveMethodImplementations(), 

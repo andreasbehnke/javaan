@@ -98,7 +98,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
         Writer writer = context.getWriter();
         String criteria = context.getFilterCriteria();
 		boolean printLeaves = context.isPrintLeaves();
-		ClassContext classContext = new ClassContextBuilder(types).build();
+		ClassContext classContext = new ClassContextBuilder().build(types);
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
 				context.isResolveMethodImplementations(), 

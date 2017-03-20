@@ -88,7 +88,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		Writer writer = context.getWriter();
 	    String criteria =  context.getMethodFilterCriteria();
 		boolean printLeaves = context.isPrintLeaves();
-		ClassContext classContext = new ClassContextBuilder(types).build();
+		ClassContext classContext = new ClassContextBuilder().build(types);
 		CallGraph callGraph = new CallGraphBuilder(
 				classContext, 
 				context.isResolveMethodImplementations(), 

@@ -83,7 +83,7 @@ public class Benchmark  extends BaseCommand {
     private void runWarmup(String fileName) {
         try {
             List<Type> types =  new JarFileLoader().loadJavaClasses(fileName);
-            ClassContext context = new ClassContextBuilder(types).build();
+            ClassContext context = new ClassContextBuilder().build(types);
             CallGraph callGraph = new CallGraphBuilder(context, true, true).build();
         } catch (Exception ex) {
             System.err.println(ex);
@@ -104,7 +104,7 @@ public class Benchmark  extends BaseCommand {
             );
 
             start = System.nanoTime();
-            ClassContext context = new ClassContextBuilder(types).build();
+            ClassContext context = new ClassContextBuilder().build(types);
             printCsvRow(
                     output,
                     name,

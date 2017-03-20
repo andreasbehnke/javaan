@@ -69,7 +69,7 @@ public class ListClasses extends BaseTypeLoadingCommand {
 	@Override
 	protected void execute(CommandContext context, List<Type> types) {
 		Writer writer = context.getWriter();
-		this.classContext = new ClassContextBuilder(types).build();
+		this.classContext = new ClassContextBuilder().build(types);
 		Collection<Clazz> classes = classContext.getClasses();
 		if (context.hasFilterCriteria()) {
 			String criteria = context.getFilterCriteria();

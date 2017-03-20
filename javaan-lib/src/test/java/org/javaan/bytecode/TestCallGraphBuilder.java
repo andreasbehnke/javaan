@@ -44,7 +44,7 @@ public class TestCallGraphBuilder implements TestConstants {
 	public void testBuild() throws IOException {
 		List<Type> classes = loadClasses();
 		
-		ClassContext classContext = new ClassContextBuilder(classes).build();
+		ClassContext classContext = new ClassContextBuilder().build(classes);
 		CallGraph callGraph = new CallGraphBuilder(classContext, true, false).build();
 		
 		assertNotNull(callGraph);

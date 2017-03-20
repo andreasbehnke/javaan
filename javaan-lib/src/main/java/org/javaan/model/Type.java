@@ -85,6 +85,10 @@ public abstract class Type extends NamedObjectBase {
 		return javaClass;
 	}
 
+	public Class<?> getReflectionClass() {
+		return clazz;
+	}
+
 	public String getFilePath() {
 		return filePath;
 	}

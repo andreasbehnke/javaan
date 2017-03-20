@@ -56,8 +56,8 @@ public class ListMissingTypes extends BaseTypeLoadingCommand {
 	@Override
 	protected void execute(CommandContext context, List<Type> types) {
 		Writer writer = context.getWriter();
-		ClassContextBuilder classContextBuilder = new ClassContextBuilder(types);
-		ClassContext classContext = classContextBuilder.build();
+		ClassContextBuilder classContextBuilder = new ClassContextBuilder();
+		ClassContext classContext = classContextBuilder.build(types);
 		Set<String> missingTypes = classContextBuilder.getMissingTypes();
 		CallGraphBuilder callGraphBuilder = new CallGraphBuilder(classContext, false, false);
 		callGraphBuilder.build();

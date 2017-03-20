@@ -69,7 +69,7 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 	@Override
 	protected void execute(CommandContext context, List<Type> types) {
 		Writer writer = context.getWriter();
-		this.classContext = new ClassContextBuilder(types).build();
+		this.classContext = new ClassContextBuilder().build(types);
 		Collection<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
 		if (context.hasFilterCriteria()) {
 			String criteria = context.getFilterCriteria();

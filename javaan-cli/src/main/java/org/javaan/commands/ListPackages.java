@@ -44,7 +44,7 @@ public class ListPackages extends BaseTypeLoadingCommand {
 
 	@Override
 	protected void execute(CommandContext context, List<Type> types) {
-		this.classContext = new ClassContextBuilder(types).build();
+		this.classContext = new ClassContextBuilder().build(types);
 		boolean isTopologicalSort = context.isTopologicalSort();
 		Collection<Package> packages = null;
 		if (isTopologicalSort) {

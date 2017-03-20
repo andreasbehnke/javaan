@@ -20,6 +20,7 @@ package org.javaan.bytecode;
  * #L%
  */
 
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -43,59 +44,63 @@ public class ClassContextBuilder {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(ClassContextBuilder.class);
 
-	private final ClassContext context = new ClassContext();
-	
-	private final ReflectionClassContextBuilder reflectionClassContextBuilder;
-	
-	private final NamedObjectMap<Type> types;
-	
-	public ClassContextBuilder(List<Type> types) {
-		this.types = new NamedObjectMap<Type>(types);
-		reflectionClassContextBuilder = new ReflectionClassContextBuilder(context, this.types);
-	}
+	private Set<String> missingTypes;
 
-	private void addMethods(Type type, JavaClass javaClass) {
-		for (Method method : javaClass.getMethods()) {
-			context.addMethod(org.javaan.model.Method.create(type, method));
-		}
-	}
-	
-	private void addInterface(Interface interfaze, JavaClass javaClass) {
-		String[] superInterfaces = javaClass.getInterfaceNames();
-		reflectionClassContextBuilder.addInterface(interfaze, Arrays.asList(superInterfaces));
-		addMethods(interfaze, javaClass);
-	}
-	
-	private void addClass(Clazz clazz, JavaClass javaClass) {
-		String superClassName = javaClass.getSuperclassName();
-		String[] interfaceNames = javaClass.getInterfaceNames();
-		reflectionClassContextBuilder.addClass(clazz, superClassName, Arrays.asList(interfaceNames));
-		addMethods(clazz, javaClass);
-	}
-	
-	private void addType(Type type) {
-		switch (type.getJavaType()) {
-		case CLASS:
-			addClass((Clazz)type, type.getJavaClass());
-			break;
-		case INTERFACE:
-			addInterface((Interface)type, type.getJavaClass());
-			break;
-		default:
-			throw new IllegalArgumentException("Unknown type: " + type.getJavaType());
-		}
-	}
-	
-	public ClassContext build() {
-		LOG.info("Creating class context ...");
+	private void processInterface(Interface interfaze, NamedObjectMap<Type> typeLookup, ClassContext classContext) {
+        for (String superInterface: interfaze.getSuperInterfaceNames()) {
+            classContext.addSuperInterface(interfaze, typeLookup.get(superInterface).toInterface());
+        }
+    }
+
+	private void processClass(Clazz clazz, NamedObjectMap<Type> typeLookup, ClassContext classContext) {
+	    String superTypeName = clazz.getSuperTypeName();
+	    if (typeLookup.contains(superTypeName)) {
+            classContext.addSuperClass(clazz, typeLookup.get(superTypeName).toClazz());
+        }
+        for (String interfaceName: clazz.getInterfaceNames()) {
+	        if (typeLookup.contains(interfaceName)) {
+                classContext.addInterfaceOfClass(clazz, typeLookup.get(interfaceName).toInterface());
+            }
+        }
+    }
+
+    private void addType(Type type, ClassContext classContext) {
+	    if(type.getJavaType() == Type.JavaType.CLASS) {
+	        classContext.addClass(type.toClazz());
+        } else {
+	        classContext.addInterface(type.toInterface());
+        }
+        if (!type.isReflection()) {
+            for (Method method : type.getJavaClass().getMethods()) {
+                classContext.addMethod(org.javaan.model.Method.create(type, method));
+            }
+        } else {
+	        for (java.lang.reflect.Method method : type.getReflectionClass().getDeclaredMethods()) {
+	            classContext.addMethod(org.javaan.model.Method.create(type, method));
+            }
+            for (Constructor<?> constructor : type.getReflectionClass().getConstructors()) {
+                classContext.addMethod(org.javaan.model.Method.create(type, constructor));
+            }
+        }
+    }
+
+	public ClassContext build(List<Type> types) {
+        LOG.info("Creating class context ...");
 		Date start = new Date();
-		for (Type type : types.getNamedObjects()) {
-			addType(type);
-		}
+        ReflectionTypeLoader loader = new ReflectionTypeLoader();
+		types = loader.loadMissingTypes(types);
+		missingTypes = loader.getMissingTypes();
+		NamedObjectMap<Type> typeLookup = new NamedObjectMap<>(types);
+		ClassContext context = new ClassContext();
+		types.stream().forEach(type -> addType(type, context));
+		types.stream().filter(type -> type.getJavaType() == Type.JavaType.CLASS)
+                .forEach(type -> processClass(type.toClazz(), typeLookup, context));
+        types.stream().filter(type -> type.getJavaType() == Type.JavaType.INTERFACE)
+                .forEach(type -> processInterface(type.toInterface(), typeLookup, context));
         long duration = new Date().getTime() - start.getTime();
         LOG.info("Creation of class context with {} classes and {} interfaces took {} ms",
 				context.getClasses().size(), context.getInterfaces().size(), duration);
-		int numberOfMissingTypes = reflectionClassContextBuilder.getMissingTypes().size();
+		int numberOfMissingTypes = missingTypes.size();
 		if (numberOfMissingTypes > 0) {
 			LOG.warn("Missing types: {} types could not be resoled", numberOfMissingTypes);
 		}
@@ -103,6 +108,6 @@ public class ClassContextBuilder {
 	}
 	
 	public Set<String> getMissingTypes() {
-		return reflectionClassContextBuilder.getMissingTypes();
+		return missingTypes;
 	}
 }
