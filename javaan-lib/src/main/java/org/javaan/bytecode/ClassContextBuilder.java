@@ -64,6 +64,17 @@ public class ClassContextBuilder {
         }
     }
 
+    private void processDependencies(Type type, NamedObjectMap<Type> typeLookup, ClassContext classContext) {
+	    switch (type.getJavaType()) {
+            case CLASS:
+                processClass(type.toClazz(), typeLookup, classContext);
+                break;
+            case INTERFACE:
+                processInterface(type.toInterface(), typeLookup, classContext);
+                break;
+        }
+    }
+
     private void addType(Type type, ClassContext classContext) {
 	    if(type.getJavaType() == Type.JavaType.CLASS) {
 	        classContext.addClass(type.toClazz());
@@ -93,10 +104,7 @@ public class ClassContextBuilder {
 		NamedObjectMap<Type> typeLookup = new NamedObjectMap<>(types);
 		ClassContext context = new ClassContext();
 		types.stream().forEach(type -> addType(type, context));
-		types.stream().filter(type -> type.getJavaType() == Type.JavaType.CLASS)
-                .forEach(type -> processClass(type.toClazz(), typeLookup, context));
-        types.stream().filter(type -> type.getJavaType() == Type.JavaType.INTERFACE)
-                .forEach(type -> processInterface(type.toInterface(), typeLookup, context));
+		types.stream ().forEach(type -> processDependencies(type, typeLookup, context));
         long duration = new Date().getTime() - start.getTime();
         LOG.info("Creation of class context with {} classes and {} interfaces took {} ms",
 				context.getClasses().size(), context.getInterfaces().size(), duration);
