@@ -21,6 +21,7 @@ package org.javaan.bytecode;
  */
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.EmptyVisitor;
@@ -31,6 +32,7 @@ import org.apache.bcel.generic.INVOKEVIRTUAL;
 import org.apache.bcel.generic.InstructionHandle;
 import org.apache.bcel.generic.InvokeInstruction;
 import org.apache.bcel.generic.MethodGen;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
@@ -129,9 +131,14 @@ public class CallGraphBuilder {
 	
 	private void processClasses() {
 		List<Method> classMethods = new ArrayList<>(classContext.getMethodsOfClasses());
-		classMethods.stream()
-				.filter(method -> !method.getType().isReflection())
-				.forEach(method -> new MethodVisitor(method, method.createMethodGen()).start());
+		// create method generators in parallel
+        classMethods.parallelStream()
+                .filter(method -> !method.getType().isReflection())
+                .map(method -> new ImmutablePair<>(method, method.createMethodGen()))
+                // terminate parallel processing...
+                .collect(Collectors.toList()).stream()
+                // ...and add methods to callgraph in single thread
+                .forEach(methodPair -> new MethodVisitor(methodPair.getLeft(), methodPair.getRight()).start());
 	}
 	
 	public CallGraph build() {
