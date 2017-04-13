@@ -21,6 +21,7 @@ package org.javaan.model;
  */
 
 import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.generic.ConstantPoolGen;
 
 public abstract class Type extends NamedObjectBase {
 	
@@ -32,6 +33,8 @@ public abstract class Type extends NamedObjectBase {
 	private final Class clazz;
 
 	private final JavaClass javaClass;
+
+	private ConstantPoolGen constantPoolGen;
 
     private final String filePath;
 
@@ -118,4 +121,13 @@ public abstract class Type extends NamedObjectBase {
 	public Interface toInterface() {
 		return (Interface)this;
 	}
+
+    public ConstantPoolGen getConstantPoolGen() {
+	    if (constantPoolGen == null) {
+	        // my be initialized multiple times in multithreaded environment,
+            // this is not a problem because synchronization is much more expensive.
+            constantPoolGen = new ConstantPoolGen(javaClass.getConstantPool());
+        }
+        return constantPoolGen;
+    }
 }

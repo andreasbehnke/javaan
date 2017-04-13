@@ -133,12 +133,10 @@ public class CallGraphBuilder {
 	private void processClasses() {
 		List<Clazz> classes = new ArrayList<Clazz>(classContext.getClasses());
 		for (Clazz clazz : classes) {
-			JavaClass javaClass = clazz.getJavaClass();
-			if (javaClass != null) {
-				ConstantPoolGen constantPoolGen = new ConstantPoolGen(javaClass.getConstantPool());
+			if (!clazz.isReflection()) {
 				Set<Method> methods = classContext.getMethods(clazz);
 				for (Method method : methods) {
-					MethodGen mg = method.createMethodGen(clazz, constantPoolGen);
+					MethodGen mg = method.createMethodGen(clazz, clazz.getConstantPoolGen());
 					new MethodVisitor(method, mg).start();
 				}
 			}
