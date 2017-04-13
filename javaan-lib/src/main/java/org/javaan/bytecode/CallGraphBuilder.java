@@ -136,7 +136,7 @@ public class CallGraphBuilder {
 			if (!clazz.isReflection()) {
 				Set<Method> methods = classContext.getMethods(clazz);
 				for (Method method : methods) {
-					MethodGen mg = method.createMethodGen(clazz, clazz.getConstantPoolGen());
+					MethodGen mg = method.createMethodGen();
 					new MethodVisitor(method, mg).start();
 				}
 			}
