@@ -31,6 +31,7 @@ import org.apache.bcel.generic.INVOKEVIRTUAL;
 import org.apache.bcel.generic.InstructionHandle;
 import org.apache.bcel.generic.InvokeInstruction;
 import org.apache.bcel.generic.MethodGen;
+import org.apache.commons.lang3.tuple.Pair;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
@@ -128,11 +129,9 @@ public class CallGraphBuilder {
 	
 	private void processClasses() {
 		List<Method> classMethods = new ArrayList<>(classContext.getMethodsOfClasses());
-		for (Method method : classMethods) {
-			if (!method.getType().isReflection()) {
-				new MethodVisitor(method, method.createMethodGen()).start();
-			}
-		}
+		classMethods.stream()
+				.filter(method -> !method.getType().isReflection())
+				.forEach(method -> new MethodVisitor(method, method.createMethodGen()).start());
 	}
 	
 	public CallGraph build() {
