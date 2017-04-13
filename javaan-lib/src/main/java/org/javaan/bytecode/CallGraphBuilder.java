@@ -20,12 +20,8 @@ package org.javaan.bytecode;
  * #L%
  */
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.EmptyVisitor;
 import org.apache.bcel.generic.INVOKEINTERFACE;
@@ -57,10 +53,10 @@ public class CallGraphBuilder {
 		
 		private final ConstantPoolGen constantPoolGen;
 		
-		public MethodVisitor(final Method method, final MethodGen mg) {
+		public MethodVisitor(final Method method, MethodGen methodGen) {
 			this.method = method;
-			this.methodGen = mg;
-			this.constantPoolGen = mg.getConstantPool();
+			this.methodGen = methodGen;
+			this.constantPoolGen = methodGen.getConstantPool();
 		}
 		
 		public void start() {
@@ -131,14 +127,10 @@ public class CallGraphBuilder {
 	}
 	
 	private void processClasses() {
-		List<Clazz> classes = new ArrayList<Clazz>(classContext.getClasses());
-		for (Clazz clazz : classes) {
-			if (!clazz.isReflection()) {
-				Set<Method> methods = classContext.getMethods(clazz);
-				for (Method method : methods) {
-					MethodGen mg = method.createMethodGen();
-					new MethodVisitor(method, mg).start();
-				}
+		List<Method> classMethods = new ArrayList<>(classContext.getMethodsOfClasses());
+		for (Method method : classMethods) {
+			if (!method.getType().isReflection()) {
+				new MethodVisitor(method, method.createMethodGen()).start();
 			}
 		}
 	}
