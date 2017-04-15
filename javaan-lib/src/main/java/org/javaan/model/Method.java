@@ -156,7 +156,7 @@ public class Method extends NamedObjectBase {
 		return annotationTypes;
 	}
 
-	public MethodGen createMethodGen(Clazz clazz, ConstantPoolGen constantPoolGen) {
-		return new MethodGen(javaMethod, clazz.getName(), constantPoolGen);
+	public MethodGen createMethodGen() {
+		return new MethodGen(javaMethod, type.getName(), type.getConstantPoolGen());
 	}
 }

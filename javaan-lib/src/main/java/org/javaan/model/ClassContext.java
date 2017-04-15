@@ -273,6 +273,10 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		methods.addAll(methodsOfInterface.getChilds());
 		return methods;
 	}
+
+	public Set<Method> getMethodsOfClasses() {
+		return methodsOfClass.getChilds();
+	}
 	
 	public Set<Method> getMethods(Clazz className) {
 		Set<Method> methods = methodsOfClass.getChilds(className);

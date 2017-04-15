@@ -67,8 +67,7 @@ public class Benchmark  extends BaseCommand {
         String baseDirectory = commandContext.getArguments()[0];
         try (Writer output = new OutputStreamWriter(System.out)) {
             LOG.info("Run warmup...");
-            new ArrayList<>(FileUtils.listFiles(new File(baseDirectory), new String[]{"jar"}, true))
-                    .stream().limit(10)
+            FileUtils.listFiles(new File(baseDirectory), new String[]{"jar"}, true)
                     .forEach(file -> runWarmup(file.getAbsolutePath()));
             LOG.info("Processing benchmarks");
             PrintUtil.println(output, "filename, component, count, time");

@@ -20,12 +20,9 @@ package org.javaan.bytecode;
  * #L%
  */
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.EmptyVisitor;
 import org.apache.bcel.generic.INVOKEINTERFACE;
@@ -35,6 +32,8 @@ import org.apache.bcel.generic.INVOKEVIRTUAL;
 import org.apache.bcel.generic.InstructionHandle;
 import org.apache.bcel.generic.InvokeInstruction;
 import org.apache.bcel.generic.MethodGen;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Clazz;
@@ -57,10 +56,10 @@ public class CallGraphBuilder {
 		
 		private final ConstantPoolGen constantPoolGen;
 		
-		public MethodVisitor(final Method method, final MethodGen mg) {
+		public MethodVisitor(final Method method, MethodGen methodGen) {
 			this.method = method;
-			this.methodGen = mg;
-			this.constantPoolGen = mg.getConstantPool();
+			this.methodGen = methodGen;
+			this.constantPoolGen = methodGen.getConstantPool();
 		}
 		
 		public void start() {
@@ -131,18 +130,15 @@ public class CallGraphBuilder {
 	}
 	
 	private void processClasses() {
-		List<Clazz> classes = new ArrayList<Clazz>(classContext.getClasses());
-		for (Clazz clazz : classes) {
-			JavaClass javaClass = clazz.getJavaClass();
-			if (javaClass != null) {
-				ConstantPoolGen constantPoolGen = new ConstantPoolGen(javaClass.getConstantPool());
-				Set<Method> methods = classContext.getMethods(clazz);
-				for (Method method : methods) {
-					MethodGen mg = method.createMethodGen(clazz, constantPoolGen);
-					new MethodVisitor(method, mg).start();
-				}
-			}
-		}
+		List<Method> classMethods = new ArrayList<>(classContext.getMethodsOfClasses());
+		// create method generators in parallel
+        classMethods.parallelStream()
+                .filter(method -> !method.getType().isReflection())
+                .map(method -> new ImmutablePair<>(method, method.createMethodGen()))
+                // terminate parallel processing...
+                .collect(Collectors.toList()).stream()
+                // ...and add methods to callgraph in single thread
+                .forEach(methodPair -> new MethodVisitor(methodPair.getLeft(), methodPair.getRight()).start());
 	}
 	
 	public CallGraph build() {
