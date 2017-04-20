@@ -105,8 +105,8 @@ public class CallGraph {
 	}
 	
 	private void addUsageOfPackage(Method caller, Method callee) {
-		Package packageOfCaller = classContext.getPackageOfType(caller.getType());
-		Package packageOfCallee = classContext.getPackageOfType(callee.getType());
+		Package packageOfCaller = new Package(caller.getType());
+		Package packageOfCallee = new Package(callee.getType());
 		if (packageOfCaller.equals(packageOfCallee)) {
 			return;
 		}
