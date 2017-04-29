@@ -49,7 +49,7 @@ public class JarFileLoader {
                 String name = entry.getName();
                 boolean isClass = name.endsWith(".class");
                 if (isClass) {
-                    ClassParser parser = new ClassParser(fileName, entry.getName());
+                    ClassParser parser = new ClassParser(jar.getInputStream(entry), entry.getName());
                     JavaClass javaClass = parser.parse();
                     String filePath = path + File.pathSeparator + javaClass.getFileName();
                     return Type.create(javaClass, filePath);
