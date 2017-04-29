@@ -30,6 +30,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
 
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
@@ -43,33 +44,23 @@ public class JarFileLoader {
 
 	protected final static Logger LOG = LoggerFactory.getLogger(JarFileLoader.class);
 
-	private Type processEntry(String path, String fileName, JarFile jar, JarEntry entry) {
-	    try {
-            if (!entry.isDirectory()) {
-                String name = entry.getName();
-                boolean isClass = name.endsWith(".class");
-                if (isClass) {
-                    ClassParser parser = new ClassParser(jar.getInputStream(entry), entry.getName());
-                    JavaClass javaClass = parser.parse();
-                    String filePath = path + File.pathSeparator + javaClass.getFileName();
-                    return Type.create(javaClass, filePath);
-                }
-            }
-			return null;
-        } catch (IOException ioe) {
-	        throw new RuntimeException(ioe);
-        }
+	private static Type parse(String path, JarFile jar, JarEntry entry, String filename) {
+		try {
+			ClassParser parser = new ClassParser(jar.getInputStream(entry), entry.getName());
+			JavaClass javaClass = parser.parse();
+			String filePath = path + File.pathSeparator + javaClass.getFileName();
+			return Type.create(javaClass, filePath);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private List<Type> processJar(String path, String fileName, JarFile jar) throws IOException {
-	    try {
-            return  jar.stream().parallel()
-                    .map(jarEntry -> processEntry(path, fileName, jar, jarEntry))
-                    .filter(type -> type != null)
-                    .collect(Collectors.toList());
-        } finally {
-            jar.close();
-        }
+		return  jar.stream().parallel()
+				.filter(jarEntry -> jarEntry.getName().endsWith(".class"))
+				.map(jarEntry -> parse(path, jar, jarEntry, fileName))
+				.filter(type -> type != null)
+				.collect(Collectors.toList());
 	}
 
 	public List<Type> loadJavaClasses(String... fileNames)
