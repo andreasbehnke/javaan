@@ -36,15 +36,15 @@ public class Dependency extends NamedObjectBase {
 		return callees;
 	}
 	
-	public NamedObject getSource() {
+	NamedObject getSource() {
 		return source;
 	}
 	
-	public NamedObject getTarget() {
+	NamedObject getTarget() {
 		return target;
 	}
 	
-	public static <V extends NamedObject> void addDependency(DirectedGraph<V, Dependency> graph, V source, V target, Method callee) {
+	static <V extends NamedObject> void addDependency(DirectedGraph<V, Dependency> graph, V source, V target, Method callee) {
 		Dependency dependency = graph.getEdge(source, target);
 		if (dependency == null) {
 			graph.addEdge(source, target, new Dependency(source, target, callee));
