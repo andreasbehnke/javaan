@@ -102,7 +102,7 @@ public class CallGraphBuilder {
 	public CallGraphBuilder(final ClassContext classContext, final boolean resolveMethodImplementations, final boolean resolveDependenciesInClassHierarchy) {
 		this.classContext = classContext;
 		this.callGraph = new CallGraph(classContext, resolveMethodImplementations, resolveDependenciesInClassHierarchy);
-		this.reflectionClassContextBuilder = new ReflectionClassContextBuilder(classContext, classContext);
+		this.reflectionClassContextBuilder = new ReflectionClassContextBuilder(classContext);
 	}
 	
 	private Method getMethod(InvokeInstruction invoke, ConstantPoolGen constantPoolGen) {

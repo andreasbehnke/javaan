@@ -45,14 +45,11 @@ class ReflectionClassContextBuilder {
 	private static final String JAVA_LANG_OBJECT = "java.lang.Object";
 
 	private final ClassContext context;
-	
-	private final NamedObjectRepository<Type> types;
-	
+
 	private final Set<String> missingTypes = new HashSet<String>();
 
-	public ReflectionClassContextBuilder(ClassContext context, NamedObjectRepository<Type> types) {
+	public ReflectionClassContextBuilder(ClassContext context) {
 		this.context = context;
-		this.types = types;
 	}
 
 	public Set<String> getMissingTypes() {
@@ -97,10 +94,7 @@ class ReflectionClassContextBuilder {
 		if (missingTypes.contains(name)) {
 			return null;
 		}
-		Type type = types.get(name);
-		if (type == null) {
-			type = context.get(name);
-		}
+		Type type = context.get(name);
 		if (type == null) {
 			type = createTypeFromClass(name);
 		}
