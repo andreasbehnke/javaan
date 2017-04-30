@@ -24,18 +24,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.graph.BidirectionalMap;
-import org.javaan.graph.ExtendedDirectedGraph;
-import org.javaan.graph.GraphFactory;
-import org.javaan.graph.Tree;
-import org.javaan.graph.VertexEdge;
+import org.javaan.graph.*;
 import org.javaan.model.Type.JavaType;
 
 public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final NamedObjectMap<Type> types = new NamedObjectMap<Type>();
 	
-	private final BidirectionalMap<Type, Package> packageOfType = new BidirectionalMap<Type, Package>();
+	private final ParentChildMap<Package, Type> typesOfPackage = new ParentChildMap<>();
 	
 	private final Tree<Clazz, VertexEdge<Clazz>> superClass = GraphFactory.createVertexEdgeTree();
 
@@ -61,7 +57,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		if (!types.contains(type.getName())) {
 			types.add(type);
-			packageOfType.addEdge(type, new Package(type));
+			typesOfPackage.addChild(new Package(type), type);
 		}
 	}
 
@@ -199,16 +195,16 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Package> getPackages() {
-		return packageOfType.getChilds();
+		return typesOfPackage.keySet();
 	}
 	
 	public Package getPackageOfType(Type type) {
-		return packageOfType.getChilds(type).iterator().next();
+		return new Package(type);
 	}
 	
 	public Set<Clazz> getClassesOfPackage(Package package1) {
 		Set<Clazz> classes = new HashSet<Clazz>();
-		for (Type type : packageOfType.getParents(package1)) {
+		for (Type type : typesOfPackage.get(package1)) {
 			if (type.getJavaType() == JavaType.CLASS) {
 				classes.add((Clazz)type);
 			}
@@ -218,7 +214,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	public Set<Interface> getInterfacesOfPackage(Package package1) {
 		Set<Interface> interfaces = new HashSet<Interface>();
-		for (Type type : packageOfType.getParents(package1)) {
+		for (Type type : typesOfPackage.get(package1)) {
 			if (type.getJavaType() == JavaType.INTERFACE) {
 				interfaces.add((Interface)type);
 			}
@@ -227,7 +223,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Type> getTypesOfPackage(Package package1) {
-		return packageOfType.getParents(package1);
+		return typesOfPackage.get(package1);
 	}
 	
 	public void addMethod(Method method) {
