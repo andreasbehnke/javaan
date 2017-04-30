@@ -20,6 +20,7 @@ package org.javaan.model;
  * #L%
  */
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
@@ -420,8 +421,7 @@ public class TestClassContext {
 		context.addMethod(INTERFACEA_METHODC);
 		
 		Set<Method> methods = context.getMethods(CLASSB);
-		assertNotNull(methods);
-		assertEquals(0, methods.size());
+		assertNull(methods);
 		
 		methods = context.getMethods(CLASSA);
 		assertNotNull(methods);

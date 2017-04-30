@@ -23,6 +23,8 @@ package org.javaan.model;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.javaan.graph.*;
 import org.javaan.model.Type.JavaType;
@@ -39,9 +41,9 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private final BidirectionalMap<Clazz, Interface> interfaceOfClass = new BidirectionalMap<Clazz, Interface>();
 	
-	private final BidirectionalMap<Clazz, Method> methodsOfClass = new BidirectionalMap<Clazz, Method>();
+	private final ParentChildMap<Clazz, Method> methodsOfClass = new ParentChildMap<Clazz, Method>();
 	
-	private final BidirectionalMap<Interface, Method> methodsOfInterface = new BidirectionalMap<Interface, Method>();
+	private final ParentChildMap<Interface, Method> methodsOfInterface = new ParentChildMap<Interface, Method>();
 	
 	public TreeView<Clazz, VertexEdge<Clazz>> getSuperClassGraph() {
 		return superClass;
@@ -233,13 +235,13 @@ public class ClassContext implements NamedObjectRepository<Type> {
 			if (!superClass.containsVertex((Clazz)typeName)) {
 				throw new IllegalArgumentException("Unknown class " + typeName);
 			}
-			methodsOfClass.addEdge((Clazz)typeName, method);
+			methodsOfClass.addChild((Clazz)typeName, method);
 			break;
 		case INTERFACE:
 			if (!superInterface.containsVertex((Interface)typeName)) {
 				throw new IllegalArgumentException("Unknown interface " + typeName);
 			}
-			methodsOfInterface.addEdge((Interface)typeName, method);
+			methodsOfInterface.addChild((Interface)typeName, method);
 			break;
 		default:
 			break;
@@ -247,9 +249,11 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 
 	private Method findMethod(Set<Method> methods, String signature) {
-		for (Method method : methods) {
-			if (method.getSignature().equals(signature)) {
-				return method;
+		if (methods != null) {
+			for (Method method : methods) {
+				if (method.getSignature().equals(signature)) {
+					return method;
+				}
 			}
 		}
 		return null;
@@ -264,30 +268,23 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Method> getMethods() {
-		Set<Method> methods = new HashSet<Method>();
-		methods.addAll(methodsOfClass.getChilds());
-		methods.addAll(methodsOfInterface.getChilds());
-		return methods;
+		return Stream.concat(methodsOfClass.values().stream().flatMap(Set::stream),
+				methodsOfInterface.values().stream().flatMap(Set::stream))
+				.collect(Collectors.toSet());
 	}
 
 	public Set<Method> getMethodsOfClasses() {
-		return methodsOfClass.getChilds();
+		return methodsOfClass.values().stream()
+				.flatMap(Set::stream)
+				.collect(Collectors.toSet());
 	}
 	
 	public Set<Method> getMethods(Clazz className) {
-		Set<Method> methods = methodsOfClass.getChilds(className);
-		if (methods == null) {
-			methods = new HashSet<Method>();
-		}
-		return methods;
+		return methodsOfClass.get(className);
 	}
 
 	public Set<Method> getMethods(Interface interfaceName) {
-		Set<Method> methods = methodsOfInterface.getChilds(interfaceName);
-		if (methods == null) {
-			methods = new HashSet<Method>();
-		}
-		return methods;
+		return methodsOfInterface.get(interfaceName);
 	}
 	
 	public Method getVirtualMethod(Clazz className, String signature) {
@@ -308,21 +305,20 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Method> getVirtualMethods(Clazz className) {
-		List<Clazz> superClasses = getSuperClassHierachy(className);
-		Set<Method> methods = new HashSet<Method>();
-		for (Clazz clazz : superClasses) {
-			methods.addAll(methodsOfClass.getChilds(clazz));
-		}
-		return methods;
+		return getSuperClassHierachy(className).stream()
+				.map(clazz -> methodsOfClass.get(clazz))
+				.filter(methods -> methods != null)
+				.flatMap(Set::stream)
+				.collect(Collectors.toSet());
 	}
 
 	public Set<Method> getVirtualMethods(Interface interfaceName) {
-		Set<Interface> superInterfaces = getSuperInterfaces(interfaceName);
-		superInterfaces.add(interfaceName);
-		Set<Method> methods = new HashSet<Method>();
-		for (Interface interfaze : superInterfaces) {
-			methods.addAll(methodsOfInterface.getChilds(interfaze));
-		}
-		return methods;
+		Set<Interface> interfaces = getSuperInterfaces(interfaceName);
+		interfaces.add(interfaceName);
+		return interfaces.stream()
+				.map(anInterface -> methodsOfInterface.get(anInterface))
+				.filter(methods -> methods != null)
+				.flatMap(Set::stream)
+				.collect(Collectors.toSet());
 	}
 }
