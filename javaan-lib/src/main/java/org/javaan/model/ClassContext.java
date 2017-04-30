@@ -20,6 +20,7 @@ package org.javaan.model;
  * #L%
  */
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,7 +40,9 @@ public class ClassContext implements NamedObjectRepository<Type> {
 
 	private final ExtendedDirectedGraph<Interface, VertexEdge<Interface>> superInterface = GraphFactory.createVertexEdgeDirectedGraph();
 	
-	private final BidirectionalMap<Clazz, Interface> interfaceOfClass = new BidirectionalMap<Clazz, Interface>();
+	private final ParentChildMap<Clazz, Interface> interfacesOfClass = new ParentChildMap<>();
+
+	private final ParentChildMap<Interface, Clazz> implementationOfInterface = new ParentChildMap<>();
 	
 	private final ParentChildMap<Clazz, Method> methodsOfClass = new ParentChildMap<Clazz, Method>();
 	
@@ -66,7 +69,6 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	public void addClass(Clazz className) {
 		addType(className);
 		superClass.addVertex(className);
-		interfaceOfClass.addParent(className);
 	}
 
 	public void addSuperClass(Clazz className, Clazz superClassName) {
@@ -153,12 +155,14 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		if (!superClass.containsVertex(className)) {
 			throw new IllegalArgumentException("Unknown class " + className);
 		}
-		interfaceOfClass.addEdge(className, interfaceName);
+		interfacesOfClass.addChild(className, interfaceName);
+		implementationOfInterface.addChild(interfaceName, className);
 	}
 	
-	private Set<Interface> getDirectIntefacesOfClass(Clazz className) {
-		Set<Interface> childs = interfaceOfClass.getChilds(className);
-		Set<Interface> interfaces = new HashSet<Interface>(childs);
+	private Set<Interface> getDirectInterfacesOfClass(Clazz className) {
+		Set<Interface> childs = interfacesOfClass.get(className);
+		if (childs == null) return Collections.EMPTY_SET;
+		Set<Interface> interfaces = new HashSet<>(childs);
 		for (Interface interfaceName : childs) {
 			interfaces.addAll(superInterface.successorsOf(interfaceName));
 		}
@@ -169,7 +173,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		List<Clazz> superClasses = superClass.predecessorPathOf(className);
 		Set<Interface> interfaces = new HashSet<Interface>();
 		for (Clazz superClassName : superClasses) {
-			interfaces.addAll(getDirectIntefacesOfClass(superClassName));
+			interfaces.addAll(getDirectInterfacesOfClass(superClassName));
 		}
 		return interfaces;
 	}
@@ -181,7 +185,8 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		Set<Clazz> classes = new HashSet<Clazz>();
 		// find direct implementations of all specialized interfaces
 		for (Interface specializedInterface : interfaces) {
-			classes.addAll(interfaceOfClass.getParents(specializedInterface));
+			Set<Clazz> implementations = implementationOfInterface.get(specializedInterface);
+			if (implementations != null) classes.addAll(implementations);
 		}
 		// find all specializations of implementations
 		for (Clazz className : classes) {
