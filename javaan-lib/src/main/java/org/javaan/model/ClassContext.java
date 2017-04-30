@@ -32,7 +32,7 @@ import org.javaan.model.Type.JavaType;
 
 public class ClassContext implements NamedObjectRepository<Type> {
 	
-	private final NamedObjectMap<Type> types = new NamedObjectMap<Type>();
+	private final NamedObjectMap<Type> types = new NamedObjectMap<>();
 	
 	private final ParentChildMap<Package, Type> typesOfPackage = new ParentChildMap<>();
 	
@@ -44,9 +44,9 @@ public class ClassContext implements NamedObjectRepository<Type> {
 
 	private final ParentChildMap<Interface, Clazz> implementationOfInterface = new ParentChildMap<>();
 	
-	private final ParentChildMap<Clazz, Method> methodsOfClass = new ParentChildMap<Clazz, Method>();
+	private final ParentChildMap<Clazz, Method> methodsOfClass = new ParentChildMap<>();
 	
-	private final ParentChildMap<Interface, Method> methodsOfInterface = new ParentChildMap<Interface, Method>();
+	private final ParentChildMap<Interface, Method> methodsOfInterface = new ParentChildMap<>();
 	
 	public TreeView<Clazz, VertexEdge<Clazz>> getSuperClassGraph() {
 		return superClass;
