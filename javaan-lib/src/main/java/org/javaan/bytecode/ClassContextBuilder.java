@@ -28,11 +28,7 @@ import java.util.Set;
 
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
-import org.javaan.model.ClassContext;
-import org.javaan.model.Clazz;
-import org.javaan.model.Interface;
-import org.javaan.model.NamedObjectMap;
-import org.javaan.model.Type;
+import org.javaan.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,13 +42,13 @@ public class ClassContextBuilder {
 
 	private Set<String> missingTypes;
 
-	private void processInterface(Interface interfaze, NamedObjectMap<Type> typeLookup, ClassContext classContext) {
+	private void processInterface(Interface interfaze, NamedObjectRepository<Type> typeLookup, ClassContext classContext) {
         for (String superInterface: interfaze.getSuperInterfaceNames()) {
             classContext.addSuperInterface(interfaze, typeLookup.get(superInterface).toInterface());
         }
     }
 
-	private void processClass(Clazz clazz, NamedObjectMap<Type> typeLookup, ClassContext classContext) {
+	private void processClass(Clazz clazz, NamedObjectRepository<Type> typeLookup, ClassContext classContext) {
 	    String superTypeName = clazz.getSuperTypeName();
 	    if (typeLookup.contains(superTypeName)) {
             classContext.addSuperClass(clazz, typeLookup.get(superTypeName).toClazz());
@@ -64,7 +60,7 @@ public class ClassContextBuilder {
         }
     }
 
-    private void processDependencies(Type type, NamedObjectMap<Type> typeLookup, ClassContext classContext) {
+    private void processDependencies(Type type, NamedObjectRepository<Type> typeLookup, ClassContext classContext) {
 	    switch (type.getJavaType()) {
             case CLASS:
                 processClass(type.toClazz(), typeLookup, classContext);

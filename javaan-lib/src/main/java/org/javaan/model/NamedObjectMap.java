@@ -24,9 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NamedObjectMap<N extends NamedObject> implements NamedObjectRepository<N> {
-	
-	private final Map<String, N> objectMap = new HashMap<String, N>();
+public class NamedObjectMap<N extends NamedObject> extends HashMap<String, N> implements NamedObjectRepository<N> {
 	
 	public NamedObjectMap() {}
 	
@@ -36,10 +34,10 @@ public class NamedObjectMap<N extends NamedObject> implements NamedObjectReposit
 	
 	public void add(N object) {
 		String name = object.getName();
-		if (objectMap.containsKey(name)) {
+		if (containsKey(name)) {
 			throw new IllegalArgumentException("Duplicate object found: " + object.getName());
 		}
-		objectMap.put(name, object);
+		put(name, object);
 	}
 	
 	public void addAll(Collection<N> objects) {
@@ -47,16 +45,18 @@ public class NamedObjectMap<N extends NamedObject> implements NamedObjectReposit
 			add(object);
 		}
 	}
-	
+
+	@Override
 	public N get(String name) {
-		return objectMap.get(name);
+		return super.get(name);
 	}
 
 	public Collection<N> getNamedObjects() {
-		return objectMap.values();
+		return values();
 	}
 	
 	public boolean contains(String name) {
-		return objectMap.containsKey(name);
+		return containsKey(name);
 	}
+
 }

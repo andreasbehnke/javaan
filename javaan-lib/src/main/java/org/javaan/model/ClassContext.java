@@ -31,23 +31,45 @@ import org.javaan.graph.*;
 import org.javaan.model.Type.JavaType;
 
 public class ClassContext implements NamedObjectRepository<Type> {
-	
-	private final NamedObjectMap<Type> types = new NamedObjectMap<>();
-	
-	private final ParentChildMap<Package, Type> typesOfPackage = new ParentChildMap<>();
-	
-	private final Tree<Clazz, VertexEdge<Clazz>> superClass = GraphFactory.createVertexEdgeTree();
 
-	private final ExtendedDirectedGraph<Interface, VertexEdge<Interface>> superInterface = GraphFactory.createVertexEdgeDirectedGraph();
-	
-	private final ParentChildMap<Clazz, Interface> interfacesOfClass = new ParentChildMap<>();
+	private final NamedObjectMap<Type> types;
 
-	private final ParentChildMap<Interface, Clazz> implementationOfInterface = new ParentChildMap<>();
-	
-	private final ParentChildMap<Clazz, Method> methodsOfClass = new ParentChildMap<>();
-	
-	private final ParentChildMap<Interface, Method> methodsOfInterface = new ParentChildMap<>();
-	
+	private final ParentChildMap<Package, Type> typesOfPackage;
+
+	private final Tree<Clazz, VertexEdge<Clazz>> superClass;
+
+	private final ExtendedDirectedGraph<Interface, VertexEdge<Interface>> superInterface;
+
+	private final ParentChildMap<Clazz, Interface> interfacesOfClass;
+
+	private final ParentChildMap<Interface, Clazz> implementationOfInterface;
+
+	private final ParentChildMap<Clazz, Method> methodsOfClass;
+
+	private final ParentChildMap<Interface, Method> methodsOfInterface;
+
+	public ClassContext() {
+		this.types = new NamedObjectMap<>();
+		this.typesOfPackage = new ParentChildMap<>();
+		this.superClass = GraphFactory.createVertexEdgeTree();
+		this.superInterface = GraphFactory.createVertexEdgeDirectedGraph();
+		this.interfacesOfClass = new ParentChildMap<>();
+		this.implementationOfInterface = new ParentChildMap<>();
+		this.methodsOfClass = new ParentChildMap<>();
+		this.methodsOfInterface = new ParentChildMap<>();
+	}
+
+	public ClassContext(ClassContextInternals internals) {
+		this.types = internals.types;
+		this.typesOfPackage = internals.typesOfPackage;
+		this.superClass = internals.superClass;
+		this.superInterface = internals.superInterface;
+		this.interfacesOfClass = internals.interfacesOfClass;
+		this.implementationOfInterface = internals.implementationOfInterface;
+		this.methodsOfClass = internals.methodsOfClass;
+		this.methodsOfInterface = internals.methodsOfInterface;
+	}
+
 	public TreeView<Clazz, VertexEdge<Clazz>> getSuperClassGraph() {
 		return superClass;
 	}
@@ -55,6 +77,20 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	public GraphView<Interface, VertexEdge<Interface>> getSuperInterfaceGraph() {
 		return superInterface;
 	}
+
+	/* NamedObjectRepository API */
+
+	@Override
+	public Type get(String className) {
+		return types.get(className);
+	}
+
+	@Override
+	public boolean contains(String name) {
+		return types.contains(name);
+	}
+
+	/*****************************/
 
 	private void addType(Type type) {
 		if (type == null) {
@@ -194,11 +230,6 @@ public class ClassContext implements NamedObjectRepository<Type> {
 			implementingClasses.addAll(superClass.successorsOf(className));
 		}
 		return implementingClasses;
-	}
-	
-	@Override
-	public Type get(String className) {
-		return types.get(className);
 	}
 	
 	public Set<Package> getPackages() {
