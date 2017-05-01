@@ -240,13 +240,13 @@ public class ClassContext implements NamedObjectRepository<Type> {
 			if (!superClass.containsVertex((Clazz)typeName)) {
 				throw new IllegalArgumentException("Unknown class " + typeName);
 			}
-			methodsOfClass.addChild((Clazz)typeName, method);
+			methodsOfClass.addChild(typeName.toClazz(), method);
 			break;
 		case INTERFACE:
 			if (!superInterface.containsVertex((Interface)typeName)) {
 				throw new IllegalArgumentException("Unknown interface " + typeName);
 			}
-			methodsOfInterface.addChild((Interface)typeName, method);
+			methodsOfInterface.addChild(typeName.toInterface(), method);
 			break;
 		default:
 			break;
