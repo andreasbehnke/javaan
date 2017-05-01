@@ -420,7 +420,7 @@ public class TestClassContext {
 		context.addMethod(INTERFACEA_METHODB);
 		context.addMethod(INTERFACEA_METHODC);
 		
-		Set<Method> methods = context.getMethods(CLASSB);
+		List<Method> methods = context.getMethods(CLASSB);
 		assertNull(methods);
 		
 		methods = context.getMethods(CLASSA);

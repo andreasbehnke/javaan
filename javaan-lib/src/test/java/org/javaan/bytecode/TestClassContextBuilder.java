@@ -67,14 +67,14 @@ public class TestClassContextBuilder implements TestConstants {
 		assertEquals(1, implementations.size());
 		assertTrue(implementations.contains(CLASS_A));
 		
-		Set<Method> methods =  context.getMethods(CLASS_A);
+		List<Method> methods =  context.getMethods(CLASS_A);
 		assertNotNull(methods);
 		assertEquals(2, methods.size());
 		assertTrue(methods.contains(new Method(CLASS_A, SIGNATURE_METHOD_INTERFACE_B)));
 		
-		methods =  context.getVirtualMethods(CLASS_EXTENDING_EXTERNAL_CLASS);
-		assertNotNull(methods);
-		assertEquals(32, methods.size());
-		assertTrue(methods.contains(new Method(CLASS_EXTENDING_EXTERNAL_CLASS, SIGNATURE_METHOD_ABSTRACT_COLLECTION_SIZE)));
+		Set<Method> methods2 =  context.getVirtualMethods(CLASS_EXTENDING_EXTERNAL_CLASS);
+		assertNotNull(methods2);
+		assertEquals(32, methods2.size());
+		assertTrue(methods2.contains(new Method(CLASS_EXTENDING_EXTERNAL_CLASS, SIGNATURE_METHOD_ABSTRACT_COLLECTION_SIZE)));
 	}
 }

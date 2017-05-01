@@ -196,7 +196,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	private Set<Interface> getDirectInterfacesOfClass(Clazz className) {
-		Set<Interface> childs = interfacesOfClass.get(className);
+		List<Interface> childs = interfacesOfClass.get(className);
 		if (childs == null) return Collections.EMPTY_SET;
 		Set<Interface> interfaces = new HashSet<>(childs);
 		for (Interface interfaceName : childs) {
@@ -221,7 +221,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		Set<Clazz> classes = new HashSet<Clazz>();
 		// find direct implementations of all specialized interfaces
 		for (Interface specializedInterface : interfaces) {
-			Set<Clazz> implementations = implementationOfInterface.get(specializedInterface);
+			List<Clazz> implementations = implementationOfInterface.get(specializedInterface);
 			if (implementations != null) classes.addAll(implementations);
 		}
 		// find all specializations of implementations
@@ -260,7 +260,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		return interfaces;
 	}
 	
-	public Set<Type> getTypesOfPackage(Package package1) {
+	public List<Type> getTypesOfPackage(Package package1) {
 		return typesOfPackage.get(package1);
 	}
 	
@@ -284,7 +284,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 	}
 
-	private Method findMethod(Set<Method> methods, String signature) {
+	private Method findMethod(List<Method> methods, String signature) {
 		if (methods != null) {
 			for (Method method : methods) {
 				if (method.getSignature().equals(signature)) {
@@ -304,22 +304,22 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Method> getMethods() {
-		return Stream.concat(methodsOfClass.values().stream().flatMap(Set::stream),
-				methodsOfInterface.values().stream().flatMap(Set::stream))
+		return Stream.concat(methodsOfClass.values().stream().flatMap(List::stream),
+				methodsOfInterface.values().stream().flatMap(List::stream))
 				.collect(Collectors.toSet());
 	}
 
 	public Set<Method> getMethodsOfClasses() {
 		return methodsOfClass.values().stream()
-				.flatMap(Set::stream)
+				.flatMap(List::stream)
 				.collect(Collectors.toSet());
 	}
 	
-	public Set<Method> getMethods(Clazz className) {
+	public List<Method> getMethods(Clazz className) {
 		return methodsOfClass.get(className);
 	}
 
-	public Set<Method> getMethods(Interface interfaceName) {
+	public List<Method> getMethods(Interface interfaceName) {
 		return methodsOfInterface.get(interfaceName);
 	}
 	
@@ -344,7 +344,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		return getSuperClassHierachy(className).stream()
 				.map(clazz -> methodsOfClass.get(clazz))
 				.filter(methods -> methods != null)
-				.flatMap(Set::stream)
+				.flatMap(List::stream)
 				.collect(Collectors.toSet());
 	}
 
@@ -354,7 +354,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		return interfaces.stream()
 				.map(anInterface -> methodsOfInterface.get(anInterface))
 				.filter(methods -> methods != null)
-				.flatMap(Set::stream)
+				.flatMap(List::stream)
 				.collect(Collectors.toSet());
 	}
 }

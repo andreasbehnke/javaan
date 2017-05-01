@@ -259,7 +259,7 @@ public class CallGraph {
 	 */
 	public Set<Package> getLeafUsedPackages(Package using) {
 		Set<Type> usedTypes = new HashSet<>();
-		Set<Type> typesOfPackage = classContext.getTypesOfPackage(using);
+		List<Type> typesOfPackage = classContext.getTypesOfPackage(using);
 		for (Type type : typesOfPackage) {
 			usedTypes.addAll(getLeafUsedTypes(type));
 		}
@@ -279,7 +279,7 @@ public class CallGraph {
 	 */
 	public Set<Package> getLeafUsingPackages(Package used) {
 		Set<Type> usingTypes = new HashSet<>();
-		Set<Type> typesOfPackage = classContext.getTypesOfPackage(used);
+		List<Type> typesOfPackage = classContext.getTypesOfPackage(used);
 		for (Type type : typesOfPackage) {
 			usingTypes.addAll(getLeafUsingTypes(type));
 		}

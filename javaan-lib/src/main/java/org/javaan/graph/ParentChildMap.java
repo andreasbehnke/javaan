@@ -1,15 +1,13 @@
 package org.javaan.graph;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-public class ParentChildMap<P, C> extends HashMap<P, Set<C>> {
+public class ParentChildMap<P, C> extends HashMap<P, List<C>> {
 
     public boolean addChild(P parent, C child) {
-        Set<C> children = get(parent);
+        List<C> children = get(parent);
         if (children == null) {
-            children = new HashSet<>();
+            children = new ArrayList<>();
             put(parent, children);
         }
         return children.add(child);
