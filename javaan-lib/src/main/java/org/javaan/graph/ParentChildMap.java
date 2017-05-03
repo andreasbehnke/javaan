@@ -23,6 +23,16 @@ public class ParentChildMap<P, C> implements Map<P, List<C>> {
         return children.add(child);
     }
 
+    public ParentChildMap<C, P> invers() {
+        ParentChildMap<C, P> result = new ParentChildMap<>();
+        for (Entry<P,List<C>> entry : entrySet()) {
+            for (C child : entry.getValue()) {
+                result.addChild(child, entry.getKey());
+            }
+        }
+        return result;
+    }
+
     @Override
     public int size() {
         return internalMap.size();
