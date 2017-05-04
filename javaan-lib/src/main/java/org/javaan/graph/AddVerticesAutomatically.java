@@ -3,6 +3,8 @@ package org.javaan.graph;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.GraphDelegator;
 
+import java.util.List;
+
 public class AddVerticesAutomatically<V, E> extends GraphDelegator<V, E> {
 
 	private static final long serialVersionUID = 1L;
@@ -26,5 +28,13 @@ public class AddVerticesAutomatically<V, E> extends GraphDelegator<V, E> {
 		addVertex(sourceVertex);
 		addVertex(targetVertex);
 		return super.addEdge(sourceVertex, targetVertex, edge);
+	}
+
+	public void addEdges(V sourceVertex, List<V> targetVertecies) {
+		addVertex(sourceVertex);
+		for (V targetVertex: targetVertecies) {
+			addVertex(targetVertex);
+			super.addEdge(sourceVertex, targetVertex);
+		}
 	}
 }

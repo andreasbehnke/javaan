@@ -20,17 +20,24 @@ package org.javaan.bytecode;
  * #L%
  */
 
+import org.apache.bcel.classfile.Method;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.javaan.graph.GraphFactory;
+import org.javaan.graph.ParentChildMap;
+import org.javaan.graph.Tree;
+import org.javaan.graph.VertexEdge;
+import org.javaan.model.*;
+import org.javaan.model.Package;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.bcel.classfile.JavaClass;
-import org.apache.bcel.classfile.Method;
-import org.javaan.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Creates class context from bytecode, references to classes outside the loaded libraries are resolved
@@ -42,66 +49,117 @@ public class ClassContextBuilder {
 
 	private Set<String> missingTypes;
 
-	private void processInterface(Interface interfaze, NamedObjectRepository<Type> typeLookup, ClassContext classContext) {
-        for (String superInterface: interfaze.getSuperInterfaceNames()) {
-            classContext.addSuperInterface(interfaze, typeLookup.get(superInterface).toInterface());
-        }
-    }
+    private NamedObjectMap<Type> typeLookup;
 
-	private void processClass(Clazz clazz, NamedObjectRepository<Type> typeLookup, ClassContext classContext) {
-	    String superTypeName = clazz.getSuperTypeName();
-	    if (typeLookup.contains(superTypeName)) {
-            classContext.addSuperClass(clazz, typeLookup.get(superTypeName).toClazz());
-        }
-        for (String interfaceName: clazz.getInterfaceNames()) {
-	        if (typeLookup.contains(interfaceName)) {
-                classContext.addInterfaceOfClass(clazz, typeLookup.get(interfaceName).toInterface());
-            }
-        }
-    }
-
-    private void processDependencies(Type type, NamedObjectRepository<Type> typeLookup, ClassContext classContext) {
-	    switch (type.getJavaType()) {
-            case CLASS:
-                processClass(type.toClazz(), typeLookup, classContext);
-                break;
-            case INTERFACE:
-                processInterface(type.toInterface(), typeLookup, classContext);
-                break;
-        }
-    }
-
-    private void addType(Type type, ClassContext classContext) {
-	    if(type.getJavaType() == Type.JavaType.CLASS) {
-	        classContext.addClass(type.toClazz());
-        } else {
-	        classContext.addInterface(type.toInterface());
-        }
-        if (!type.isReflection()) {
-            for (Method method : type.getJavaClass().getMethods()) {
-                classContext.addMethod(org.javaan.model.Method.create(type, method));
-            }
-        } else {
-	        for (java.lang.reflect.Method method : type.getReflectionClass().getDeclaredMethods()) {
-	            classContext.addMethod(org.javaan.model.Method.create(type, method));
+    private List<org.javaan.model.Method> getMethodsOfType(Type type) {
+	    List<org.javaan.model.Method> methods = new ArrayList<>();
+	    if (type.isReflection()) {
+            for (java.lang.reflect.Method method : type.getReflectionClass().getDeclaredMethods()) {
+                methods.add(org.javaan.model.Method.create(type, method));
             }
             for (Constructor<?> constructor : type.getReflectionClass().getConstructors()) {
-                classContext.addMethod(org.javaan.model.Method.create(type, constructor));
+                methods.add(org.javaan.model.Method.create(type, constructor));
+            }
+        } else {
+            for (Method method : type.getJavaClass().getMethods()) {
+                methods.add(org.javaan.model.Method.create(type, method));
             }
         }
+        return methods;
+    }
+
+    private List<Interface> getInterfacesOfClass(Clazz clazz) {
+	    return clazz.getInterfaceNames().stream()
+                .map(s -> typeLookup.get(s).toInterface())
+                .collect(Collectors.toList());
+    }
+
+    private List<Interface> getSuperInterfacesOfInterface(Interface interfaze) {
+	    return interfaze.getSuperInterfaceNames().stream()
+                .map(s -> typeLookup.get(s).toInterface())
+                .collect(Collectors.toList());
+    }
+
+    private void addSuperClass(Clazz clazz, Clazz superClazz, Tree<Clazz, VertexEdge<Clazz>> superClassTree) {
+        if (superClazz == null) {
+            superClassTree.addVertex(clazz);
+        } else {
+            superClassTree.addEdge(superClazz, clazz);
+        }
+    }
+
+    private Clazz getSuperClazz(Clazz clazz) {
+        Type type = typeLookup.get(clazz.getSuperTypeName());
+        return (type == null) ? null : type.toClazz();
     }
 
 	public ClassContext build(List<Type> types) {
         LOG.info("Creating class context ...");
 		Date start = new Date();
+
+		// ---- load missing types ----
+
         ReflectionTypeLoader loader = new ReflectionTypeLoader();
 		types = loader.loadMissingTypes(types);
-		missingTypes = loader.getMissingTypes();
-		NamedObjectMap<Type> typeLookup = new NamedObjectMap<>(types);
-		ClassContext context = new ClassContext();
-		types.stream().forEach(type -> addType(type, context));
-		types.stream ().forEach(type -> processDependencies(type, typeLookup, context));
-        long duration = new Date().getTime() - start.getTime();
+        typeLookup = new NamedObjectMap<>(types);
+        missingTypes = loader.getMissingTypes();
+
+		// ---- process packages ----
+
+        ClassContextInternals internals = new ClassContextInternals();
+        internals.types = typeLookup;
+        
+        // build types of package
+        internals.typesOfPackage = new ParentChildMap<>(
+                types.stream()
+                        .collect(Collectors.groupingBy(Package::new)));
+
+        // ---- process classes ----
+
+		// build super class hierarchy
+        List<Clazz> classes = types.parallelStream()
+                .filter(type -> type.getJavaType() == Type.JavaType.CLASS)
+                .map(type -> type.toClazz())
+                .collect(Collectors.toList());
+		internals.superClass = GraphFactory.createVertexEdgeTree();
+        classes.parallelStream()
+                .map(clazz -> new ImmutablePair<>(clazz, getSuperClazz(clazz)))
+                .collect(Collectors.toList()).stream() // interrupt parallel processing because graph library does not support multithreading
+                .forEach(clazzSuperClazz -> addSuperClass(clazzSuperClazz.getLeft(), clazzSuperClazz.getRight(), internals.superClass));
+
+		// build interfaces of class
+        internals.interfacesOfClass = new ParentChildMap<>(
+        classes.stream()
+                .collect(Collectors.toMap(Function.identity(), clazz -> getInterfacesOfClass(clazz)))
+        );
+
+        // build implementation of interface
+        internals.implementationOfInterface = internals.interfacesOfClass.invers();
+
+        // ---- process interfaces ----
+        List<Interface> interfaces = types.parallelStream()
+                .filter(type -> type.getJavaType() == Type.JavaType.INTERFACE)
+                .map(type -> type.toInterface())
+                .collect(Collectors.toList());
+        internals.superInterface = GraphFactory.createVertexEdgeDirectedGraph();
+        interfaces.parallelStream()
+                .map(anInterface -> new ImmutablePair<Interface, List<Interface>>(anInterface, getSuperInterfacesOfInterface(anInterface)))
+                .collect(Collectors.toList()).stream() // interrupt parallel processing
+                .forEach(interfaceSuperInterfaces -> internals.superInterface.addEdges(interfaceSuperInterfaces.getLeft(), interfaceSuperInterfaces.getRight()));
+
+        // ---- process methods
+        internals.methodsOfClass = new ParentChildMap<>(
+                classes.stream()
+                .collect(Collectors.toMap(Function.identity(), clazz -> getMethodsOfType(clazz)))
+        );
+
+        internals.methodsOfInterface = new ParentChildMap<>(
+                interfaces.stream()
+                .collect(Collectors.toMap(Function.identity(), anInterface -> getMethodsOfType(anInterface)))
+        );
+
+        ClassContext context = new ClassContext(internals);
+		long duration = new Date().getTime() - start.getTime();
         LOG.info("Creation of class context with {} classes and {} interfaces took {} ms",
 				context.getClasses().size(), context.getInterfaces().size(), duration);
 		int numberOfMissingTypes = missingTypes.size();
