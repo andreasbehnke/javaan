@@ -12,6 +12,6 @@ public class CyclicDirectedMultigraph<V, E> extends AbstractBaseGraph<V, E> impl
 	private static final long serialVersionUID = 0L;
 
 	public CyclicDirectedMultigraph(EdgeFactory<V, E> ef) {
-		super(ef, true, true);
+		super(ef, true, true, true, false);
 	}	
 }

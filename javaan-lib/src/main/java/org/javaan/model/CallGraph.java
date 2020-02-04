@@ -28,7 +28,6 @@ import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.alg.interfaces.StrongConnectivityAlgorithm;
 import org.jgrapht.graph.DirectedMultigraph;
-import org.jgrapht.graph.DirectedSubgraph;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -223,12 +222,12 @@ public class CallGraph {
 		return getDependencyCycles(usageOfClass);
 	}
 	
-	private static <V, E> void traverseDepdendencyCycles(GraphVisitor<V, E> cyclesVisitor, Graph<V, E> graph) {
+	private static <V, E> void traverseDependencyCycles(GraphVisitor<V, E> cyclesVisitor, Graph<V, E> graph) {
 		StrongConnectivityAlgorithm<V, E> inspector = new GabowStrongConnectivityInspector<>(graph);
-		List<DirectedSubgraph<V, E>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
+		List<Graph<V, E>> cycleGraphs = inspector.getStronglyConnectedComponents();
 		int index = 1;
 		ExtendedGraph<V, E> traversalGraph;
-		for (DirectedSubgraph<V, E> subgraph : cycleGraphs) {
+		for (Graph<V, E> subgraph : cycleGraphs) {
 			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one vertex (these cycles have no impact in software design)
 				traversalGraph = new ExtendedGraph<>(subgraph);
 				cyclesVisitor.visitGraph(traversalGraph, index);
@@ -239,7 +238,7 @@ public class CallGraph {
 	}
 	
 	public void traverseDependencyCycles(GraphVisitor<Type, Dependency> cyclesVisitor) {
-		traverseDepdendencyCycles(cyclesVisitor, usageOfClass);
+		traverseDependencyCycles(cyclesVisitor, usageOfClass);
 	}
 	
 	// package usage
@@ -300,7 +299,7 @@ public class CallGraph {
 	}
 	
 	public void traversePackageDependencyCycles(GraphVisitor<Package, Dependency> cyclesVisitor) {
-		traverseDepdendencyCycles(cyclesVisitor, usageOfPackage);
+		traverseDependencyCycles(cyclesVisitor, usageOfPackage);
 	}
 	
 	/**

@@ -3,7 +3,7 @@ package org.javaan.graph;
 import org.javaan.model.Dependency;
 import org.javaan.model.GraphView;
 import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DirectedSubgraph;
+import org.jgrapht.graph.AsSubgraph;
 import org.jgrapht.graph.EdgeReversedGraph;
 
 import java.util.Set;
@@ -46,11 +46,11 @@ public final class GraphFactory {
 		}
 		if (reversed) {
 			return new ExtendedGraph<>(
-					new EdgeReversedGraph<>(new DirectedSubgraph<>(graph.getDelegate(), vertices, null))
+					new EdgeReversedGraph<>(new AsSubgraph<>(graph.getDelegate(), vertices, null))
 					);	
 		}
 		return new ExtendedGraph<>(
-				new DirectedSubgraph<>(graph.getDelegate(), vertices, null)
+				new AsSubgraph<>(graph.getDelegate(), vertices, null)
 				);
 	}
 }
