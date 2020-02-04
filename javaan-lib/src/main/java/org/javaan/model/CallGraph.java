@@ -20,15 +20,9 @@ package org.javaan.model;
  * #L%
  */
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.commons.lang3.NotImplementedException;
 import org.javaan.graph.*;
 import org.javaan.model.Type.JavaType;
-import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
 import org.jgrapht.alg.GabowStrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
@@ -36,17 +30,22 @@ import org.jgrapht.alg.interfaces.StrongConnectivityAlgorithm;
 import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedSubgraph;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Represents the call-graph of all loaded methods.
  * Type dependencies are created for every method.
  */
 public class CallGraph {
 
-	private final ExtendedDirectedGraph<Method, VertexEdge<Method>> callerOfMethod = GraphFactory.createVertexEdgeDirectedGraph();
+	private final ExtendedGraph<Method, VertexEdge<Method>> callerOfMethod = GraphFactory.createVertexEdgeGraph();
 
-	private final ExtendedDirectedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
+	private final ExtendedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
 	
-	private final ExtendedDirectedGraph<Package, Dependency> usageOfPackage = GraphFactory.createDependencyGraph();
+	private final ExtendedGraph<Package, Dependency> usageOfPackage = GraphFactory.createDependencyGraph();
 			
 	private final ClassContext classContext;
 	
@@ -128,7 +127,7 @@ public class CallGraph {
 		}
 		Set<Type> resolvedTypes = methodResolver.resolve(callee);
 		for (Type type : resolvedTypes) {
-			Method calleeCandidate = null;
+			Method calleeCandidate;
 			switch (type.getJavaType()) {
 			case CLASS:
 				calleeCandidate = classContext.getVirtualMethod((Clazz)type, callee.getSignature());
@@ -203,11 +202,11 @@ public class CallGraph {
 		return usageOfClass.collectLeaves(using, true);
 	}
 	
-	private static <V> DirectedSimpleCycles<V, ?> createCycleDetector(DirectedGraph<V, ?> graph) {
+	private static <V> DirectedSimpleCycles<V, ?> createCycleDetector(Graph<V, ?> graph) {
 		return new JohnsonSimpleCycles<>(graph);
 	}
 	
-	private static <V> List<List<V>> getDependencyCycles(DirectedGraph<V, ?> graph) {
+	private static <V> List<List<V>> getDependencyCycles(Graph<V, ?> graph) {
 		List<List<V>> cycles = new ArrayList<>();
 		for (List<V> list : createCycleDetector(graph).findSimpleCycles()) {
 			if (list.size() > 1) {
@@ -224,14 +223,14 @@ public class CallGraph {
 		return getDependencyCycles(usageOfClass);
 	}
 	
-	private static <V, E> void traverseDepdendencyCycles(GraphVisitor<V, E> cyclesVisitor, DirectedGraph<V, E> graph) {
+	private static <V, E> void traverseDepdendencyCycles(GraphVisitor<V, E> cyclesVisitor, Graph<V, E> graph) {
 		StrongConnectivityAlgorithm<V, E> inspector = new GabowStrongConnectivityInspector<>(graph);
 		List<DirectedSubgraph<V, E>> cycleGraphs = inspector.stronglyConnectedSubgraphs();
 		int index = 1;
-		ExtendedDirectedGraph<V, E> traversalGraph;
+		ExtendedGraph<V, E> traversalGraph;
 		for (DirectedSubgraph<V, E> subgraph : cycleGraphs) {
 			if (subgraph.vertexSet().size() > 1) {// ignore dependency cycles within one vertex (these cycles have no impact in software design)
-				traversalGraph = new ExtendedDirectedGraph<V, E>(subgraph);
+				traversalGraph = new ExtendedGraph<>(subgraph);
 				cyclesVisitor.visitGraph(traversalGraph, index);
 				traversalGraph.traverseDepthFirst(null, cyclesVisitor, false);
 				index++;
@@ -311,7 +310,7 @@ public class CallGraph {
 	 * is applied.
 	 */
 	public List<Package> getTopologicalSortedPackages() {
-		DirectedGraph<Package, Dependency> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<Package, Dependency>());
+		Graph<Package, Dependency> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<>());
 		target = new MinimumEdgesCycleCut<>(usageOfPackage, target).cutCycles();
 		return new TopologicalMultigraphSort<>(target).sort();
 	}

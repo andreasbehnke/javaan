@@ -1,9 +1,9 @@
 package org.javaan.graph;
 
-import java.util.*;
-
-import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
 import org.jgrapht.graph.DirectedMultigraph;
+
+import java.util.*;
 
 /**
  * Provides a topological sort for a {@link DirectedMultigraph} (may not contain loops 
@@ -30,7 +30,7 @@ public class TopologicalMultigraphSort<V, E> {
 		}
 	}
 	
-	private final DirectedGraph<V, E> graph;
+	private final Graph<V, E> graph;
 	
 	private Queue<V> queue;
 	
@@ -38,7 +38,7 @@ public class TopologicalMultigraphSort<V, E> {
 
 	private Map<V, ModifiableInteger> inDegreeMap;
 	
-	public TopologicalMultigraphSort(DirectedGraph<V, E> graph) {
+	public TopologicalMultigraphSort(Graph<V, E> graph) {
 		this.graph = graph;
 	}
 	
@@ -58,13 +58,10 @@ public class TopologicalMultigraphSort<V, E> {
 		}
 		// sort queue by out-degree of vertex in ascending order. Vertices with lower 
 		// out-degree should be processed first
-		Collections.sort(vertexList, new Comparator<V>() {
-			@Override
-			public int compare(V o1, V o2) {
-				int outDegree1 = graph.outDegreeOf(o1);
-				int outDegree2 = graph.outDegreeOf(o2);
-				return outDegree1 - outDegree2;
-			}
+		vertexList.sort((o1, o2) -> {
+			int outDegree1 = graph.outDegreeOf(o1);
+			int outDegree2 = graph.outDegreeOf(o2);
+			return outDegree1 - outDegree2;
 		});
 		startVertexQueue = vertexList;
 		queue = new LinkedList<>();
@@ -81,14 +78,10 @@ public class TopologicalMultigraphSort<V, E> {
 		List<V> vertices = new ArrayList<>(DirectedGraphUtils.targetVerticesOf(vertex, graph));
 		// sort target vertices to be processed by	2 number of edges
 		// between target vertex and source vertex
-		Collections.sort(vertices, new Comparator<V>() {
-
-			@Override
-			public int compare(V o1, V o2) {
-				int degree1 = graph.getAllEdges(vertex, o1).size();
-				int degree2 = graph.getAllEdges(vertex, o2).size();
-				return degree2 - degree1;
-			}
+		vertices.sort((o1, o2) -> {
+			int degree1 = graph.getAllEdges(vertex, o1).size();
+			int degree2 = graph.getAllEdges(vertex, o2).size();
+			return degree2 - degree1;
 		});
 		return vertices;
 	}

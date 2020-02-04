@@ -20,22 +20,16 @@ package org.javaan.graph;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import java.util.Set;
-
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.Test;
 
+import java.util.Set;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 @SuppressWarnings("unchecked")
-public class TestExtendedDirectedGraph {
+public class TestExtendedGraph {
 
 	private static final String A = "a";
 	private static final String B = "b";
@@ -47,16 +41,16 @@ public class TestExtendedDirectedGraph {
 	private static final String X = "x";
 	private static final String Y = "y";
 	
-	private static <V> ExtendedDirectedGraph<V, VertexEdge<V>> createVertexEdgeDirectedGraph() {
-		return new ExtendedDirectedGraph<>(
-				new DefaultDirectedGraph<V, VertexEdge<V>>(
-						new VertexEdgeFactory<V>())
+	private static <V> ExtendedGraph<V, VertexEdge<V>> createVertexEdgeGraph() {
+		return new ExtendedGraph<>(
+				new DefaultDirectedGraph<>(
+						new VertexEdgeFactory<>())
 		);
 	}
 
 	@Test
 	public void testTargetVerticesOf() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -79,7 +73,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testSourceVerticesOf() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(Y, A);
@@ -102,7 +96,7 @@ public class TestExtendedDirectedGraph {
 	
 	@Test
 	public void testSuccessorsOf() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
@@ -117,7 +111,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testPredecessorsOf() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
@@ -147,7 +141,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirst() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		VertexEdge<String> X_A = graph.addEdge(X, A);
 		VertexEdge<String> X_B = graph.addEdge(X, B);
 		VertexEdge<String> X_C = graph.addEdge(X, C);
@@ -178,7 +172,7 @@ public class TestExtendedDirectedGraph {
 	
 	@Test
 	public void testTraverseSuccessorsBreadthFirst() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		VertexEdge<String> X_A = graph.addEdge(X, A);
 		VertexEdge<String> X_B = graph.addEdge(X, B);
 		VertexEdge<String> X_C = graph.addEdge(X, C);
@@ -210,7 +204,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstCycle() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		VertexEdge<String> X_A = graph.addEdge(X, A);
 		VertexEdge<String> A_B = graph.addEdge(A, B);
 		VertexEdge<String> B_X = graph.addEdge(B, X);
@@ -228,7 +222,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstDisruption() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -246,7 +240,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstUnknownStartVertex() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
 
 		graph.traverseDepthFirst(X, visitor, false);
@@ -255,7 +249,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testTraversePredecessorsDepthFirst() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		VertexEdge<String> X_C = graph.addEdge(X, C);
@@ -280,7 +274,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testTraversePredecessorsBreadthFirst() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		VertexEdge<String> X_C = graph.addEdge(X, C);
@@ -306,7 +300,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testGetLeafSuccessors() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -340,7 +334,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testGetLeafSuccessorsUnknownStartVertex() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		Set<String> leafNodes = graph.collectLeaves(A, false);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
@@ -348,7 +342,7 @@ public class TestExtendedDirectedGraph {
 
 	@Test
 	public void testGetLeafPredecessors() {
-		ExtendedDirectedGraph<String, VertexEdge<String>> graph = createVertexEdgeDirectedGraph();
+		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);

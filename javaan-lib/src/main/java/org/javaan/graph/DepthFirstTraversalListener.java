@@ -20,14 +20,14 @@ package org.javaan.graph;
  * #L%
  */
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
-
-import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.TraversalListenerAdapter;
 import org.jgrapht.event.VertexTraversalEvent;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
 
 /**
  * Adapter between the simpler {@link GraphVisitor} interface and the more
@@ -37,15 +37,15 @@ import org.jgrapht.event.VertexTraversalEvent;
  */
 class DepthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 	
-	private final DirectedGraph<V, E> graph;
+	private final Graph<V, E> graph;
 	
 	private final GraphVisitor<V, E> visitor;
 	
-	private final Stack<V> stack = new Stack<V>();
+	private final Stack<V> stack = new Stack<>();
 	
-	private final Set<E> visitedEdges = new HashSet<E>();
+	private final Set<E> visitedEdges = new HashSet<>();
 	
-	public DepthFirstTraversalListener(DirectedGraph<V, E> graph, GraphVisitor<V, E> visitor) {
+	public DepthFirstTraversalListener(Graph<V, E> graph, GraphVisitor<V, E> visitor) {
 		this.graph = graph;
 		this.visitor = visitor;
 	}
@@ -54,7 +54,7 @@ class DepthFirstTraversalListener<V, E> extends TraversalListenerAdapter<V, E> {
 	public void vertexFinished(VertexTraversalEvent<V> e) {
 		int level = stack.size();
 		V vertex = stack.pop();
-		Set<E> edges = new HashSet<E>(graph.outgoingEdgesOf(vertex));
+		Set<E> edges = new HashSet<>(graph.outgoingEdgesOf(vertex));
 		edges.removeAll(visitedEdges);
 		for (E edge : edges) {
 			visitor.visitEdge(edge, level);

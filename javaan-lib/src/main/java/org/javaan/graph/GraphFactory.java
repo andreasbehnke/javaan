@@ -1,21 +1,21 @@
 package org.javaan.graph;
 
-import java.util.Set;
-
 import org.javaan.model.Dependency;
 import org.javaan.model.GraphView;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DirectedSubgraph;
 import org.jgrapht.graph.EdgeReversedGraph;
 
+import java.util.Set;
+
 public final class GraphFactory {
 
 	private GraphFactory() {}
 
-	public static <V> ExtendedDirectedGraph<V, Dependency> createDependencyGraph() {
-		return new ExtendedDirectedGraph<V, Dependency>(
+	public static <V> ExtendedGraph<V, Dependency> createDependencyGraph() {
+		return new ExtendedGraph<>(
 				new DefaultDirectedGraph<V, Dependency>(
-						new UnsupportedEdgeFactory<V, Dependency>()){
+						new UnsupportedEdgeFactory<>()){
 					
 					private static final long serialVersionUID = 1L;
 
@@ -26,31 +26,31 @@ public final class GraphFactory {
 				});
 	}
 
-	public static <V> ExtendedDirectedGraph<V, VertexEdge<V>> createVertexEdgeDirectedGraph() {
-		return new ExtendedDirectedGraph<>(
-				new DefaultDirectedGraph<V, VertexEdge<V>>(
-						new VertexEdgeFactory<V>())
+	public static <V> ExtendedGraph<V, VertexEdge<V>> createVertexEdgeGraph() {
+		return new ExtendedGraph<>(
+				new DefaultDirectedGraph<>(
+						new VertexEdgeFactory<>())
 		);
 	}
 	
 	public static <V> Tree<V, VertexEdge<V>> createVertexEdgeTree() {
 		return new Tree<>(
-				new DefaultDirectedGraph<V, VertexEdge<V>>(
-						new VertexEdgeFactory<V>())
+				new DefaultDirectedGraph<>(
+						new VertexEdgeFactory<>())
 		);
 	}
 	
-	public static <V, E> GraphView<V, E> createSubgraphView(ExtendedDirectedGraph<V, E> graph, Set<V> vertices, boolean reversed) {
-		if (vertices == null && reversed == false) {
+	public static <V, E> GraphView<V, E> createSubgraphView(ExtendedGraph<V, E> graph, Set<V> vertices, boolean reversed) {
+		if (vertices == null && !reversed) {
 			return graph;
 		}
 		if (reversed) {
-			return new ExtendedDirectedGraph<V, E>(
-					new EdgeReversedGraph<V, E>(new DirectedSubgraph<V, E>(graph.getDelegate(), vertices, null))
+			return new ExtendedGraph<>(
+					new EdgeReversedGraph<>(new DirectedSubgraph<>(graph.getDelegate(), vertices, null))
 					);	
 		}
-		return new ExtendedDirectedGraph<V, E>(
-				new DirectedSubgraph<V, E>(graph.getDelegate(), vertices, null)
+		return new ExtendedGraph<>(
+				new DirectedSubgraph<>(graph.getDelegate(), vertices, null)
 				);
 	}
 }

@@ -20,19 +20,19 @@ package org.javaan.graph;
  * #L%
  */
 
+import org.javaan.model.TreeView;
+import org.jgrapht.Graph;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.javaan.model.TreeView;
-import org.jgrapht.DirectedGraph;
-
 /**
  * Implementation of {@link TreeView}
  */
-public class Tree<V, E> extends ExtendedDirectedGraph<V, E> implements TreeView<V, E> {
+public class Tree<V, E> extends ExtendedGraph<V, E> implements TreeView<V, E> {
 
-	public Tree(DirectedGraph<V, E> g) {
+	public Tree(Graph<V, E> g) {
 		super(g);
 	}
 
@@ -57,7 +57,7 @@ public class Tree<V, E> extends ExtendedDirectedGraph<V, E> implements TreeView<
 
 	@Override
 	public List<V> predecessorPathOf(V vertex) {
-		List<V> path = new ArrayList<V>();
+		List<V> path = new ArrayList<>();
 		while(vertex != null) {
 			if (path.contains(vertex)) {
 				break; // cycle detected

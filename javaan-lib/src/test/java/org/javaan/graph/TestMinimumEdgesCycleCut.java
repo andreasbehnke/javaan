@@ -1,21 +1,21 @@
 package org.javaan.graph;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.List;
-
 import org.javaan.graph.SimpleGraphReader.ObjectProducer;
-import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
+import org.jgrapht.Graph;
 import org.jgrapht.VertexFactory;
 import org.jgrapht.generate.CompleteGraphGenerator;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DirectedMultigraph;
 import org.jgrapht.graph.DirectedPseudograph;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class TestMinimumEdgesCycleCut {
 	
@@ -42,7 +42,7 @@ public class TestMinimumEdgesCycleCut {
 			+ "E v v vv2 \n";
 
 	private DirectedPseudograph<String, String> createGraph() throws IOException {
-		DirectedPseudograph<String, String> graph = new DirectedPseudograph<String, String>(new UnsupportedEdgeFactory<String, String>());
+		DirectedPseudograph<String, String> graph = new DirectedPseudograph<>(new UnsupportedEdgeFactory<>());
 		ObjectProducer<String, String> objectProducer = new ObjectProducer<String, String>() {
 			@Override
 			public String createEdge(String source, String target, String edgeLabel) {
@@ -54,13 +54,13 @@ public class TestMinimumEdgesCycleCut {
 				return vertexLabel;
 			}
 		};
-		new SimpleGraphReader<String, String>(graph, objectProducer).readGraph(new StringReader(GRAPH_CONTENT));
+		new SimpleGraphReader<>(graph, objectProducer).readGraph(new StringReader(GRAPH_CONTENT));
 		return graph;
 	}
 
 	@Test
 	public void testFindCutPoints() throws IOException {
-		DirectedMultigraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<String, String>());
+		DirectedMultigraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<>());
 		List<CutPoint<String, String>> cutPoints = new MinimumEdgesCycleCut<>(createGraph(), target).findCutPoints();
 		assertNotNull(cutPoints);
 		assertEquals(4, cutPoints.size());
@@ -73,8 +73,8 @@ public class TestMinimumEdgesCycleCut {
 	@Test
 	public void testCutCycles() throws IOException {
 		DirectedPseudograph<String, String> source = createGraph();
-		DirectedGraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<String, String>());
-		target = new MinimumEdgesCycleCut<String, String>(source, target).cutCycles();
+		Graph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<>());
+		target = new MinimumEdgesCycleCut<>(source, target).cutCycles();
 		
 		assertTrue(source.edgeSet().contains("a-->b:ab1"));
 		assertFalse(target.edgeSet().contains("a-->b:ab1"));
@@ -92,14 +92,9 @@ public class TestMinimumEdgesCycleCut {
 	}
 	
 	@Test
-	public void testCutCyclesCompleteGraph() throws IOException {
+	public void testCutCyclesCompleteGraph() {
 		CompleteGraphGenerator<String, String> generator = new CompleteGraphGenerator<>(5);
-		DirectedGraph<String, String> graph = new DefaultDirectedGraph<>(new EdgeFactory<String, String>() {
-			@Override
-			public String createEdge(String sourceVertex, String targetVertex) {
-				return sourceVertex + targetVertex;
-			}
-		});
+		Graph<String, String> graph = new DefaultDirectedGraph<>((sourceVertex, targetVertex) -> sourceVertex + targetVertex);
 		generator.generateGraph(graph, new VertexFactory<String>() {
 			
 			private int count = 0;
@@ -109,8 +104,8 @@ public class TestMinimumEdgesCycleCut {
 				count ++;
 				return "V" + count;
 			}
-		}, new HashMap<String, String>());
-		DirectedGraph<String, String> target = new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<String, String>());
-		target = new MinimumEdgesCycleCut<String, String>(graph, target).cutCycles();
+		}, new HashMap<>());
+		Graph<String, String> target = new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<>());
+		new MinimumEdgesCycleCut<>(graph, target).cutCycles();
 	}
 }

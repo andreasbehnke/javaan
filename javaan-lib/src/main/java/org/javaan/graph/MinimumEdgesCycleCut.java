@@ -1,14 +1,14 @@
 package org.javaan.graph;
 
+import org.jgrapht.Graph;
+import org.jgrapht.Graphs;
+import org.jgrapht.alg.cycle.DirectedSimpleCycles;
+import org.jgrapht.alg.cycle.TiernanSimpleCycles;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.Graphs;
-import org.jgrapht.alg.cycle.DirectedSimpleCycles;
-import org.jgrapht.alg.cycle.TiernanSimpleCycles;
 
 /**
  * Given a directed <a href="http://mathworld.wolfram.com/Pseudograph.html">pseudograph</a> g, 
@@ -17,11 +17,11 @@ import org.jgrapht.alg.cycle.TiernanSimpleCycles;
  */
 public class MinimumEdgesCycleCut<V, E> {
 
-	private final DirectedGraph<V, E> sourceGraph;
+	private final Graph<V, E> sourceGraph;
 	
-	private final DirectedGraph<V, E> targetGraph;
+	private final Graph<V, E> targetGraph;
 
-	public MinimumEdgesCycleCut(DirectedGraph<V, E> source, DirectedGraph<V, E> target) {
+	public MinimumEdgesCycleCut(Graph<V, E> source, Graph<V, E> target) {
 		this.sourceGraph = source;
 		this.targetGraph = target;
 	}
@@ -38,8 +38,7 @@ public class MinimumEdgesCycleCut<V, E> {
 		V cutPointTarget = null;
 		int minEdgeCount = Integer.MAX_VALUE;
 		V source = cycle.get(cycle.size() - 1);
-		for(int i=0; i < cycle.size(); i++) {
-			V target = cycle.get(i);
+		for (V target : cycle) {
 			int edgeCount = sourceGraph.getAllEdges(source, target).size();
 			if (edgeCount < minEdgeCount) {
 				cutPointSource = source;
@@ -48,7 +47,7 @@ public class MinimumEdgesCycleCut<V, E> {
 			}
 			source = target;
 		}
-		return new CutPoint<V, E>(cutPointSource, cutPointTarget);
+		return new CutPoint<>(cutPointSource, cutPointTarget);
 	}
 
 	public List<CutPoint<V, E>> findCutPoints() {
@@ -60,7 +59,7 @@ public class MinimumEdgesCycleCut<V, E> {
 		return cutPoints;
 	}
 	
-	public DirectedGraph<V, E> cutCycles() {
+	public Graph<V, E> cutCycles() {
 		Set<CutPoint<V, E>> cutPoints = new HashSet<>(findCutPoints());
 		Graphs.addAllVertices(targetGraph, sourceGraph.vertexSet());
 		for (E e : sourceGraph.edgeSet()) {

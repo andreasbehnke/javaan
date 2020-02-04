@@ -26,8 +26,8 @@ import org.javaan.graph.GraphFactory;
 import org.javaan.graph.ParentChildMap;
 import org.javaan.graph.Tree;
 import org.javaan.graph.VertexEdge;
-import org.javaan.model.*;
 import org.javaan.model.Package;
+import org.javaan.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +119,7 @@ public class ClassContextBuilder {
 		// build super class hierarchy
         List<Clazz> classes = types.parallelStream()
                 .filter(type -> type.getJavaType() == Type.JavaType.CLASS)
-                .map(type -> type.toClazz())
+                .map(Type::toClazz)
                 .collect(Collectors.toList());
 		internals.superClass = GraphFactory.createVertexEdgeTree();
         classes.parallelStream()
@@ -130,7 +130,7 @@ public class ClassContextBuilder {
 		// build interfaces of class
         internals.interfacesOfClass = new ParentChildMap<>(
         classes.stream()
-                .collect(Collectors.toMap(Function.identity(), clazz -> getInterfacesOfClass(clazz)))
+                .collect(Collectors.toMap(Function.identity(), this::getInterfacesOfClass))
         );
 
         // build implementation of interface
@@ -139,23 +139,23 @@ public class ClassContextBuilder {
         // ---- process interfaces ----
         List<Interface> interfaces = types.parallelStream()
                 .filter(type -> type.getJavaType() == Type.JavaType.INTERFACE)
-                .map(type -> type.toInterface())
+                .map(Type::toInterface)
                 .collect(Collectors.toList());
-        internals.superInterface = GraphFactory.createVertexEdgeDirectedGraph();
+        internals.superInterface = GraphFactory.createVertexEdgeGraph();
         interfaces.parallelStream()
-                .map(anInterface -> new ImmutablePair<Interface, List<Interface>>(anInterface, getSuperInterfacesOfInterface(anInterface)))
+                .map(anInterface -> new ImmutablePair<>(anInterface, getSuperInterfacesOfInterface(anInterface)))
                 .collect(Collectors.toList()).stream() // interrupt parallel processing
                 .forEach(interfaceSuperInterfaces -> internals.superInterface.addEdges(interfaceSuperInterfaces.getLeft(), interfaceSuperInterfaces.getRight()));
 
         // ---- process methods
         internals.methodsOfClass = new ParentChildMap<>(
                 classes.stream()
-                .collect(Collectors.toMap(Function.identity(), clazz -> getMethodsOfType(clazz)))
+                .collect(Collectors.toMap(Function.identity(), this::getMethodsOfType))
         );
 
         internals.methodsOfInterface = new ParentChildMap<>(
                 interfaces.stream()
-                .collect(Collectors.toMap(Function.identity(), anInterface -> getMethodsOfType(anInterface)))
+                .collect(Collectors.toMap(Function.identity(), this::getMethodsOfType))
         );
 
         ClassContext context = new ClassContext(internals);

@@ -20,15 +20,12 @@ package org.javaan.model;
  * #L%
  */
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.javaan.graph.*;
 import org.javaan.model.Type.JavaType;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ClassContext implements NamedObjectRepository<Type> {
 
@@ -38,7 +35,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 
 	private final Tree<Clazz, VertexEdge<Clazz>> superClass;
 
-	private final ExtendedDirectedGraph<Interface, VertexEdge<Interface>> superInterface;
+	private final ExtendedGraph<Interface, VertexEdge<Interface>> superInterface;
 
 	private final ParentChildMap<Clazz, Interface> interfacesOfClass;
 
@@ -52,7 +49,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		this.types = new NamedObjectMap<>();
 		this.typesOfPackage = new ParentChildMap<>();
 		this.superClass = GraphFactory.createVertexEdgeTree();
-		this.superInterface = GraphFactory.createVertexEdgeDirectedGraph();
+		this.superInterface = GraphFactory.createVertexEdgeGraph();
 		this.interfacesOfClass = new ParentChildMap<>();
 		this.implementationOfInterface = new ParentChildMap<>();
 		this.methodsOfClass = new ParentChildMap<>();
@@ -197,7 +194,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	private Set<Interface> getDirectInterfacesOfClass(Clazz className) {
 		List<Interface> childs = interfacesOfClass.get(className);
-		if (childs == null) return Collections.EMPTY_SET;
+		if (childs == null) return Collections.emptySet();
 		Set<Interface> interfaces = new HashSet<>(childs);
 		for (Interface interfaceName : childs) {
 			interfaces.addAll(superInterface.successorsOf(interfaceName));
@@ -207,7 +204,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	public Set<Interface> getInterfacesOfClass(Clazz className) {
 		List<Clazz> superClasses = superClass.predecessorPathOf(className);
-		Set<Interface> interfaces = new HashSet<Interface>();
+		Set<Interface> interfaces = new HashSet<>();
 		for (Clazz superClassName : superClasses) {
 			interfaces.addAll(getDirectInterfacesOfClass(superClassName));
 		}
@@ -215,10 +212,10 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Clazz> getImplementations(Interface interfaceName) {
-		Set<Clazz> implementingClasses = new HashSet<Clazz>();
+		Set<Clazz> implementingClasses = new HashSet<>();
 		Set<Interface> interfaces = superInterface.predecessorsOf(interfaceName);
 		interfaces.add(interfaceName);
-		Set<Clazz> classes = new HashSet<Clazz>();
+		Set<Clazz> classes = new HashSet<>();
 		// find direct implementations of all specialized interfaces
 		for (Interface specializedInterface : interfaces) {
 			List<Clazz> implementations = implementationOfInterface.get(specializedInterface);
@@ -241,7 +238,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Clazz> getClassesOfPackage(Package package1) {
-		Set<Clazz> classes = new HashSet<Clazz>();
+		Set<Clazz> classes = new HashSet<>();
 		for (Type type : typesOfPackage.get(package1)) {
 			if (type.getJavaType() == JavaType.CLASS) {
 				classes.add((Clazz)type);
@@ -251,7 +248,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	}
 	
 	public Set<Interface> getInterfacesOfPackage(Package package1) {
-		Set<Interface> interfaces = new HashSet<Interface>();
+		Set<Interface> interfaces = new HashSet<>();
 		for (Type type : typesOfPackage.get(package1)) {
 			if (type.getJavaType() == JavaType.INTERFACE) {
 				interfaces.add((Interface)type);
@@ -342,8 +339,8 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	
 	public Set<Method> getVirtualMethods(Clazz className) {
 		return getSuperClassHierachy(className).stream()
-				.map(clazz -> methodsOfClass.get(clazz))
-				.filter(methods -> methods != null)
+				.map(methodsOfClass::get)
+				.filter(Objects::nonNull)
 				.flatMap(List::stream)
 				.collect(Collectors.toSet());
 	}
@@ -352,8 +349,8 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		Set<Interface> interfaces = getSuperInterfaces(interfaceName);
 		interfaces.add(interfaceName);
 		return interfaces.stream()
-				.map(anInterface -> methodsOfInterface.get(anInterface))
-				.filter(methods -> methods != null)
+				.map(methodsOfInterface::get)
+				.filter(Objects::nonNull)
 				.flatMap(List::stream)
 				.collect(Collectors.toSet());
 	}

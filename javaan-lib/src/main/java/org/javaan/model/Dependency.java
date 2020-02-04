@@ -1,9 +1,9 @@
 package org.javaan.model;
 
+import org.jgrapht.Graph;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import org.jgrapht.DirectedGraph;
 
 /**
  * Represents a dependency between two types
@@ -44,7 +44,7 @@ public class Dependency extends NamedObjectBase {
 		return target;
 	}
 	
-	static <V extends NamedObject> void addDependency(DirectedGraph<V, Dependency> graph, V source, V target, Method callee) {
+	static <V extends NamedObject> void addDependency(Graph<V, Dependency> graph, V source, V target, Method callee) {
 		Dependency dependency = graph.getEdge(source, target);
 		if (dependency == null) {
 			graph.addEdge(source, target, new Dependency(source, target, callee));
