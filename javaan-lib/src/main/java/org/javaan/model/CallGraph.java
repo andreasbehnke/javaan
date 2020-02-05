@@ -23,7 +23,7 @@ package org.javaan.model;
 import org.javaan.graph.*;
 import org.javaan.model.Type.JavaType;
 import org.jgrapht.Graph;
-import org.jgrapht.alg.GabowStrongConnectivityInspector;
+import org.jgrapht.alg.connectivity.GabowStrongConnectivityInspector;
 import org.jgrapht.alg.cycle.DirectedSimpleCycles;
 import org.jgrapht.alg.cycle.JohnsonSimpleCycles;
 import org.jgrapht.alg.interfaces.StrongConnectivityAlgorithm;
