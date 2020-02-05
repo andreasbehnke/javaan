@@ -40,7 +40,7 @@ import java.util.Set;
  */
 public class CallGraph {
 
-	private final ExtendedGraph<Method, VertexEdge<Method>> callerOfMethod = GraphFactory.createVertexEdgeGraph();
+	private final ExtendedGraph<Method, String> callerOfMethod = GraphFactory.createVertexEdgeGraph(new RandomEdgeSupplier("calls"));
 
 	private final ExtendedGraph<Type, Dependency> usageOfClass = GraphFactory.createDependencyGraph();
 	
@@ -62,7 +62,7 @@ public class CallGraph {
 		this.resolveDependenciesInClassHierarchy = resolveDependenciesInClassHierarchy;
 	}
 
-	public GraphView<Method, VertexEdge<Method>> getCallerOfMethodGraph() {
+	public GraphView<Method, String> getCallerOfMethodGraph() {
 		return callerOfMethod;
 	}
 	
@@ -159,11 +159,11 @@ public class CallGraph {
 		return null;
 	}
 	
-	public void traverseCallers(Method callee, VertexEdgeGraphVisitor<Method> callerVisitor) {
+	public void traverseCallers(Method callee, GraphVisitor<Method, String> callerVisitor) {
 		callerOfMethod.traverseDepthFirst(callee, callerVisitor, true);
 	}
 	
-	public void traverseCallees(Method caller, VertexEdgeGraphVisitor<Method> calleeVisitor) {
+	public void traverseCallees(Method caller, GraphVisitor<Method, String> calleeVisitor) {
 		callerOfMethod.traverseDepthFirst(caller, calleeVisitor, false);
 	}
 	

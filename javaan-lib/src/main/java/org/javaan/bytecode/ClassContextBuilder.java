@@ -24,8 +24,8 @@ import org.apache.bcel.classfile.Method;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.javaan.graph.GraphFactory;
 import org.javaan.graph.ParentChildMap;
+import org.javaan.graph.RandomEdgeSupplier;
 import org.javaan.graph.Tree;
-import org.javaan.graph.VertexEdge;
 import org.javaan.model.Package;
 import org.javaan.model.*;
 import org.slf4j.Logger;
@@ -80,7 +80,7 @@ public class ClassContextBuilder {
                 .collect(Collectors.toList());
     }
 
-    private void addSuperClass(Clazz clazz, Clazz superClazz, Tree<Clazz, VertexEdge<Clazz>> superClassTree) {
+    private void addSuperClass(Clazz clazz, Clazz superClazz, Tree<Clazz, String> superClassTree) {
         if (superClazz == null) {
             superClassTree.addVertex(clazz);
         } else {
@@ -121,7 +121,7 @@ public class ClassContextBuilder {
                 .filter(type -> type.getJavaType() == Type.JavaType.CLASS)
                 .map(Type::toClazz)
                 .collect(Collectors.toList());
-		internals.superClass = GraphFactory.createVertexEdgeTree();
+		internals.superClass = GraphFactory.createVertexEdgeTree(new RandomEdgeSupplier("superClassOf"));
         classes.parallelStream()
                 .map(clazz -> new ImmutablePair<>(clazz, getSuperClazz(clazz)))
                 .collect(Collectors.toList()).stream() // interrupt parallel processing because graph library does not support multithreading
@@ -141,7 +141,7 @@ public class ClassContextBuilder {
                 .filter(type -> type.getJavaType() == Type.JavaType.INTERFACE)
                 .map(Type::toInterface)
                 .collect(Collectors.toList());
-        internals.superInterface = GraphFactory.createVertexEdgeGraph();
+        internals.superInterface = GraphFactory.createVertexEdgeGraph(new RandomEdgeSupplier("superInterfaceOf"));
         interfaces.parallelStream()
                 .map(anInterface -> new ImmutablePair<>(anInterface, getSuperInterfacesOfInterface(anInterface)))
                 .collect(Collectors.toList()).stream() // interrupt parallel processing

@@ -3,7 +3,6 @@ package org.javaan.model;
 import org.javaan.graph.ExtendedGraph;
 import org.javaan.graph.ParentChildMap;
 import org.javaan.graph.Tree;
-import org.javaan.graph.VertexEdge;
 
 /**
  * Internal data structure of {@link ClassContext}. Used by ClassContextBuilder to produce
@@ -15,9 +14,9 @@ public class ClassContextInternals {
 
     public ParentChildMap<Package, Type> typesOfPackage;
 
-    public Tree<Clazz, VertexEdge<Clazz>> superClass;
+    public Tree<Clazz, String> superClass;
 
-    public ExtendedGraph<Interface, VertexEdge<Interface>> superInterface;
+    public ExtendedGraph<Interface, String> superInterface;
 
     public ParentChildMap<Clazz, Interface> interfacesOfClass;
 

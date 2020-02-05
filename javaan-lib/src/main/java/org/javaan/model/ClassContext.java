@@ -33,9 +33,9 @@ public class ClassContext implements NamedObjectRepository<Type> {
 
 	private final ParentChildMap<Package, Type> typesOfPackage;
 
-	private final Tree<Clazz, VertexEdge<Clazz>> superClass;
+	private final Tree<Clazz, String> superClass;
 
-	private final ExtendedGraph<Interface, VertexEdge<Interface>> superInterface;
+	private final ExtendedGraph<Interface, String> superInterface;
 
 	private final ParentChildMap<Clazz, Interface> interfacesOfClass;
 
@@ -48,8 +48,8 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	public ClassContext() {
 		this.types = new NamedObjectMap<>();
 		this.typesOfPackage = new ParentChildMap<>();
-		this.superClass = GraphFactory.createVertexEdgeTree();
-		this.superInterface = GraphFactory.createVertexEdgeGraph();
+		this.superClass = GraphFactory.createVertexEdgeTree(new RandomEdgeSupplier("superClassOf"));
+		this.superInterface = GraphFactory.createVertexEdgeGraph(new RandomEdgeSupplier("superInterfaceOf"));
 		this.interfacesOfClass = new ParentChildMap<>();
 		this.implementationOfInterface = new ParentChildMap<>();
 		this.methodsOfClass = new ParentChildMap<>();
@@ -67,11 +67,11 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		this.methodsOfInterface = internals.methodsOfInterface;
 	}
 
-	public TreeView<Clazz, VertexEdge<Clazz>> getSuperClassGraph() {
+	public TreeView<Clazz, String> getSuperClassGraph() {
 		return superClass;
 	}
 	
-	public GraphView<Interface, VertexEdge<Interface>> getSuperInterfaceGraph() {
+	public GraphView<Interface, String> getSuperInterfaceGraph() {
 		return superInterface;
 	}
 

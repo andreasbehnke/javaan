@@ -41,16 +41,20 @@ public class TestExtendedGraph {
 	private static final String X = "x";
 	private static final String Y = "y";
 	
-	private static <V> ExtendedGraph<V, VertexEdge<V>> createVertexEdgeGraph() {
+	private static <V> ExtendedGraph<V, String> createVertexEdgeGraph() {
 		return new ExtendedGraph<>(
-				new DefaultDirectedGraph<>(
-						new VertexEdgeFactory<>())
+				new DefaultDirectedGraph<V, String>(null, new RandomEdgeSupplier("test_"), false) {
+					@Override
+					public boolean addEdge(V sourceVertex, V targetVertex, String edge) {
+						return super.addEdge(sourceVertex, targetVertex, sourceVertex + "_" + targetVertex);
+					}
+				}
 		);
 	}
 
 	@Test
 	public void testTargetVerticesOf() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -73,7 +77,7 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testSourceVerticesOf() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(Y, A);
@@ -96,7 +100,7 @@ public class TestExtendedGraph {
 	
 	@Test
 	public void testSuccessorsOf() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
@@ -111,7 +115,7 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testPredecessorsOf() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
@@ -141,15 +145,15 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirst() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
-		VertexEdge<String> X_A = graph.addEdge(X, A);
-		VertexEdge<String> X_B = graph.addEdge(X, B);
-		VertexEdge<String> X_C = graph.addEdge(X, C);
-		VertexEdge<String> C_D = graph.addEdge(C, D);
-		VertexEdge<String> C_E = graph.addEdge(C, E);
-		VertexEdge<String> E_F = graph.addEdge(E, F);
-		VertexEdge<String> X_G = graph.addEdge(X, G);
-		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
+		String X_A = graph.addEdge(X, A);
+		String X_B = graph.addEdge(X, B);
+		String X_C = graph.addEdge(X, C);
+		String C_D = graph.addEdge(C, D);
+		String C_E = graph.addEdge(C, E);
+		String E_F = graph.addEdge(E, F);
+		String X_G = graph.addEdge(X, G);
+		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 		
 		graph.traverseDepthFirst(X, visitor, false);
 		verify(visitor, times(8)).finished();
@@ -172,15 +176,15 @@ public class TestExtendedGraph {
 	
 	@Test
 	public void testTraverseSuccessorsBreadthFirst() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
-		VertexEdge<String> X_A = graph.addEdge(X, A);
-		VertexEdge<String> X_B = graph.addEdge(X, B);
-		VertexEdge<String> X_C = graph.addEdge(X, C);
-		VertexEdge<String> C_D = graph.addEdge(C, D);
-		VertexEdge<String> C_E = graph.addEdge(C, E);
-		VertexEdge<String> E_F = graph.addEdge(E, F);
-		VertexEdge<String> X_G = graph.addEdge(X, G);
-		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
+		String X_A = graph.addEdge(X, A);
+		String X_B = graph.addEdge(X, B);
+		String X_C = graph.addEdge(X, C);
+		String C_D = graph.addEdge(C, D);
+		String C_E = graph.addEdge(C, E);
+		String E_F = graph.addEdge(E, F);
+		String X_G = graph.addEdge(X, G);
+		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 		
 		graph.traverseBreadthFirst(X, visitor, false);
 		verify(visitor, times(8)).finished();
@@ -204,11 +208,11 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstCycle() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
-		VertexEdge<String> X_A = graph.addEdge(X, A);
-		VertexEdge<String> A_B = graph.addEdge(A, B);
-		VertexEdge<String> B_X = graph.addEdge(B, X);
-		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
+		String X_A = graph.addEdge(X, A);
+		String A_B = graph.addEdge(A, B);
+		String B_X = graph.addEdge(B, X);
+		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 
 		graph.traverseDepthFirst(X, visitor, false);
 		verify(visitor, times(3)).finished();
@@ -222,7 +226,7 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstDisruption() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -230,7 +234,7 @@ public class TestExtendedGraph {
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
 		graph.addEdge(X, G);
-		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
+		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 		when(visitor.finished()).thenReturn(true);
 		
 		graph.traverseDepthFirst(X, visitor, false);
@@ -240,8 +244,8 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testTraverseSuccessorsDepthFirstUnknownStartVertex() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
-		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
+		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 
 		graph.traverseDepthFirst(X, visitor, false);
 		verifyNoMoreInteractions(visitor);
@@ -249,15 +253,15 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testTraversePredecessorsDepthFirst() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		VertexEdge<String> X_C = graph.addEdge(X, C);
+		String X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		VertexEdge<String> C_E = graph.addEdge(C, E);
-		VertexEdge<String> E_F = graph.addEdge(E, F);
-		VertexEdge<String> Y_F = graph.addEdge(Y, F);
-		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
+		String C_E = graph.addEdge(C, E);
+		String E_F = graph.addEdge(E, F);
+		String Y_F = graph.addEdge(Y, F);
+		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 		
 		graph.traverseDepthFirst(F, visitor, true);
 		verify(visitor, times(5)).finished();
@@ -274,15 +278,15 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testTraversePredecessorsBreadthFirst() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
-		VertexEdge<String> X_C = graph.addEdge(X, C);
+		String X_C = graph.addEdge(X, C);
 		graph.addEdge(C, D);
-		VertexEdge<String> C_E = graph.addEdge(C, E);
-		VertexEdge<String> E_F = graph.addEdge(E, F);
-		VertexEdge<String> Y_F = graph.addEdge(Y, F);
-		VertexEdgeGraphVisitor<String> visitor = mock(VertexEdgeGraphVisitor.class);
+		String C_E = graph.addEdge(C, E);
+		String E_F = graph.addEdge(E, F);
+		String Y_F = graph.addEdge(Y, F);
+		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 		
 		graph.traverseBreadthFirst(F, visitor, true);
 		verify(visitor, times(5)).finished();
@@ -300,7 +304,7 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testGetLeafSuccessors() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
@@ -334,7 +338,7 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testGetLeafSuccessorsUnknownStartVertex() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		Set<String> leafNodes = graph.collectLeaves(A, false);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());
@@ -342,7 +346,7 @@ public class TestExtendedGraph {
 
 	@Test
 	public void testGetLeafPredecessors() {
-		ExtendedGraph<String, VertexEdge<String>> graph = createVertexEdgeGraph();
+		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);

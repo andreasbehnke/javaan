@@ -7,6 +7,7 @@ import org.jgrapht.graph.AsSubgraph;
 import org.jgrapht.graph.EdgeReversedGraph;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 public final class GraphFactory {
 
@@ -26,17 +27,15 @@ public final class GraphFactory {
 				});
 	}
 
-	public static <V> ExtendedGraph<V, VertexEdge<V>> createVertexEdgeGraph() {
+	public static <V, E> ExtendedGraph<V, E> createVertexEdgeGraph(Supplier<E> edgeSupplier) {
 		return new ExtendedGraph<>(
-				new DefaultDirectedGraph<>(
-						new VertexEdgeFactory<>())
+				new DefaultDirectedGraph<>(null, edgeSupplier, false)
 		);
 	}
 	
-	public static <V> Tree<V, VertexEdge<V>> createVertexEdgeTree() {
+	public static <V, E> Tree<V, E> createVertexEdgeTree(Supplier<E> edgeSupplier) {
 		return new Tree<>(
-				new DefaultDirectedGraph<>(
-						new VertexEdgeFactory<>())
+				new DefaultDirectedGraph<>(null, edgeSupplier, false)
 		);
 	}
 	

@@ -20,11 +20,10 @@ package org.javaan.model;
  * #L%
  */
 
+import org.javaan.graph.GraphVisitor;
 import org.javaan.graph.GraphVisitorAdapter;
-import org.javaan.graph.VertexEdge;
-import org.javaan.graph.VertexEdgeGraphVisitor;
 
-public class InterfaceMethodFinder extends GraphVisitorAdapter<Interface, VertexEdge<Interface>> implements VertexEdgeGraphVisitor<Interface> {
+public class InterfaceMethodFinder extends GraphVisitorAdapter<Interface, String> implements GraphVisitor<Interface, String> {
 	
 	private final String signature;
 	

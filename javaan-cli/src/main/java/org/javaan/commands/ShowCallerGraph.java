@@ -20,11 +20,11 @@ package org.javaan.commands;
  * #L%
  */
 
-import java.util.Set;
-
-import org.javaan.graph.VertexEdgeGraphVisitor;
+import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.Method;
+
+import java.util.Set;
 
 public class ShowCallerGraph extends BaseCallGraphCommand {
 
@@ -44,7 +44,7 @@ public class ShowCallerGraph extends BaseCallGraphCommand {
 	}
 
 	@Override
-	protected void traverse(CallGraph callGraph, Method method, VertexEdgeGraphVisitor<Method> graphPrinter) {
+	protected void traverse(CallGraph callGraph, Method method, GraphVisitor<Method, String> graphPrinter) {
 		callGraph.traverseCallers(method, graphPrinter);
 	}
 

@@ -20,14 +20,12 @@ package org.javaan.print;
  * #L%
  */
 
-import java.io.PrintStream;
+import org.javaan.graph.GraphVisitor;
+import org.javaan.graph.GraphVisitorAdapter;
+
 import java.io.Writer;
 
-import org.javaan.graph.GraphVisitorAdapter;
-import org.javaan.graph.VertexEdge;
-import org.javaan.graph.VertexEdgeGraphVisitor;
-
-public class VertexEdgeGraphPrinter<V>  extends GraphVisitorAdapter<V, VertexEdge<V>> implements VertexEdgeGraphVisitor<V> {
+public class VertexEdgeGraphPrinter<V, E>  extends GraphVisitorAdapter<V, E> implements GraphVisitor<V, E> {
 
 	private final ObjectFormatter<V> formatter;
 	

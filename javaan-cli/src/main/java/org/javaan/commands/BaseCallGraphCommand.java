@@ -20,17 +20,11 @@ package org.javaan.commands;
  * #L%
  */
 
-import java.io.PrintStream;
-import java.io.Writer;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.commons.cli.Options;
 import org.javaan.CommandContext;
 import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
-import org.javaan.graph.VertexEdgeGraphVisitor;
+import org.javaan.graph.GraphVisitor;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Method;
@@ -40,12 +34,17 @@ import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
 import org.javaan.print.VertexEdgeGraphPrinter;
 
+import java.io.Writer;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Base command for all method call graph commands
  */
 public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
-	protected abstract void traverse(CallGraph callGraph, Method method, VertexEdgeGraphVisitor<Method> graphPrinter);
+	protected abstract void traverse(CallGraph callGraph, Method method, GraphVisitor<Method, String> graphPrinter);
 
 	protected abstract Set<Method> collectLeafObjects(CallGraph callGraph, Method method);
 	
@@ -68,7 +67,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 
 	private void printGraph(CallGraph callGraph, Writer writer, Collection<Method> methods,
 			ObjectFormatter<Method> formatter) {
-				VertexEdgeGraphVisitor<Method> printer = new VertexEdgeGraphPrinter<Method>(writer, formatter);
+				GraphVisitor<Method, String> printer = new VertexEdgeGraphPrinter<>(writer, formatter);
 				for (Method method : methods) {
 					PrintUtil.format(writer, "%s:",formatter.format(method));
 					traverse(callGraph, method, printer);

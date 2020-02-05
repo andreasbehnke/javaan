@@ -40,16 +40,15 @@ public class TestTree {
 	private final static Clazz Y = new Clazz("y");
 	private final static Clazz Z = new Clazz("z");
 	
-	private static <V> Tree<V, VertexEdge<V>> createVertexEdgeTree() {
+	private static <V> Tree<V, String> createVertexEdgeTree() {
 		return new Tree<>(
-				new DefaultDirectedGraph<V, VertexEdge<V>>(
-						new VertexEdgeFactory<V>())
+				new DefaultDirectedGraph<>(null, new RandomEdgeSupplier("test"), false)
 		);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddEdge() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
+		Tree<Clazz, String> graph = createVertexEdgeTree();
 		graph.addEdge(A, X);
 		graph.addEdge(B, X);
 		fail("expecting exception");
@@ -57,14 +56,14 @@ public class TestTree {
 
 	@Test
 	public void testSourceVertexOf() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
+		Tree<Clazz, String> graph = createVertexEdgeTree();
 		graph.addEdge(A, X);
 		assertEquals(A, graph.sourceVertexOf(X));
 	}
 	
 	@Test
 	public void testPredecessorPathOf() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
+		Tree<Clazz, String> graph = createVertexEdgeTree();
 		graph.addEdge(B, A);
 		graph.addEdge(C, B);
 		graph.addEdge(D, C);
@@ -93,7 +92,7 @@ public class TestTree {
 	
 	@Test
 	public void testPredecessorPathOfCycle() {
-		Tree<Clazz, VertexEdge<Clazz>> graph = createVertexEdgeTree();
+		Tree<Clazz, String> graph = createVertexEdgeTree();
 		graph.addEdge(A, X);
 		graph.addEdge(B, A);
 		graph.addEdge(X, B);

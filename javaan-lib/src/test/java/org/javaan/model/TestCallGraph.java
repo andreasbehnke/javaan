@@ -20,24 +20,16 @@ package org.javaan.model;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import org.javaan.graph.GraphVisitor;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Set;
 
-import jdk.nashorn.internal.codegen.CompilerConstants;
-import org.javaan.graph.GraphVisitor;
-import org.javaan.graph.VertexEdgeGraphVisitor;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 public class TestCallGraph {
 	
@@ -164,7 +156,7 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, A_METHODC);
 		callGraph.addCall(A_METHODC, B_METHODD);
 		callGraph.addCall(B_METHODD, C_METHODE);
-		VertexEdgeGraphVisitor<Method> visitor = mock(VertexEdgeGraphVisitor.class);
+		GraphVisitor<Method, String> visitor = mock(GraphVisitor.class);
 		
 		callGraph.traverseCallers(C_METHODE, visitor);
 		verify(visitor, times(4)).finished();
@@ -181,7 +173,7 @@ public class TestCallGraph {
 		callGraph.addCall(A_METHODA, A_METHODC);
 		callGraph.addCall(A_METHODC, B_METHODD);
 		callGraph.addCall(B_METHODD, C_METHODE);
-		VertexEdgeGraphVisitor<Method> visitor = mock(VertexEdgeGraphVisitor.class);
+		GraphVisitor<Method, String> visitor = mock(GraphVisitor.class);
 
 		callGraph.traverseCallees(A_METHODA, visitor);
 		verify(visitor, times(5)).finished();
