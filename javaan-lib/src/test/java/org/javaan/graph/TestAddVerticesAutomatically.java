@@ -1,21 +1,23 @@
 package org.javaan.graph;
 
-import static org.junit.Assert.*;
-
-import org.jgrapht.EdgeFactory;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class TestAddVerticesAutomatically {
 	
 	@Test
 	public void testAddEdgeWithMissingVertices() {
-		Graph<String, String> graph = new DefaultDirectedGraph<>(new EdgeFactory<String, String>() {
-			public String createEdge(String sourceVertex, String targetVertex) {
-				return sourceVertex + targetVertex;
-			};
-		});
+		Graph<String, String> graph = new DefaultDirectedGraph<String, String>(null, null, false) {
+			@Override
+			public String addEdge(String sourceVertex, String targetVertex) {
+				String edge = sourceVertex + targetVertex;
+				super.addEdge(sourceVertex, targetVertex, edge);
+				return edge;
+			}
+		};
 		graph = new AddVerticesAutomatically<>(graph);
 		graph.addEdge("A", "B");
 		graph.addEdge("A", "C", "DEF");

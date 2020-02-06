@@ -2,7 +2,6 @@ package org.javaan.graph;
 
 import org.javaan.graph.SimpleGraphReader.ObjectProducer;
 import org.jgrapht.Graph;
-import org.jgrapht.VertexFactory;
 import org.jgrapht.generate.CompleteGraphGenerator;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DirectedMultigraph;
@@ -13,6 +12,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+import java.util.function.Supplier;
 
 import static org.junit.Assert.*;
 
@@ -93,17 +94,21 @@ public class TestMinimumEdgesCycleCut {
 	@Test
 	public void testCutCyclesCompleteGraph() {
 		CompleteGraphGenerator<String, String> generator = new CompleteGraphGenerator<>(5);
-		Graph<String, String> graph = new DefaultDirectedGraph<>((sourceVertex, targetVertex) -> sourceVertex + targetVertex);
-		generator.generateGraph(graph, new VertexFactory<String>() {
-			
-			private int count = 0;
-			
+		Supplier<String> vertexSupplier = new Supplier<String>() {
 			@Override
-			public String createVertex() {
-				count ++;
-				return "V" + count;
+			public String get() {
+				return UUID.randomUUID().toString();
 			}
-		}, new HashMap<>());
+		};
+		Graph<String, String> graph = new DefaultDirectedGraph<String, String>(vertexSupplier, null, false) {
+			@Override
+			public String addEdge(String sourceVertex, String targetVertex) {
+				String edge = sourceVertex + targetVertex;
+				addEdge(sourceVertex, targetVertex, edge);
+				return edge;
+			}
+		};
+		generator.generateGraph(graph, new HashMap<>());
 		Graph<String, String> target = new DefaultDirectedGraph<>(null, null, false);
 		new MinimumEdgesCycleCut<>(graph, target).cutCycles();
 	}

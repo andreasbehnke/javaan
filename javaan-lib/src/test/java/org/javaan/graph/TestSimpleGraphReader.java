@@ -1,15 +1,14 @@
 package org.javaan.graph;
 
-import static org.junit.Assert.*;
+import org.javaan.graph.SimpleGraphReader.ObjectProducer;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.javaan.graph.SimpleGraphReader.ObjectProducer;
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class TestSimpleGraphReader {
 
@@ -35,11 +34,14 @@ public class TestSimpleGraphReader {
 
 	@Test
 	public void testReadGraph() throws IOException {
-		Graph<String, String> target = new DefaultDirectedGraph<>(new EdgeFactory<String, String>() {
-			public String createEdge(String sourceVertex, String targetVertex) {
-				return  sourceVertex + "-->" +targetVertex + ":edgeCreatedByInternalFactory";
-			};
-		});
+		Graph<String, String> target = new DefaultDirectedGraph<String, String>(null, null, false) {
+			@Override
+			public String addEdge(String sourceVertex, String targetVertex) {
+				String edge = sourceVertex + "-->" + targetVertex + ":edgeCreatedByInternalFactory";
+				super.addEdge(sourceVertex, targetVertex, edge);
+				return edge;
+			}
+		};
 		SimpleGraphReader<String, String> graphReader = new SimpleGraphReader<String, String>(target, new ObjectProducer<String, String>() {
 
 			@Override
