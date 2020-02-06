@@ -309,7 +309,7 @@ public class CallGraph {
 	 * is applied.
 	 */
 	public List<Package> getTopologicalSortedPackages() {
-		Graph<Package, Dependency> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<>());
+		Graph<Package, Dependency> target = new DirectedMultigraph<>(null, null, false);
 		target = new MinimumEdgesCycleCut<>(usageOfPackage, target).cutCycles();
 		return new TopologicalMultigraphSort<>(target).sort();
 	}

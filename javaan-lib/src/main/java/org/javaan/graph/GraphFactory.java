@@ -15,8 +15,7 @@ public final class GraphFactory {
 
 	public static <V> ExtendedGraph<V, Dependency> createDependencyGraph() {
 		return new ExtendedGraph<>(
-				new DefaultDirectedGraph<V, Dependency>(
-						new UnsupportedEdgeFactory<>()){
+				new DefaultDirectedGraph<V, Dependency>(null, null, true){
 					
 					private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,6 @@
 package org.javaan.graph;
 
 import org.javaan.graph.SimpleGraphReader.ObjectProducer;
-import org.jgrapht.EdgeFactory;
 import org.jgrapht.Graph;
 import org.jgrapht.VertexFactory;
 import org.jgrapht.generate.CompleteGraphGenerator;
@@ -42,7 +41,7 @@ public class TestMinimumEdgesCycleCut {
 			+ "E v v vv2 \n";
 
 	private DirectedPseudograph<String, String> createGraph() throws IOException {
-		DirectedPseudograph<String, String> graph = new DirectedPseudograph<>(new UnsupportedEdgeFactory<>());
+		DirectedPseudograph<String, String> graph = new DirectedPseudograph<>(null, null, false);
 		ObjectProducer<String, String> objectProducer = new ObjectProducer<String, String>() {
 			@Override
 			public String createEdge(String source, String target, String edgeLabel) {
@@ -60,7 +59,7 @@ public class TestMinimumEdgesCycleCut {
 
 	@Test
 	public void testFindCutPoints() throws IOException {
-		DirectedMultigraph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<>());
+		DirectedMultigraph<String, String> target = new DirectedMultigraph<>(null, null, false);
 		List<CutPoint<String, String>> cutPoints = new MinimumEdgesCycleCut<>(createGraph(), target).findCutPoints();
 		assertNotNull(cutPoints);
 		assertEquals(4, cutPoints.size());
@@ -73,7 +72,7 @@ public class TestMinimumEdgesCycleCut {
 	@Test
 	public void testCutCycles() throws IOException {
 		DirectedPseudograph<String, String> source = createGraph();
-		Graph<String, String> target = new DirectedMultigraph<>(new UnsupportedEdgeFactory<>());
+		Graph<String, String> target = new DirectedMultigraph<>(null, null, false);
 		target = new MinimumEdgesCycleCut<>(source, target).cutCycles();
 		
 		assertTrue(source.edgeSet().contains("a-->b:ab1"));
@@ -105,7 +104,7 @@ public class TestMinimumEdgesCycleCut {
 				return "V" + count;
 			}
 		}, new HashMap<>());
-		Graph<String, String> target = new DefaultDirectedGraph<>(new UnsupportedEdgeFactory<>());
+		Graph<String, String> target = new DefaultDirectedGraph<>(null, null, false);
 		new MinimumEdgesCycleCut<>(graph, target).cutCycles();
 	}
 }

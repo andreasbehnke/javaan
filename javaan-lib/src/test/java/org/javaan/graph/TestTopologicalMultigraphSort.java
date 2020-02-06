@@ -27,7 +27,7 @@ public class TestTopologicalMultigraphSort {
 			+ "E g b gb1 \n";
 	
 	private DirectedMultigraph<String, String> createGraph() throws IOException {
-		DirectedMultigraph<String, String> graph = new DirectedMultigraph<String, String>(new UnsupportedEdgeFactory<String, String>());
+		DirectedMultigraph<String, String> graph = new DirectedMultigraph<String, String>(null, null, false);
 		ObjectProducer<String, String> objectProducer = new ObjectProducer<String, String>() {
 			@Override
 			public String createEdge(String source, String target, String edgeLabel) {
