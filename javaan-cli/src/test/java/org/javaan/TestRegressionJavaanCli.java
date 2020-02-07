@@ -54,8 +54,8 @@ public class TestRegressionJavaanCli {
                 new RegressionData("classes.s.out", false, "classes", "-s", TEST_LIBRARY),
                 new RegressionData("interfaces.spec.out", false, "interfaces", "-spec", TEST_LIBRARY),
                 new RegressionData("interfaces.vm.out", false, "interfaces", "-vm", TEST_LIBRARY),
-                new RegressionData("used-packages.out", true, "used-packages", TEST_LIBRARY),
-                new RegressionData("callers.out", true, "callers", TEST_LIBRARY),
+                //new RegressionData("used-packages.out", true, "used-packages", TEST_LIBRARY),
+                //new RegressionData("callers.out", true, "callers", TEST_LIBRARY),
                 new RegressionData("callers.filter.out", true, "callers", "-method", "org.javaan", TEST_LIBRARY),
                 new RegressionData("callees.filter.out", true, "callees", "-method", "org.javaan", TEST_LIBRARY)
         };
