@@ -44,7 +44,7 @@ public class JarFileLoader {
 
 	protected final static Logger LOG = LoggerFactory.getLogger(JarFileLoader.class);
 
-	private static Type parse(String path, JarFile jar, JarEntry entry, String filename) {
+	private static Type parse(String path, JarFile jar, JarEntry entry) {
 		try {
 			ClassParser parser = new ClassParser(jar.getInputStream(entry), entry.getName());
 			JavaClass javaClass = parser.parse();
@@ -55,10 +55,10 @@ public class JarFileLoader {
 		}
 	}
 	
-	private List<Type> processJar(String path, String fileName, JarFile jar) throws IOException {
+	private List<Type> processJar(String path, JarFile jar) throws IOException {
 		return  jar.stream().parallel()
 				.filter(jarEntry -> jarEntry.getName().endsWith(".class"))
-				.map(jarEntry -> parse(path, jar, jarEntry, fileName))
+				.map(jarEntry -> parse(path, jar, jarEntry))
 				.filter(type -> type != null)
 				.collect(Collectors.toList());
 	}
@@ -74,7 +74,8 @@ public class JarFileLoader {
 				throw new IOException(String.format("JAR file %s does not exist", fileName));
 			}
 			JarFile jar = new JarFile(file);
-			types.addAll(processJar(jar.getName(), fileName, jar));
+
+			types.addAll(processJar(jar.getName(), jar));
 		}
 		long duration =  new Date().getTime() - start.getTime();
         LOG.info("Loading of {} class files took {} ms", types.size(), duration);
