@@ -26,16 +26,13 @@ import org.javaan.graph.GraphFactory;
 import org.javaan.graph.ParentChildMap;
 import org.javaan.graph.RandomEdgeSupplier;
 import org.javaan.graph.Tree;
-import org.javaan.model.Package;
 import org.javaan.model.*;
+import org.javaan.model.Package;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -68,15 +65,25 @@ public class ClassContextBuilder {
         return methods;
     }
 
+    private Interface getInterface(String interfaceName) {
+        Type interfaze = typeLookup.get(interfaceName);
+        if (interfaze == null) {
+            LOG.warn("Could not find interface " + interfaceName);
+            return null;
+        }
+        return interfaze.toInterface();
+    }
+
     private List<Interface> getInterfacesOfClass(Clazz clazz) {
 	    return clazz.getInterfaceNames().stream()
-                .map(s -> typeLookup.get(s).toInterface())
+                .map(this::getInterface)
                 .collect(Collectors.toList());
     }
 
     private List<Interface> getSuperInterfacesOfInterface(Interface interfaze) {
 	    return interfaze.getSuperInterfaceNames().stream()
-                .map(s -> typeLookup.get(s).toInterface())
+                .map(this::getInterface)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -89,8 +96,14 @@ public class ClassContextBuilder {
     }
 
     private Clazz getSuperClazz(Clazz clazz) {
-        Type type = typeLookup.get(clazz.getSuperTypeName());
-        return (type == null) ? null : type.toClazz();
+        String superType = clazz.getSuperTypeName();
+        Type type = typeLookup.get(superType);
+        if (type == null) {
+            LOG.warn("Could not find class " + superType);
+            return null;
+        } else {
+            return type.toClazz();
+        }
     }
 
 	public ClassContext build(List<Type> types) {
@@ -145,6 +158,7 @@ public class ClassContextBuilder {
         interfaces.parallelStream()
                 .map(anInterface -> new ImmutablePair<>(anInterface, getSuperInterfacesOfInterface(anInterface)))
                 .collect(Collectors.toList()).stream() // interrupt parallel processing
+                .filter(interfaceListImmutablePair -> interfaceListImmutablePair.getLeft() != null)
                 .forEach(interfaceSuperInterfaces -> internals.superInterface.addEdges(interfaceSuperInterfaces.getLeft(), interfaceSuperInterfaces.getRight()));
 
         // ---- process methods
