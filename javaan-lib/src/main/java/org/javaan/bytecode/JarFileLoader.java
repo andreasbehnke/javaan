@@ -44,6 +44,8 @@ public class JarFileLoader {
 
 	protected final static Logger LOG = LoggerFactory.getLogger(JarFileLoader.class);
 
+	private final List<File> tempFiles = new ArrayList<>();
+
 	private static Type parse(String path, JarFile jar, JarEntry entry) {
 		try {
 			ClassParser parser = new ClassParser(jar.getInputStream(entry), entry.getName());
@@ -55,11 +57,31 @@ public class JarFileLoader {
 		}
 	}
 	
-	private List<Type> processJar(String path, JarFile jar) throws IOException {
+	private List<Type> processJar(JarFile jar) {
 		return  jar.stream().parallel()
 				.filter(jarEntry -> jarEntry.getName().endsWith(".class"))
-				.map(jarEntry -> parse(path, jar, jarEntry))
+				.map(jarEntry -> parse(jar.getName(), jar, jarEntry))
 				.filter(type -> type != null)
+				.collect(Collectors.toList());
+	}
+
+	private JarFile createTempJarFile(JarFile parent, JarEntry jarEntry) {
+		try (InputStream inputStream = parent.getInputStream(jarEntry)) {
+			File tempFile = File.createTempFile(parent.getName() + "." + jarEntry.getName(), ".jar");
+			FileUtils.copyInputStreamToFile(inputStream, tempFile);
+			tempFiles.add(tempFile);
+			return new JarFile(tempFile);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private List<Type> processJarsInJar(JarFile jar) {
+		return jar.stream().parallel()
+				.filter(jarEntry -> jarEntry.getName().endsWith(".jar"))
+				.map(jarEntry -> createTempJarFile(jar, jarEntry))
+				.map(this::processJar)
+				.flatMap(types -> types.stream())
 				.collect(Collectors.toList());
 	}
 
@@ -68,14 +90,16 @@ public class JarFileLoader {
 		LOG.info("Processing jar files...");
         Date start = new Date();
 		List<Type> types = new ArrayList<>();
+		this.tempFiles.clear();
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
 			if (!file.exists()) {
 				throw new IOException(String.format("JAR file %s does not exist", fileName));
 			}
 			JarFile jar = new JarFile(file);
-
-			types.addAll(processJar(jar.getName(), jar));
+			types.addAll(processJarsInJar(jar));
+			tempFiles.stream().forEach(File::delete);
+			types.addAll(processJar(jar));
 		}
 		long duration =  new Date().getTime() - start.getTime();
         LOG.info("Loading of {} class files took {} ms", types.size(), duration);
