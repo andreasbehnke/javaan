@@ -9,9 +9,9 @@ package org.javaan;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,6 +21,7 @@ package org.javaan;
  */
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -42,34 +43,34 @@ import org.slf4j.LoggerFactory;
  * @author behnkea
  */
 public class JavaanCli {
-	
+
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(JavaanCli.class);
-	
+
 	private static final int MAX_WIDTH = 120;
 	private static final int SEPARATOR_WIDTH = MAX_WIDTH / 2;
-	
+
 	private static final String HELP_USAGE = "usage:";
 	private static final String HELP_COMMAND = "javaan <command> <arguments> <options>\njavaan --help\njavaan <command> --help";
-	private static final String HELP_HEADER = 
+	private static final String HELP_HEADER =
 			  "javaan is a tool for static code analysis. It is using byte code analysis to provide "
 			+ "informations about the loaded types. There are several sub commands for different tasks. "
 			+ "The command name is followed by a list of jar, war or ear files, which should be processed, "
 			+ "and options.";
 	public static final String HELP_COMMANDS = "supported commands:";
-	private static final String HELP_FOOTER = 
+	private static final String HELP_FOOTER =
 			  "Use javaan <command> --help to display detailed options of command.";
 	private static final String HELP_COMMAND_DETAILS = "command details:";
 
 	private static final String EXCEPTION_UNKNOWN_COMMAND = "Unknown command: %s";
 	private static final String EXCEPTION_COULD_NOT_PARSE = "Could not parse command line argumeents: %s";
 	private static final String EXCEPTION_COMMAND = "Could not process command";
-	
+
 	private final CommandMap commands;
-	
+
 	private final String[] args;
 
 	private final Writer writer;
-	
+
 	public JavaanCli(String[] args, CommandMap commands, Writer writer) {
 		this.commands = commands;
 		this.args = args;
@@ -98,15 +99,16 @@ public class JavaanCli {
 	}
 
 	public static void main(String[] args) throws IOException {
-		try (Writer writer = new OutputStreamWriter(System.out, "UTF8")) {
+		try (Writer writer = new OutputStreamWriter(System.out, StandardCharsets.UTF_8)) {
 			ReturnCodes returnCode = new JavaanCli(args, getCommands(), writer).execute();
+			writer.flush();
 			if (returnCode != ReturnCodes.threadSpawn)
 			{
 				System.exit(returnCode.getValue());
 			}
 		}
 	}
-	
+
 	private void setLoggerLevel(Level level) {
 		Logger logger = LogManager.getLogManager().getLogger("");
 		Handler[] handlers = logger.getHandlers();
@@ -135,10 +137,10 @@ public class JavaanCli {
 			if (displayHelp && !withoutCommand) {
 				printCommandUsage(command, options);
 				return ReturnCodes.ok;
-			} else if (displayHelp && withoutCommand) {
+			} else if (displayHelp) {
 				printUsage(true);
 				return ReturnCodes.ok;
-			} else if (!displayHelp && withoutCommand) {
+			} else if (withoutCommand) {
 				PrintUtil.format(writer,EXCEPTION_UNKNOWN_COMMAND, args[0]);
 				printUsage(false);
 				return ReturnCodes.errorParse;
@@ -148,7 +150,7 @@ public class JavaanCli {
 			} else {
 				setLoggerLevel(Level.WARNING);
 			}
-			
+
 			String[] arguments = cl.getArgs();
 			arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
 			return command.execute(new CommandContext(writer, cl, arguments, new Settings()));
@@ -165,7 +167,7 @@ public class JavaanCli {
 			return ReturnCodes.errorCommand;
 		}
 	}
-	
+
 	private int maxCommandNameLength() {
 		int length = 0;
 		for (Command command : commands.getCommands()) {
@@ -176,7 +178,7 @@ public class JavaanCli {
 		}
 		return length;
 	}
-	
+
 	private String createIndent() {
 		int width = maxCommandNameLength() + 3;
 		StringBuilder buffer = new StringBuilder(width);
@@ -185,18 +187,18 @@ public class JavaanCli {
 		}
 		return buffer.toString();
 	}
-	
+
 	private String formatCommandName(String name, String indent) {
 		return new StringBuilder(indent.length())
 			.append(' ').append(name).append(": ")
 			.append(indent, 0, indent.length() - name.length() - 3).toString();
 	}
-	
+
 	private void printParagraph(String content) {
         PrintUtil.println(writer, WordUtils.wrap(content, MAX_WIDTH));
         PrintUtil.println(writer);
 	}
-	
+
 	public void printUsage(boolean printFullHelp) {
 		printParagraph(HELP_USAGE);
 		printParagraph(HELP_COMMAND);
@@ -207,7 +209,7 @@ public class JavaanCli {
             PrintUtil.print(writer, formatCommandName(command.getName(), indent));
             PrintUtil.println(writer,
                     WordUtils.wrap(command.getDescription(),
-							MAX_WIDTH - indent.length(), 
+							MAX_WIDTH - indent.length(),
 							System.lineSeparator() + indent,
 							true));
 		}
@@ -225,7 +227,7 @@ public class JavaanCli {
 			}
 		}
 	}
-	
+
 	private void printSeparator() {
 		StringBuilder buffer = new StringBuilder();
 		for(int i=0; i<SEPARATOR_WIDTH; i++) {
@@ -234,7 +236,7 @@ public class JavaanCli {
 		buffer.append(System.lineSeparator());
         PrintUtil.println(writer, buffer.toString());
 	}
-	
+
 	private void printCommandUsage(Command command, Options options) {
 		HelpFormatter helpFormatter = new HelpFormatter();
 		//helpFormatter.printHelp(command.getHelpCommandLine() + "\n", , options, "");
