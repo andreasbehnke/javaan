@@ -25,7 +25,7 @@
 			<artifactId>javaan-lib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.tinyjee.jgraphx</groupId>
+			<groupId>com.github.vlsi.mxgraph</groupId>
 			<artifactId>jgraphx</artifactId>
 		</dependency>
 		<dependency>
