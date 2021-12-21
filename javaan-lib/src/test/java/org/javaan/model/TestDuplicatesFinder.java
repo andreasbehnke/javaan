@@ -9,9 +9,9 @@ package org.javaan.model;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,7 +34,7 @@ public class TestDuplicatesFinder {
 
 	@Test
 	public void testFind() {
-		List<Clazz> inputClasses = new ArrayList<Clazz>();
+		List<Clazz> inputClasses = new ArrayList<>();
 		Clazz c1 = new Clazz("a");
 		Clazz c12 = new Clazz("a");
 		Clazz c2 = new Clazz("b");
@@ -42,7 +42,7 @@ public class TestDuplicatesFinder {
 		inputClasses.add(c12);
 		inputClasses.add(c2);
 
-		DuplicatesFinder<Clazz> finder = new DuplicatesFinder<Clazz>(inputClasses);
+		DuplicatesFinder<Clazz> finder = new DuplicatesFinder<>(inputClasses);
 		List<List<Clazz>> duplicates = finder.find();
 		assertNotNull(duplicates);
 		assertEquals(1, duplicates.size());
@@ -50,10 +50,10 @@ public class TestDuplicatesFinder {
 		assertTrue(duplicates.get(0).contains(c1));
 		assertTrue(duplicates.get(0).contains(c12));
 	}
-	
+
 	@Test
 	public void testHasDuplicates() {
-		List<Clazz> inputClasses = new ArrayList<Clazz>();
+		List<Clazz> inputClasses = new ArrayList<>();
 		Clazz c1 = new Clazz("a");
 		Clazz c12 = new Clazz("a");
 		Clazz c2 = new Clazz("b");
@@ -61,14 +61,14 @@ public class TestDuplicatesFinder {
 		inputClasses.add(c12);
 		inputClasses.add(c2);
 
-		DuplicatesFinder<Clazz> finder = new DuplicatesFinder<Clazz>(inputClasses);
+		DuplicatesFinder<Clazz> finder = new DuplicatesFinder<>(inputClasses);
 		assertTrue(finder.hasDuplicates());
 
-		inputClasses = new ArrayList<Clazz>();
+		inputClasses = new ArrayList<>();
 		inputClasses.add(c1);
 		inputClasses.add(c2);
 
-		finder = new DuplicatesFinder<Clazz>(inputClasses);
+		finder = new DuplicatesFinder<>(inputClasses);
 		assertFalse(finder.hasDuplicates());
 	}
 }

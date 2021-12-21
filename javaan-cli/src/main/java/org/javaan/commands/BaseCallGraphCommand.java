@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,7 +47,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 	protected abstract void traverse(CallGraph callGraph, Method method, GraphVisitor<Method, String> graphPrinter);
 
 	protected abstract Set<Method> collectLeafObjects(CallGraph callGraph, Method method);
-	
+
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		options.addOption(StandardOptions.METHOD);
@@ -61,7 +61,7 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		return new MethodFormatter();
 	}
 
-	private Collection<Method> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria) {
+	private Collection<Method> getInput(ClassContext classContext, String filterCriteria) {
 		return SortUtil.sort(FilterUtil.filter(classContext.getMethods(), new MethodMatcher(filterCriteria)));
 	}
 
@@ -89,10 +89,10 @@ public abstract class BaseCallGraphCommand extends BaseTypeLoadingCommand {
 		boolean printLeaves = context.isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder().build(types);
 		CallGraph callGraph = new CallGraphBuilder(
-				classContext, 
-				context.isResolveMethodImplementations(), 
+				classContext,
+				context.isResolveMethodImplementations(),
 				context.isResolveDependenciesInClassHierarchy()).build();
-		Collection<Method> input = getInput(classContext, callGraph, criteria);
+		Collection<Method> input = getInput(classContext, criteria);
 		ObjectFormatter<Method> formatter = getFormatter();
 		if (printLeaves) {
 			printLeafObjects(callGraph, writer, input, formatter);

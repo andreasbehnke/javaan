@@ -9,9 +9,9 @@ package org.javaan.model;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,16 +22,15 @@ package org.javaan.model;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 public class NamedObjectMap<N extends NamedObject> extends HashMap<String, N> implements NamedObjectRepository<N> {
-	
+
 	public NamedObjectMap() {}
-	
+
 	public NamedObjectMap(Collection<N> objects) {
 		addAll(objects);
 	}
-	
+
 	public void add(N object) {
 		String name = object.getName();
 		if (containsKey(name)) {
@@ -39,7 +38,7 @@ public class NamedObjectMap<N extends NamedObject> extends HashMap<String, N> im
 		}
 		put(name, object);
 	}
-	
+
 	public void addAll(Collection<N> objects) {
 		for (N object : objects) {
 			add(object);
@@ -54,7 +53,7 @@ public class NamedObjectMap<N extends NamedObject> extends HashMap<String, N> im
 	public Collection<N> getNamedObjects() {
 		return values();
 	}
-	
+
 	public boolean contains(String name) {
 		return containsKey(name);
 	}

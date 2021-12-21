@@ -56,19 +56,19 @@ public class TestCallGraphBuilder implements TestConstants {
 		assertTrue(callers.contains(CLASSB_METHOD_CLASS_B));
 		assertTrue(callers.contains(CLASSC_ENTRY_METHOD));
 
-		// callees of method
-		Set<Method> callees = callGraph.getCallees(CLASSC_ENTRY_METHOD);
-		assertNotNull(callees);
-		assertEquals(3, callees.size());
-		assertTrue(callees.contains(CLASSB_METHOD_CLASS_B));
-		assertTrue(callees.contains(CLASSA_METHOD_INTERFACE_B));
-		assertTrue(callees.contains(CLASSB_CONSTRUCTOR));
+		// callee of method
+		Set<Method> callee = callGraph.getCallee(CLASSC_ENTRY_METHOD);
+		assertNotNull(callee);
+		assertEquals(3, callee.size());
+		assertTrue(callee.contains(CLASSB_METHOD_CLASS_B));
+		assertTrue(callee.contains(CLASSA_METHOD_INTERFACE_B));
+		assertTrue(callee.contains(CLASSB_CONSTRUCTOR));
 
 		// abstract method call
-		callees = callGraph.getCallees(CLASS_CALLING_ABSTACT_METHOD_CALL_ABSTRACT_METHOD);
-		assertNotNull(callees);
-		assertEquals(1, callees.size());
-		assertTrue(callees.contains(SPECIALIZATION_CLASS_B_ABSTRACT_METHOD));
+		callee = callGraph.getCallee(CLASS_CALLING_ABSTACT_METHOD_CALL_ABSTRACT_METHOD);
+		assertNotNull(callee);
+		assertEquals(1, callee.size());
+		assertTrue(callee.contains(SPECIALIZATION_CLASS_B_ABSTRACT_METHOD));
 
 		// external method call (String constructor)
 		assertTrue(classContext.getMethods().contains(CLASSC_CALLING_EXTERNAL_CLASS));

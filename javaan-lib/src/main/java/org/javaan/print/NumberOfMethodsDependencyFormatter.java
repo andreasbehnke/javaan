@@ -7,7 +7,7 @@ public class NumberOfMethodsDependencyFormatter implements
 
 	@Override
 	public String format(Dependency object) {
-		return object.getCallees().size() + "";
+		return object.getCallee().size() + "";
 	}
 
 }

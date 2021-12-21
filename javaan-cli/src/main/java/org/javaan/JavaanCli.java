@@ -53,7 +53,7 @@ public class JavaanCli {
 	private static final String HELP_COMMAND = "javaan <command> <arguments> <options>\njavaan --help\njavaan <command> --help";
 	private static final String HELP_HEADER =
 			  "javaan is a tool for static code analysis. It is using byte code analysis to provide "
-			+ "informations about the loaded types. There are several sub commands for different tasks. "
+			+ "information about the loaded types. There are several sub commands for different tasks. "
 			+ "The command name is followed by a list of jar, war or ear files, which should be processed, "
 			+ "and options.";
 	public static final String HELP_COMMANDS = "supported commands:";
@@ -62,7 +62,7 @@ public class JavaanCli {
 	private static final String HELP_COMMAND_DETAILS = "command details:";
 
 	private static final String EXCEPTION_UNKNOWN_COMMAND = "Unknown command: %s";
-	private static final String EXCEPTION_COULD_NOT_PARSE = "Could not parse command line argumeents: %s";
+	private static final String EXCEPTION_COULD_NOT_PARSE = "Could not parse command line arguments: %s";
 	private static final String EXCEPTION_COMMAND = "Could not process command";
 
 	private final CommandMap commands;
@@ -84,12 +84,12 @@ public class JavaanCli {
 		commands.addCommand(new ListInterfaces());
 		commands.addCommand(new ListDuplicates());
 		commands.addCommand(new ListMissingTypes());
-		commands.addCommand(new ShowDepdendencyCyclesGraph());
+		commands.addCommand(new ShowDependencyCyclesGraph());
 		commands.addCommand(new ShowCallerGraph());
 		commands.addCommand(new ShowCalleeGraph());
 		commands.addCommand(new ShowUsedGraph());
 		commands.addCommand(new ShowUsingGraph());
-		commands.addCommand(new ShowPackageDepdendencyCyclesGraph());
+		commands.addCommand(new ShowPackageDependencyCyclesGraph());
 		commands.addCommand(new ShowPackageUsedGraph());
 		commands.addCommand(new ShowPackageUsingGraph());
 		commands.addCommand(new SetOptions());
@@ -181,17 +181,12 @@ public class JavaanCli {
 
 	private String createIndent() {
 		int width = maxCommandNameLength() + 3;
-		StringBuilder buffer = new StringBuilder(width);
-		for(int i=0; i < width; i++) {
-			buffer.append(' ');
-		}
-		return buffer.toString();
+		return " ".repeat(Math.max(0, width));
 	}
 
 	private String formatCommandName(String name, String indent) {
-		return new StringBuilder(indent.length())
-			.append(' ').append(name).append(": ")
-			.append(indent, 0, indent.length() - name.length() - 3).toString();
+		return ' ' + name + ": " +
+				indent.substring(0, indent.length() - name.length() - 3);
 	}
 
 	private void printParagraph(String content) {
@@ -229,12 +224,9 @@ public class JavaanCli {
 	}
 
 	private void printSeparator() {
-		StringBuilder buffer = new StringBuilder();
-		for(int i=0; i<SEPARATOR_WIDTH; i++) {
-			buffer.append('-');
-		}
-		buffer.append(System.lineSeparator());
-        PrintUtil.println(writer, buffer.toString());
+		String buffer = "-".repeat(SEPARATOR_WIDTH) +
+				System.lineSeparator();
+        PrintUtil.println(writer, buffer);
 	}
 
 	private void printCommandUsage(Command command, Options options) {

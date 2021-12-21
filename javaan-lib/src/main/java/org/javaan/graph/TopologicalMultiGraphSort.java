@@ -6,15 +6,15 @@ import org.jgrapht.graph.DirectedMultigraph;
 import java.util.*;
 
 /**
- * Provides a topological sort for a {@link DirectedMultigraph} (may not contain loops 
+ * Provides a topological sort for a {@link DirectedMultigraph} (may not contain loops
  * but multiple edges between one pair of vertices). Order starts with vertex having
- * in-degree = 0 and lowest out-degree. A tie is broken by sorting vertices by the number of 
+ * in-degree = 0 and lowest out-degree. A tie is broken by sorting vertices by the number of
  * edges to the current vertex.
  */
-public class TopologicalMultigraphSort<V, E> {
+public class TopologicalMultiGraphSort<V, E> {
 
 	private static class ModifiableInteger {
-		
+
 		private int value;
 
 		public ModifiableInteger(int value) {
@@ -24,24 +24,24 @@ public class TopologicalMultigraphSort<V, E> {
 		public int getValue() {
 			return value;
 		}
-	
-		public void substract(int sub) {
+
+		public void subtract(int sub) {
 			value -= sub;
 		}
 	}
-	
+
 	private final Graph<V, E> graph;
-	
+
 	private Queue<V> queue;
-	
+
 	private Queue<V> startVertexQueue;
 
 	private Map<V, ModifiableInteger> inDegreeMap;
-	
-	public TopologicalMultigraphSort(Graph<V, E> graph) {
+
+	public TopologicalMultiGraphSort(Graph<V, E> graph) {
 		this.graph = graph;
 	}
-	
+
 	/**
 	 * Creates a indegree map and the queue to be processed
 	 */
@@ -56,7 +56,7 @@ public class TopologicalMultigraphSort<V, E> {
 			}
 			inDegreeMap.put(v, new ModifiableInteger(inDegree));
 		}
-		// sort queue by out-degree of vertex in ascending order. Vertices with lower 
+		// sort queue by out-degree of vertex in ascending order. Vertices with lower
 		// out-degree should be processed first
 		vertexList.sort((o1, o2) -> {
 			int outDegree1 = graph.outDegreeOf(o1);
@@ -67,13 +67,13 @@ public class TopologicalMultigraphSort<V, E> {
 		queue = new LinkedList<>();
 		queue.offer(startVertexQueue.remove());// add first start vertex to queue
 	}
-	
-	private void addVertexIfnotContained(List<V> list, V vertex) {
+
+	private void addVertexIfNotContained(List<V> list, V vertex) {
 		if (!list.contains(vertex)) {
 			list.add(vertex);
 		}
 	}
-	
+
 	private List<V> getTargetVerticesSortedByDegree(final V vertex) {
 		List<V> vertices = new ArrayList<>(DirectedGraphUtils.targetVerticesOf(vertex, graph));
 		// sort target vertices to be processed by	2 number of edges
@@ -92,13 +92,13 @@ public class TopologicalMultigraphSort<V, E> {
 
 		while(!queue.isEmpty()) {
 			V vertex = queue.remove();
-			addVertexIfnotContained(sorted, vertex);
+			addVertexIfNotContained(sorted, vertex);
 			List<V> targets = getTargetVerticesSortedByDegree(vertex);
 			for (V target : targets) {
 				// subtract number of edges from in-degree map
 				int numberOfEdges = graph.getAllEdges(vertex, target).size();
 				ModifiableInteger modInt = inDegreeMap.get(target);
-				modInt.substract(numberOfEdges);
+				modInt.subtract(numberOfEdges);
 				if (modInt.getValue() == 0) {
 					queue.offer(target);
 				}

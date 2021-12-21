@@ -15,15 +15,11 @@ public class ParentChildMap<P, C> implements Map<P, List<C>> {
     }
 
     public boolean addChild(P parent, C child) {
-        List<C> children = internalMap.get(parent);
-        if (children == null) {
-            children = new ArrayList<>();
-            internalMap.put(parent, children);
-        }
+        List<C> children = internalMap.computeIfAbsent(parent, k -> new ArrayList<>());
         return children.add(child);
     }
 
-    public ParentChildMap<C, P> invers() {
+    public ParentChildMap<C, P> inverse() {
         ParentChildMap<C, P> result = new ParentChildMap<>();
         for (Entry<P,List<C>> entry : entrySet()) {
             for (C child : entry.getValue()) {

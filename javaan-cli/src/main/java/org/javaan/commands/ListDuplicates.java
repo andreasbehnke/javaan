@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,12 +34,12 @@ import org.javaan.print.PrintUtil;
 import org.javaan.print.TypeInformationFormatter;
 
 public class ListDuplicates extends BaseCommand {
-	
+
 private final static String NAME = "duplicates";
-	
+
 	private final static String DESCRIPTION = "List all duplicate classes and interfaces of the libraries being loaded. "
 			+ "Classes are marked as duplications if they share canonical name, they may vary in bytecode and file location.";
-	
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -54,7 +54,7 @@ private final static String NAME = "duplicates";
 	public Options buildCommandLineOptions(Options options) {
 		return options;
 	}
-	
+
 	@Override
 	public ReturnCodes execute(CommandContext context) {
 		try {
@@ -71,7 +71,7 @@ private final static String NAME = "duplicates";
 	}
 
 	private void printDuplicates(Writer output, List<Type> types) {
-		List<List<Type>> duplicates = new DuplicatesFinder<Type>(types).find();
+		List<List<Type>> duplicates = new DuplicatesFinder<>(types).find();
 		SortUtil.sort(duplicates);
 		ObjectFormatter<Type> formatter = new TypeInformationFormatter();
 		for (List<Type> duplicate : duplicates) {

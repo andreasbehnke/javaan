@@ -2,10 +2,10 @@ package org.javaan.bytecode;
 
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
+import org.javaan.model.NamedObjectBase;
 import org.javaan.model.Type;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -62,7 +62,7 @@ public class ReflectionTypeLoader {
 
     private Set<String> createTypeLookup(List<Type> types) {
         return types.stream()
-                .map(type -> type.getName())
+                .map(NamedObjectBase::getName)
                 .collect(Collectors.toSet());
     }
 
@@ -77,8 +77,8 @@ public class ReflectionTypeLoader {
                     .collect(Collectors.toSet());
             // resolve types by reflection
             typesToResolve = newTypeNames.parallelStream()
-                    .map(typeName -> loadType(typeName))
-                    .filter(type -> type != null)
+                    .map(this::loadType)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
             // add types to result list
             loadedTypes.addAll(typesToResolve);

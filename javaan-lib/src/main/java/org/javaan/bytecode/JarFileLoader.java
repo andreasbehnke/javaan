@@ -9,9 +9,9 @@ package org.javaan.bytecode;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,25 +20,20 @@ package org.javaan.bytecode;
  * #L%
  */
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.zip.ZipEntry;
-
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.javaan.model.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 public class JarFileLoader {
 
@@ -56,12 +51,11 @@ public class JarFileLoader {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	private List<Type> processJar(JarFile jar) {
 		return  jar.stream().parallel()
 				.filter(jarEntry -> jarEntry.getName().endsWith(".class"))
 				.map(jarEntry -> parse(jar.getName(), jar, jarEntry))
-				.filter(type -> type != null)
 				.collect(Collectors.toList());
 	}
 
@@ -81,7 +75,7 @@ public class JarFileLoader {
 				.filter(jarEntry -> jarEntry.getName().endsWith(".jar"))
 				.map(jarEntry -> createTempJarFile(jar, jarEntry))
 				.map(this::processJar)
-				.flatMap(types -> types.stream())
+				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
 	}
 

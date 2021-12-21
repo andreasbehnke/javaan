@@ -18,8 +18,8 @@ import java.util.function.Supplier;
 import static org.junit.Assert.*;
 
 public class TestMinimumEdgesCycleCut {
-	
-	private static final String GRAPH_CONTENT = 
+
+	private static final String GRAPH_CONTENT =
 			"E a b ab1 \n" // first cycle a -> b -> c -> d -> a
 			+ "E b c bc1 \n"
 			+ "E b c bc2 \n"
@@ -43,12 +43,12 @@ public class TestMinimumEdgesCycleCut {
 
 	private DirectedPseudograph<String, String> createGraph() throws IOException {
 		DirectedPseudograph<String, String> graph = new DirectedPseudograph<>(null, null, false);
-		ObjectProducer<String, String> objectProducer = new ObjectProducer<String, String>() {
+		ObjectProducer<String, String> objectProducer = new ObjectProducer<>() {
 			@Override
 			public String createEdge(String source, String target, String edgeLabel) {
 				return source + "-->" + target + ":" + edgeLabel;
 			}
-			
+
 			@Override
 			public String createVertex(String vertexLabel) {
 				return vertexLabel;
@@ -69,19 +69,19 @@ public class TestMinimumEdgesCycleCut {
 		assertTrue(cutPoints.contains(new CutPoint<String, String>("x", "y")));
 		assertTrue(cutPoints.contains(new CutPoint<String, String>("v", "v")));
 	}
-	
+
 	@Test
 	public void testCutCycles() throws IOException {
 		DirectedPseudograph<String, String> source = createGraph();
 		Graph<String, String> target = new DirectedMultigraph<>(null, null, false);
 		target = new MinimumEdgesCycleCut<>(source, target).cutCycles();
-		
+
 		assertTrue(source.edgeSet().contains("a-->b:ab1"));
 		assertFalse(target.edgeSet().contains("a-->b:ab1"));
 
 		assertTrue(source.edgeSet().contains("e-->b:eb1"));
 		assertFalse(target.edgeSet().contains("e-->b:eb1"));
-		
+
 		assertTrue(source.edgeSet().contains("x-->y:xy1"));
 		assertFalse(target.edgeSet().contains("x-->y:xy1"));
 
@@ -90,17 +90,12 @@ public class TestMinimumEdgesCycleCut {
 		assertFalse(target.edgeSet().contains("v-->v:vv1"));
 		assertFalse(target.edgeSet().contains("v-->v:vv2"));
 	}
-	
+
 	@Test
 	public void testCutCyclesCompleteGraph() {
 		CompleteGraphGenerator<String, String> generator = new CompleteGraphGenerator<>(5);
-		Supplier<String> vertexSupplier = new Supplier<String>() {
-			@Override
-			public String get() {
-				return UUID.randomUUID().toString();
-			}
-		};
-		Graph<String, String> graph = new DefaultDirectedGraph<String, String>(vertexSupplier, null, false) {
+		Supplier<String> vertexSupplier = () -> UUID.randomUUID().toString();
+		Graph<String, String> graph = new DefaultDirectedGraph<>(vertexSupplier, null, false) {
 			@Override
 			public String addEdge(String sourceVertex, String targetVertex) {
 				String edge = sourceVertex + targetVertex;

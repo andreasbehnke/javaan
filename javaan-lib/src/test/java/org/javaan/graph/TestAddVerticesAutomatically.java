@@ -7,10 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class TestAddVerticesAutomatically {
-	
+
 	@Test
 	public void testAddEdgeWithMissingVertices() {
-		Graph<String, String> graph = new DefaultDirectedGraph<String, String>(null, null, false) {
+		Graph<String, String> graph = new DefaultDirectedGraph<>(null, null, false) {
 			@Override
 			public String addEdge(String sourceVertex, String targetVertex) {
 				String edge = sourceVertex + targetVertex;

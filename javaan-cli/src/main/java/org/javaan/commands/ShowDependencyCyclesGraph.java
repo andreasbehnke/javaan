@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,9 +20,6 @@ package org.javaan.commands;
  * #L%
  */
 
-import java.io.PrintStream;
-import java.util.List;
-
 import org.apache.commons.cli.Options;
 import org.javaan.CommandContext;
 import org.javaan.bytecode.CallGraphBuilder;
@@ -30,19 +27,20 @@ import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.model.CallGraph;
 import org.javaan.model.ClassContext;
 import org.javaan.model.Dependency;
-import org.javaan.model.Package;
 import org.javaan.model.Type;
+import org.javaan.print.ConsoleDependencyFormatter;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
-import org.javaan.print.PackageFormatter;
-import org.javaan.print.ConsoleDependencyFormatter;
+import org.javaan.print.TypeFormatter;
 
-public class ShowPackageDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
+import java.util.List;
 
-	private final static String NAME = "package-cycles";
-	
-	private final static String DESCRIPTION = "Show call graph for each package dependency cycle in the loaded libraries.";
-	
+public class ShowDependencyCyclesGraph extends BaseTypeLoadingCommand {
+
+	private final static String NAME = "cycles";
+
+	private final static String DESCRIPTION = "Show call graph for each dependency cycle in the loaded libraries. Cycles within class hierarchies are omitted, if option -rdh is not provided.";
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -64,12 +62,12 @@ public class ShowPackageDepdendencyCyclesGraph extends BaseTypeLoadingCommand {
 	protected void execute(CommandContext context, List<Type> types) {
 		ClassContext classContext = new ClassContextBuilder().build(types);
 		CallGraph callGraph = new CallGraphBuilder(
-				classContext, 
-				context.isResolveMethodImplementations(), 
+				classContext,
+				context.isResolveMethodImplementations(),
 				context.isResolveDependenciesInClassHierarchy()).build();
-		ObjectFormatter<Package> packageFormatter = new PackageFormatter();
+		ObjectFormatter<Type> typeFormatter = new TypeFormatter();
 		ObjectFormatter<Dependency> dependencyFormatter = new ConsoleDependencyFormatter();
-		GraphPrinter<Package, Dependency> printer = new GraphPrinter<Package, Dependency>(context.getWriter(), packageFormatter, dependencyFormatter, "cycle %s:");
-		callGraph.traversePackageDependencyCycles(printer);
+		GraphPrinter<Type, Dependency> printer = new GraphPrinter<>(context.getWriter(), typeFormatter, dependencyFormatter, "cycle %s:");
+		callGraph.traverseDependencyCycles(printer);
 	}
 }

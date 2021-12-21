@@ -26,12 +26,10 @@ public class MethodFormatter implements ObjectFormatter<Method> {
 
 	private static final String DEFAULT_METHOD_FORMAT = "%1$s%2$s.%3$s(%4$s)";
 
-	private final String format = DEFAULT_METHOD_FORMAT;
-
 	@Override
 	public String format(Method method) {
-		String parameters = PrintUtil.createArgumentList(method.getParamterTypes());
-		return String.format(format, "[M]", method.getType().getName(), method.getMethodName(), parameters);
+		String parameters = PrintUtil.createArgumentList(method.getParameterTypes());
+		return String.format(DEFAULT_METHOD_FORMAT, "[M]", method.getType().getName(), method.getMethodName(), parameters);
 	}
 
 }

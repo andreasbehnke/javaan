@@ -9,9 +9,9 @@ package org.javaan.graph;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -40,10 +40,10 @@ public class TestExtendedGraph {
 	private static final String G = "g";
 	private static final String X = "x";
 	private static final String Y = "y";
-	
+
 	private static <V> ExtendedGraph<V, String> createVertexEdgeGraph() {
 		return new ExtendedGraph<>(
-				new DefaultDirectedGraph<V, String>(null, new RandomEdgeSupplier("test_"), false) {
+				new DefaultDirectedGraph<>(null, new RandomEdgeSupplier("test_"), false) {
 					@Override
 					public boolean addEdge(V sourceVertex, V targetVertex, String edge) {
 						return super.addEdge(sourceVertex, targetVertex, sourceVertex + "_" + targetVertex);
@@ -58,21 +58,21 @@ public class TestExtendedGraph {
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(X, C);
-		
-		Set<String> childs = graph.targetVerticesOf(B);
-		assertNotNull(childs);
-		assertEquals(0, childs.size());
-		
-		childs = graph.targetVerticesOf(A);
-		assertNotNull(childs);
-		assertEquals(0, childs.size());
-		
-		childs = graph.targetVerticesOf(X);
-		assertNotNull(childs);
-		assertEquals(3, childs.size());
-		assertTrue(childs.contains(A));
-		assertTrue(childs.contains(B));
-		assertTrue(childs.contains(C));
+
+		Set<String> children = graph.targetVerticesOf(B);
+		assertNotNull(children);
+		assertEquals(0, children.size());
+
+		children = graph.targetVerticesOf(A);
+		assertNotNull(children);
+		assertEquals(0, children.size());
+
+		children = graph.targetVerticesOf(X);
+		assertNotNull(children);
+		assertEquals(3, children.size());
+		assertTrue(children.contains(A));
+		assertTrue(children.contains(B));
+		assertTrue(children.contains(C));
 	}
 
 	@Test
@@ -81,30 +81,30 @@ public class TestExtendedGraph {
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(Y, A);
-		
-		Set<String> childs = graph.sourceVerticesOf(B);
-		assertNotNull(childs);
-		assertEquals(1, childs.size());
-		assertTrue(childs.contains(X));
-		
-		childs = graph.sourceVerticesOf(A);
-		assertNotNull(childs);
-		assertEquals(2, childs.size());
-		assertTrue(childs.contains(X));
-		assertTrue(childs.contains(Y));
-		
-		childs = graph.sourceVerticesOf(X);
-		assertNotNull(childs);
-		assertEquals(0, childs.size());
+
+		Set<String> children = graph.sourceVerticesOf(B);
+		assertNotNull(children);
+		assertEquals(1, children.size());
+		assertTrue(children.contains(X));
+
+		children = graph.sourceVerticesOf(A);
+		assertNotNull(children);
+		assertEquals(2, children.size());
+		assertTrue(children.contains(X));
+		assertTrue(children.contains(Y));
+
+		children = graph.sourceVerticesOf(X);
+		assertNotNull(children);
+		assertEquals(0, children.size());
 	}
-	
+
 	@Test
 	public void testSuccessorsOf() {
 		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
 		graph.addEdge(X, A);
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
-		
+
 		Set<String> successors = graph.successorsOf(X);
 		assertNotNull(successors);
 		assertEquals(3, successors.size());
@@ -120,21 +120,21 @@ public class TestExtendedGraph {
 		graph.addEdge(X, B);
 		graph.addEdge(B, C);
 		graph.addEdge(D, C);
-		
+
 		Set<String> predecessors = graph.predecessorsOf(X);
 		assertNotNull(predecessors);
 		assertEquals(0, predecessors.size());
-		
+
 		predecessors = graph.predecessorsOf(A);
 		assertNotNull(predecessors);
 		assertEquals(1, predecessors.size());
 		assertTrue(predecessors.contains(X));
-		
+
 		predecessors = graph.predecessorsOf(B);
 		assertNotNull(predecessors);
 		assertEquals(1, predecessors.size());
 		assertTrue(predecessors.contains(X));
-		
+
 		predecessors = graph.predecessorsOf(C);
 		assertNotNull(predecessors);
 		assertEquals(3, predecessors.size());
@@ -154,7 +154,7 @@ public class TestExtendedGraph {
 		String E_F = graph.addEdge(E, F);
 		String X_G = graph.addEdge(X, G);
 		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
-		
+
 		graph.traverseDepthFirst(X, visitor, false);
 		verify(visitor, times(8)).finished();
 		verify(visitor).visitVertex(X, 0);
@@ -173,7 +173,7 @@ public class TestExtendedGraph {
 		verify(visitor).visitEdge(X_G, 1);
 		verify(visitor).visitVertex(G, 1);
 	}
-	
+
 	@Test
 	public void testTraverseSuccessorsBreadthFirst() {
 		ExtendedGraph<String, String> graph = createVertexEdgeGraph();
@@ -185,7 +185,7 @@ public class TestExtendedGraph {
 		String E_F = graph.addEdge(E, F);
 		String X_G = graph.addEdge(X, G);
 		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
-		
+
 		graph.traverseBreadthFirst(X, visitor, false);
 		verify(visitor, times(8)).finished();
 		verify(visitor).visitVertex(X, -1);
@@ -236,7 +236,7 @@ public class TestExtendedGraph {
 		graph.addEdge(X, G);
 		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
 		when(visitor.finished()).thenReturn(true);
-		
+
 		graph.traverseDepthFirst(X, visitor, false);
 		verify(visitor).finished();
 		verifyNoMoreInteractions(visitor);
@@ -262,7 +262,7 @@ public class TestExtendedGraph {
 		String E_F = graph.addEdge(E, F);
 		String Y_F = graph.addEdge(Y, F);
 		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
-		
+
 		graph.traverseDepthFirst(F, visitor, true);
 		verify(visitor, times(5)).finished();
 		verify(visitor).visitVertex(F, 0);
@@ -287,7 +287,7 @@ public class TestExtendedGraph {
 		String E_F = graph.addEdge(E, F);
 		String Y_F = graph.addEdge(Y, F);
 		GraphVisitor<String, String> visitor = mock(GraphVisitor.class);
-		
+
 		graph.traverseBreadthFirst(F, visitor, true);
 		verify(visitor, times(5)).finished();
 		verify(visitor).visitVertex(F, -1);
@@ -311,7 +311,7 @@ public class TestExtendedGraph {
 		graph.addEdge(C, D);
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
-		
+
 		Set<String> leafNodes = graph.collectLeaves(X, false);
 		assertNotNull(leafNodes);
 		assertEquals(4, leafNodes.size());
@@ -353,7 +353,7 @@ public class TestExtendedGraph {
 		graph.addEdge(C, D);
 		graph.addEdge(C, E);
 		graph.addEdge(E, F);
-		
+
 		Set<String> leafNodes = graph.collectLeaves(X, true);
 		assertNotNull(leafNodes);
 		assertEquals(0, leafNodes.size());

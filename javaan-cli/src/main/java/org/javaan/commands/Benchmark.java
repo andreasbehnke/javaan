@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -83,7 +82,7 @@ public class Benchmark  extends BaseCommand {
         try {
             List<Type> types =  new JarFileLoader().loadJavaClasses(fileName);
             ClassContext context = new ClassContextBuilder().build(types);
-            CallGraph callGraph = new CallGraphBuilder(context, true, true).build();
+            new CallGraphBuilder(context, true, true).build();
         } catch (Exception ex) {
             System.err.println(ex);
         }

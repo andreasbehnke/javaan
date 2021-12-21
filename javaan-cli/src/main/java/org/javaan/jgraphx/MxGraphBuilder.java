@@ -12,7 +12,7 @@ public class MxGraphBuilder<V, E> {
 
 	private final GraphView<V, E> source;
 
-	private final Map<V, mxICell> vertexToCell = new HashMap<V, mxICell>();
+	private final Map<V, mxICell> vertexToCell = new HashMap<>();
 
     private final CellStyle<V, E> cellStyle;
 

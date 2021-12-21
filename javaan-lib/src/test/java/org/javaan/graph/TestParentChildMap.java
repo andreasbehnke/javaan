@@ -9,14 +9,14 @@ import java.util.List;
 public class TestParentChildMap {
 
     @Test
-    public void testInvers() {
+    public void testInverse() {
         ParentChildMap<String, String> map = new ParentChildMap<>();
         map.addChild("p1", "c1");
         map.addChild("p1", "c2");
         map.addChild("p2", "c1");
         map.addChild("p2", "c3");
 
-        map = map.invers();
+        map = map.inverse();
         assertNotNull(map);
         assertEquals(3, map.keySet().size());
         assertTrue(map.containsKey("c1"));

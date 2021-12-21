@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,7 @@ import java.util.Set;
 
 public class ShowCalleeGraph extends BaseCallGraphCommand {
 
-	private final static String NAME = "callees";
+	private final static String NAME = "callee";
 
 	private final static String DESCRIPTION = "Display the graph of methods being called by another method. "
 			+ "This is the top down view of the call graph.";
@@ -45,11 +45,11 @@ public class ShowCalleeGraph extends BaseCallGraphCommand {
 
 	@Override
 	protected void traverse(CallGraph callGraph, Method method, GraphVisitor<Method, String> graphPrinter) {
-		callGraph.traverseCallees(method, graphPrinter);
+		callGraph.traverseCallee(method, graphPrinter);
 	}
-	
+
 	@Override
 	protected Set<Method> collectLeafObjects(CallGraph callGraph, Method method) {
-		return callGraph.getLeafCallees(method);
+		return callGraph.getLeafCallee(method);
 	}
 }

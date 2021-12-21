@@ -72,13 +72,11 @@ public class SimpleGraphReader<V, E> {
 	}
 
 	private void addVertex(String[] columns) throws IOException {
-		switch (columns.length) {
-			case 2:
-				String vertexLabel = columns[1];
-				addVertex(vertexLabel);
-				break;
-			default:
-				throw new IOException("Vertex line does not contain one vertex label");
+		if (columns.length == 2) {
+			String vertexLabel = columns[1];
+			addVertex(vertexLabel);
+		} else {
+			throw new IOException("Vertex line does not contain one vertex label");
 		}
 	}
 

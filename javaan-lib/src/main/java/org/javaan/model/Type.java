@@ -23,6 +23,7 @@ package org.javaan.model;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.generic.ConstantPoolGen;
 
+@SuppressWarnings("rawtypes")
 public abstract class Type extends NamedObjectBase {
 
 	public enum JavaType {
@@ -74,7 +75,7 @@ public abstract class Type extends NamedObjectBase {
 	}
 
 	public static Type create(String className) throws ClassNotFoundException {
-        Type type = null;
+        Type type;
         Class<?> clazz = Class.forName(className);
         if (clazz.isInterface()) {
             type = new Interface(clazz);

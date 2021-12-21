@@ -14,15 +14,15 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
 public class Graph2dDisplay<V, E> extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public Graph2dDisplay(String title, GraphView<V, E> input, CellStyle<V, E> cellStyle, final Settings settings) {
 		super(title);
-		mxGraph view = new MxGraphBuilder<V, E>(input, cellStyle).build();
-		
+		mxGraph view = new MxGraphBuilder<>(input, cellStyle).build();
+
 		mxGraphComponent graphComponent = new mxGraphComponent(view) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -32,14 +32,14 @@ public class Graph2dDisplay<V, E> extends JFrame {
 			}
 		};
 		getContentPane().add(graphComponent);
-        
+
         // layout graph
         mxHierarchicalLayout layout = new mxHierarchicalLayout(view);
         layout.setInterRankCellSpacing(200d);
         layout.execute(view.getDefaultParent());
-        
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         final JFrame frame = this;
         addWindowListener(new WindowAdapter() {
         	@Override

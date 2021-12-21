@@ -9,9 +9,9 @@ package org.javaan.model;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -70,7 +70,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	public TreeView<Clazz, String> getSuperClassGraph() {
 		return superClass;
 	}
-	
+
 	public GraphView<Interface, String> getSuperInterfaceGraph() {
 		return superInterface;
 	}
@@ -119,11 +119,11 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		superClass.addEdge(superClassName, className);
 	}
-	
+
 	public boolean containsClass(Clazz className) {
 		return superClass.containsVertex(className);
 	}
-	
+
 	public Set<Clazz> getClasses() {
 		return superClass.vertexSet();
 	}
@@ -131,19 +131,19 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	public Clazz getSuperClass(Clazz className) {
 		return superClass.sourceVertexOf(className);
 	}
-	
-	public List<Clazz> getSuperClassHierachy(Clazz className) {
+
+	public List<Clazz> getSuperClassHierarchy(Clazz className) {
 		return superClass.predecessorPathOf(className);
 	}
-	
+
 	public Set<Clazz> getSpecializationsOfClass(Clazz className) {
 		return superClass.successorsOf(className);
 	}
-	
+
 	public Set<Clazz> getDirectSpecializationsOfClass(Clazz className) {
 		return superClass.targetVerticesOf(className);
 	}
-	
+
 	public void addInterface(Interface interfaceName) {
 		addType(interfaceName);
 		superInterface.addVertex(interfaceName);
@@ -164,11 +164,11 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		superInterface.addEdge(interfaceName, superInterfaceName);
 	}
-	
+
 	public boolean containsInterface(Interface interfaceName) {
 		return superInterface.containsVertex(interfaceName);
 	}
-	
+
 	public Set<Interface> getInterfaces() {
 		return superInterface.vertexSet();
 	}
@@ -176,11 +176,11 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	public Set<Interface> getSuperInterfaces(Interface interfaceName) {
 		return superInterface.successorsOf(interfaceName);
 	}
-	
+
 	public Set<Interface> getSpecializationOfInterface(Interface interfaceName) {
 		return superInterface.predecessorsOf(interfaceName);
 	}
-	
+
 	public void addInterfaceOfClass(Clazz className, Interface interfaceName) {
 		if (!superInterface.containsVertex(interfaceName)) {
 			throw new IllegalArgumentException("Unknown interface " + interfaceName);
@@ -191,17 +191,17 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		interfacesOfClass.addChild(className, interfaceName);
 		implementationOfInterface.addChild(interfaceName, className);
 	}
-	
+
 	private Set<Interface> getDirectInterfacesOfClass(Clazz className) {
-		List<Interface> childs = interfacesOfClass.get(className);
-		if (childs == null) return Collections.emptySet();
-		Set<Interface> interfaces = new HashSet<>(childs);
-		for (Interface interfaceName : childs) {
+		List<Interface> children = interfacesOfClass.get(className);
+		if (children == null) return Collections.emptySet();
+		Set<Interface> interfaces = new HashSet<>(children);
+		for (Interface interfaceName : children) {
 			interfaces.addAll(superInterface.successorsOf(interfaceName));
 		}
 		return interfaces;
 	}
-	
+
 	public Set<Interface> getInterfacesOfClass(Clazz className) {
 		List<Clazz> superClasses = superClass.predecessorPathOf(className);
 		Set<Interface> interfaces = new HashSet<>();
@@ -210,7 +210,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		return interfaces;
 	}
-	
+
 	public Set<Clazz> getImplementations(Interface interfaceName) {
 		Set<Clazz> implementingClasses = new HashSet<>();
 		Set<Interface> interfaces = superInterface.predecessorsOf(interfaceName);
@@ -228,15 +228,15 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		return implementingClasses;
 	}
-	
+
 	public Set<Package> getPackages() {
 		return typesOfPackage.keySet();
 	}
-	
+
 	public Package getPackageOfType(Type type) {
 		return new Package(type);
 	}
-	
+
 	public Set<Clazz> getClassesOfPackage(Package package1) {
 		Set<Clazz> classes = new HashSet<>();
 		for (Type type : typesOfPackage.get(package1)) {
@@ -246,7 +246,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		return classes;
 	}
-	
+
 	public Set<Interface> getInterfacesOfPackage(Package package1) {
 		Set<Interface> interfaces = new HashSet<>();
 		for (Type type : typesOfPackage.get(package1)) {
@@ -256,11 +256,11 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		return interfaces;
 	}
-	
+
 	public List<Type> getTypesOfPackage(Package package1) {
 		return typesOfPackage.get(package1);
 	}
-	
+
 	public void addMethod(Method method) {
 		Type typeName = method.getType();
 		switch (typeName.getJavaType()) {
@@ -291,15 +291,15 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		return null;
 	}
-	
+
 	public Method getMethod(Clazz className, String signature) {
 		return findMethod(getMethods(className), signature);
 	}
-	
+
 	public Method getMethod(Interface interfaceName, String signature) {
 		return findMethod(getMethods(interfaceName), signature);
 	}
-	
+
 	public Set<Method> getMethods() {
 		return Stream.concat(methodsOfClass.values().stream().flatMap(List::stream),
 				methodsOfInterface.values().stream().flatMap(List::stream))
@@ -311,7 +311,7 @@ public class ClassContext implements NamedObjectRepository<Type> {
 				.flatMap(List::stream)
 				.collect(Collectors.toSet());
 	}
-	
+
 	public List<Method> getMethods(Clazz className) {
 		return methodsOfClass.get(className);
 	}
@@ -319,9 +319,9 @@ public class ClassContext implements NamedObjectRepository<Type> {
 	public List<Method> getMethods(Interface interfaceName) {
 		return methodsOfInterface.get(interfaceName);
 	}
-	
+
 	public Method getVirtualMethod(Clazz className, String signature) {
-		List<Clazz> superClasses = getSuperClassHierachy(className);
+		List<Clazz> superClasses = getSuperClassHierarchy(className);
 		for (Clazz clazz : superClasses) {
 			Method method = getMethod(clazz, signature);
 			if (method != null) {
@@ -330,15 +330,15 @@ public class ClassContext implements NamedObjectRepository<Type> {
 		}
 		return null;
 	}
-	
+
 	public Method getVirtualMethod(final Interface interfaceName, final String signature) {
 		InterfaceMethodFinder methodFinder = new InterfaceMethodFinder(this, signature);
 		superInterface.traverseBreadthFirst(interfaceName, methodFinder, false);
 		return methodFinder.getMethodFound();
 	}
-	
+
 	public Set<Method> getVirtualMethods(Clazz className) {
-		return getSuperClassHierachy(className).stream()
+		return getSuperClassHierarchy(className).stream()
 				.map(methodsOfClass::get)
 				.filter(Objects::nonNull)
 				.flatMap(List::stream)

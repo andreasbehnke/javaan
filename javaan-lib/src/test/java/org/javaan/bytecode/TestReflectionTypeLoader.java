@@ -1,17 +1,16 @@
 package org.javaan.bytecode;
 
-import static org.junit.Assert.*;
-
 import org.javaan.model.Clazz;
 import org.javaan.model.Interface;
 import org.javaan.model.Type;
 import org.junit.Test;
 
-import java.nio.file.Path;
-import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestReflectionTypeLoader implements TestConstants {
 
@@ -29,7 +28,7 @@ public class TestReflectionTypeLoader implements TestConstants {
 
     public static final Clazz CLASS_JAVA_LANG_INTEGER = new Clazz("java.lang.Integer");
 
-    public static final Clazz CLASS_WITH_SUPER_TYPE = new Clazz("org.classwithsupertype", CLASS_JAVA_LANG_INTEGER.getName(), null);
+    public static final Clazz CLASS_WITH_SUPER_TYPE = new Clazz("org.ClassWithSuperType", CLASS_JAVA_LANG_INTEGER.getName(), null);
 
     public static final Clazz CLASS_WITH_INTERFACES = new Clazz("org.ClassWithInterfaces", null, Arrays.asList("java.lang.Comparable", "java.io.Serializable"));
 

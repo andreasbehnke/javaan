@@ -9,9 +9,9 @@ package org.javaan.print;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,7 +36,7 @@ public class PrintUtil {
 	public static <E> void println(Writer writer, Collection<E> elements, String prefix, String linePrefix, String separator) {
 		println(writer, null, elements, prefix, linePrefix, separator);
 	}
-	
+
 	public static <F> void println(Writer writer, ObjectFormatter<F> formatter, Collection<F> elements, String prefix, String linePrefix, String separator) {
 		try {
             writer.write(prefix);
@@ -85,12 +85,10 @@ public class PrintUtil {
             throw new RuntimeException(ioe);
         }
     }
-	
+
 	public static <F> void indent(Writer writer, ObjectFormatter<F> formatter, F element, int indentWidth) {
 		StringBuilder buffer = new StringBuilder();
-		for (int i=0; i < indentWidth; i++) {
-			buffer.append(LEVEL_SPACER);
-		}
+        buffer.append(LEVEL_SPACER.repeat(Math.max(0, indentWidth)));
         try {
             writer.append(buffer).append(formatter.format(element)).write(LINE_SEPARATOR);
             writer.flush();
@@ -98,7 +96,7 @@ public class PrintUtil {
 		    throw new RuntimeException(ioe);
         }
     }
-	
+
 	public static void printSeparator(Writer writer) {
         try {
             writer.append(PrintUtil.BLOCK_SEPARATOR).write(LINE_SEPARATOR);
@@ -116,7 +114,7 @@ public class PrintUtil {
             throw new RuntimeException(ioe);
         }
     }
-	
+
 	public static String createArgumentList(List<String> args) {
 		if (args == null) {
 			return null;

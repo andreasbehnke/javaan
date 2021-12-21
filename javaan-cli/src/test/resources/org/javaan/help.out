@@ -4,8 +4,8 @@ javaan <command> <arguments> <options>
 javaan --help
 javaan <command> --help
 
-javaan is a tool for static code analysis. It is using byte code analysis to provide informations about the loaded
-types. There are several sub commands for different tasks. The command name is followed by a list of jar, war or ear
+javaan is a tool for static code analysis. It is using byte code analysis to provide information about the loaded types.
+There are several sub commands for different tasks. The command name is followed by a list of jar, war or ear
 files, which should be processed, and options.
 
 supported commands:
@@ -32,10 +32,10 @@ supported commands:
                  dependency graph.
  set:            Makes options persistent across consecutive calls. If no option is provided, lists all persistent
                  options. The following options can be set, separated by whitespace: rmi
-                 (resolve-method-implementations) rdh (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph) 
+                 (resolve-method-implementations) rdh (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph)
  reset:          Resets options which have been made persistent with set command. If no option is provided, lists all
                  persistent options. The following options can be resetted, separated by whitespace: rmi
-                 (resolve-method-implementations) rdh (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph) 
+                 (resolve-method-implementations) rdh (resolve-dependencies-in-class-hierarchy) 2d (display-2d-graph)
  benchmark:      run benchmark and print result values as CSV list
 Use javaan <command> --help to display detailed options of command.
 

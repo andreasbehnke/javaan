@@ -31,7 +31,7 @@ public class FilterUtil {
 	}
 
 	public static <E> List<E> filter(Collection<E> list, Matcher<E> matcher) {
-		List<E> filtered = new ArrayList<E>();
+		List<E> filtered = new ArrayList<>();
 		for (E e : list) {
 			if (matcher.accept(e)) {
 				filtered.add(e);

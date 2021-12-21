@@ -9,9 +9,9 @@ package org.javaan.bytecode;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,20 +20,14 @@ package org.javaan.bytecode;
  * #L%
  */
 
+import org.apache.commons.lang3.ClassUtils;
+import org.javaan.model.*;
+
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.commons.lang3.ClassUtils;
-import org.javaan.model.ClassContext;
-import org.javaan.model.Clazz;
-import org.javaan.model.Interface;
-import org.javaan.model.Method;
-import org.javaan.model.NamedObjectMap;
-import org.javaan.model.NamedObjectRepository;
-import org.javaan.model.Type;
 
 /**
  * Provides methods for adding {@link Interface}s and {@link Clazz}es to {@link ClassContext}.
@@ -41,12 +35,12 @@ import org.javaan.model.Type;
  * is not found in that repository, tries to resolve type using java reflection and type loading.
  */
 class ReflectionClassContextBuilder {
-	
+
 	private static final String JAVA_LANG_OBJECT = "java.lang.Object";
 
 	private final ClassContext context;
 
-	private final Set<String> missingTypes = new HashSet<String>();
+	private final Set<String> missingTypes = new HashSet<>();
 
 	public ReflectionClassContextBuilder(ClassContext context) {
 		this.context = context;
@@ -67,29 +61,28 @@ class ReflectionClassContextBuilder {
 	}
 
 	private Type createTypeFromClass(String className) {
-		Type type = null;
+		Type type;
 		try {
 			Class<?> clazz = Class.forName(className);
 			if (clazz.isInterface()) {
 				type = new Interface(className);
 				Class<?>[] superInterfaces = clazz.getInterfaces();
 				addInterface((Interface)type, ClassUtils.convertClassesToClassNames(Arrays.asList(superInterfaces)));
-				addMethods(type, clazz);
 			} else {
 				type = new Clazz(className);
 				Class<?> superClass = clazz.getSuperclass();
 				String superClassName = (superClass == null) ? null : superClass.getName();
 				Class<?>[] implementedInterfaces = clazz.getInterfaces();
 				addClass((Clazz)type, superClassName, ClassUtils.convertClassesToClassNames(Arrays.asList(implementedInterfaces)));
-				addMethods(type, clazz);
 			}
+			addMethods(type, clazz);
 		} catch (ClassNotFoundException e) {
 			missingTypes.add(className);
 			return null;
 		}
 		return type;
 	}
-	
+
 	public Type getType(String name) {
 		if (missingTypes.contains(name)) {
 			return null;
@@ -125,7 +118,7 @@ class ReflectionClassContextBuilder {
 			}
 		}
 	}
-	
+
 	public void addInterface(Interface interfaze, List<String> superInterfaces) {
 		context.addInterface(interfaze);
 		for (String superInterfaceName : superInterfaces) {

@@ -1277,8 +1277,8 @@
 [C]org.javaan.commands.SetOptions --> [C]org.javaan.commands.BaseSetOptionsCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.ShowCalleeGraph --> [C]org.javaan.commands.BaseCallGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.ShowCallerGraph --> [C]org.javaan.commands.BaseCallGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
-[C]org.javaan.commands.ShowDepdendencyCyclesGraph --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
-[C]org.javaan.commands.ShowPackageDepdendencyCyclesGraph --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
+[C]org.javaan.commands.ShowDependencyCyclesGraph --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
+[C]org.javaan.commands.ShowPackageDependencyCyclesGraph --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.ShowPackageUsedGraph --> [C]org.javaan.commands.BasePackageDependencyGraphCommand --> [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.ShowPackageUsingGraph --> [C]org.javaan.commands.BasePackageDependencyGraphCommand --> [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.ShowUsedGraph --> [C]org.javaan.commands.BaseClassDependencyGraphCommand --> [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object

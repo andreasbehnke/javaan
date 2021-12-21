@@ -9,9 +9,9 @@ package org.javaan.model;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,11 +34,11 @@ public class TestNamedObjectRepository {
 		when(n1.getName()).thenReturn("dup");
 		NamedObject n2 = mock(NamedObject.class);
 		when(n2.getName()).thenReturn("dup");
-		
-		NamedObjectMap<NamedObject> rep = new NamedObjectMap<NamedObject>();
+
+		NamedObjectMap<NamedObject> rep = new NamedObjectMap<>();
 		rep.add(n1);
 		rep.add(n2);
 		fail("expecting illegal argument exception");
 	}
-	
+
 }

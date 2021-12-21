@@ -76,7 +76,7 @@ public abstract class NamedObjectBase implements NamedObject {
 		if (otherName != null && name == null) {
 			return 1;
 		}
-		if (otherName == null && name != null) {
+		if (otherName == null) {
 			return -1;
 		}
 		return name.compareTo(otherName);

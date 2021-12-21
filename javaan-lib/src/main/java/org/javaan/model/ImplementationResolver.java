@@ -9,7 +9,7 @@ import java.util.Set;
 public class ImplementationResolver implements MethodResolver {
 
 	private final ClassContext classContext;
-	
+
 	public ImplementationResolver(ClassContext classContext) {
 		this.classContext = classContext;
 	}
@@ -24,14 +24,12 @@ public class ImplementationResolver implements MethodResolver {
 		}
 		return implementations;
 	}
-	
-	private Set<Type> findImplementations(Interface interfaze, Method method) {
-		Set<Type> implementations = new HashSet<>();
+
+	private Set<Type> findImplementations(Interface interfaze) {
 		// find implementations of interface
-		implementations.addAll(classContext.getImplementations(interfaze));
-		return implementations;
+		return new HashSet<>(classContext.getImplementations(interfaze));
 	}
-	
+
 	@Override
 	public Set<Type> resolve(Method method) {
 		Type type = method.getType();
@@ -39,7 +37,7 @@ public class ImplementationResolver implements MethodResolver {
 		case CLASS:
 			return findImplementations((Clazz)type, method);
 		case INTERFACE:
-			return findImplementations((Interface)type, method);
+			return findImplementations((Interface)type);
 		default:
 			throw new IllegalArgumentException("Unknown java type: " + type.getJavaType());
 		}

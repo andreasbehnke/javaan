@@ -22,7 +22,7 @@ public class AddVerticesAutomatically<V, E> extends GraphDelegator<V, E> {
 		addVertex(targetVertex);
 		return super.addEdge(sourceVertex, targetVertex);
 	}
-	
+
 	@Override
 	public boolean addEdge(V sourceVertex, V targetVertex, E edge) {
 		addVertex(sourceVertex);
@@ -30,9 +30,9 @@ public class AddVerticesAutomatically<V, E> extends GraphDelegator<V, E> {
 		return super.addEdge(sourceVertex, targetVertex, edge);
 	}
 
-	public void addEdges(V sourceVertex, List<V> targetVertecies) {
+	public void addEdges(V sourceVertex, List<V> targetVertices) {
 		addVertex(sourceVertex);
-		for (V targetVertex: targetVertecies) {
+		for (V targetVertex: targetVertices) {
 			addVertex(targetVertex);
 			super.addEdge(sourceVertex, targetVertex);
 		}

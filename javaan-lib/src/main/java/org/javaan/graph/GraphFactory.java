@@ -15,13 +15,13 @@ public final class GraphFactory {
 
 	public static <V> ExtendedGraph<V, Dependency> createDependencyGraph() {
 		return new ExtendedGraph<>(
-				new DefaultDirectedGraph<V, Dependency>(null, null, true){
-					
+				new DefaultDirectedGraph<>(null, null, true) {
+
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public double getEdgeWeight(Dependency e) {
-						return e.getCallees().size();
+						return e.getCallee().size();
 					}
 				});
 	}
@@ -31,13 +31,13 @@ public final class GraphFactory {
 				new DefaultDirectedGraph<>(null, edgeSupplier, false)
 		);
 	}
-	
+
 	public static <V, E> Tree<V, E> createVertexEdgeTree(Supplier<E> edgeSupplier) {
 		return new Tree<>(
 				new DefaultDirectedGraph<>(null, edgeSupplier, false)
 		);
 	}
-	
+
 	public static <V, E> GraphView<V, E> createSubgraphView(ExtendedGraph<V, E> graph, Set<V> vertices, boolean reversed) {
 		if (vertices == null && !reversed) {
 			return graph;
@@ -45,7 +45,7 @@ public final class GraphFactory {
 		if (reversed) {
 			return new ExtendedGraph<>(
 					new EdgeReversedGraph<>(new AsSubgraph<>(graph.getDelegate(), vertices, null))
-					);	
+					);
 		}
 		return new ExtendedGraph<>(
 				new AsSubgraph<>(graph.getDelegate(), vertices, null)

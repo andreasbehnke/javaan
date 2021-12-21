@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,13 +19,6 @@ package org.javaan.commands;
  * limitations under the License.
  * #L%
  */
-
-import java.io.PrintStream;
-import java.io.Writer;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
@@ -36,27 +29,29 @@ import org.javaan.bytecode.CallGraphBuilder;
 import org.javaan.bytecode.ClassContextBuilder;
 import org.javaan.graph.GraphVisitor;
 import org.javaan.jgraphx.CellStyle;
-import org.javaan.model.CallGraph;
-import org.javaan.model.ClassContext;
-import org.javaan.model.Dependency;
-import org.javaan.model.GraphView;
-import org.javaan.model.Type;
+import org.javaan.model.*;
 import org.javaan.print.ConsoleDependencyFormatter;
 import org.javaan.print.GraphPrinter;
 import org.javaan.print.ObjectFormatter;
 import org.javaan.print.PrintUtil;
 
+import java.io.Writer;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Base command for all dependency commands
  */
 public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>> extends BaseTypeLoadingCommand {
-	
+
 	protected abstract GraphView<T,	Dependency> getDependencyGraph(CallGraph callGraph, Set<T> filter);
 
 	protected abstract ObjectFormatter<T> getTypeFormatter();
-	
-	protected abstract Collection<T> getInput(ClassContext classContext, CallGraph callGraph, String filterCriteria);
-	
+
+	protected abstract Collection<T> getInput(ClassContext classContext, String filterCriteria);
+
 	@Override
 	public Options buildCommandLineOptions(Options options) {
 		options.addOption(StandardOptions.FILTER);
@@ -72,7 +67,7 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 	private ObjectFormatter<Dependency> getConsoleDependencyFormatter() {
 		return new ConsoleDependencyFormatter();
 	}
-	
+
 	protected abstract CellStyle<T, Dependency> getDependencyGraphCellStyle();
 
 	private void printGraph(CallGraph callGraph, Writer writer, Collection<T> types, ObjectFormatter<T> typeFormatter, ObjectFormatter<Dependency> dependencyFormatter) {
@@ -100,25 +95,23 @@ public abstract class BaseDependencyGraphCommand<T extends Comparable<? super T>
 		boolean printLeaves = context.isPrintLeaves();
 		ClassContext classContext = new ClassContextBuilder().build(types);
 		CallGraph callGraph = new CallGraphBuilder(
-				classContext, 
-				context.isResolveMethodImplementations(), 
+				classContext,
+				context.isResolveMethodImplementations(),
 				context.isResolveDependenciesInClassHierarchy()).build();
-		Collection<T> input = getInput(classContext, callGraph, criteria);
+		Collection<T> input = getInput(classContext, criteria);
 		final ObjectFormatter<T> typeFormatter = getTypeFormatter();
 		if (printLeaves) {
 			printLeafObjects(callGraph, writer, input, typeFormatter);
 		} else if (context.isDisplay2dGraph())  {
 			Set<T> filter = new HashSet<>(input);
 			final GraphView<T, Dependency> graph = getDependencyGraph(callGraph, filter);
-			java.awt.EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					CellStyle<T, Dependency> cellStyle = getDependencyGraphCellStyle();
-					new Graph2dDisplay<T, Dependency>(getName(), graph, cellStyle, context.getSettings()).setVisible(true);
-				}
+			java.awt.EventQueue.invokeLater(() -> {
+				CellStyle<T, Dependency> cellStyle = getDependencyGraphCellStyle();
+				new Graph2dDisplay<>(getName(), graph, cellStyle, context.getSettings()).setVisible(true);
 			});
 			context.setReturnCode(ReturnCodes.threadSpawn);
 		} else {
 			printGraph(callGraph, writer, input, typeFormatter, getConsoleDependencyFormatter());
 		}
-	}	
+	}
 }

@@ -1,11 +1,8 @@
 package org.javaan;
 
-import static org.junit.Assert.*;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -15,20 +12,19 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
+
+import static org.junit.Assert.assertArrayEquals;
 
 @RunWith(Parameterized.class)
 public class TestRegressionJavaanCli {
 
     private static class RegressionData {
 
-        public String[] commandLineArguments;
+        public final String[] commandLineArguments;
 
-        public String regressionFileName;
+        public final String regressionFileName;
 
-        public boolean sortResult;
-
-        public boolean trimResult;
+        public final boolean sortResult;
 
         public RegressionData(String regressionFileName, boolean sortResult, String... commandLineArguments) {
             this.commandLineArguments = commandLineArguments;
@@ -47,9 +43,8 @@ public class TestRegressionJavaanCli {
     private static final String REGRESSION_FILE_PATH = "target/";
 
     @Parameterized.Parameters(name = "{0}")
-    public static RegressionData[] regresseionTestData() {
+    public static RegressionData[] regressionTestData() {
         return new RegressionData[]{
-                new RegressionData("help.out", false,"--help"),
                 new RegressionData("classes.out", false,"classes", TEST_LIBRARY),
                 new RegressionData("classes.i.out", false, "classes", "-i", TEST_LIBRARY),
                 new RegressionData("classes.s.out", false, "classes", "-s", TEST_LIBRARY),
@@ -58,7 +53,7 @@ public class TestRegressionJavaanCli {
                 //new RegressionData("used-packages.out", true, "used-packages", TEST_LIBRARY),
                 //new RegressionData("callers.out", true, "callers", TEST_LIBRARY),
                 new RegressionData("callers.filter.out", true, "callers", "-method", "org.javaan", TEST_LIBRARY),
-                new RegressionData("callees.filter.out", true, "callees", "-method", "org.javaan", TEST_LIBRARY)
+                new RegressionData("callee.filter.out", true, "callee", "-method", "org.javaan", TEST_LIBRARY)
         };
     }
 

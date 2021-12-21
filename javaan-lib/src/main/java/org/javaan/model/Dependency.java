@@ -9,41 +9,41 @@ import java.util.Set;
  * Represents a dependency between two types
  */
 public class Dependency extends NamedObjectBase {
-	
-	private final Set<Method> callees;
-	
+
+	private final Set<Method> callee;
+
 	private final NamedObject source;
-	
+
 	private final NamedObject target;
-	
+
 	private Dependency(NamedObject source, NamedObject target, Method callee) {
 		super(createName(source, target));
 		this.source = source;
 		this.target = target;
-		callees = new HashSet<>();
-		callees.add(callee);
+		this.callee = new HashSet<>();
+		this.callee.add(callee);
 	}
 
 	private static String createName(NamedObject source, NamedObject target) {
 		return source.getName() + "-->" + target.getName();
 	}
-	
+
 	private void addCallee(Method callee) {
-		callees.add(callee);
+		this.callee.add(callee);
 	}
-	
-	public Set<Method> getCallees() {
-		return callees;
+
+	public Set<Method> getCallee() {
+		return callee;
 	}
-	
+
 	NamedObject getSource() {
 		return source;
 	}
-	
+
 	NamedObject getTarget() {
 		return target;
 	}
-	
+
 	static <V extends NamedObject> void addDependency(Graph<V, Dependency> graph, V source, V target, Method callee) {
 		Dependency dependency = graph.getEdge(source, target);
 		if (dependency == null) {

@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,13 +35,13 @@ import org.javaan.print.MethodFormatter;
 import org.javaan.print.PrintUtil;
 
 public class ListInterfaces extends BaseTypeLoadingCommand {
-	
+
 	private final static String NAME = "interfaces";
-	
+
 	private final static String DESCRIPTION = "List all interfaces of the libraries";
-	
+
 	private ClassContext classContext;
-	
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -73,7 +73,7 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 		Collection<Interface> interfaces = SortUtil.sort(classContext.getInterfaces());
 		if (context.hasFilterCriteria()) {
 			String criteria = context.getFilterCriteria();
-			interfaces = FilterUtil.filter(interfaces, new NameMatcher<Interface>(criteria)); 
+			interfaces = FilterUtil.filter(interfaces, new NameMatcher<>(criteria));
 		}
 		switch (context.getAdditionalTypeInformation()) {
 		case SUPER_CLASSES:
@@ -96,19 +96,19 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 			break;
 		}
 	}
-	
+
 	private void printInterfaces(Writer writer, Collection<Interface> interfaces) {
 		PrintUtil.println(writer, interfaces, "", "[I]", System.lineSeparator());
 	}
 
 	private void printInterfacesAndSuperInterfaces(Writer writer, Collection<Interface> interfaces) {
-		for (Interface interfaceName : interfaces) {	
+		for (Interface interfaceName : interfaces) {
 			PrintUtil.println(writer, SortUtil.sort(classContext.getSuperInterfaces(interfaceName)), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
-	
+
 	private void printInterfacesAndSpecializations(Writer writer, Collection<Interface> interfaces) {
-		for (Interface interfaceName : interfaces) {	
+		for (Interface interfaceName : interfaces) {
 			PrintUtil.println(writer, SortUtil.sort(classContext.getSpecializationOfInterface(interfaceName)), "[I]" + interfaceName + ": ", "[I]", ", ");
 		}
 	}
@@ -118,13 +118,13 @@ public class ListInterfaces extends BaseTypeLoadingCommand {
 			PrintUtil.println(writer, SortUtil.sort(classContext.getImplementations(interfaceName)), "[I]" + interfaceName + ": ", "[C]", ", ");
 		}
 	}
-	
+
 	private void printInterfacesAndMethods(Writer writer, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
 			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");
 		}
 	}
-	
+
 	private void printInterfacesAndVirtualMethods(Writer writer, Collection<Interface> interfaces) {
 		for (Interface interfaceName : interfaces) {
 			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(interfaceName)), "[I]" + interfaceName + ": ", "\n\t", ", ");

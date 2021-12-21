@@ -8,7 +8,7 @@ import org.javaan.Settings;
 
 
 public abstract class BaseSetOptionsCommand extends BaseCommand {
-	
+
 	protected abstract String getDescriptionFormat();
 
 	@Override
@@ -27,9 +27,9 @@ public abstract class BaseSetOptionsCommand extends BaseCommand {
 	public Options buildCommandLineOptions(Options options) {
 		return options;
 	}
-	
 
-	private boolean optionExsists(String option) {
+
+	private boolean optionExists(String option) {
 		for (Option optionObj : StandardOptions.PERSISTENT_OPTIONS) {
 			if (optionObj.getOpt().equals(option)) {
 				return true;
@@ -37,12 +37,12 @@ public abstract class BaseSetOptionsCommand extends BaseCommand {
 		}
 		return false;
 	}
-	
+
 	protected abstract void processOption(Settings settings, String option);
-	
+
 	private ReturnCodes processOptions(CommandContext commandContext, String[] options) {
 		for (String option : options) {
-			if (!optionExsists(option)) {
+			if (!optionExists(option)) {
 				LOG.error("Unknown option: " + option);
 				return ReturnCodes.errorCommand;
 			}
@@ -53,8 +53,8 @@ public abstract class BaseSetOptionsCommand extends BaseCommand {
 		}
 		return ReturnCodes.ok;
 	}
-	
-	private ReturnCodes listPersistentOptions(CommandContext commandContext) {
+
+	private void listPersistentOptions(CommandContext commandContext) {
 		Settings settings = commandContext.getSettings();
 		System.out.println("The following options are set:");
 		for (Option optionObj : StandardOptions.PERSISTENT_OPTIONS) {
@@ -62,14 +62,14 @@ public abstract class BaseSetOptionsCommand extends BaseCommand {
 				System.out.println(optionObj.getOpt());
 			}
 		}
-		return ReturnCodes.ok;
 	}
 
 	@Override
 	public ReturnCodes execute(CommandContext commandContext) {
 		String[] options = commandContext.getArguments();
 		if (options.length == 0) {
-			return listPersistentOptions(commandContext);
+			listPersistentOptions(commandContext);
+			return ReturnCodes.ok;
 		} else {
 			return processOptions(commandContext, options);
 		}

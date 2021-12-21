@@ -11,9 +11,9 @@ import org.javaan.graph.SimpleGraphReader.ObjectProducer;
 import org.jgrapht.graph.DirectedMultigraph;
 import org.junit.Test;
 
-public class TestTopologicalMultigraphSort {
+public class TestTopologicalMultiGraphSort {
 
-	private static final String GRAPH_CONTENT = 
+	private static final String GRAPH_CONTENT =
 			"E a b ab1 \n"
 			+ "E a b ab2 \n"
 			+ "E b c bc1 \n"
@@ -25,28 +25,28 @@ public class TestTopologicalMultigraphSort {
 			+ "E c e ce3 \n"
 			+ "E f g fg1 \n"
 			+ "E g b gb1 \n";
-	
+
 	private DirectedMultigraph<String, String> createGraph() throws IOException {
-		DirectedMultigraph<String, String> graph = new DirectedMultigraph<String, String>(null, null, false);
-		ObjectProducer<String, String> objectProducer = new ObjectProducer<String, String>() {
+		DirectedMultigraph<String, String> graph = new DirectedMultigraph<>(null, null, false);
+		ObjectProducer<String, String> objectProducer = new ObjectProducer<>() {
 			@Override
 			public String createEdge(String source, String target, String edgeLabel) {
 				return source + "-->" + target + ":" + edgeLabel;
 			}
-			
+
 			@Override
 			public String createVertex(String vertexLabel) {
 				return vertexLabel;
 			}
 		};
-		new SimpleGraphReader<String, String>(graph, objectProducer).readGraph(new StringReader(GRAPH_CONTENT));
+		new SimpleGraphReader<>(graph, objectProducer).readGraph(new StringReader(GRAPH_CONTENT));
 		return graph;
 	}
-			
+
 	@Test
 	public void testSort() throws IOException {
 		DirectedMultigraph<String, String> graph = createGraph();
-		List<String> sorted = new TopologicalMultigraphSort<>(graph).sort();
+		List<String> sorted = new TopologicalMultiGraphSort<>(graph).sort();
 		assertNotNull(sorted);
 		assertEquals(graph.vertexSet().size(), sorted.size());
 		assertEquals("f", sorted.get(0));

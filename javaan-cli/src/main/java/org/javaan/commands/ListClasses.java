@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,13 +35,13 @@ import org.javaan.print.MethodFormatter;
 import org.javaan.print.PrintUtil;
 
 public class ListClasses extends BaseTypeLoadingCommand {
-	
+
 	private final static String NAME = "classes";
-	
+
 	private final static String DESCRIPTION = "List all classes of the libraries";
-	
+
 	private ClassContext classContext;
-	
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -73,7 +73,7 @@ public class ListClasses extends BaseTypeLoadingCommand {
 		Collection<Clazz> classes = classContext.getClasses();
 		if (context.hasFilterCriteria()) {
 			String criteria = context.getFilterCriteria();
-			classes = FilterUtil.filter(classes, new NameMatcher<Clazz>(criteria)); 
+			classes = FilterUtil.filter(classes, new NameMatcher<>(criteria));
 		}
 		classes = SortUtil.sort(classes);
 		switch (context.getAdditionalTypeInformation()) {
@@ -97,35 +97,35 @@ public class ListClasses extends BaseTypeLoadingCommand {
 			break;
 		}
 	}
-	
+
 	private void printClasses(Writer writer, Collection<Clazz> classes) {
 		PrintUtil.println(writer, classes, "", "[C]", System.lineSeparator());
 	}
 
 	private void printClassesAndSuperClasses(Writer writer, Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
-			PrintUtil.println(writer, classContext.getSuperClassHierachy(clazz), "", "[C]", " --> ");
+			PrintUtil.println(writer, classContext.getSuperClassHierarchy(clazz), "", "[C]", " --> ");
 		}
 	}
-	
+
 	private void printClassesAndSpecializations(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(writer, classContext.getSpecializationsOfClass(clazz), "[C]" + clazz + ": ", "[C]", ", ");
 		}
 	}
-	
+
 	private void printClassesAndInterfaces(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(writer, classContext.getInterfacesOfClass(clazz), "[C]" + clazz + ": ", "[I]", ", ");
 		}
 	}
-	
+
 	private void printClassesAndMethods(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");
 		}
 	}
-	
+
 	private void printClassesAndVirtualMethods(Writer writer,  Collection<Clazz> classes) {
 		for (Clazz clazz : classes) {
 			PrintUtil.println(writer, new MethodFormatter(), SortUtil.sort(classContext.getVirtualMethods(clazz)), "[C]" + clazz + ": ", "\n\t", ", ");

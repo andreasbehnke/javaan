@@ -39,7 +39,7 @@ public class DuplicatesFinder<N extends NamedObject> {
 	}
 
 	public boolean hasDuplicates() {
-		Set<N> testSet = new HashSet<N>();
+		Set<N> testSet = new HashSet<>();
 		for (N namedObject : namedObjects) {
 			if (testSet.contains(namedObject)) {
 				return true;
@@ -50,25 +50,25 @@ public class DuplicatesFinder<N extends NamedObject> {
 	}
 
 	public Set<N> createUniqueSet() {
-		return new HashSet<N>(namedObjects);
+		return new HashSet<>(namedObjects);
 	}
 
 	public List<List<N>> find() {
-		Map<String, List<N>> counts = new HashMap<String, List<N>>();
+		Map<String, List<N>> counts = new HashMap<>();
 		for (N namedObject : namedObjects) {
 			String name = namedObject.getName();
 			if (counts.containsKey(name)) {
 				counts.get(name).add(namedObject);
 			} else {
-				List<N> dups = new ArrayList<N>();
+				List<N> dups = new ArrayList<>();
 				dups.add(namedObject);
 				counts.put(name, dups);
 			}
 		}
-		List<List<N>> duplicates = new ArrayList<List<N>>();
-		for (List<N> classlist : counts.values()) {
-			if (classlist.size() > 1) {
-				duplicates.add(classlist);
+		List<List<N>> duplicates = new ArrayList<>();
+		for (List<N> classList : counts.values()) {
+			if (classList.size() > 1) {
+				duplicates.add(classList);
 			}
 		}
 		return duplicates;

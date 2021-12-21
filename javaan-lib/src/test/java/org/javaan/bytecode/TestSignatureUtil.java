@@ -66,7 +66,7 @@ public class TestSignatureUtil implements TestConstants {
 
 	@Test
 	public void testCreateMethodSignatureFromMethod() throws IOException {
-		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
+		NamedObjectMap<Type> types = new NamedObjectMap<>(loadClasses());
 		Interface i = (Interface)types.get(INTERFACE_B.getName());
 		Method method = i.getJavaClass().getMethods()[0]; /* public String methodInterfaceB(String a, String b); */
 		assertEquals(SIGNATURE_METHOD_INTERFACE_B, SignatureUtil.createMethodSignature(method));
@@ -86,7 +86,7 @@ public class TestSignatureUtil implements TestConstants {
 
 	@Test
 	public void testCreateSignatureFromInvoke() throws IOException {
-		NamedObjectMap<Type> types = new NamedObjectMap<Type>(loadClasses());
+		NamedObjectMap<Type> types = new NamedObjectMap<>(loadClasses());
 		Clazz classb = (Clazz)types.get(CLASS_B.getName());
 		ConstantPoolGen cpg = new ConstantPoolGen(classb.getJavaClass().getConstantPool());
 		Method method = classb.getJavaClass().getMethods()[1]; /* void methodClassB(InterfaceC c); */
