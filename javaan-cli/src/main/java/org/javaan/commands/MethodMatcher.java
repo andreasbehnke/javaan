@@ -9,9 +9,9 @@ package org.javaan.commands;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,15 +24,15 @@ import org.javaan.commands.FilterUtil.Matcher;
 import org.javaan.model.Method;
 
 public class MethodMatcher implements Matcher<Method> {
-	
+
 	private final static String PREFIX_ANNOTATION = "a:";
-	
+
 	private final String criteria;
-	
-	private boolean matchAll;
-	
+
+	private final boolean matchAll;
+
 	private boolean matchAnnotation = false;
-	
+
 	public MethodMatcher(String criteria) {
 		this.matchAll = (criteria == null);
 		if (!matchAll) {
@@ -58,7 +58,7 @@ public class MethodMatcher implements Matcher<Method> {
 			return acceptMethodName(method);
 		}
 	}
-	
+
 	private boolean acceptMethodName(Method method) {
 		boolean match = method.getName().toLowerCase().contains(criteria);
 		if (!match) {
@@ -66,7 +66,7 @@ public class MethodMatcher implements Matcher<Method> {
 		}
 		return match;
 	}
-	
+
 	private boolean acceptAnnotationClass(Method method) {
 		for (String annotation : method.getAnnotationTypes()) {
 			boolean match = annotation.toLowerCase().contains(criteria);

@@ -6,15 +6,15 @@ import org.javaan.model.Type;
 
 public class TypeFormatter implements ObjectFormatter<Type> {
 
-	private ObjectFormatter<Clazz> clazzFormatter;
-	
-	private ObjectFormatter<Interface> interfaceFormatter;
-	
+	private final ObjectFormatter<Clazz> clazzFormatter;
+
+	private final ObjectFormatter<Interface> interfaceFormatter;
+
 	public TypeFormatter() {
 		this.clazzFormatter = new ClazzFormatter();
 		this.interfaceFormatter = new InterfaceFormatter();
 	}
-	
+
 	public TypeFormatter(ObjectFormatter<Clazz> clazzFormatter, ObjectFormatter<Interface> interfaceFormatter) {
 		this.clazzFormatter = clazzFormatter;
 		this.interfaceFormatter = interfaceFormatter;

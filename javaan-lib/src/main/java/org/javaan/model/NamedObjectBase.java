@@ -9,9 +9,9 @@ package org.javaan.model;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,7 @@ package org.javaan.model;
 public abstract class NamedObjectBase implements NamedObject {
 
 	protected final String name;
-	
+
 	protected NamedObjectBase(String name) {
 		this.name = name;
 	}
@@ -56,11 +56,8 @@ public abstract class NamedObjectBase implements NamedObject {
 			return false;
 		NamedObjectBase other = (NamedObjectBase) obj;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+			return other.name == null;
+		} else return name.equals(other.name);
 	}
 
 	@Override

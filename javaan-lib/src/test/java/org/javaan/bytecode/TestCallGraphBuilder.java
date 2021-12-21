@@ -9,9 +9,9 @@ package org.javaan.bytecode;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,27 +35,27 @@ import org.javaan.model.Type;
 import org.junit.Test;
 
 public class TestCallGraphBuilder implements TestConstants {
-	
+
 	private List<Type> loadClasses() throws IOException {
-		return new JarFileLoader().loadJavaClasses(new String[]{TEST_JAR_FILE});
+		return new JarFileLoader().loadJavaClasses(TEST_JAR_FILE);
 	}
-	
+
 	@Test
 	public void testBuild() throws IOException {
 		List<Type> classes = loadClasses();
-		
+
 		ClassContext classContext = new ClassContextBuilder().build(classes);
 		CallGraph callGraph = new CallGraphBuilder(classContext, true, false).build();
-		
+
 		assertNotNull(callGraph);
-		
+
 		// class calling interface method
 		Set<Method> callers = callGraph.getCallers(CLASSA_METHOD_INTERFACE_B);
 		assertNotNull(callers);
 		assertEquals(2, callers.size());
 		assertTrue(callers.contains(CLASSB_METHOD_CLASS_B));
 		assertTrue(callers.contains(CLASSC_ENTRY_METHOD));
-		
+
 		// callees of method
 		Set<Method> callees = callGraph.getCallees(CLASSC_ENTRY_METHOD);
 		assertNotNull(callees);
@@ -63,13 +63,13 @@ public class TestCallGraphBuilder implements TestConstants {
 		assertTrue(callees.contains(CLASSB_METHOD_CLASS_B));
 		assertTrue(callees.contains(CLASSA_METHOD_INTERFACE_B));
 		assertTrue(callees.contains(CLASSB_CONSTRUCTOR));
-		
+
 		// abstract method call
 		callees = callGraph.getCallees(CLASS_CALLING_ABSTACT_METHOD_CALL_ABSTRACT_METHOD);
 		assertNotNull(callees);
 		assertEquals(1, callees.size());
 		assertTrue(callees.contains(SPECIALIZATION_CLASS_B_ABSTRACT_METHOD));
-		
+
 		// external method call (String constructor)
 		assertTrue(classContext.getMethods().contains(CLASSC_CALLING_EXTERNAL_CLASS));
 		callers = callGraph.getCallers(STRING_CONSTRUCTOR);

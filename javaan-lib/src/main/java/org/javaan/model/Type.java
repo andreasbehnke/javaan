@@ -9,9 +9,9 @@ package org.javaan.model;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.generic.ConstantPoolGen;
 
 public abstract class Type extends NamedObjectBase {
-	
+
 	public enum JavaType {
 		CLASS,
 		INTERFACE
@@ -39,7 +39,7 @@ public abstract class Type extends NamedObjectBase {
     private final String filePath;
 
 	private final boolean isReflection;
-	
+
 	protected Type(String name) {
 		super(name);
 		this.clazz = null;
@@ -63,14 +63,14 @@ public abstract class Type extends NamedObjectBase {
         this.filePath = null;
         this.isReflection = true;
     }
-	
+
 	public static Type create(JavaClass javaClass, String filePath) {
 		if (javaClass.isInterface()) {
 			return new Interface(javaClass, filePath);
 		} else if (javaClass.isClass()) {
 			return new Clazz(javaClass, filePath);
 		}
-		throw new IllegalArgumentException("Unknown type: " + javaClass.toString());
+		throw new IllegalArgumentException("Unknown type: " + javaClass);
 	}
 
 	public static Type create(String className) throws ClassNotFoundException {
@@ -83,7 +83,7 @@ public abstract class Type extends NamedObjectBase {
         }
         return type;
 	}
-	
+
 	public JavaClass getJavaClass() {
 		return javaClass;
 	}
@@ -107,17 +107,17 @@ public abstract class Type extends NamedObjectBase {
 		}
 		return signature;
 	}
-	
+
 	public String getShortName() {
 		return getShortName(getName());
 	}
-	
+
 	public abstract JavaType getJavaType();
-	
+
 	public Clazz toClazz() {
 		return (Clazz)this;
 	}
-	
+
 	public Interface toInterface() {
 		return (Interface)this;
 	}

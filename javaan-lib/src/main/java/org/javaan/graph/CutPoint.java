@@ -5,7 +5,7 @@ package org.javaan.graph;
  */
 public class CutPoint<V, E> {
 	private final V source;
-	
+
 	private final V target;
 
 	public CutPoint(V source, V target) {
@@ -45,11 +45,8 @@ public class CutPoint<V, E> {
 		} else if (!source.equals(other.source))
 			return false;
 		if (target == null) {
-			if (other.target != null)
-				return false;
-		} else if (!target.equals(other.target))
-			return false;
-		return true;
+			return other.target == null;
+		} else return target.equals(other.target);
 	}
 
 	@Override

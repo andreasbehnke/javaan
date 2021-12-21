@@ -9,15 +9,15 @@ import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph;
 
 public class MxGraphBuilder<V, E> {
-	
+
 	private final GraphView<V, E> source;
-	
-	private Map<V, mxICell> vertexToCell = new HashMap<V, mxICell>();
-    
+
+	private final Map<V, mxICell> vertexToCell = new HashMap<V, mxICell>();
+
     private final CellStyle<V, E> cellStyle;
-	
+
     private mxGraph target;
- 
+
 	public MxGraphBuilder(GraphView<V, E> source, CellStyle<V, E> cellStyle) {
 		this.source = source;
 		this.cellStyle = cellStyle;
@@ -30,7 +30,7 @@ public class MxGraphBuilder<V, E> {
 	        vertexToCell.put(vertex, cell);
 		}
 	}
-	
+
 	private void addEdges() {
 		for (E edge : source.edgeSet()) {
 			V sourceVertex = source.getEdgeSource(edge);
@@ -38,7 +38,7 @@ public class MxGraphBuilder<V, E> {
 
             Object sourceCell = vertexToCell.get(sourceVertex);
             Object targetCell = vertexToCell.get(targetVertex);
-            
+
             if (sourceCell != null && targetCell != null)
             {
             	mxICell cell = (mxICell)target.insertEdge(null, null, cellStyle.getEdgeLabel(source, edge), sourceCell, targetCell, cellStyle.getEdgeStyle(source, edge));
@@ -46,7 +46,7 @@ public class MxGraphBuilder<V, E> {
             }
 		}
 	}
-	
+
 	public mxGraph build() {
 		target = new mxGraph();
 		target.getModel().beginUpdate();

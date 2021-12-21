@@ -12,38 +12,38 @@ import org.jgrapht.Graph;
  * Reads graphs from simple text files. Text files have the following simple syntax:
  * Lines beginning with # are comments.
  * Lines beginning with v or V define a vertex to be added, lines beginning with e or E define an edge:
- * 
+ *
  * V vertexLabel
  * E targetVertex sourceVertex edgeLabel
- * 
+ *
  * If an edge line references unknown vertices, these are added to the graph before adding the edge.
  * So the following produces a valid graph:
- * 
+ *
  *  E A B AB
  */
 public class SimpleGraphReader<V, E> {
-	
-	public static interface ObjectProducer<V, E> {
-		
+
+	public interface ObjectProducer<V, E> {
+
 		V createVertex(String vertexLabel);
-		
+
 		E createEdge(V source, V target, String edgeLabel);
-		
+
 	}
-	
+
 	private final Graph<V, E> target;
-	
+
 	private final Map<String, V> vertexMap = new HashMap<>();
-	
+
 	private final Map<String, E> edgeMap = new HashMap<>();
-	
+
 	private final ObjectProducer<V, E> objectProducer;
-	
+
 	public SimpleGraphReader(Graph<V, E> target, ObjectProducer<V, E> objectProducer) {
 		this.target = target;
 		this.objectProducer = objectProducer;
 	}
-	
+
 	public Map<String, V> getVertexMap() {
 		return vertexMap;
 	}
@@ -63,14 +63,14 @@ public class SimpleGraphReader<V, E> {
 		}
 		return null;
 	}
-	
+
 	private V addVertex(String vertexLabel) {
 		V vertex = objectProducer.createVertex(vertexLabel);
 		vertexMap.put(vertexLabel, vertex);
 		target.addVertex(vertex);
 		return vertex;
 	}
-	
+
 	private void addVertex(String[] columns) throws IOException {
 		switch (columns.length) {
 			case 2:
@@ -78,17 +78,17 @@ public class SimpleGraphReader<V, E> {
 				addVertex(vertexLabel);
 				break;
 			default:
-				throw new IOException("Vertex line does not contain one vertex label");	
+				throw new IOException("Vertex line does not contain one vertex label");
 		}
 	}
-	
+
 	private void addEdge(String sourceLabel, String targetLabel) {
 		V sourceVertex = addVertex(sourceLabel);
 		V targetVertex = addVertex(targetLabel);
 		E edge = target.addEdge(sourceVertex, targetVertex);
 		edgeMap.put(edge.toString(), edge);
 	}
-	
+
 	private void addEdge(String sourceLabel, String targetLabel, String edgeLabel) {
 		V sourceVertex = addVertex(sourceLabel);
 		V targetVertex = addVertex(targetLabel);
@@ -96,7 +96,7 @@ public class SimpleGraphReader<V, E> {
 		target.addEdge(sourceVertex, targetVertex, edge);
 		edgeMap.put(edge.toString(), edge);
 	}
-	
+
 	private void addEdge(String[] columns) throws IOException {
 		String sourceLabel, targetLabel, edgeLabel;
 		switch (columns.length) {
@@ -117,7 +117,7 @@ public class SimpleGraphReader<V, E> {
 	}
 
 	public Graph<V, E> readGraph(Reader reader) throws IOException {
-		BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader)reader : new BufferedReader(reader); 
+		BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader)reader : new BufferedReader(reader);
 		String[] columns = skipComments(bufferedReader);
 		while(columns != null) {
 			if (columns.length > 0) {

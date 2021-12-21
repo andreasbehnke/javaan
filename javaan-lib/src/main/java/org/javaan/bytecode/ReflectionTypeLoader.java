@@ -15,7 +15,7 @@ public class ReflectionTypeLoader {
 
     private static final String JAVA_LANG_OBJECT = "java.lang.Object";
 
-    private Set<String> missingTypes = Collections.synchronizedSet(new HashSet<>());
+    private final Set<String> missingTypes = Collections.synchronizedSet(new HashSet<>());
 
     public Set<String> getMissingTypes() {
         return missingTypes;
