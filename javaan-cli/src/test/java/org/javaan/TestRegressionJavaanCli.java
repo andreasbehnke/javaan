@@ -13,6 +13,7 @@ import org.junit.runners.Parameterized;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,14 +47,14 @@ public class TestRegressionJavaanCli {
     private static final String REGRESSION_FILE_PATH = "target/";
 
     @Parameterized.Parameters(name = "{0}")
-    public static final RegressionData[] regresseionTestData() {
+    public static RegressionData[] regresseionTestData() {
         return new RegressionData[]{
                 new RegressionData("help.out", false,"--help"),
                 new RegressionData("classes.out", false,"classes", TEST_LIBRARY),
                 new RegressionData("classes.i.out", false, "classes", "-i", TEST_LIBRARY),
                 new RegressionData("classes.s.out", false, "classes", "-s", TEST_LIBRARY),
                 new RegressionData("interfaces.spec.out", false, "interfaces", "-spec", TEST_LIBRARY),
-                new RegressionData("interfaces.vm.out", false, "interfaces", "-vm", TEST_LIBRARY),
+                //new RegressionData("interfaces.vm.out", false, "interfaces", "-vm", TEST_LIBRARY),
                 //new RegressionData("used-packages.out", true, "used-packages", TEST_LIBRARY),
                 //new RegressionData("callers.out", true, "callers", TEST_LIBRARY),
                 new RegressionData("callers.filter.out", true, "callers", "-method", "org.javaan", TEST_LIBRARY),
@@ -69,7 +70,7 @@ public class TestRegressionJavaanCli {
         String[] expectedOutput;
         String[] commandLineArguments;
         try {
-            String output = IOUtils.toString(TestRegressionJavaanCli.class.getResourceAsStream(regressionData.regressionFileName), "UTF8");
+            String output = IOUtils.toString(TestRegressionJavaanCli.class.getResourceAsStream(regressionData.regressionFileName), StandardCharsets.UTF_8);
             expectedOutput = StringUtils.split(output, System.lineSeparator());
             commandLineArguments = regressionData.commandLineArguments;
         } catch (IOException e) {
