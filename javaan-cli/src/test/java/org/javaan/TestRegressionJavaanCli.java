@@ -38,7 +38,7 @@ public class TestRegressionJavaanCli {
         }
     }
 
-    private static final String TEST_LIBRARY = "src/test/resources/org/javaan/javaan-cli-2.1.jar";
+    private static final String TEST_LIBRARY = "src/test/resources/org/javaan/javaan.jar";
 
     private static final String REGRESSION_FILE_PATH = "target/";
 

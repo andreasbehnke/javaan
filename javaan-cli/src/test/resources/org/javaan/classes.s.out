@@ -128,6 +128,8 @@
 [C]com.mxgraph.reader.mxDomOutputParser$38 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxDomOutputParser$39 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxDomOutputParser$4 --> [C]java.lang.Object
+[C]com.mxgraph.reader.mxDomOutputParser$40 --> [C]java.lang.Object
+[C]com.mxgraph.reader.mxDomOutputParser$41 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxDomOutputParser$5 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxDomOutputParser$6 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxDomOutputParser$7 --> [C]java.lang.Object
@@ -170,6 +172,8 @@
 [C]com.mxgraph.reader.mxSaxOutputHandler$38 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxSaxOutputHandler$39 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxSaxOutputHandler$4 --> [C]java.lang.Object
+[C]com.mxgraph.reader.mxSaxOutputHandler$40 --> [C]java.lang.Object
+[C]com.mxgraph.reader.mxSaxOutputHandler$41 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxSaxOutputHandler$5 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxSaxOutputHandler$6 --> [C]java.lang.Object
 [C]com.mxgraph.reader.mxSaxOutputHandler$7 --> [C]java.lang.Object
@@ -411,11 +415,13 @@
 [C]java.io.InputStream --> [C]java.lang.Object
 [C]java.io.ObjectInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]java.io.OutputStream --> [C]java.lang.Object
+[C]java.io.PrintStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]java.io.Reader --> [C]java.lang.Object
 [C]java.io.Writer --> [C]java.lang.Object
 [C]java.lang.ClassLoader --> [C]java.lang.Object
 [C]java.lang.Enum --> [C]java.lang.Object
 [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]java.lang.IllegalArgumentException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]java.lang.InheritableThreadLocal --> [C]java.lang.ThreadLocal --> [C]java.lang.Object
 [C]java.lang.Number --> [C]java.lang.Object
 [C]java.lang.Object
@@ -427,6 +433,7 @@
 [C]java.lang.UnsupportedOperationException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]java.lang.ref.PhantomReference --> [C]java.lang.ref.Reference --> [C]java.lang.Object
 [C]java.lang.ref.Reference --> [C]java.lang.Object
+[C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
 [C]java.text.Format --> [C]java.lang.Object
 [C]java.text.MessageFormat --> [C]java.text.Format --> [C]java.lang.Object
 [C]java.util.AbstractCollection --> [C]java.lang.Object
@@ -440,7 +447,9 @@
 [C]java.util.HashSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
 [C]java.util.LinkedHashMap --> [C]java.util.HashMap --> [C]java.util.AbstractMap --> [C]java.lang.Object
 [C]java.util.LinkedHashSet --> [C]java.util.HashSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
-[C]java.util.LinkedList --> [C]java.util.AbstractSequentialList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]java.util.TimeZone --> [C]java.lang.Object
+[C]java.util.concurrent.ForkJoinTask --> [C]java.lang.Object
+[C]java.util.concurrent.RecursiveTask --> [C]java.util.concurrent.ForkJoinTask --> [C]java.lang.Object
 [C]javax.swing.AbstractAction --> [C]java.lang.Object
 [C]javax.swing.JComponent --> [C]java.awt.Container --> [C]java.awt.Component --> [C]java.lang.Object
 [C]javax.swing.JDialog --> [C]java.awt.Dialog --> [C]java.awt.Window --> [C]java.awt.Container --> [C]java.awt.Component --> [C]java.lang.Object
@@ -481,6 +490,7 @@
 [C]org.apache.bcel.classfile.ConstantCP --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantClass --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantDouble --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ConstantDynamic --> [C]org.apache.bcel.classfile.ConstantCP --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantFieldref --> [C]org.apache.bcel.classfile.ConstantCP --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantFloat --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantInteger --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
@@ -490,13 +500,15 @@
 [C]org.apache.bcel.classfile.ConstantMethodHandle --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantMethodType --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantMethodref --> [C]org.apache.bcel.classfile.ConstantCP --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ConstantModule --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantNameAndType --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ConstantPackage --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantPool --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantString --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantUtf8 --> [C]org.apache.bcel.classfile.Constant --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantUtf8$1 --> [C]java.lang.Thread --> [C]java.lang.Object
-[C]org.apache.bcel.classfile.ConstantUtf8$CACHE_HOLDER --> [C]java.lang.Object
-[C]org.apache.bcel.classfile.ConstantUtf8$CACHE_HOLDER$1 --> [C]java.util.LinkedHashMap --> [C]java.util.HashMap --> [C]java.util.AbstractMap --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ConstantUtf8$Cache --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ConstantUtf8$Cache$1 --> [C]java.util.LinkedHashMap --> [C]java.util.HashMap --> [C]java.util.AbstractMap --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ConstantValue --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.Deprecated --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.DescendingVisitor --> [C]java.lang.Object
@@ -522,6 +534,15 @@
 [C]org.apache.bcel.classfile.Method$1 --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.MethodParameter --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.MethodParameters --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.Module --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ModuleExports --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ModuleMainClass --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ModuleOpens --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ModulePackages --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ModuleProvides --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.ModuleRequires --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.NestHost --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
+[C]org.apache.bcel.classfile.NestMembers --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.PMGClass --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ParameterAnnotationEntry --> [C]java.lang.Object
 [C]org.apache.bcel.classfile.ParameterAnnotations --> [C]org.apache.bcel.classfile.Attribute --> [C]java.lang.Object
@@ -681,7 +702,6 @@
 [C]org.apache.bcel.generic.IXOR --> [C]org.apache.bcel.generic.ArithmeticInstruction --> [C]org.apache.bcel.generic.Instruction --> [C]java.lang.Object
 [C]org.apache.bcel.generic.IfInstruction --> [C]org.apache.bcel.generic.BranchInstruction --> [C]org.apache.bcel.generic.Instruction --> [C]java.lang.Object
 [C]org.apache.bcel.generic.Instruction --> [C]java.lang.Object
-[C]org.apache.bcel.generic.InstructionComparator$1 --> [C]java.lang.Object
 [C]org.apache.bcel.generic.InstructionConst --> [C]java.lang.Object
 [C]org.apache.bcel.generic.InstructionConstants$Clinit --> [C]java.lang.Object
 [C]org.apache.bcel.generic.InstructionFactory --> [C]java.lang.Object
@@ -728,7 +748,6 @@
 [C]org.apache.bcel.generic.MULTIANEWARRAY --> [C]org.apache.bcel.generic.CPInstruction --> [C]org.apache.bcel.generic.Instruction --> [C]java.lang.Object
 [C]org.apache.bcel.generic.MethodGen --> [C]org.apache.bcel.generic.FieldGenOrMethodGen --> [C]org.apache.bcel.classfile.AccessFlags --> [C]java.lang.Object
 [C]org.apache.bcel.generic.MethodGen$1 --> [C]java.lang.Object
-[C]org.apache.bcel.generic.MethodGen$2 --> [C]java.lang.Object
 [C]org.apache.bcel.generic.MethodGen$BranchStack --> [C]java.lang.Object
 [C]org.apache.bcel.generic.MethodGen$BranchTarget --> [C]java.lang.Object
 [C]org.apache.bcel.generic.NEW --> [C]org.apache.bcel.generic.CPInstruction --> [C]org.apache.bcel.generic.Instruction --> [C]java.lang.Object
@@ -761,6 +780,7 @@
 [C]org.apache.bcel.generic.Type$1 --> [C]org.apache.bcel.generic.ReferenceType --> [C]org.apache.bcel.generic.Type --> [C]java.lang.Object
 [C]org.apache.bcel.generic.Type$2 --> [C]org.apache.bcel.generic.Type --> [C]java.lang.Object
 [C]org.apache.bcel.generic.Type$3 --> [C]java.lang.ThreadLocal --> [C]java.lang.Object
+[C]org.apache.bcel.util.AbstractClassPathRepository --> [C]java.lang.Object
 [C]org.apache.bcel.util.AttributeHTML --> [C]java.lang.Object
 [C]org.apache.bcel.util.BCELFactory --> [C]org.apache.bcel.generic.EmptyVisitor --> [C]java.lang.Object
 [C]org.apache.bcel.util.BCELifier --> [C]org.apache.bcel.classfile.EmptyVisitor --> [C]java.lang.Object
@@ -772,12 +792,17 @@
 [C]org.apache.bcel.util.ClassLoaderRepository --> [C]java.lang.Object
 [C]org.apache.bcel.util.ClassPath --> [C]java.lang.Object
 [C]org.apache.bcel.util.ClassPath$1 --> [C]java.lang.Object
-[C]org.apache.bcel.util.ClassPath$Dir --> [C]org.apache.bcel.util.ClassPath$PathEntry --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$AbstractPathEntry --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$AbstractZip --> [C]org.apache.bcel.util.ClassPath$AbstractPathEntry --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$AbstractZip$1 --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$Dir --> [C]org.apache.bcel.util.ClassPath$AbstractPathEntry --> [C]java.lang.Object
 [C]org.apache.bcel.util.ClassPath$Dir$1 --> [C]java.lang.Object
-[C]org.apache.bcel.util.ClassPath$PathEntry --> [C]java.lang.Object
-[C]org.apache.bcel.util.ClassPath$Zip --> [C]org.apache.bcel.util.ClassPath$PathEntry --> [C]java.lang.Object
-[C]org.apache.bcel.util.ClassPath$Zip$1 --> [C]java.lang.Object
-[C]org.apache.bcel.util.ClassPathRepository --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$Jar --> [C]org.apache.bcel.util.ClassPath$AbstractZip --> [C]org.apache.bcel.util.ClassPath$AbstractPathEntry --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$JrtModule --> [C]org.apache.bcel.util.ClassPath$AbstractPathEntry --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$JrtModule$1 --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$JrtModules --> [C]org.apache.bcel.util.ClassPath$AbstractPathEntry --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPath$Module --> [C]org.apache.bcel.util.ClassPath$AbstractZip --> [C]org.apache.bcel.util.ClassPath$AbstractPathEntry --> [C]java.lang.Object
+[C]org.apache.bcel.util.ClassPathRepository --> [C]org.apache.bcel.util.AbstractClassPathRepository --> [C]java.lang.Object
 [C]org.apache.bcel.util.ClassQueue --> [C]java.lang.Object
 [C]org.apache.bcel.util.ClassSet --> [C]java.lang.Object
 [C]org.apache.bcel.util.ClassStack --> [C]java.lang.Object
@@ -786,9 +811,12 @@
 [C]org.apache.bcel.util.ConstantHTML --> [C]java.lang.Object
 [C]org.apache.bcel.util.InstructionFinder --> [C]java.lang.Object
 [C]org.apache.bcel.util.JavaWrapper --> [C]java.lang.Object
-[C]org.apache.bcel.util.MemorySensitiveClassPathRepository --> [C]java.lang.Object
+[C]org.apache.bcel.util.LruCacheClassPathRepository --> [C]org.apache.bcel.util.AbstractClassPathRepository --> [C]java.lang.Object
+[C]org.apache.bcel.util.LruCacheClassPathRepository$1 --> [C]java.util.LinkedHashMap --> [C]java.util.HashMap --> [C]java.util.AbstractMap --> [C]java.lang.Object
+[C]org.apache.bcel.util.MemorySensitiveClassPathRepository --> [C]org.apache.bcel.util.AbstractClassPathRepository --> [C]java.lang.Object
 [C]org.apache.bcel.util.MethodHTML --> [C]java.lang.Object
-[C]org.apache.bcel.util.SyntheticRepository --> [C]org.apache.bcel.util.MemorySensitiveClassPathRepository --> [C]java.lang.Object
+[C]org.apache.bcel.util.ModularRuntimeImage --> [C]java.lang.Object
+[C]org.apache.bcel.util.SyntheticRepository --> [C]org.apache.bcel.util.MemorySensitiveClassPathRepository --> [C]org.apache.bcel.util.AbstractClassPathRepository --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.GraphicalVerifier --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.NativeVerifier --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.PassVerifier --> [C]java.lang.Object
@@ -796,12 +824,6 @@
 [C]org.apache.bcel.verifier.VerificationResult --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.Verifier --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.VerifierAppFrame --> [C]javax.swing.JFrame --> [C]java.awt.Frame --> [C]java.awt.Window --> [C]java.awt.Container --> [C]java.awt.Component --> [C]java.lang.Object
-[C]org.apache.bcel.verifier.VerifierAppFrame$1 --> [C]java.lang.Object
-[C]org.apache.bcel.verifier.VerifierAppFrame$2 --> [C]java.lang.Object
-[C]org.apache.bcel.verifier.VerifierAppFrame$3 --> [C]java.lang.Object
-[C]org.apache.bcel.verifier.VerifierAppFrame$4 --> [C]java.lang.Object
-[C]org.apache.bcel.verifier.VerifierAppFrame$5 --> [C]java.lang.Object
-[C]org.apache.bcel.verifier.VerifierAppFrame$6 --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.VerifierFactory --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.VerifierFactoryListModel --> [C]java.lang.Object
 [C]org.apache.bcel.verifier.VerifyDialog --> [C]javax.swing.JDialog --> [C]java.awt.Dialog --> [C]java.awt.Window --> [C]java.awt.Container --> [C]java.awt.Component --> [C]java.lang.Object
@@ -856,7 +878,10 @@
 [C]org.apache.commons.cli.AmbiguousOptionException --> [C]org.apache.commons.cli.UnrecognizedOptionException --> [C]org.apache.commons.cli.ParseException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.apache.commons.cli.BasicParser --> [C]org.apache.commons.cli.Parser --> [C]java.lang.Object
 [C]org.apache.commons.cli.CommandLine --> [C]java.lang.Object
+[C]org.apache.commons.cli.CommandLine$Builder --> [C]java.lang.Object
 [C]org.apache.commons.cli.DefaultParser --> [C]java.lang.Object
+[C]org.apache.commons.cli.DefaultParser$1 --> [C]java.lang.Object
+[C]org.apache.commons.cli.DefaultParser$Builder --> [C]java.lang.Object
 [C]org.apache.commons.cli.GnuParser --> [C]org.apache.commons.cli.Parser --> [C]java.lang.Object
 [C]org.apache.commons.cli.HelpFormatter --> [C]java.lang.Object
 [C]org.apache.commons.cli.HelpFormatter$1 --> [C]java.lang.Object
@@ -878,6 +903,7 @@
 [C]org.apache.commons.cli.UnrecognizedOptionException --> [C]org.apache.commons.cli.ParseException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.apache.commons.cli.Util --> [C]java.lang.Object
 [C]org.apache.commons.io.ByteOrderMark --> [C]java.lang.Object
+[C]org.apache.commons.io.ByteOrderParser --> [C]java.lang.Object
 [C]org.apache.commons.io.Charsets --> [C]java.lang.Object
 [C]org.apache.commons.io.CopyUtils --> [C]java.lang.Object
 [C]org.apache.commons.io.DirectoryWalker --> [C]java.lang.Object
@@ -890,16 +916,19 @@
 [C]org.apache.commons.io.FileDeleteStrategy --> [C]java.lang.Object
 [C]org.apache.commons.io.FileDeleteStrategy$ForceFileDeleteStrategy --> [C]org.apache.commons.io.FileDeleteStrategy --> [C]java.lang.Object
 [C]org.apache.commons.io.FileExistsException --> [C]java.io.IOException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.apache.commons.io.FileSystem --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.apache.commons.io.FileSystemUtils --> [C]java.lang.Object
 [C]org.apache.commons.io.FileUtils --> [C]java.lang.Object
-[C]org.apache.commons.io.FileUtils$1 --> [C]java.lang.Object
 [C]org.apache.commons.io.FilenameUtils --> [C]java.lang.Object
 [C]org.apache.commons.io.HexDump --> [C]java.lang.Object
 [C]org.apache.commons.io.IOCase --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.io.IOExceptionList --> [C]java.io.IOException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.apache.commons.io.IOExceptionWithCause --> [C]java.io.IOException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.apache.commons.io.IOIndexedException --> [C]java.io.IOException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.apache.commons.io.IOUtils --> [C]java.lang.Object
-[C]org.apache.commons.io.Java7Support --> [C]java.lang.Object
 [C]org.apache.commons.io.LineIterator --> [C]java.lang.Object
+[C]org.apache.commons.io.StandardLineSeparator --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.io.StreamIterator --> [C]java.lang.Object
 [C]org.apache.commons.io.TaggedIOException --> [C]org.apache.commons.io.IOExceptionWithCause --> [C]java.io.IOException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.apache.commons.io.ThreadMonitor --> [C]java.lang.Object
 [C]org.apache.commons.io.comparator.AbstractFileComparator --> [C]java.lang.Object
@@ -910,17 +939,41 @@
 [C]org.apache.commons.io.comparator.LastModifiedFileComparator --> [C]org.apache.commons.io.comparator.AbstractFileComparator --> [C]java.lang.Object
 [C]org.apache.commons.io.comparator.NameFileComparator --> [C]org.apache.commons.io.comparator.AbstractFileComparator --> [C]java.lang.Object
 [C]org.apache.commons.io.comparator.PathFileComparator --> [C]org.apache.commons.io.comparator.AbstractFileComparator --> [C]java.lang.Object
-[C]org.apache.commons.io.comparator.ReverseComparator --> [C]org.apache.commons.io.comparator.AbstractFileComparator --> [C]java.lang.Object
+[C]org.apache.commons.io.comparator.ReverseFileComparator --> [C]org.apache.commons.io.comparator.AbstractFileComparator --> [C]java.lang.Object
 [C]org.apache.commons.io.comparator.SizeFileComparator --> [C]org.apache.commons.io.comparator.AbstractFileComparator --> [C]java.lang.Object
+[C]org.apache.commons.io.file.AccumulatorPathVisitor --> [C]org.apache.commons.io.file.CountingPathVisitor --> [C]org.apache.commons.io.file.SimplePathVisitor --> [C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
+[C]org.apache.commons.io.file.CleaningPathVisitor --> [C]org.apache.commons.io.file.CountingPathVisitor --> [C]org.apache.commons.io.file.SimplePathVisitor --> [C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
+[C]org.apache.commons.io.file.CopyDirectoryVisitor --> [C]org.apache.commons.io.file.CountingPathVisitor --> [C]org.apache.commons.io.file.SimplePathVisitor --> [C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$1 --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$AbstractPathCounters --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$BigIntegerCounter --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$BigIntegerPathCounters --> [C]org.apache.commons.io.file.Counters$AbstractPathCounters --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$LongCounter --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$LongPathCounters --> [C]org.apache.commons.io.file.Counters$AbstractPathCounters --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$NoopCounter --> [C]java.lang.Object
+[C]org.apache.commons.io.file.Counters$NoopPathCounters --> [C]org.apache.commons.io.file.Counters$AbstractPathCounters --> [C]java.lang.Object
+[C]org.apache.commons.io.file.CountingPathVisitor --> [C]org.apache.commons.io.file.SimplePathVisitor --> [C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
+[C]org.apache.commons.io.file.DeletingPathVisitor --> [C]org.apache.commons.io.file.CountingPathVisitor --> [C]org.apache.commons.io.file.SimplePathVisitor --> [C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
+[C]org.apache.commons.io.file.DirectoryStreamFilter --> [C]java.lang.Object
+[C]org.apache.commons.io.file.NoopPathVisitor --> [C]org.apache.commons.io.file.SimplePathVisitor --> [C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
+[C]org.apache.commons.io.file.PathUtils --> [C]java.lang.Object
+[C]org.apache.commons.io.file.PathUtils$1 --> [C]java.lang.Object
+[C]org.apache.commons.io.file.PathUtils$RelativeSortedPaths --> [C]java.lang.Object
+[C]org.apache.commons.io.file.SimplePathVisitor --> [C]java.nio.file.SimpleFileVisitor --> [C]java.lang.Object
+[C]org.apache.commons.io.file.StandardDeleteOption --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.io.file.spi.FileSystemProviders --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.AgeFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.AndFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
+[C]org.apache.commons.io.filefilter.CanExecuteFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.CanReadFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.CanWriteFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.DelegateFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.DirectoryFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.EmptyFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.FalseFileFilter --> [C]java.lang.Object
+[C]org.apache.commons.io.filefilter.FileEqualsFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.FileFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.FileFilterUtils --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.HiddenFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
@@ -928,67 +981,108 @@
 [C]org.apache.commons.io.filefilter.NameFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.NotFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.OrFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
+[C]org.apache.commons.io.filefilter.PathEqualsFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
+[C]org.apache.commons.io.filefilter.PathVisitorFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.PrefixFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.RegexFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.SizeFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.SuffixFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
+[C]org.apache.commons.io.filefilter.SymbolicLinkFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.TrueFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.WildcardFileFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
 [C]org.apache.commons.io.filefilter.WildcardFilter --> [C]org.apache.commons.io.filefilter.AbstractFileFilter --> [C]java.lang.Object
+[C]org.apache.commons.io.input.AbstractCharacterFilterReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.AutoCloseInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.BOMInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
-[C]org.apache.commons.io.input.BOMInputStream$1 --> [C]java.lang.Object
 [C]org.apache.commons.io.input.BoundedInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.BoundedReader --> [C]java.io.Reader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.BrokenInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.BrokenReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.io.input.BufferedFileChannelInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.CharSequenceInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.CharSequenceReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.io.input.CharacterFilterReader --> [C]org.apache.commons.io.input.AbstractCharacterFilterReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.io.input.CharacterSetFilterReader --> [C]org.apache.commons.io.input.AbstractCharacterFilterReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.io.input.CircularInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ClassLoaderObjectInputStream --> [C]java.io.ObjectInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.CloseShieldInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.CloseShieldReader --> [C]org.apache.commons.io.input.ProxyReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ClosedInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.ClosedReader --> [C]java.io.Reader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.CountingInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.DemuxInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.InfiniteCircularInputStream --> [C]org.apache.commons.io.input.CircularInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.MarkShieldInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.MessageDigestCalculatingInputStream --> [C]org.apache.commons.io.input.ObservableInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.MessageDigestCalculatingInputStream$MessageDigestMaintainingObserver --> [C]org.apache.commons.io.input.ObservableInputStream$Observer --> [C]java.lang.Object
 [C]org.apache.commons.io.input.NullInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.NullReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.io.input.ObservableInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.ObservableInputStream$Observer --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ProxyReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.io.input.QueueInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.RandomAccessFileInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.ReadAheadInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ReaderInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ReversedLinesFileReader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ReversedLinesFileReader$1 --> [C]java.lang.Object
 [C]org.apache.commons.io.input.ReversedLinesFileReader$FilePart --> [C]java.lang.Object
+[C]org.apache.commons.io.input.SequenceReader --> [C]java.io.Reader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.SwappedDataInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.TaggedInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.TaggedReader --> [C]org.apache.commons.io.input.ProxyReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.Tailer --> [C]java.lang.Object
 [C]org.apache.commons.io.input.TailerListenerAdapter --> [C]java.lang.Object
 [C]org.apache.commons.io.input.TeeInputStream --> [C]org.apache.commons.io.input.ProxyInputStream --> [C]java.io.FilterInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.TeeReader --> [C]org.apache.commons.io.input.ProxyReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.io.input.TimestampedObserver --> [C]org.apache.commons.io.input.ObservableInputStream$Observer --> [C]java.lang.Object
 [C]org.apache.commons.io.input.UnixLineEndingInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.UnsupportedOperationExceptions --> [C]java.lang.Object
+[C]org.apache.commons.io.input.UnsynchronizedByteArrayInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.WindowsLineEndingInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.input.XmlStreamReader --> [C]java.io.Reader --> [C]java.lang.Object
 [C]org.apache.commons.io.input.XmlStreamReaderException --> [C]java.io.IOException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.apache.commons.io.input.buffer.CircularBufferInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.input.buffer.CircularByteBuffer --> [C]java.lang.Object
+[C]org.apache.commons.io.input.buffer.PeekableInputStream --> [C]org.apache.commons.io.input.buffer.CircularBufferInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.monitor.FileAlterationListenerAdaptor --> [C]java.lang.Object
 [C]org.apache.commons.io.monitor.FileAlterationMonitor --> [C]java.lang.Object
 [C]org.apache.commons.io.monitor.FileAlterationObserver --> [C]java.lang.Object
 [C]org.apache.commons.io.monitor.FileEntry --> [C]java.lang.Object
+[C]org.apache.commons.io.output.AbstractByteArrayOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.AppendableOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.AppendableWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.BrokenOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
-[C]org.apache.commons.io.output.ByteArrayOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.BrokenWriter --> [C]java.io.Writer --> [C]java.lang.Object
+[C]org.apache.commons.io.output.ByteArrayOutputStream --> [C]org.apache.commons.io.output.AbstractByteArrayOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.ChunkedOutputStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.ChunkedWriter --> [C]java.io.FilterWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.CloseShieldOutputStream --> [C]org.apache.commons.io.output.ProxyOutputStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.CloseShieldWriter --> [C]org.apache.commons.io.output.ProxyWriter --> [C]java.io.FilterWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.ClosedOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.ClosedWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.CountingOutputStream --> [C]org.apache.commons.io.output.ProxyOutputStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.DeferredFileOutputStream --> [C]org.apache.commons.io.output.ThresholdingOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.DemuxOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.FileWriterWithEncoding --> [C]java.io.Writer --> [C]java.lang.Object
+[C]org.apache.commons.io.output.FilterCollectionWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.LockableFileWriter --> [C]java.io.Writer --> [C]java.lang.Object
+[C]org.apache.commons.io.output.NullAppendable --> [C]java.lang.Object
 [C]org.apache.commons.io.output.NullOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.NullPrintStream --> [C]java.io.PrintStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.NullWriter --> [C]java.io.Writer --> [C]java.lang.Object
+[C]org.apache.commons.io.output.ProxyCollectionWriter --> [C]org.apache.commons.io.output.FilterCollectionWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.ProxyOutputStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.ProxyWriter --> [C]java.io.FilterWriter --> [C]java.io.Writer --> [C]java.lang.Object
+[C]org.apache.commons.io.output.QueueOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.StringBuilderWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.TaggedOutputStream --> [C]org.apache.commons.io.output.ProxyOutputStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.TaggedWriter --> [C]org.apache.commons.io.output.ProxyWriter --> [C]java.io.FilterWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.TeeOutputStream --> [C]org.apache.commons.io.output.ProxyOutputStream --> [C]java.io.FilterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.TeeWriter --> [C]org.apache.commons.io.output.ProxyCollectionWriter --> [C]org.apache.commons.io.output.FilterCollectionWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.output.ThresholdingOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
+[C]org.apache.commons.io.output.UnsynchronizedByteArrayOutputStream --> [C]org.apache.commons.io.output.AbstractByteArrayOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.WriterOutputStream --> [C]java.io.OutputStream --> [C]java.lang.Object
 [C]org.apache.commons.io.output.XmlStreamWriter --> [C]java.io.Writer --> [C]java.lang.Object
 [C]org.apache.commons.io.serialization.FullClassNameMatcher --> [C]java.lang.Object
@@ -997,8 +1091,9 @@
 [C]org.apache.commons.io.serialization.WildcardClassNameMatcher --> [C]java.lang.Object
 [C]org.apache.commons.lang3.AnnotationUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.AnnotationUtils$1 --> [C]org.apache.commons.lang3.builder.ToStringStyle --> [C]java.lang.Object
+[C]org.apache.commons.lang3.ArchUtils --> [C]java.lang.Object
+[C]org.apache.commons.lang3.ArraySorter --> [C]java.lang.Object
 [C]org.apache.commons.lang3.ArrayUtils --> [C]java.lang.Object
-[C]org.apache.commons.lang3.ArrayUtils$1 --> [C]java.lang.Object
 [C]org.apache.commons.lang3.BitField --> [C]java.lang.Object
 [C]org.apache.commons.lang3.BooleanUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.CharEncoding --> [C]java.lang.Object
@@ -1009,15 +1104,16 @@
 [C]org.apache.commons.lang3.CharSet --> [C]java.lang.Object
 [C]org.apache.commons.lang3.CharSetUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.CharUtils --> [C]java.lang.Object
+[C]org.apache.commons.lang3.Charsets --> [C]java.lang.Object
+[C]org.apache.commons.lang3.ClassLoaderUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.ClassPathUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.ClassUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.ClassUtils$1 --> [C]java.lang.Object
-[C]org.apache.commons.lang3.ClassUtils$1$1 --> [C]java.lang.Object
 [C]org.apache.commons.lang3.ClassUtils$2 --> [C]java.lang.Object
-[C]org.apache.commons.lang3.ClassUtils$2$1 --> [C]java.lang.Object
 [C]org.apache.commons.lang3.ClassUtils$Interfaces --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.apache.commons.lang3.Conversion --> [C]java.lang.Object
 [C]org.apache.commons.lang3.EnumUtils --> [C]java.lang.Object
+[C]org.apache.commons.lang3.Functions --> [C]java.lang.Object
 [C]org.apache.commons.lang3.JavaVersion --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.apache.commons.lang3.LocaleUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.LocaleUtils$SyncAvoid --> [C]java.lang.Object
@@ -1028,9 +1124,13 @@
 [C]org.apache.commons.lang3.RandomUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.Range --> [C]java.lang.Object
 [C]org.apache.commons.lang3.Range$ComparableComparator --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.lang3.RegExUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.SerializationException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.apache.commons.lang3.SerializationUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.SerializationUtils$ClassLoaderAwareObjectInputStream --> [C]java.io.ObjectInputStream --> [C]java.io.InputStream --> [C]java.lang.Object
+[C]org.apache.commons.lang3.Streams --> [C]java.lang.Object
+[C]org.apache.commons.lang3.Streams$ArrayCollector --> [C]java.lang.Object
+[C]org.apache.commons.lang3.Streams$FailableStream --> [C]java.lang.Object
 [C]org.apache.commons.lang3.StringEscapeUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.StringEscapeUtils$CsvEscaper --> [C]org.apache.commons.lang3.text.translate.CharSequenceTranslator --> [C]java.lang.Object
 [C]org.apache.commons.lang3.StringEscapeUtils$CsvUnescaper --> [C]org.apache.commons.lang3.text.translate.CharSequenceTranslator --> [C]java.lang.Object
@@ -1042,6 +1142,9 @@
 [C]org.apache.commons.lang3.ThreadUtils$NamePredicate --> [C]java.lang.Object
 [C]org.apache.commons.lang3.ThreadUtils$ThreadIdPredicate --> [C]java.lang.Object
 [C]org.apache.commons.lang3.Validate --> [C]java.lang.Object
+[C]org.apache.commons.lang3.arch.Processor --> [C]java.lang.Object
+[C]org.apache.commons.lang3.arch.Processor$Arch --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.lang3.arch.Processor$Type --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.CompareToBuilder --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.Diff --> [C]org.apache.commons.lang3.tuple.Pair --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.DiffBuilder --> [C]java.lang.Object
@@ -1069,6 +1172,7 @@
 [C]org.apache.commons.lang3.builder.IDKey --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.MultilineRecursiveToStringStyle --> [C]org.apache.commons.lang3.builder.RecursiveToStringStyle --> [C]org.apache.commons.lang3.builder.ToStringStyle --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.RecursiveToStringStyle --> [C]org.apache.commons.lang3.builder.ToStringStyle --> [C]java.lang.Object
+[C]org.apache.commons.lang3.builder.ReflectionDiffBuilder --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.ReflectionToStringBuilder --> [C]org.apache.commons.lang3.builder.ToStringBuilder --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.StandardToStringStyle --> [C]org.apache.commons.lang3.builder.ToStringStyle --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.ToStringBuilder --> [C]java.lang.Object
@@ -1080,6 +1184,10 @@
 [C]org.apache.commons.lang3.builder.ToStringStyle$NoFieldNameToStringStyle --> [C]org.apache.commons.lang3.builder.ToStringStyle --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.ToStringStyle$ShortPrefixToStringStyle --> [C]org.apache.commons.lang3.builder.ToStringStyle --> [C]java.lang.Object
 [C]org.apache.commons.lang3.builder.ToStringStyle$SimpleToStringStyle --> [C]org.apache.commons.lang3.builder.ToStringStyle --> [C]java.lang.Object
+[C]org.apache.commons.lang3.compare.ComparableUtils --> [C]java.lang.Object
+[C]org.apache.commons.lang3.compare.ComparableUtils$1 --> [C]java.lang.Object
+[C]org.apache.commons.lang3.compare.ComparableUtils$ComparableCheckBuilder --> [C]java.lang.Object
+[C]org.apache.commons.lang3.compare.ObjectToStringComparator --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.AbstractCircuitBreaker --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.AbstractCircuitBreaker$1 --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.AbstractCircuitBreaker$State --> [C]java.lang.Enum --> [C]java.lang.Object
@@ -1106,12 +1214,16 @@
 [C]org.apache.commons.lang3.concurrent.EventCountCircuitBreaker$StateStrategyClosed --> [C]org.apache.commons.lang3.concurrent.EventCountCircuitBreaker$StateStrategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.EventCountCircuitBreaker$StateStrategyOpen --> [C]org.apache.commons.lang3.concurrent.EventCountCircuitBreaker$StateStrategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.LazyInitializer --> [C]java.lang.Object
+[C]org.apache.commons.lang3.concurrent.Memoizer --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.MultiBackgroundInitializer --> [C]org.apache.commons.lang3.concurrent.BackgroundInitializer --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.MultiBackgroundInitializer$1 --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.MultiBackgroundInitializer$MultiBackgroundInitializerResults --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.ThresholdCircuitBreaker --> [C]org.apache.commons.lang3.concurrent.AbstractCircuitBreaker --> [C]java.lang.Object
 [C]org.apache.commons.lang3.concurrent.TimedSemaphore --> [C]java.lang.Object
-[C]org.apache.commons.lang3.concurrent.TimedSemaphore$1 --> [C]java.lang.Object
+[C]org.apache.commons.lang3.concurrent.locks.LockingVisitors --> [C]java.lang.Object
+[C]org.apache.commons.lang3.concurrent.locks.LockingVisitors$LockVisitor --> [C]java.lang.Object
+[C]org.apache.commons.lang3.concurrent.locks.LockingVisitors$ReadWriteLockVisitor --> [C]org.apache.commons.lang3.concurrent.locks.LockingVisitors$LockVisitor --> [C]java.lang.Object
+[C]org.apache.commons.lang3.concurrent.locks.LockingVisitors$StampedLockVisitor --> [C]org.apache.commons.lang3.concurrent.locks.LockingVisitors$LockVisitor --> [C]java.lang.Object
 [C]org.apache.commons.lang3.event.EventListenerSupport --> [C]java.lang.Object
 [C]org.apache.commons.lang3.event.EventListenerSupport$ProxyInvocationHandler --> [C]java.lang.Object
 [C]org.apache.commons.lang3.event.EventUtils --> [C]java.lang.Object
@@ -1121,6 +1233,7 @@
 [C]org.apache.commons.lang3.exception.ContextedRuntimeException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.apache.commons.lang3.exception.DefaultExceptionContext --> [C]java.lang.Object
 [C]org.apache.commons.lang3.exception.ExceptionUtils --> [C]java.lang.Object
+[C]org.apache.commons.lang3.function.Failable --> [C]java.lang.Object
 [C]org.apache.commons.lang3.math.Fraction --> [C]java.lang.Number --> [C]java.lang.Object
 [C]org.apache.commons.lang3.math.IEEE754rUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.math.NumberUtils --> [C]java.lang.Object
@@ -1145,6 +1258,9 @@
 [C]org.apache.commons.lang3.reflect.TypeUtils$ParameterizedTypeImpl --> [C]java.lang.Object
 [C]org.apache.commons.lang3.reflect.TypeUtils$WildcardTypeBuilder --> [C]java.lang.Object
 [C]org.apache.commons.lang3.reflect.TypeUtils$WildcardTypeImpl --> [C]java.lang.Object
+[C]org.apache.commons.lang3.stream.Streams --> [C]java.lang.Object
+[C]org.apache.commons.lang3.stream.Streams$ArrayCollector --> [C]java.lang.Object
+[C]org.apache.commons.lang3.stream.Streams$FailableStream --> [C]java.lang.Object
 [C]org.apache.commons.lang3.text.CompositeFormat --> [C]java.text.Format --> [C]java.lang.Object
 [C]org.apache.commons.lang3.text.ExtendedMessageFormat --> [C]java.text.MessageFormat --> [C]java.text.Format --> [C]java.lang.Object
 [C]org.apache.commons.lang3.text.FormattableUtils --> [C]java.lang.Object
@@ -1178,22 +1294,23 @@
 [C]org.apache.commons.lang3.text.translate.UnicodeEscaper --> [C]org.apache.commons.lang3.text.translate.CodePointTranslator --> [C]org.apache.commons.lang3.text.translate.CharSequenceTranslator --> [C]java.lang.Object
 [C]org.apache.commons.lang3.text.translate.UnicodeUnescaper --> [C]org.apache.commons.lang3.text.translate.CharSequenceTranslator --> [C]java.lang.Object
 [C]org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover --> [C]org.apache.commons.lang3.text.translate.CodePointTranslator --> [C]org.apache.commons.lang3.text.translate.CharSequenceTranslator --> [C]java.lang.Object
-[C]org.apache.commons.lang3.time.CalendarReflection --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.CalendarUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.DateFormatUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.DateUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.DateUtils$DateIterator --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.DateUtils$ModifyType --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.DurationFormatUtils --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.DurationFormatUtils$Token --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.DurationUtils --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.DurationUtils$1 --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateFormat --> [C]java.text.Format --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateFormat$1 --> [C]org.apache.commons.lang3.time.FormatCache --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser --> [C]java.lang.Object
-[C]org.apache.commons.lang3.time.FastDateParser$1 --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.FastDateParser$1 --> [C]org.apache.commons.lang3.time.FastDateParser$NumberStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser$2 --> [C]org.apache.commons.lang3.time.FastDateParser$NumberStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser$3 --> [C]org.apache.commons.lang3.time.FastDateParser$NumberStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser$4 --> [C]org.apache.commons.lang3.time.FastDateParser$NumberStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser$5 --> [C]org.apache.commons.lang3.time.FastDateParser$NumberStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
-[C]org.apache.commons.lang3.time.FastDateParser$6 --> [C]org.apache.commons.lang3.time.FastDateParser$NumberStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser$CaseInsensitiveTextStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$PatternStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser$CopyQuotedStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDateParser$ISO8601TimeZoneStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$PatternStrategy --> [C]org.apache.commons.lang3.time.FastDateParser$Strategy --> [C]java.lang.Object
@@ -1222,8 +1339,10 @@
 [C]org.apache.commons.lang3.time.FastDatePrinter$UnpaddedMonthField --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDatePrinter$UnpaddedNumberField --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FastDatePrinter$WeekYear --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.FastTimeZone --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.FormatCache --> [C]java.lang.Object
-[C]org.apache.commons.lang3.time.FormatCache$MultipartKey --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.FormatCache$ArrayKey --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.GmtTimeZone --> [C]java.util.TimeZone --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.StopWatch --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.StopWatch$1 --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.StopWatch$SplitState --> [C]java.lang.Enum --> [C]java.lang.Object
@@ -1232,12 +1351,138 @@
 [C]org.apache.commons.lang3.time.StopWatch$State$2 --> [C]org.apache.commons.lang3.time.StopWatch$State --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.StopWatch$State$3 --> [C]org.apache.commons.lang3.time.StopWatch$State --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.apache.commons.lang3.time.StopWatch$State$4 --> [C]org.apache.commons.lang3.time.StopWatch$State --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.lang3.time.TimeZones --> [C]java.lang.Object
 [C]org.apache.commons.lang3.tuple.ImmutablePair --> [C]org.apache.commons.lang3.tuple.Pair --> [C]java.lang.Object
 [C]org.apache.commons.lang3.tuple.ImmutableTriple --> [C]org.apache.commons.lang3.tuple.Triple --> [C]java.lang.Object
 [C]org.apache.commons.lang3.tuple.MutablePair --> [C]org.apache.commons.lang3.tuple.Pair --> [C]java.lang.Object
 [C]org.apache.commons.lang3.tuple.MutableTriple --> [C]org.apache.commons.lang3.tuple.Triple --> [C]java.lang.Object
 [C]org.apache.commons.lang3.tuple.Pair --> [C]java.lang.Object
+[C]org.apache.commons.lang3.tuple.Pair$PairAdapter --> [C]org.apache.commons.lang3.tuple.Pair --> [C]java.lang.Object
 [C]org.apache.commons.lang3.tuple.Triple --> [C]java.lang.Object
+[C]org.apache.commons.lang3.tuple.Triple$TripleAdapter --> [C]org.apache.commons.lang3.tuple.Triple --> [C]java.lang.Object
+[C]org.apache.commons.text.AlphabetConverter --> [C]java.lang.Object
+[C]org.apache.commons.text.CaseUtils --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates$1 --> [C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates$2 --> [C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates$3 --> [C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates$4 --> [C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates$5 --> [C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates$6 --> [C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CharacterPredicates$7 --> [C]org.apache.commons.text.CharacterPredicates --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.CompositeFormat --> [C]java.text.Format --> [C]java.lang.Object
+[C]org.apache.commons.text.ExtendedMessageFormat --> [C]java.text.MessageFormat --> [C]java.text.Format --> [C]java.lang.Object
+[C]org.apache.commons.text.FormattableUtils --> [C]java.lang.Object
+[C]org.apache.commons.text.RandomStringGenerator --> [C]java.lang.Object
+[C]org.apache.commons.text.RandomStringGenerator$1 --> [C]java.lang.Object
+[C]org.apache.commons.text.RandomStringGenerator$Builder --> [C]java.lang.Object
+[C]org.apache.commons.text.StrBuilder --> [C]java.lang.Object
+[C]org.apache.commons.text.StrBuilder$StrBuilderReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.text.StrBuilder$StrBuilderTokenizer --> [C]org.apache.commons.text.StrTokenizer --> [C]java.lang.Object
+[C]org.apache.commons.text.StrBuilder$StrBuilderWriter --> [C]java.io.Writer --> [C]java.lang.Object
+[C]org.apache.commons.text.StrLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.StrLookup$1 --> [C]java.lang.Object
+[C]org.apache.commons.text.StrLookup$MapStrLookup --> [C]org.apache.commons.text.StrLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.StrLookup$ResourceBundleLookup --> [C]org.apache.commons.text.StrLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.StrLookup$SystemPropertiesStrLookup --> [C]org.apache.commons.text.StrLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.StrMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.StrMatcher$CharMatcher --> [C]org.apache.commons.text.StrMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.StrMatcher$CharSetMatcher --> [C]org.apache.commons.text.StrMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.StrMatcher$NoMatcher --> [C]org.apache.commons.text.StrMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.StrMatcher$StringMatcher --> [C]org.apache.commons.text.StrMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.StrMatcher$TrimMatcher --> [C]org.apache.commons.text.StrMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.StrSubstitutor --> [C]java.lang.Object
+[C]org.apache.commons.text.StrTokenizer --> [C]java.lang.Object
+[C]org.apache.commons.text.StringEscapeUtils --> [C]java.lang.Object
+[C]org.apache.commons.text.StringEscapeUtils$1 --> [C]java.lang.Object
+[C]org.apache.commons.text.StringEscapeUtils$Builder --> [C]java.lang.Object
+[C]org.apache.commons.text.StringEscapeUtils$XsiUnescaper --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.StringSubstitutor --> [C]java.lang.Object
+[C]org.apache.commons.text.StringSubstitutor$1 --> [C]java.lang.Object
+[C]org.apache.commons.text.StringSubstitutor$Result --> [C]java.lang.Object
+[C]org.apache.commons.text.StringTokenizer --> [C]java.lang.Object
+[C]org.apache.commons.text.TextStringBuilder --> [C]java.lang.Object
+[C]org.apache.commons.text.TextStringBuilder$TextStringBuilderReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.text.TextStringBuilder$TextStringBuilderTokenizer --> [C]org.apache.commons.text.StringTokenizer --> [C]java.lang.Object
+[C]org.apache.commons.text.TextStringBuilder$TextStringBuilderWriter --> [C]java.io.Writer --> [C]java.lang.Object
+[C]org.apache.commons.text.WordUtils --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.DeleteCommand --> [C]org.apache.commons.text.diff.EditCommand --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.EditCommand --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.EditScript --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.InsertCommand --> [C]org.apache.commons.text.diff.EditCommand --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.KeepCommand --> [C]org.apache.commons.text.diff.EditCommand --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.ReplacementsFinder --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.StringsComparator --> [C]java.lang.Object
+[C]org.apache.commons.text.diff.StringsComparator$Snake --> [C]java.lang.Object
+[C]org.apache.commons.text.io.StringSubstitutorReader --> [C]java.io.FilterReader --> [C]java.io.Reader --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.BiFunctionStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.ConstantStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.DateStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.DefaultStringLookup --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.DnsStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.FileStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.FunctionStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.IllegalArgumentExceptions --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.InetAddressKeys --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.InterpolatorStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.JavaPlatformStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.LocalHostStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.PropertiesStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.ResourceBundleStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.ScriptStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.StringLookupFactory --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.UrlDecoderStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.UrlEncoderStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.UrlStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.lookup.XmlStringLookup --> [C]org.apache.commons.text.lookup.AbstractStringLookup --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.AbstractStringMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.AbstractStringMatcher$AndStringMatcher --> [C]org.apache.commons.text.matcher.AbstractStringMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.AbstractStringMatcher$CharArrayMatcher --> [C]org.apache.commons.text.matcher.AbstractStringMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.AbstractStringMatcher$CharMatcher --> [C]org.apache.commons.text.matcher.AbstractStringMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.AbstractStringMatcher$CharSetMatcher --> [C]org.apache.commons.text.matcher.AbstractStringMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.AbstractStringMatcher$NoneMatcher --> [C]org.apache.commons.text.matcher.AbstractStringMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.AbstractStringMatcher$TrimMatcher --> [C]org.apache.commons.text.matcher.AbstractStringMatcher --> [C]java.lang.Object
+[C]org.apache.commons.text.matcher.StringMatcherFactory --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.CosineDistance --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.CosineSimilarity --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.Counter --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.EditDistanceFrom --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.FuzzyScore --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.HammingDistance --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.IntersectionResult --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.IntersectionSimilarity --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.IntersectionSimilarity$1 --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.IntersectionSimilarity$BagCount --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.IntersectionSimilarity$TinyBag --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.JaccardDistance --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.JaccardSimilarity --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.JaroWinklerDistance --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.JaroWinklerSimilarity --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.LevenshteinDetailedDistance --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.LevenshteinDistance --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.LevenshteinResults --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.LongestCommonSubsequence --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.LongestCommonSubsequenceDistance --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.RegexTokenizer --> [C]java.lang.Object
+[C]org.apache.commons.text.similarity.SimilarityScoreFrom --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.AggregateTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.CodePointTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.CsvTranslators --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.CsvTranslators$CsvEscaper --> [C]org.apache.commons.text.translate.SinglePassTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.CsvTranslators$CsvUnescaper --> [C]org.apache.commons.text.translate.SinglePassTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.EntityArrays --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.JavaUnicodeEscaper --> [C]org.apache.commons.text.translate.UnicodeEscaper --> [C]org.apache.commons.text.translate.CodePointTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.LookupTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.NumericEntityEscaper --> [C]org.apache.commons.text.translate.CodePointTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.NumericEntityUnescaper --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.NumericEntityUnescaper$OPTION --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.OctalUnescaper --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.SinglePassTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.UnicodeEscaper --> [C]org.apache.commons.text.translate.CodePointTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.UnicodeUnescaper --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
+[C]org.apache.commons.text.translate.UnicodeUnpairedSurrogateRemover --> [C]org.apache.commons.text.translate.CodePointTranslator --> [C]org.apache.commons.text.translate.CharSequenceTranslator --> [C]java.lang.Object
 [C]org.javaan.CommandContext --> [C]java.lang.Object
 [C]org.javaan.CommandContext$AdditionalTypeInformation --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.javaan.CommandMap --> [C]java.lang.Object
@@ -1251,18 +1496,19 @@
 [C]org.javaan.bytecode.CallGraphBuilder$1 --> [C]java.lang.Object
 [C]org.javaan.bytecode.CallGraphBuilder$MethodVisitor --> [C]org.apache.bcel.generic.EmptyVisitor --> [C]java.lang.Object
 [C]org.javaan.bytecode.ClassContextBuilder --> [C]java.lang.Object
-[C]org.javaan.bytecode.ClassContextBuilder$1 --> [C]java.lang.Object
 [C]org.javaan.bytecode.JarFileLoader --> [C]java.lang.Object
 [C]org.javaan.bytecode.ReflectionClassContextBuilder --> [C]java.lang.Object
+[C]org.javaan.bytecode.ReflectionTypeLoader --> [C]java.lang.Object
+[C]org.javaan.bytecode.ReflectionTypeLoader$1 --> [C]java.lang.Object
 [C]org.javaan.bytecode.SignatureUtil --> [C]java.lang.Object
 [C]org.javaan.commands.BaseCallGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.BaseClassDependencyGraphCommand --> [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
-[C]org.javaan.commands.BaseDependencyGraphCommand$1 --> [C]java.lang.Object
 [C]org.javaan.commands.BasePackageDependencyGraphCommand --> [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.BaseSetOptionsCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
+[C]org.javaan.commands.Benchmark --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.FilterUtil --> [C]java.lang.Object
 [C]org.javaan.commands.ListClasses --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.ListClasses$1 --> [C]java.lang.Object
@@ -1284,26 +1530,29 @@
 [C]org.javaan.commands.ShowUsedGraph --> [C]org.javaan.commands.BaseClassDependencyGraphCommand --> [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.ShowUsingGraph --> [C]org.javaan.commands.BaseClassDependencyGraphCommand --> [C]org.javaan.commands.BaseDependencyGraphCommand --> [C]org.javaan.commands.BaseTypeLoadingCommand --> [C]org.javaan.commands.BaseCommand --> [C]java.lang.Object
 [C]org.javaan.commands.SortUtil --> [C]java.lang.Object
-[C]org.javaan.commands.SortUtil$1 --> [C]java.lang.Object
 [C]org.javaan.graph.AddVerticesAutomatically --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.javaan.graph.BidirectionalMap --> [C]java.lang.Object
 [C]org.javaan.graph.BreadthFirstTraversalListener --> [C]org.jgrapht.event.TraversalListenerAdapter --> [C]java.lang.Object
-[C]org.javaan.graph.CyclicDirectedMultigraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.javaan.graph.CutPoint --> [C]java.lang.Object
 [C]org.javaan.graph.DepthFirstTraversalListener --> [C]org.jgrapht.event.TraversalListenerAdapter --> [C]java.lang.Object
-[C]org.javaan.graph.ExtendedDirectedGraph --> [C]org.javaan.graph.AddVerticesAutomatically --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.javaan.graph.DirectedGraphUtils --> [C]java.lang.Object
+[C]org.javaan.graph.ExtendedGraph --> [C]org.javaan.graph.AddVerticesAutomatically --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.javaan.graph.GraphFactory --> [C]java.lang.Object
 [C]org.javaan.graph.GraphFactory$1 --> [C]org.jgrapht.graph.DefaultDirectedGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.javaan.graph.GraphVisitorAdapter --> [C]java.lang.Object
-[C]org.javaan.graph.Tree --> [C]org.javaan.graph.ExtendedDirectedGraph --> [C]org.javaan.graph.AddVerticesAutomatically --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.javaan.graph.UnsupportedEdgeFactory --> [C]java.lang.Object
-[C]org.javaan.graph.VertexEdge --> [C]java.lang.Object
-[C]org.javaan.graph.VertexEdgeFactory --> [C]java.lang.Object
+[C]org.javaan.graph.MinimumEdgesCycleCut --> [C]java.lang.Object
+[C]org.javaan.graph.ParentChildMap --> [C]java.lang.Object
+[C]org.javaan.graph.RandomEdgeSupplier --> [C]java.lang.Object
+[C]org.javaan.graph.SimpleGraphReader --> [C]java.lang.Object
+[C]org.javaan.graph.TopologicalMultiGraphSort --> [C]java.lang.Object
+[C]org.javaan.graph.TopologicalMultiGraphSort$ModifiableInteger --> [C]java.lang.Object
+[C]org.javaan.graph.Tree --> [C]org.javaan.graph.ExtendedGraph --> [C]org.javaan.graph.AddVerticesAutomatically --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.javaan.jgraphx.DependencyGraphCellStyle --> [C]java.lang.Object
 [C]org.javaan.jgraphx.MxGraphBuilder --> [C]java.lang.Object
 [C]org.javaan.model.CallGraph --> [C]java.lang.Object
 [C]org.javaan.model.CallGraph$1 --> [C]java.lang.Object
 [C]org.javaan.model.ClassContext --> [C]java.lang.Object
 [C]org.javaan.model.ClassContext$1 --> [C]java.lang.Object
+[C]org.javaan.model.ClassContextInternals --> [C]java.lang.Object
 [C]org.javaan.model.Clazz --> [C]org.javaan.model.Type --> [C]org.javaan.model.NamedObjectBase --> [C]java.lang.Object
 [C]org.javaan.model.DeclaringResolver --> [C]java.lang.Object
 [C]org.javaan.model.Dependency --> [C]org.javaan.model.NamedObjectBase --> [C]java.lang.Object
@@ -1314,7 +1563,7 @@
 [C]org.javaan.model.InterfaceMethodFinder --> [C]org.javaan.graph.GraphVisitorAdapter --> [C]java.lang.Object
 [C]org.javaan.model.Method --> [C]org.javaan.model.NamedObjectBase --> [C]java.lang.Object
 [C]org.javaan.model.NamedObjectBase --> [C]java.lang.Object
-[C]org.javaan.model.NamedObjectMap --> [C]java.lang.Object
+[C]org.javaan.model.NamedObjectMap --> [C]java.util.HashMap --> [C]java.util.AbstractMap --> [C]java.lang.Object
 [C]org.javaan.model.Package --> [C]org.javaan.model.NamedObjectBase --> [C]java.lang.Object
 [C]org.javaan.model.Type --> [C]org.javaan.model.NamedObjectBase --> [C]java.lang.Object
 [C]org.javaan.model.Type$JavaType --> [C]java.lang.Enum --> [C]java.lang.Object
@@ -1331,90 +1580,109 @@
 [C]org.javaan.print.TypeFormatter$1 --> [C]java.lang.Object
 [C]org.javaan.print.TypeInformationFormatter --> [C]java.lang.Object
 [C]org.javaan.print.VertexEdgeGraphPrinter --> [C]org.javaan.graph.GraphVisitorAdapter --> [C]java.lang.Object
+[C]org.jgrapht.GraphMetrics --> [C]java.lang.Object
 [C]org.jgrapht.GraphTests --> [C]java.lang.Object
 [C]org.jgrapht.Graphs --> [C]java.lang.Object
-[C]org.jgrapht.alg.AStarShortestPath --> [C]java.lang.Object
-[C]org.jgrapht.alg.AbstractPathElement --> [C]java.lang.Object
-[C]org.jgrapht.alg.AbstractPathElementList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
-[C]org.jgrapht.alg.AllDirectedPaths --> [C]java.lang.Object
-[C]org.jgrapht.alg.BellmanFordIterator --> [C]java.lang.Object
-[C]org.jgrapht.alg.BellmanFordPathElement --> [C]org.jgrapht.alg.AbstractPathElement --> [C]java.lang.Object
-[C]org.jgrapht.alg.BellmanFordShortestPath --> [C]java.lang.Object
-[C]org.jgrapht.alg.BiconnectivityInspector --> [C]java.lang.Object
-[C]org.jgrapht.alg.BidirectionalDijkstraShortestPath --> [C]java.lang.Object
-[C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails --> [C]java.lang.Object
-[C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails$DirectedSpecifics --> [C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails$QueueEntry --> [C]java.lang.Object
-[C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails$SearchFrontier --> [C]java.lang.Object
-[C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails$UndirectedSpecifics --> [C]org.jgrapht.alg.BidirectionalDijkstraShortestPath$AlgorithmDetails$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.BlockCutpointGraph --> [C]org.jgrapht.graph.SimpleGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.alg.BlockCutpointGraph$BCGEdge --> [C]org.jgrapht.graph.DefaultEdge --> [C]org.jgrapht.graph.IntrusiveEdge --> [C]java.lang.Object
-[C]org.jgrapht.alg.BronKerboschCliqueFinder --> [C]java.lang.Object
-[C]org.jgrapht.alg.ChromaticNumber --> [C]java.lang.Object
-[C]org.jgrapht.alg.CliqueMinimalSeparatorDecomposition --> [C]java.lang.Object
-[C]org.jgrapht.alg.ConnectivityInspector --> [C]java.lang.Object
-[C]org.jgrapht.alg.ConnectivityInspector$1 --> [C]java.lang.Object
-[C]org.jgrapht.alg.ConnectivityInspector$MyTraversalListener --> [C]org.jgrapht.event.TraversalListenerAdapter --> [C]java.lang.Object
-[C]org.jgrapht.alg.CycleDetector --> [C]java.lang.Object
-[C]org.jgrapht.alg.CycleDetector$1 --> [C]java.lang.Object
-[C]org.jgrapht.alg.CycleDetector$CycleDetectedException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
-[C]org.jgrapht.alg.CycleDetector$ProbeIterator --> [C]org.jgrapht.traverse.DepthFirstIterator --> [C]org.jgrapht.traverse.CrossComponentIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
-[C]org.jgrapht.alg.DijkstraShortestPath --> [C]java.lang.Object
-[C]org.jgrapht.alg.DirectedNeighborIndex --> [C]java.lang.Object
-[C]org.jgrapht.alg.EdmondsBlossomShrinking --> [C]java.lang.Object
-[C]org.jgrapht.alg.EulerianCircuit --> [C]java.lang.Object
-[C]org.jgrapht.alg.FloydWarshallShortestPaths --> [C]java.lang.Object
-[C]org.jgrapht.alg.GabowStrongConnectivityInspector --> [C]java.lang.Object
-[C]org.jgrapht.alg.GabowStrongConnectivityInspector$1 --> [C]java.lang.Object
-[C]org.jgrapht.alg.GabowStrongConnectivityInspector$VertexNumber --> [C]java.lang.Object
-[C]org.jgrapht.alg.GreedyMultiplicativeSpanner --> [C]java.lang.Object
-[C]org.jgrapht.alg.GreedyMultiplicativeSpanner$1 --> [C]java.lang.Object
-[C]org.jgrapht.alg.GreedyMultiplicativeSpanner$SpannerAlgorithmBase --> [C]java.lang.Object
-[C]org.jgrapht.alg.GreedyMultiplicativeSpanner$UnweightedSpannerAlgorithm --> [C]org.jgrapht.alg.GreedyMultiplicativeSpanner$SpannerAlgorithmBase --> [C]java.lang.Object
-[C]org.jgrapht.alg.GreedyMultiplicativeSpanner$WeightedSpannerAlgorithm --> [C]org.jgrapht.alg.GreedyMultiplicativeSpanner$SpannerAlgorithmBase --> [C]java.lang.Object
-[C]org.jgrapht.alg.HamiltonianCycle --> [C]java.lang.Object
-[C]org.jgrapht.alg.HopcroftKarpBipartiteMatching --> [C]java.lang.Object
-[C]org.jgrapht.alg.KShortestPaths --> [C]java.lang.Object
-[C]org.jgrapht.alg.KShortestPaths$PathWrapper --> [C]java.lang.Object
-[C]org.jgrapht.alg.KShortestPathsIterator --> [C]java.lang.Object
-[C]org.jgrapht.alg.KosarajuStrongConnectivityInspector --> [C]java.lang.Object
-[C]org.jgrapht.alg.KosarajuStrongConnectivityInspector$1 --> [C]java.lang.Object
-[C]org.jgrapht.alg.KosarajuStrongConnectivityInspector$VertexData --> [C]java.lang.Object
-[C]org.jgrapht.alg.KosarajuStrongConnectivityInspector$VertexData1 --> [C]org.jgrapht.alg.KosarajuStrongConnectivityInspector$VertexData --> [C]java.lang.Object
-[C]org.jgrapht.alg.KosarajuStrongConnectivityInspector$VertexData2 --> [C]org.jgrapht.alg.KosarajuStrongConnectivityInspector$VertexData --> [C]java.lang.Object
-[C]org.jgrapht.alg.KruskalMinimumSpanningTree --> [C]java.lang.Object
-[C]org.jgrapht.alg.KuhnMunkresMinimalWeightBipartitePerfectMatching --> [C]java.lang.Object
-[C]org.jgrapht.alg.KuhnMunkresMinimalWeightBipartitePerfectMatching$1 --> [C]java.lang.Object
-[C]org.jgrapht.alg.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation --> [C]java.lang.Object
-[C]org.jgrapht.alg.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation$MatchExtender --> [C]java.lang.Object
-[C]org.jgrapht.alg.MaximumWeightBipartiteMatching --> [C]java.lang.Object
-[C]org.jgrapht.alg.NaiveLcaFinder --> [C]java.lang.Object
-[C]org.jgrapht.alg.NeighborIndex --> [C]java.lang.Object
-[C]org.jgrapht.alg.NeighborIndex$Neighbors --> [C]java.lang.Object
-[C]org.jgrapht.alg.PrimMinimumSpanningTree --> [C]java.lang.Object
-[C]org.jgrapht.alg.RankingPathElement --> [C]org.jgrapht.alg.AbstractPathElement --> [C]java.lang.Object
-[C]org.jgrapht.alg.RankingPathElementList --> [C]org.jgrapht.alg.AbstractPathElementList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
-[C]org.jgrapht.alg.RankingPathElementList$PathMask --> [C]java.lang.Object
 [C]org.jgrapht.alg.StoerWagnerMinimumCut --> [C]java.lang.Object
 [C]org.jgrapht.alg.StoerWagnerMinimumCut$VertexAndWeight --> [C]java.lang.Object
-[C]org.jgrapht.alg.TarjanLowestCommonAncestor --> [C]java.lang.Object
-[C]org.jgrapht.alg.TarjanLowestCommonAncestor$1 --> [C]java.lang.Object
-[C]org.jgrapht.alg.TarjanLowestCommonAncestor$LcaRequestResponse --> [C]java.lang.Object
-[C]org.jgrapht.alg.TarjanLowestCommonAncestor$MultiMap --> [C]java.util.HashMap --> [C]java.util.AbstractMap --> [C]java.lang.Object
-[C]org.jgrapht.alg.TarjanLowestCommonAncestor$Worker --> [C]java.lang.Object
 [C]org.jgrapht.alg.TransitiveClosure --> [C]java.lang.Object
 [C]org.jgrapht.alg.TransitiveReduction --> [C]java.lang.Object
+[C]org.jgrapht.alg.clique.BaseBronKerboschCliqueFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.clique.BronKerboschCliqueFinder --> [C]org.jgrapht.alg.clique.BaseBronKerboschCliqueFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.clique.ChordalGraphMaxCliqueFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.clique.CliqueMinimalSeparatorDecomposition --> [C]java.lang.Object
+[C]org.jgrapht.alg.clique.DegeneracyBronKerboschCliqueFinder --> [C]org.jgrapht.alg.clique.PivotBronKerboschCliqueFinder --> [C]org.jgrapht.alg.clique.BaseBronKerboschCliqueFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.clique.PivotBronKerboschCliqueFinder --> [C]org.jgrapht.alg.clique.BaseBronKerboschCliqueFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.clustering.GirvanNewmanClustering --> [C]java.lang.Object
+[C]org.jgrapht.alg.clustering.KSpanningTreeClustering --> [C]java.lang.Object
+[C]org.jgrapht.alg.clustering.LabelPropagationClustering --> [C]java.lang.Object
+[C]org.jgrapht.alg.clustering.LabelPropagationClustering$Implementation --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.BrownBacktrackColoring --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.ChordalGraphColoring --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.ColorRefinementAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.ColorRefinementAlgorithm$ColoringRepresentation --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.GreedyColoring --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.LargestDegreeFirstColoring --> [C]org.jgrapht.alg.color.GreedyColoring --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.RandomGreedyColoring --> [C]org.jgrapht.alg.color.GreedyColoring --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.SaturationDegreeColoring --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.SaturationDegreeColoring$DSaturComparator --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.SaturationDegreeColoring$Heap --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.SaturationDegreeColoring$HeapHandle --> [C]java.lang.Object
+[C]org.jgrapht.alg.color.SmallestDegreeLastColoring --> [C]org.jgrapht.alg.color.GreedyColoring --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.AbstractStrongConnectivityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.BiconnectivityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.BlockCutpointGraph --> [C]org.jgrapht.graph.SimpleGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.ConnectivityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.ConnectivityInspector$MyTraversalListener --> [C]org.jgrapht.event.TraversalListenerAdapter --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.GabowStrongConnectivityInspector --> [C]org.jgrapht.alg.connectivity.AbstractStrongConnectivityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.GabowStrongConnectivityInspector$VertexNumber --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector --> [C]org.jgrapht.alg.connectivity.AbstractStrongConnectivityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector$VertexData --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector$VertexData1 --> [C]org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector$VertexData --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector$VertexData2 --> [C]org.jgrapht.alg.connectivity.KosarajuStrongConnectivityInspector$VertexData --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.TreeDynamicConnectivity --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.TreeDynamicConnectivity$Arc --> [C]java.lang.Object
+[C]org.jgrapht.alg.connectivity.TreeDynamicConnectivity$Node --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.AbstractFundamentalCycleBasis --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.AhujaOrlinSharmaCyclicExchangeLocalAugmentation --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.AhujaOrlinSharmaCyclicExchangeLocalAugmentation$LabeledPath --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.AhujaOrlinSharmaCyclicExchangeLocalAugmentation$PathSetKey --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.BergeGraphInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.ChinesePostman --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.ChordalGraphMinimalVertexSeparatorFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.ChordalityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.ChordalityInspector$IterationOrder --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.CycleDetector --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.CycleDetector$CycleDetectedException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.CycleDetector$ProbeIterator --> [C]org.jgrapht.traverse.DepthFirstIterator --> [C]org.jgrapht.traverse.CrossComponentIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.Cycles --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.HawickJamesSimpleCycles --> [C]java.lang.Object
-[C]org.jgrapht.alg.cycle.HawickJamesSimpleCycles$Operation --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.HierholzerEulerianCycle --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.HierholzerEulerianCycle$EdgeNode --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.HierholzerEulerianCycle$VertexNode --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.HowardMinimumMeanCycle --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.JohnsonSimpleCycles --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.PatonCycleBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.QueueBFSFundamentalCycleBasis --> [C]org.jgrapht.alg.cycle.AbstractFundamentalCycleBasis --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.StackBFSFundamentalCycleBasis --> [C]org.jgrapht.alg.cycle.AbstractFundamentalCycleBasis --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.SzwarcfiterLauerSimpleCycles --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.TarjanSimpleCycles --> [C]java.lang.Object
 [C]org.jgrapht.alg.cycle.TiernanSimpleCycles --> [C]java.lang.Object
+[C]org.jgrapht.alg.cycle.WeakChordalityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.decomposition.DulmageMendelsohnDecomposition --> [C]java.lang.Object
+[C]org.jgrapht.alg.decomposition.DulmageMendelsohnDecomposition$Decomposition --> [C]java.lang.Object
+[C]org.jgrapht.alg.decomposition.HeavyPathDecomposition --> [C]java.lang.Object
+[C]org.jgrapht.alg.decomposition.HeavyPathDecomposition$InternalState --> [C]java.lang.Object
+[C]org.jgrapht.alg.densesubgraph.GoldbergMaximumDensitySubgraphAlgorithm --> [C]org.jgrapht.alg.densesubgraph.GoldbergMaximumDensitySubgraphAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.densesubgraph.GoldbergMaximumDensitySubgraphAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.densesubgraph.GoldbergMaximumDensitySubgraphAlgorithmNodeWeightPerEdgeWeight --> [C]org.jgrapht.alg.densesubgraph.GoldbergMaximumDensitySubgraphAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.densesubgraph.GoldbergMaximumDensitySubgraphAlgorithmNodeWeights --> [C]org.jgrapht.alg.densesubgraph.GoldbergMaximumDensitySubgraphAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.BarycenterGreedyTwoLayeredBipartiteLayout2D --> [C]org.jgrapht.alg.drawing.TwoLayeredBipartiteLayout2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.BaseLayoutAlgorithm2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.CircularLayoutAlgorithm2D --> [C]org.jgrapht.alg.drawing.BaseLayoutAlgorithm2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.FRLayoutAlgorithm2D --> [C]org.jgrapht.alg.drawing.BaseLayoutAlgorithm2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.FRLayoutAlgorithm2D$InverseLinearTemperatureModel --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.FRQuadTree --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.FRQuadTree$Node --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.IndexedFRLayoutAlgorithm2D --> [C]org.jgrapht.alg.drawing.FRLayoutAlgorithm2D --> [C]org.jgrapht.alg.drawing.BaseLayoutAlgorithm2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.MedianGreedyTwoLayeredBipartiteLayout2D --> [C]org.jgrapht.alg.drawing.TwoLayeredBipartiteLayout2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.RandomLayoutAlgorithm2D --> [C]org.jgrapht.alg.drawing.BaseLayoutAlgorithm2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.RescaleLayoutAlgorithm2D --> [C]org.jgrapht.alg.drawing.BaseLayoutAlgorithm2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.TwoLayeredBipartiteLayout2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.model.Box2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.model.Boxes --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.model.ListenableLayoutModel2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.model.MapLayoutModel2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.model.Point2D --> [C]java.lang.Object
+[C]org.jgrapht.alg.drawing.model.Points --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexExtension --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase$VertexExtensionBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexTreeStatus --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexTreeStatus$1 --> [C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexTreeStatus --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexTreeStatus$2 --> [C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexTreeStatus --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexTreeStatus$3 --> [C]org.jgrapht.alg.flow.BoykovKolmogorovMFImpl$VertexTreeStatus --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.DinicMFImpl --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.DinicMFImpl$VertexExtension --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase$VertexExtensionBase --> [C]java.lang.Object
 [C]org.jgrapht.alg.flow.EdmondsKarpMFImpl --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase --> [C]java.lang.Object
 [C]org.jgrapht.alg.flow.EdmondsKarpMFImpl$VertexExtension --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase$VertexExtensionBase --> [C]java.lang.Object
 [C]org.jgrapht.alg.flow.GusfieldEquivalentFlowTree --> [C]java.lang.Object
@@ -1426,14 +1694,36 @@
 [C]org.jgrapht.alg.flow.PushRelabelMFImpl --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase --> [C]java.lang.Object
 [C]org.jgrapht.alg.flow.PushRelabelMFImpl$PushRelabelDiagnostic --> [C]java.lang.Object
 [C]org.jgrapht.alg.flow.PushRelabelMFImpl$VertexExtension --> [C]org.jgrapht.alg.flow.MaximumFlowAlgorithmBase$VertexExtensionBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.mincost.CapacityScalingMinimumCostFlow --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.mincost.CapacityScalingMinimumCostFlow$Arc --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.mincost.CapacityScalingMinimumCostFlow$Node --> [C]java.lang.Object
+[C]org.jgrapht.alg.flow.mincost.MinimumCostFlowProblem$MinimumCostFlowProblemImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.independentset.ChordalGraphIndependentSetFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.CapacitatedSpanningTreeAlgorithm$CapacitatedSpanningTreeImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.CliqueAlgorithm$CliqueImpl --> [C]org.jgrapht.util.WeightedUnmodifiableSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.ClusteringAlgorithm$ClusteringImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.CycleBasisAlgorithm$CycleBasisImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.FlowAlgorithm$FlowImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.IndependentSetAlgorithm$IndependentSetImpl --> [C]org.jgrapht.util.WeightedUnmodifiableSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.ManyToManyShortestPathsAlgorithm$BaseManyToManyShortestPathsImpl --> [C]java.lang.Object
 [C]org.jgrapht.alg.interfaces.MatchingAlgorithm$MatchingImpl --> [C]java.lang.Object
-[C]org.jgrapht.alg.interfaces.MaximumFlowAlgorithm$MaximumFlowImpl --> [C]java.lang.Object
-[C]org.jgrapht.alg.interfaces.MinimumVertexCoverAlgorithm$VertexCoverImpl --> [C]java.lang.Object
-[C]org.jgrapht.alg.interfaces.SpannerAlgorithm$SpannerImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.MaximumFlowAlgorithm$MaximumFlowImpl --> [C]org.jgrapht.alg.interfaces.FlowAlgorithm$FlowImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.MinimumCostFlowAlgorithm$MinimumCostFlowImpl --> [C]org.jgrapht.alg.interfaces.FlowAlgorithm$FlowImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.PartitioningAlgorithm$PartitioningImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.PlanarityTestingAlgorithm$EmbeddingImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.SpannerAlgorithm$SpannerImpl --> [C]org.jgrapht.util.WeightedUnmodifiableSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
 [C]org.jgrapht.alg.interfaces.SpanningTreeAlgorithm$SpanningTreeImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.TreeToPathDecompositionAlgorithm$PathDecompositionImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.VertexColoringAlgorithm$ColoringImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.interfaces.VertexCoverAlgorithm$VertexCoverImpl --> [C]org.jgrapht.util.WeightedUnmodifiableSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]org.jgrapht.alg.isomorphism.AHUForestIsomorphismInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.isomorphism.AHURootedTreeIsomorphismInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.isomorphism.AHUUnrootedTreeIsomorphismInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.isomorphism.ColorRefinementIsomorphismInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.isomorphism.ColorRefinementIsomorphismInspector$DistinctGraphObject --> [C]java.lang.Object
 [C]org.jgrapht.alg.isomorphism.GraphOrdering --> [C]java.lang.Object
-[C]org.jgrapht.alg.isomorphism.GraphOrdering$GeneralVertexDegreeComparator --> [C]java.lang.Object
 [C]org.jgrapht.alg.isomorphism.IsomorphicGraphMapping --> [C]java.lang.Object
+[C]org.jgrapht.alg.isomorphism.IsomorphismUndecidableException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.jgrapht.alg.isomorphism.VF2AbstractIsomorphismInspector --> [C]java.lang.Object
 [C]org.jgrapht.alg.isomorphism.VF2GraphIsomorphismInspector --> [C]org.jgrapht.alg.isomorphism.VF2AbstractIsomorphismInspector --> [C]java.lang.Object
 [C]org.jgrapht.alg.isomorphism.VF2GraphIsomorphismState --> [C]org.jgrapht.alg.isomorphism.VF2State --> [C]java.lang.Object
@@ -1443,62 +1733,218 @@
 [C]org.jgrapht.alg.isomorphism.VF2SubgraphIsomorphismInspector --> [C]org.jgrapht.alg.isomorphism.VF2AbstractIsomorphismInspector --> [C]java.lang.Object
 [C]org.jgrapht.alg.isomorphism.VF2SubgraphIsomorphismState --> [C]org.jgrapht.alg.isomorphism.VF2State --> [C]java.lang.Object
 [C]org.jgrapht.alg.isomorphism.VF2SubgraphMappingIterator --> [C]org.jgrapht.alg.isomorphism.VF2MappingIterator --> [C]java.lang.Object
-[C]org.jgrapht.alg.matching.EdmondsBlossomShrinking --> [C]java.lang.Object
+[C]org.jgrapht.alg.lca.BinaryLiftingLCAFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.lca.EulerTourRMQLCAFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.lca.HeavyPathLCAFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.lca.NaiveLCAFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.lca.TarjanLCAFinder --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.AdamicAdarIndexLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.CommonNeighborsLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.HubDepressedIndexLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.HubPromotedIndexLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.JaccardCoefficientLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.LeichtHolmeNewmanIndexLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.LinkPredictionIndexNotWellDefinedException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.PreferentialAttachmentLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.ResourceAllocationIndexLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.SaltonIndexLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.linkprediction.SørensenIndexLinkPrediction --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.DenseEdmondsMaximumCardinalityMatching --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.DenseEdmondsMaximumCardinalityMatching$Levels --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.DenseEdmondsMaximumCardinalityMatching$SimpleMatching --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.GreedyMaximumCardinalityMatching --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.GreedyMaximumCardinalityMatching$EdgeDegreeComparator --> [C]java.lang.Object
 [C]org.jgrapht.alg.matching.GreedyWeightedMatching --> [C]java.lang.Object
-[C]org.jgrapht.alg.matching.HopcroftKarpBipartiteMatching --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching --> [C]java.lang.Object
 [C]org.jgrapht.alg.matching.KuhnMunkresMinimalWeightBipartitePerfectMatching --> [C]java.lang.Object
-[C]org.jgrapht.alg.matching.KuhnMunkresMinimalWeightBipartitePerfectMatching$1 --> [C]java.lang.Object
 [C]org.jgrapht.alg.matching.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation --> [C]java.lang.Object
 [C]org.jgrapht.alg.matching.KuhnMunkresMinimalWeightBipartitePerfectMatching$KuhnMunkresMatrixImplementation$MatchExtender --> [C]java.lang.Object
 [C]org.jgrapht.alg.matching.MaximumWeightBipartiteMatching --> [C]java.lang.Object
 [C]org.jgrapht.alg.matching.PathGrowingWeightedMatching --> [C]java.lang.Object
 [C]org.jgrapht.alg.matching.PathGrowingWeightedMatching$DynamicProgrammingPathSolver --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.SparseEdmondsMaximumCardinalityMatching --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.SparseEdmondsMaximumCardinalityMatching$Algorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.SparseEdmondsMaximumCardinalityMatching$Algorithm$Label --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.SparseEdmondsMaximumCardinalityMatching$VertexPartition --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.SparseEdmondsMaximumCardinalityMatching$VertexPartition$Item --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVDualUpdater --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVEdge --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVEdge$BlossomNodesIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVInitializer --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVInitializer$1 --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVInitializer$Action --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVNode --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVNode$IncidentEdgeIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVNode$Label --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$DualUpdateStrategy --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$DualUpdateStrategy$1 --> [C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$DualUpdateStrategy --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$DualUpdateStrategy$2 --> [C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$DualUpdateStrategy --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$InitializationType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$InitializationType$1 --> [C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$InitializationType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$InitializationType$2 --> [C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$InitializationType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$InitializationType$3 --> [C]org.jgrapht.alg.matching.blossom.v5.BlossomVOptions$InitializationType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVPrimalUpdater --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVState --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVTree --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVTree$TreeEdgeIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVTree$TreeNodeIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.BlossomVTreeEdge --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.KolmogorovWeightedMatching --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.KolmogorovWeightedPerfectMatching --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.KolmogorovWeightedPerfectMatching$DualSolution --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.KolmogorovWeightedPerfectMatching$Statistics --> [C]java.lang.Object
+[C]org.jgrapht.alg.matching.blossom.v5.ObjectiveSense --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.partition.BipartitePartitioning --> [C]java.lang.Object
+[C]org.jgrapht.alg.planar.BoyerMyrvoldPlanarityInspector --> [C]java.lang.Object
+[C]org.jgrapht.alg.planar.BoyerMyrvoldPlanarityInspector$Edge --> [C]java.lang.Object
+[C]org.jgrapht.alg.planar.BoyerMyrvoldPlanarityInspector$MergeInfo --> [C]java.lang.Object
+[C]org.jgrapht.alg.planar.BoyerMyrvoldPlanarityInspector$Node --> [C]java.lang.Object
+[C]org.jgrapht.alg.planar.BoyerMyrvoldPlanarityInspector$OrientDfsStackInfo --> [C]java.lang.Object
+[C]org.jgrapht.alg.planar.BoyerMyrvoldPlanarityInspector$OuterFaceCirculator --> [C]java.lang.Object
+[C]org.jgrapht.alg.planar.BoyerMyrvoldPlanarityInspector$SearchInfo --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.AlphaCentrality --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.BetweennessCentrality --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.BetweennessCentrality$OverflowStrategy --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.BetweennessCentrality$UnweightedQueue --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.BetweennessCentrality$WeightedQueue --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.ClosenessCentrality --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.ClusteringCoefficient --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.Coreness --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.EdgeBetweennessCentrality --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.EdgeBetweennessCentrality$Algorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.EdgeBetweennessCentrality$OverflowStrategy --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.EdgeBetweennessCentrality$WeightedAlgorithm --> [C]org.jgrapht.alg.scoring.EdgeBetweennessCentrality$Algorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.EigenvectorCentrality --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.HarmonicCentrality --> [C]org.jgrapht.alg.scoring.ClosenessCentrality --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.KatzCentrality --> [C]java.lang.Object
 [C]org.jgrapht.alg.scoring.PageRank --> [C]java.lang.Object
-[C]org.jgrapht.alg.scoring.PageRank$DirectedSpecifics --> [C]org.jgrapht.alg.scoring.PageRank$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.scoring.PageRank$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.scoring.PageRank$UndirectedSpecifics --> [C]org.jgrapht.alg.scoring.PageRank$Specifics --> [C]java.lang.Object
+[C]org.jgrapht.alg.scoring.PageRank$Algorithm --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.ALTAdmissibleHeuristic --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.AStarShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.AbstractPathElement --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.AbstractPathElementList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.AllDirectedPaths --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BFSShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BaseBidirectionalShortestPathAlgorithm --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BaseBidirectionalShortestPathAlgorithm$BaseSearchFrontier --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BaseKDisjointShortestPathsAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BaseManyToManyShortestPaths --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BaseMultiObjectiveShortestPathAlgorithm --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BellmanFordIterator --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BellmanFordPathElement --> [C]org.jgrapht.alg.shortestpath.AbstractPathElement --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.BellmanFordShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BellmanFordShortestPath$PathElementSingleSourcePaths --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$DirectedSpecifics --> [C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$QueueEntry --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$SearchFrontier --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$UndirectedSpecifics --> [C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$Specifics --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BhandariKDisjointShortestPaths --> [C]org.jgrapht.alg.shortestpath.BaseKDisjointShortestPathsAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseBidirectionalShortestPathAlgorithm --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath$AStarSearchFrontier --> [C]org.jgrapht.alg.shortestpath.BaseBidirectionalShortestPathAlgorithm$BaseSearchFrontier --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath$ConsistentTerminationCriterion --> [C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath$TerminationCriterion --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath$InconsistentTerminationCriterion --> [C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath$TerminationCriterion --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath$ReversedGraphHeuristic --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalAStarShortestPath$TerminationCriterion --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseBidirectionalShortestPathAlgorithm --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$DijkstraSearchFrontier --> [C]org.jgrapht.alg.shortestpath.BaseBidirectionalShortestPathAlgorithm$BaseSearchFrontier --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.CHManyToManyShortestPaths --> [C]org.jgrapht.alg.shortestpath.BaseManyToManyShortestPaths --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.CHManyToManyShortestPaths$BucketEntry --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.CHManyToManyShortestPaths$CHManyToManyShortestPathsImpl --> [C]org.jgrapht.alg.interfaces.ManyToManyShortestPathsAlgorithm$BaseManyToManyShortestPathsImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyBidirectionalDijkstra --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyBidirectionalDijkstra$ContractionSearchFrontier --> [C]org.jgrapht.alg.shortestpath.BidirectionalDijkstraShortestPath$DijkstraSearchFrontier --> [C]org.jgrapht.alg.shortestpath.BaseBidirectionalShortestPathAlgorithm$BaseSearchFrontier --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$1 --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$ContractionEdge --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$ContractionHierarchy --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$ContractionTask --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$ContractionVertex --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$ToListConsumer --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$ToStatisticsConsumer --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$VertexData --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ContractionHierarchyPrecomputation$VertexStatistics --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DefaultManyToManyShortestPaths --> [C]org.jgrapht.alg.shortestpath.BaseManyToManyShortestPaths --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DefaultManyToManyShortestPaths$DefaultManyToManyShortestPathsImpl --> [C]org.jgrapht.alg.interfaces.ManyToManyShortestPathsAlgorithm$BaseManyToManyShortestPathsImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DeltaSteppingShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DeltaSteppingShortestPath$HeavyRelaxTask --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DeltaSteppingShortestPath$LightRelaxTask --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DeltaSteppingShortestPath$MaxEdgeWeightTask --> [C]java.util.concurrent.RecursiveTask --> [C]java.util.concurrent.ForkJoinTask --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.DijkstraClosestFirstIterator --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.DijkstraClosestFirstIterator$DirectedSpecifics --> [C]org.jgrapht.alg.shortestpath.DijkstraClosestFirstIterator$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.DijkstraClosestFirstIterator$QueueEntry --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.DijkstraClosestFirstIterator$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.DijkstraClosestFirstIterator$UndirectedSpecifics --> [C]org.jgrapht.alg.shortestpath.DijkstraClosestFirstIterator$Specifics --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DijkstraManyToManyShortestPaths --> [C]org.jgrapht.alg.shortestpath.BaseManyToManyShortestPaths --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.DijkstraManyToManyShortestPaths$DijkstraManyToManyShortestPathsImpl --> [C]org.jgrapht.alg.interfaces.ManyToManyShortestPathsAlgorithm$BaseManyToManyShortestPathsImpl --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.DijkstraShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.EppsteinKShortestPath --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.EppsteinShortestPathIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.EppsteinShortestPathIterator$EppsteinGraphPath --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.EppsteinShortestPathIterator$PathsGraphVertex --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths$FloydWarshallSingleSourcePaths --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.KShortestPaths --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.KShortestPathsIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.GraphMeasurer --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.IntVertexDijkstraShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.IntVertexDijkstraShortestPath$Algorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.IntVertexDijkstraShortestPath$ArrayBasedSingleSourcePathsImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.IntVertexDijkstraShortestPath$IdentifierMap --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.JohnsonShortestPaths --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.JohnsonShortestPaths$JohnsonSingleSourcePaths --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.ListMultiObjectiveSingleSourcePathsImpl --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.ListSingleSourcePathsImpl --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.RankingPathElement --> [C]org.jgrapht.alg.shortestpath.AbstractPathElement --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.RankingPathElementList --> [C]org.jgrapht.alg.shortestpath.AbstractPathElementList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
-[C]org.jgrapht.alg.shortestpath.RankingPathElementList$PathMask --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.MartinShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseMultiObjectiveShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.MartinShortestPath$Label --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.MartinShortestPath$LabelComparator --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.NegativeCycleDetectedException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.SuurballeKDisjointShortestPaths --> [C]org.jgrapht.alg.shortestpath.BaseKDisjointShortestPathsAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$AVAndLFConstructionTask --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$AccessVertex --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$AccessVertices --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$AccessVerticesBuilder --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$ContractionHierarchyBFS --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$LocalityFilter --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$LocalityFilterBuilder --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$PathsUnpackingTask --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$TransitNodeRouting --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$VoronoiDiagram --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingPrecomputation$VoronoiDiagramComputation --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TransitNodeRoutingShortestPath --> [C]org.jgrapht.alg.shortestpath.BaseShortestPathAlgorithm --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.TreeMeasurer --> [C]java.lang.Object
 [C]org.jgrapht.alg.shortestpath.TreeSingleSourcePathsImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.YenKShortestPath --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.YenShortestPathIterator --> [C]java.lang.Object
+[C]org.jgrapht.alg.shortestpath.YenShortestPathIterator$YenShortestPathsTree --> [C]org.jgrapht.alg.shortestpath.TreeSingleSourcePathsImpl --> [C]java.lang.Object
+[C]org.jgrapht.alg.similarity.ZhangShashaTreeEditDistance --> [C]java.lang.Object
+[C]org.jgrapht.alg.similarity.ZhangShashaTreeEditDistance$CacheEntry --> [C]java.lang.Object
+[C]org.jgrapht.alg.similarity.ZhangShashaTreeEditDistance$EditOperation --> [C]java.lang.Object
+[C]org.jgrapht.alg.similarity.ZhangShashaTreeEditDistance$OperationType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.alg.similarity.ZhangShashaTreeEditDistance$TreeOrdering --> [C]java.lang.Object
+[C]org.jgrapht.alg.similarity.ZhangShashaTreeEditDistance$TreeOrdering$StackEntry --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.AbstractCapacitatedMinimumSpanningTree --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.AbstractCapacitatedMinimumSpanningTree$CapacitatedSpanningTreeSolutionRepresentation --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.AhujaOrlinSharmaCapacitatedMinimumSpanningTree --> [C]org.jgrapht.alg.spanning.AbstractCapacitatedMinimumSpanningTree --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.AhujaOrlinSharmaCapacitatedMinimumSpanningTree$1 --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.AhujaOrlinSharmaCapacitatedMinimumSpanningTree$ImprovementGraph --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.AhujaOrlinSharmaCapacitatedMinimumSpanningTree$ImprovementGraph$1 --> [C]java.util.AbstractMap --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.AhujaOrlinSharmaCapacitatedMinimumSpanningTree$ImprovementGraphVertexType --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.jgrapht.alg.spanning.BoruvkaMinimumSpanningTree --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.EsauWilliamsCapacitatedMinimumSpanningTree --> [C]org.jgrapht.alg.spanning.AbstractCapacitatedMinimumSpanningTree --> [C]java.lang.Object
 [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner --> [C]java.lang.Object
-[C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$1 --> [C]java.lang.Object
 [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$SpannerAlgorithmBase --> [C]java.lang.Object
 [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$UnweightedSpannerAlgorithm --> [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$SpannerAlgorithmBase --> [C]java.lang.Object
 [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$WeightedSpannerAlgorithm --> [C]org.jgrapht.alg.spanning.GreedyMultiplicativeSpanner$SpannerAlgorithmBase --> [C]java.lang.Object
 [C]org.jgrapht.alg.spanning.KruskalMinimumSpanningTree --> [C]java.lang.Object
 [C]org.jgrapht.alg.spanning.PrimMinimumSpanningTree --> [C]java.lang.Object
+[C]org.jgrapht.alg.spanning.PrimMinimumSpanningTree$VertexInfo --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.ChristofidesThreeHalvesApproxMetricTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.GreedyHeuristicTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.HeldKarpTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.NearestInsertionHeuristicTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.NearestInsertionHeuristicTSP$Closest --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.NearestNeighborHeuristicTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.PalmerHamiltonianCycle --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.RandomTourTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.TwoApproxMetricTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.tour.TwoOptHeuristicTSP --> [C]org.jgrapht.alg.tour.HamiltonianCycleAlgorithmBase --> [C]java.lang.Object
+[C]org.jgrapht.alg.transform.LineGraphConverter --> [C]java.lang.Object
+[C]org.jgrapht.alg.util.AliasMethodSampler --> [C]java.lang.Object
 [C]org.jgrapht.alg.util.AlwaysEqualComparator --> [C]java.lang.Object
+[C]org.jgrapht.alg.util.FixedSizeIntegerQueue --> [C]java.lang.Object
+[C]org.jgrapht.alg.util.NeighborCache --> [C]java.lang.Object
+[C]org.jgrapht.alg.util.NeighborCache$Neighbors --> [C]java.lang.Object
 [C]org.jgrapht.alg.util.Pair --> [C]java.lang.Object
 [C]org.jgrapht.alg.util.ToleranceDoubleComparator --> [C]java.lang.Object
+[C]org.jgrapht.alg.util.Triple --> [C]java.lang.Object
 [C]org.jgrapht.alg.util.UnionFind --> [C]java.lang.Object
 [C]org.jgrapht.alg.util.UnorderedPair --> [C]org.jgrapht.alg.util.Pair --> [C]java.lang.Object
 [C]org.jgrapht.alg.util.VertexDegreeComparator --> [C]java.lang.Object
@@ -1518,79 +1964,104 @@
 [C]org.jgrapht.event.GraphVertexChangeEvent --> [C]org.jgrapht.event.GraphChangeEvent --> [C]java.util.EventObject --> [C]java.lang.Object
 [C]org.jgrapht.event.TraversalListenerAdapter --> [C]java.lang.Object
 [C]org.jgrapht.event.VertexTraversalEvent --> [C]java.util.EventObject --> [C]java.lang.Object
-[C]org.jgrapht.experimental.GraphSquare --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.experimental.GraphSquare$1 --> [C]java.lang.Object
-[C]org.jgrapht.experimental.alg.IntArrayGraphAlgorithm --> [C]java.lang.Object
-[C]org.jgrapht.experimental.alg.color.BrownBacktrackColoring --> [C]org.jgrapht.experimental.alg.IntArrayGraphAlgorithm --> [C]java.lang.Object
-[C]org.jgrapht.experimental.alg.color.GreedyColoring --> [C]org.jgrapht.experimental.alg.IntArrayGraphAlgorithm --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph --> [C]org.jgrapht.graph.SimpleDirectedGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$1 --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$CycleFoundException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$Region --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$TopoComparator --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$TopoIterator --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$TopoVertexBiMap --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$TopoVertexMap --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$VisitedArrayImpl --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$VisitedArrayListImpl --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$VisitedBitSetImpl --> [C]java.lang.Object
-[C]org.jgrapht.experimental.dag.DirectedAcyclicGraph$VisitedHashSetImpl --> [C]java.lang.Object
+[C]org.jgrapht.generate.BarabasiAlbertForestGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.BarabasiAlbertGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.ComplementGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.CompleteBipartiteGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.CompleteGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.DirectedScaleFreeGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.DirectedScaleFreeGraphGenerator$Direction --> [C]java.lang.Enum --> [C]java.lang.Object
 [C]org.jgrapht.generate.EmptyGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.GeneralizedPetersenGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.GnmRandomBipartiteGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.GnmRandomGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.GnpRandomBipartiteGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.GnpRandomGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.GridGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.HyperCubeGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.KleinbergSmallWorldGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.LinearGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.LinearizedChordDiagramGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.NamedGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.PlantedPartitionGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.PruferTreeGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.RandomRegularGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.RingGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.ScaleFreeGraphGenerator --> [C]java.lang.Object
-[C]org.jgrapht.generate.SimpleWeightedBipartiteGraphMatrixGenerator --> [C]org.jgrapht.generate.WeightedGraphGeneratorAdapter --> [C]java.lang.Object
-[C]org.jgrapht.generate.SimpleWeightedGraphMatrixGenerator --> [C]org.jgrapht.generate.WeightedGraphGeneratorAdapter --> [C]java.lang.Object
+[C]org.jgrapht.generate.SimpleWeightedBipartiteGraphMatrixGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.SimpleWeightedGraphMatrixGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.StarGraphGenerator --> [C]java.lang.Object
-[C]org.jgrapht.generate.WeightedGraphGenerator --> [C]java.lang.Object
-[C]org.jgrapht.generate.WeightedGraphGeneratorAdapter --> [C]java.lang.Object
+[C]org.jgrapht.generate.TooManyFailuresException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.jgrapht.generate.WattsStrogatzGraphGenerator --> [C]java.lang.Object
 [C]org.jgrapht.generate.WheelGraphGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.WindmillGraphsGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.WindmillGraphsGenerator$Mode --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.BipartiteMatchingProblem$BipartiteMatchingProblemImpl --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.Distributor --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.MaximumFlowProblem$MaximumFlowProblemImpl --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$1 --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$Node --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType$1 --> [C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType$2 --> [C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType$3 --> [C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType$4 --> [C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType$5 --> [C]org.jgrapht.generate.netgen.NetworkGenerator$NodeType --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGeneratorConfig --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkGeneratorConfigBuilder --> [C]java.lang.Object
+[C]org.jgrapht.generate.netgen.NetworkInfo --> [C]java.lang.Object
 [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.AsGraphUnion --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.AsSubgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.AsSubgraph$BaseGraphListener --> [C]java.lang.Object
 [C]org.jgrapht.graph.AsUndirectedGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.AsUnweightedDirectedGraph --> [C]org.jgrapht.graph.AsUnweightedGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.AsUnmodifiableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.AsUnweightedGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.AsWeightedDirectedGraph --> [C]org.jgrapht.graph.AsWeightedGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.AsWeightedGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.ClassBasedEdgeFactory --> [C]java.lang.Object
-[C]org.jgrapht.graph.ClassBasedVertexFactory --> [C]java.lang.Object
+[C]org.jgrapht.graph.BaseIntrusiveEdgesSpecifics --> [C]java.lang.Object
 [C]org.jgrapht.graph.DefaultDirectedGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.DefaultDirectedWeightedGraph --> [C]org.jgrapht.graph.DefaultDirectedGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.DefaultEdge --> [C]org.jgrapht.graph.IntrusiveEdge --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultEdgeFunction --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultGraphIterables --> [C]java.lang.Object
 [C]org.jgrapht.graph.DefaultGraphMapping --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultGraphSpecificsStrategy --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultGraphType --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultGraphType$Builder --> [C]java.lang.Object
 [C]org.jgrapht.graph.DefaultListenableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.DefaultListenableGraph$FlyweightEdgeEvent --> [C]org.jgrapht.event.GraphEdgeChangeEvent --> [C]org.jgrapht.event.GraphChangeEvent --> [C]java.util.EventObject --> [C]java.lang.Object
 [C]org.jgrapht.graph.DefaultListenableGraph$FlyweightVertexEvent --> [C]org.jgrapht.event.GraphVertexChangeEvent --> [C]org.jgrapht.event.GraphChangeEvent --> [C]java.util.EventObject --> [C]java.lang.Object
-[C]org.jgrapht.graph.DefaultWeightedEdge --> [C]org.jgrapht.graph.DefaultEdge --> [C]org.jgrapht.graph.IntrusiveEdge --> [C]java.lang.Object
-[C]org.jgrapht.graph.DirectedGraphUnion --> [C]org.jgrapht.graph.GraphUnion --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.DirectedMaskSubgraph --> [C]org.jgrapht.graph.MaskSubgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultUndirectedGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultUndirectedWeightedGraph --> [C]org.jgrapht.graph.DefaultUndirectedGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.DefaultWeightedEdge --> [C]org.jgrapht.graph.IntrusiveWeightedEdge --> [C]org.jgrapht.graph.IntrusiveEdge --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$CycleFoundException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$Region --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$TopoComparator --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$TopoIterator --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$TopoVertexBiMap --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$TopoVertexMap --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$VisitedArrayImpl --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$VisitedArrayListImpl --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$VisitedBitSetImpl --> [C]java.lang.Object
+[C]org.jgrapht.graph.DirectedAcyclicGraph$VisitedHashSetImpl --> [C]java.lang.Object
 [C]org.jgrapht.graph.DirectedMultigraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.DirectedPseudograph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.DirectedSubgraph --> [C]org.jgrapht.graph.Subgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.DirectedWeightedMultigraph --> [C]org.jgrapht.graph.DirectedMultigraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.DirectedWeightedPseudograph --> [C]org.jgrapht.graph.DirectedPseudograph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.DirectedWeightedSubgraph --> [C]org.jgrapht.graph.DirectedSubgraph --> [C]org.jgrapht.graph.Subgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.EdgeReversedGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.FastLookupGraphSpecificsStrategy --> [C]java.lang.Object
 [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.GraphUnion --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.GraphWalk --> [C]java.lang.Object
 [C]org.jgrapht.graph.IntrusiveEdge --> [C]java.lang.Object
-[C]org.jgrapht.graph.ListenableDirectedGraph --> [C]org.jgrapht.graph.DefaultListenableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.ListenableDirectedWeightedGraph --> [C]org.jgrapht.graph.ListenableDirectedGraph --> [C]org.jgrapht.graph.DefaultListenableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.ListenableUndirectedGraph --> [C]org.jgrapht.graph.DefaultListenableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.ListenableUndirectedWeightedGraph --> [C]org.jgrapht.graph.ListenableUndirectedGraph --> [C]org.jgrapht.graph.DefaultListenableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.IntrusiveEdgeException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.jgrapht.graph.IntrusiveWeightedEdge --> [C]org.jgrapht.graph.IntrusiveEdge --> [C]java.lang.Object
+[C]org.jgrapht.graph.InvalidGraphWalkException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
 [C]org.jgrapht.graph.MaskEdgeSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
 [C]org.jgrapht.graph.MaskSubgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.MaskVertexSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
-[C]org.jgrapht.graph.MixedGraphUnion --> [C]org.jgrapht.graph.GraphUnion --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.Multigraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.ParanoidGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.Pseudograph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
@@ -1598,27 +2069,19 @@
 [C]org.jgrapht.graph.SimpleDirectedWeightedGraph --> [C]org.jgrapht.graph.SimpleDirectedGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.SimpleGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.SimpleWeightedGraph --> [C]org.jgrapht.graph.SimpleGraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.Subgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.Subgraph$1 --> [C]java.lang.Object
-[C]org.jgrapht.graph.Subgraph$BaseGraphListener --> [C]java.lang.Object
-[C]org.jgrapht.graph.UndirectedGraphUnion --> [C]org.jgrapht.graph.GraphUnion --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.UndirectedMaskSubgraph --> [C]org.jgrapht.graph.MaskSubgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.UndirectedSubgraph --> [C]org.jgrapht.graph.Subgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.UndirectedWeightedSubgraph --> [C]org.jgrapht.graph.UndirectedSubgraph --> [C]org.jgrapht.graph.Subgraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.UnmodifiableDirectedGraph --> [C]org.jgrapht.graph.UnmodifiableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.UnmodifiableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
-[C]org.jgrapht.graph.UnmodifiableUndirectedGraph --> [C]org.jgrapht.graph.UnmodifiableGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.UniformIntrusiveEdgesSpecifics --> [C]org.jgrapht.graph.BaseIntrusiveEdgesSpecifics --> [C]java.lang.Object
+[C]org.jgrapht.graph.WeightedIntrusiveEdgesSpecifics --> [C]org.jgrapht.graph.BaseIntrusiveEdgesSpecifics --> [C]java.lang.Object
 [C]org.jgrapht.graph.WeightedMultigraph --> [C]org.jgrapht.graph.Multigraph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.WeightedPseudograph --> [C]org.jgrapht.graph.Pseudograph --> [C]org.jgrapht.graph.AbstractBaseGraph --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
 [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.DirectedGraphBuilder --> [C]org.jgrapht.graph.builder.DirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.DirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.DirectedWeightedGraphBuilder --> [C]org.jgrapht.graph.builder.DirectedWeightedGraphBuilderBase --> [C]org.jgrapht.graph.builder.DirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.DirectedWeightedGraphBuilderBase --> [C]org.jgrapht.graph.builder.DirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.UndirectedGraphBuilder --> [C]org.jgrapht.graph.builder.UndirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.UndirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.UndirectedWeightedGraphBuilder --> [C]org.jgrapht.graph.builder.UndirectedWeightedGraphBuilderBase --> [C]org.jgrapht.graph.builder.UndirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
-[C]org.jgrapht.graph.builder.UndirectedWeightedGraphBuilderBase --> [C]org.jgrapht.graph.builder.UndirectedGraphBuilderBase --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
+[C]org.jgrapht.graph.builder.GraphBuilder --> [C]org.jgrapht.graph.builder.AbstractGraphBuilder --> [C]java.lang.Object
+[C]org.jgrapht.graph.builder.GraphTypeBuilder --> [C]java.lang.Object
+[C]org.jgrapht.graph.concurrent.AsSynchronizedGraph --> [C]org.jgrapht.graph.GraphDelegator --> [C]org.jgrapht.graph.AbstractGraph --> [C]java.lang.Object
+[C]org.jgrapht.graph.concurrent.AsSynchronizedGraph$Builder --> [C]java.lang.Object
+[C]org.jgrapht.graph.concurrent.AsSynchronizedGraph$CacheAccess --> [C]java.lang.Object
+[C]org.jgrapht.graph.concurrent.AsSynchronizedGraph$CopyOnDemandSet --> [C]java.lang.Object
+[C]org.jgrapht.graph.concurrent.AsSynchronizedGraph$NoCache --> [C]java.lang.Object
+[C]org.jgrapht.graph.concurrent.AsSynchronizedGraph$NoCopy --> [C]org.jgrapht.graph.concurrent.AsSynchronizedGraph$NoCache --> [C]java.lang.Object
 [C]org.jgrapht.graph.specifics.ArrayUnenforcedSetEdgeSetFactory --> [C]java.lang.Object
 [C]org.jgrapht.graph.specifics.DirectedEdgeContainer --> [C]java.lang.Object
 [C]org.jgrapht.graph.specifics.DirectedSpecifics --> [C]java.lang.Object
@@ -1627,32 +2090,122 @@
 [C]org.jgrapht.graph.specifics.UndirectedEdgeContainer --> [C]java.lang.Object
 [C]org.jgrapht.graph.specifics.UndirectedSpecifics --> [C]java.lang.Object
 [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
-[C]org.jgrapht.traverse.AbstractGraphIterator$DirectedSpecifics --> [C]org.jgrapht.traverse.AbstractGraphIterator$Specifics --> [C]java.lang.Object
 [C]org.jgrapht.traverse.AbstractGraphIterator$FlyweightEdgeEvent --> [C]org.jgrapht.event.EdgeTraversalEvent --> [C]java.util.EventObject --> [C]java.lang.Object
 [C]org.jgrapht.traverse.AbstractGraphIterator$FlyweightVertexEvent --> [C]org.jgrapht.event.VertexTraversalEvent --> [C]java.util.EventObject --> [C]java.lang.Object
-[C]org.jgrapht.traverse.AbstractGraphIterator$Specifics --> [C]java.lang.Object
-[C]org.jgrapht.traverse.AbstractGraphIterator$UndirectedSpecifics --> [C]org.jgrapht.traverse.AbstractGraphIterator$Specifics --> [C]java.lang.Object
 [C]org.jgrapht.traverse.BreadthFirstIterator --> [C]org.jgrapht.traverse.CrossComponentIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
+[C]org.jgrapht.traverse.BreadthFirstIterator$SearchNodeData --> [C]java.lang.Object
 [C]org.jgrapht.traverse.ClosestFirstIterator --> [C]org.jgrapht.traverse.CrossComponentIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
 [C]org.jgrapht.traverse.ClosestFirstIterator$QueueEntry --> [C]java.lang.Object
 [C]org.jgrapht.traverse.CrossComponentIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
-[C]org.jgrapht.traverse.CrossComponentIterator$VisitColor --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.traverse.DegeneracyOrderingIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
 [C]org.jgrapht.traverse.DepthFirstIterator --> [C]org.jgrapht.traverse.CrossComponentIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
+[C]org.jgrapht.traverse.DepthFirstIterator$VisitColor --> [C]java.lang.Enum --> [C]java.lang.Object
+[C]org.jgrapht.traverse.LexBreadthFirstIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
+[C]org.jgrapht.traverse.LexBreadthFirstIterator$BucketList --> [C]java.lang.Object
+[C]org.jgrapht.traverse.LexBreadthFirstIterator$BucketList$Bucket --> [C]java.lang.Object
+[C]org.jgrapht.traverse.MaximumCardinalityIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
 [C]org.jgrapht.traverse.RandomWalkIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
-[C]org.jgrapht.traverse.TopologicalOrderIterator --> [C]org.jgrapht.traverse.CrossComponentIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
-[C]org.jgrapht.traverse.TopologicalOrderIterator$1 --> [C]java.lang.Object
-[C]org.jgrapht.traverse.TopologicalOrderIterator$LinkedListQueue --> [C]java.util.LinkedList --> [C]java.util.AbstractSequentialList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]org.jgrapht.traverse.RandomWalkVertexIterator --> [C]java.lang.Object
+[C]org.jgrapht.traverse.TopologicalOrderIterator --> [C]org.jgrapht.traverse.AbstractGraphIterator --> [C]java.lang.Object
+[C]org.jgrapht.util.AVLTree --> [C]java.lang.Object
+[C]org.jgrapht.util.AVLTree$TreeNode --> [C]java.lang.Object
+[C]org.jgrapht.util.AVLTree$TreeNodeIterator --> [C]java.lang.Object
+[C]org.jgrapht.util.AVLTree$TreeValuesIterator --> [C]java.lang.Object
 [C]org.jgrapht.util.ArrayUnenforcedSet --> [C]java.util.ArrayList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
-[C]org.jgrapht.util.ArrayUnenforcedSet$1 --> [C]java.lang.Object
 [C]org.jgrapht.util.ArrayUnenforcedSet$SetForEquality --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
-[C]org.jgrapht.util.FibonacciHeap --> [C]java.lang.Object
-[C]org.jgrapht.util.FibonacciHeapNode --> [C]java.lang.Object
+[C]org.jgrapht.util.ArrayUtil --> [C]java.lang.Object
+[C]org.jgrapht.util.CollectionUtil --> [C]java.lang.Object
+[C]org.jgrapht.util.ConcurrencyUtil --> [C]java.lang.Object
+[C]org.jgrapht.util.DoublyLinkedList --> [C]java.util.AbstractSequentialList --> [C]java.util.AbstractList --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]org.jgrapht.util.DoublyLinkedList$1 --> [C]java.lang.Object
+[C]org.jgrapht.util.DoublyLinkedList$ListNodeImpl --> [C]java.lang.Object
+[C]org.jgrapht.util.DoublyLinkedList$ListNodeIteratorImpl --> [C]java.lang.Object
+[C]org.jgrapht.util.ElementsSequenceGenerator --> [C]java.lang.Object
+[C]org.jgrapht.util.LiveIterableWrapper --> [C]java.lang.Object
 [C]org.jgrapht.util.MathUtil --> [C]java.lang.Object
 [C]org.jgrapht.util.ModifiableInteger --> [C]java.lang.Number --> [C]java.lang.Object
 [C]org.jgrapht.util.PrefetchIterator --> [C]java.lang.Object
+[C]org.jgrapht.util.RadixSort --> [C]java.lang.Object
+[C]org.jgrapht.util.SupplierException --> [C]java.lang.IllegalArgumentException --> [C]java.lang.RuntimeException --> [C]java.lang.Exception --> [C]java.lang.Throwable --> [C]java.lang.Object
+[C]org.jgrapht.util.SupplierUtil --> [C]java.lang.Object
+[C]org.jgrapht.util.SupplierUtil$ConstructorSupplier --> [C]java.lang.Object
+[C]org.jgrapht.util.SupplierUtil$ConstructorSupplier$SerializedForm --> [C]java.lang.Object
 [C]org.jgrapht.util.TypeUtil --> [C]java.lang.Object
-[C]org.jgrapht.util.UnorderedVertexPair --> [C]org.jgrapht.util.VertexPair --> [C]java.lang.Object
-[C]org.jgrapht.util.VertexPair --> [C]java.lang.Object
+[C]org.jgrapht.util.UnmodifiableUnionSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]org.jgrapht.util.UnmodifiableUnionSet$SetSizeOrdering --> [C]java.lang.Object
+[C]org.jgrapht.util.UnmodifiableUnionSet$UnionIterator --> [C]java.lang.Object
+[C]org.jgrapht.util.VertexToIntegerMapping --> [C]java.lang.Object
+[C]org.jgrapht.util.WeightedUnmodifiableSet --> [C]java.util.AbstractSet --> [C]java.util.AbstractCollection --> [C]java.lang.Object
+[C]org.jheaps.Constants --> [C]java.lang.Object
+[C]org.jheaps.array.AbstractArrayAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.array.AbstractArrayAddressableHeap$ArrayHandle --> [C]java.lang.Object
+[C]org.jheaps.array.AbstractArrayHeap --> [C]org.jheaps.array.AbstractArrayWeakHeap --> [C]java.lang.Object
+[C]org.jheaps.array.AbstractArrayWeakHeap --> [C]java.lang.Object
+[C]org.jheaps.array.BinaryArrayAddressableHeap --> [C]org.jheaps.array.AbstractArrayAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.array.BinaryArrayAddressableHeap$1 --> [C]java.lang.Object
+[C]org.jheaps.array.BinaryArrayBulkInsertWeakHeap --> [C]org.jheaps.array.BinaryArrayWeakHeap --> [C]org.jheaps.array.AbstractArrayWeakHeap --> [C]java.lang.Object
+[C]org.jheaps.array.BinaryArrayHeap --> [C]org.jheaps.array.AbstractArrayHeap --> [C]org.jheaps.array.AbstractArrayWeakHeap --> [C]java.lang.Object
+[C]org.jheaps.array.BinaryArrayIntegerValueHeap --> [C]java.lang.Object
+[C]org.jheaps.array.BinaryArrayIntegerValueHeap$Elem --> [C]java.lang.Object
+[C]org.jheaps.array.BinaryArrayWeakHeap --> [C]org.jheaps.array.AbstractArrayWeakHeap --> [C]java.lang.Object
+[C]org.jheaps.array.DaryArrayAddressableHeap --> [C]org.jheaps.array.AbstractArrayAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.array.DaryArrayAddressableHeap$1 --> [C]java.lang.Object
+[C]org.jheaps.array.DaryArrayHeap --> [C]org.jheaps.array.AbstractArrayHeap --> [C]org.jheaps.array.AbstractArrayWeakHeap --> [C]java.lang.Object
+[C]org.jheaps.array.MinMaxBinaryArrayDoubleEndedHeap --> [C]org.jheaps.array.AbstractArrayHeap --> [C]org.jheaps.array.AbstractArrayWeakHeap --> [C]java.lang.Object
+[C]org.jheaps.dag.HollowHeap --> [C]java.lang.Object
+[C]org.jheaps.dag.HollowHeap$HollowNode --> [C]java.lang.Object
+[C]org.jheaps.dag.HollowHeap$Item --> [C]java.lang.Object
+[C]org.jheaps.monotone.AbstractRadixAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.AbstractRadixAddressableHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.monotone.AbstractRadixHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.BigIntegerRadixAddressableHeap --> [C]org.jheaps.monotone.AbstractRadixAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.BigIntegerRadixHeap --> [C]org.jheaps.monotone.AbstractRadixHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.DoubleRadixAddressableHeap --> [C]org.jheaps.monotone.AbstractRadixAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.DoubleRadixHeap --> [C]org.jheaps.monotone.AbstractRadixHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.IntegerRadixAddressableHeap --> [C]org.jheaps.monotone.AbstractRadixAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.IntegerRadixHeap --> [C]org.jheaps.monotone.AbstractRadixHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.LongRadixAddressableHeap --> [C]org.jheaps.monotone.AbstractRadixAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.LongRadixHeap --> [C]org.jheaps.monotone.AbstractRadixHeap --> [C]java.lang.Object
+[C]org.jheaps.monotone.UnsignedUtils --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeAddressableHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftAddressableHeap$RootList --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftAddressableHeap$RootListNode --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftAddressableHeap$SoftHandle --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftAddressableHeap$TreeNode --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftHeap$RootList --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftHeap$RootListNode --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftHeap$SoftHandle --> [C]java.lang.Object
+[C]org.jheaps.tree.BinaryTreeSoftHeap$TreeNode --> [C]java.lang.Object
+[C]org.jheaps.tree.CostlessMeldPairingHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.CostlessMeldPairingHeap$1 --> [C]java.lang.Object
+[C]org.jheaps.tree.CostlessMeldPairingHeap$2 --> [C]java.lang.Object
+[C]org.jheaps.tree.CostlessMeldPairingHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.DaryTreeAddressableHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.DaryTreeAddressableHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.FibonacciHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.FibonacciHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.LeftistHeap --> [C]org.jheaps.tree.SkewHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.LeftistHeap$LeftistNode --> [C]org.jheaps.tree.SkewHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.PairingHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.PairingHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.RankPairingHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.RankPairingHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedFibonacciHeap --> [C]org.jheaps.tree.ReflectedHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedFibonacciHeap$1 --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedFibonacciHeap$Factory --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedHeap$HandleMap --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedHeap$ReflectedHandle --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedPairingHeap --> [C]org.jheaps.tree.ReflectedHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedPairingHeap$1 --> [C]java.lang.Object
+[C]org.jheaps.tree.ReflectedPairingHeap$Factory --> [C]java.lang.Object
+[C]org.jheaps.tree.SimpleFibonacciHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.SimpleFibonacciHeap$Node --> [C]java.lang.Object
+[C]org.jheaps.tree.SkewHeap --> [C]java.lang.Object
+[C]org.jheaps.tree.SkewHeap$Node --> [C]java.lang.Object
 [C]org.slf4j.LoggerFactory --> [C]java.lang.Object
 [C]org.slf4j.MDC --> [C]java.lang.Object
 [C]org.slf4j.MDC$1 --> [C]java.lang.Object
